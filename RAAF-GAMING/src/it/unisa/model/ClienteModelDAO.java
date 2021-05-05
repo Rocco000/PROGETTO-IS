@@ -49,7 +49,7 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 			app.setPassword(risultato.getString("password"));
 			app.setData_di_nascita(risultato.getDate("data_di_nascita"));
 			app.setIban(risultato.getString("iban"));
-			app.setCarta_fedelta(risultato.getString("carta_fedeltà"));
+			app.setCarta_fedelta(risultato.getString("carta_fedelta"));
 			
 			a.add(app);//aggiungo il bean all'arraylist
 		}
