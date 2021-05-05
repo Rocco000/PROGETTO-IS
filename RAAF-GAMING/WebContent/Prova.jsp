@@ -17,11 +17,12 @@
 	<title>Prova stampa righe DB</title>
 </head>
 <body>
+	<h1>RISULTATO</h1>
 	<%
 	
 		int i=0;
 		while(i<a.size()){
-			ClienteBean indexc= a.get(i);
+			ClienteBean c= a.get(i);
 	%>
 			${c.email}
 			${c.nome}
