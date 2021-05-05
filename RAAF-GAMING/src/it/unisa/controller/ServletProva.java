@@ -24,7 +24,7 @@ public class ServletProva extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		DataSource ds= (DataSource) getServletContext().getAttribute("DatSource");//prendo dal contesto il pool di connessioni al DB
+		DataSource ds= (DataSource) getServletContext().getAttribute("DataSource");//prendo dal contesto il pool di connessioni al DB
 		
 		ClienteModelDAO modello= new ClienteModelDAO(ds);
 		
