@@ -24,13 +24,13 @@
 		while(i<a.size()){
 			ClienteBean c= a.get(i);
 	%>
-			${c.email}
-			${c.nome}
-			${c.cognome}
-			${c.password}
-			${c.iban}
-			${c.data_di_nascita}
- 			${c.carta_fedelta}
+			<%= c.getEmail() %>
+			<%=c.getNome() %>
+			<%=c.getCognome() %>
+			<%=c.getPassword() %>
+			<%=c.getIban() %>
+			<%=c.getData_di_nascita() %>
+			<%=c.getCarta_fedelta() %>
  			<br>
  			<br>
 	<%
