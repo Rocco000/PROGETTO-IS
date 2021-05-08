@@ -53,7 +53,9 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 			
 			a.add(app);//aggiungo il bean all'arraylist
 		}
-			
+		risultato.close();
+		ps.close();
+		connessione.close();
 		return a;
 	}
 
