@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+#corpo{
+	width: 100%;
+	height: 100%;	
+	top: 0;	
+	left: 0;	
+	background: url(../immagini/theWitcher.jpg) no-repeat center top;	
+	position: fixed;	
+	z-index: -1;	
+	-webkit-background-size: cover;	
+	-moz-background-size: cover;	
+	-o-background-size: cover;	
+	background-size: cover;
+
+}
+
+#divForm{
+	background-color: rgba(254,254,233,0.5); 
+	width:100%; 
+	height:110%;
+}
+
+#stileForm{
+	padding-top:10px; 
+	padding-left:10px;
+	padding-right:10px;
+	color: black;
+	font-family: Acunim Variable Consent;
+}
+
+#testoForm{
+	padding-top:5%;
+	text-align:center;	
+	font-weight: normal;
+	color: rgb(35,35,35);
+}
+
+#invio{
+	font-family: Eras Demi ITC;
+	background-color: #FF6600;
+	width: 60%;
+	font-weight: bold;
+	color:white;
+	border-radius: 15px;
+	margin-left:20%;
+}
+
+a{
+	font-family: Eras Demi ITC;
+	color:black;
+}
+
+a:hover{
+	text-decoration: none;
+	color:#FF6600;
+}
+
+p{
+	text-align:center;
+}
+
