@@ -1,10 +1,18 @@
 package it.unisa.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class RiguardaModelDAO implements OperazioniModel<RiguardaBean> {
+import javax.sql.DataSource;
 
+public class RiguardaModelDAO implements OperazioniModel<RiguardaBean> {
+	DataSource ds;
+	public RiguardaModelDAO(DataSource d) {
+		ds=d;
+	}
 	
 	public RiguardaBean doRetriveByKey(String code) throws SQLException {
 		
@@ -13,8 +21,29 @@ public class RiguardaModelDAO implements OperazioniModel<RiguardaBean> {
 
 	
 	public ArrayList<RiguardaBean> doRetriveAll(String order) throws SQLException {
+		Connection connessione= ds.getConnection();
+		String query="SELECT * FROM Riguarda WHERE riguarda.prodotto=prodotto.codice_prodotto AND riguarda.ordine=ordine.codice ORDER BY ;?";
+		PreparedStatement ps=connessione.prepareStatement(query);
 		
-		return null;
+		if(order!=null && !order.equals(""))
+			ps.setString(1,order);
+		else	
+			ps.setString(1, "riguarda.prodotto asc");
+		ArrayList<RiguardaBean>a=new ArrayList<RiguardaBean>();
+		ResultSet risultato=ps.executeQuery();
+		while(risultato.next()) {
+			RiguardaBean app=new RiguardaBean();
+			app.setOrdine(risultato.getString("riguarda.ordine"));
+			app.setProdotto(risultato.getInt("riguarda.prodotto"));
+			app.setQuantita_acquistata(risultato.getInt("riguarda.qauntita_acquistata"));
+			a.add(app);
+		}
+		
+		risultato.close();
+		ps.close();
+		connessione.close();
+		
+		return a;
 	}
 
 	
