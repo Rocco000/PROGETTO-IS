@@ -61,7 +61,7 @@ public class VideogiocoBean implements Serializable {
 	public String getVkey() {
 		return vkey;
 	}
-	public void setString(String vkey) {
+	public void setVkey(String vkey) {
 		this.vkey=vkey;
 	}
 	

@@ -1,11 +1,19 @@
 package it.unisa.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.sql.DataSource;
+
 public class SpeditoModelDAO implements OperazioniModel<SpeditoBean> {
 
-	
+	DataSource ds;
+	public SpeditoModelDAO(DataSource d) {
+		ds=d;
+	}
 	public SpeditoBean doRetriveByKey(String code) throws SQLException {
 
 		return null;
@@ -14,7 +22,30 @@ public class SpeditoModelDAO implements OperazioniModel<SpeditoBean> {
 
 	public ArrayList<SpeditoBean> doRetriveAll(String order) throws SQLException {
 		
-		return null;
+		Connection connesione=ds.getConnection();
+		String query="SELECT * FROM spedito WHERE spedito.ordine=ordine.codice AND spedito.corriere_espresso=corriereespresso.nome ORDER BY ?;";
+		
+		PreparedStatement ps=connesione.prepareStatement(query);
+		
+		if(order!=null && !order.equals(""))
+			ps.setString(1,order);
+		else
+			ps.setString(1,"spedito.ordine asc");
+		
+		ArrayList<SpeditoBean> a=new ArrayList<SpeditoBean>();
+		ResultSet risultato=ps.executeQuery();
+		while(risultato.next()) {
+			SpeditoBean app=new SpeditoBean();
+			app.setOrdine(risultato.getString("spedito.ordine"));
+			app.setCorriere_esprersso(risultato.getString("spedito.corriere_espresso"));
+			app.setData_consegna(risultato.getDate("spedito.data_consegna"));
+			a.add(app);
+		}
+		risultato.close();
+		ps.close();
+		connesione.close();
+		
+		return a;
 	}
 
 
