@@ -60,3 +60,10 @@ p{
 	text-align:center;
 }
 
+@media screen and (max-width: 765px){
+	img{width:20%;
+		left:50%;
+		align-items:center;
+	}
+	
+}

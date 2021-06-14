@@ -8,7 +8,7 @@ function controlloValori(x){
 		
 		var p= x.elements["password"]; //controllo lunghezza password
 		var valore= p.value.length;
-		if(valore<10){
+		if(valore<5){
 			alert("You have entered an invalid password!");
 			p.value="";
 			p.style.border="2px solid red";
@@ -18,7 +18,7 @@ function controlloValori(x){
 			return true;
 		
 	}else{
-		alert("You have entered an invalid email address!");
+		alert("You have entered an invalid email address bello!");
 		e.value="";
 		e.style.border="2px solid red";
 		return false;

@@ -43,15 +43,22 @@
 			<div class="col-md-4"></div>
 			<div class="col-md-4" ><!-- form -->
 				<div id="divForm">
-					<form action="#" method="POST" id="stileForm" onSubmit="return controlloValori(this);">
+					<form action="servletlogin" method="POST" id="stileForm" onSubmit="return controlloValori(this);">
 						<h3 id="testoForm">BENVENUTO GIOCATORE!</h3>
+							<%
+							String str=(String)request.getAttribute("message");
+							if(str!=null){
+								%>
+								<h5 style="color:red; text-align:center;">Email/Password errata!</h5>
+								<%
+							}
+							%>
 						<div class="input-group mb-3" style="margin-top:10%; width:80%; margin-left:10%">
   							<div class="input-group-prepend">
     							<span class="input-group-text" id="basic-addon1">
     								<i class='fas fa-user-alt' style='font-size:20px'></i>
     							</span>
   							</div>
-							
   							<input type="text" class="form-control" style="border-radius:0px 5px 5px 0px;" placeholder="email" name="email">
   						</div>
 
