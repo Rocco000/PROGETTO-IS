@@ -30,7 +30,7 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 		String query="SELECT * FROM cliente ORDER BY ?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
-		if(order!=null && order!="") {
+		if(order!=null && !order.equals("")) {
 			ps.setString(1, order);
 		}
 		else {
@@ -67,8 +67,58 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 
 	@Override
 	public void doUpdate(ClienteBean item) throws SQLException {
-		// TODO Auto-generated method stub
 		
+		Connection connessione= ds.getConnection();//ottengo la connessione al DB
+		
+		String query= "SELECT * FROM cliente WHERE email=?;";
+		
+		PreparedStatement ps= connessione.prepareStatement(query);
+		
+		ps.setString(1, item.getEmail());
+		
+		ResultSet risultato= ps.executeQuery();
+		if(risultato.next()) {
+			ClienteBean app= new ClienteBean();
+			app.setEmail(risultato.getString("email"));
+			app.setNome(risultato.getString("nome"));
+			app.setCognome(risultato.getString("cognome"));
+			app.setPassword(risultato.getString("password"));
+			app.setData_di_nascita(risultato.getDate("data_di_nascita"));
+			app.setIban(risultato.getString("iban"));
+			app.setCarta_fedelta(risultato.getString("carta_fedelta"));
+			
+			if(!item.getIban().equals(app.getIban())) {//se l'iban non corrisponde con quello del db allora devo aggiornare l'IBAN
+				
+				String aggiornamento= "UPDATE cliente SET iban=? WHERE email=? ;";
+				PreparedStatement ps2= connessione.prepareStatement(aggiornamento);
+				
+				ps2.setString(1, item.getIban());
+				ps2.setString(2, item.getEmail());
+				if(ps2.execute())
+					;
+				else
+					System.out.println("query errata");
+				
+				ps2.close();
+			}
+			else{ //se l'iban non è cambiato vuol dire che deve aggiornare la password
+				String aggiornamento= "UPDATE cliente SET password=MD5(?) WHERE email=? ;";
+				PreparedStatement ps2= connessione.prepareStatement(aggiornamento);
+				
+				ps2.setString(1, item.getPassword());
+				ps2.setString(2, item.getEmail());
+				if(ps2.execute())
+					;
+				else
+					System.out.println("query errata");
+				
+				ps2.close();
+			}
+		}
+		
+		risultato.close();
+		ps.close();
+		connessione.close();
 	}
 
 	@Override

@@ -1,10 +1,21 @@
 package it.unisa.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.sql.DataSource;
+
 public class CategoriaModelDAO implements OperazioniModel<CategoriaBean> {
 
+	DataSource ds;
+	
+	public CategoriaModelDAO(DataSource d) {
+		ds=d;
+	}
+	
 	@Override
 	public CategoriaBean doRetriveByKey(String code) throws SQLException {
 		// TODO Auto-generated method stub
@@ -13,8 +24,27 @@ public class CategoriaModelDAO implements OperazioniModel<CategoriaBean> {
 
 	@Override
 	public ArrayList<CategoriaBean> doRetriveAll(String order) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connessione= ds.getConnection();
+		String query="SELECT * FROM categoria ORDER BY ?;";
+		PreparedStatement ps= connessione.prepareStatement(query);
+		
+		if(order!=null && !order.equals(""))
+			ps.setString(1, order);
+		else
+			ps.setString(1, "nome asc");
+		
+		ArrayList<CategoriaBean> a= new ArrayList<CategoriaBean>();
+		ResultSet risultato= ps.executeQuery();
+		while(risultato.next()) {
+			CategoriaBean app= new CategoriaBean();
+			app.setNome(risultato.getString("nome"));
+			a.add(app);
+		}
+		
+		risultato.close();
+		ps.close();
+		connessione.close();
+		return a;
 	}
 
 	@Override
