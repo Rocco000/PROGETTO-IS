@@ -1,10 +1,23 @@
 package it.unisa.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.sql.DataSource;
+
 public class DlcModelDAO implements OperazioniModel<DlcBean> {
 
+	DataSource ds =null;//la connessione al DB la ottengo dal Controller che se la va a prendere dal ServletContext
+
+	
+	public  DlcModelDAO(DataSource d)
+	{
+		ds=d;
+	}
+	
 	@Override
 	public DlcBean doRetriveByKey(String code) throws SQLException {
 		// TODO Auto-generated method stub
@@ -13,8 +26,30 @@ public class DlcModelDAO implements OperazioniModel<DlcBean> {
 
 	@Override
 	public ArrayList<DlcBean> doRetriveAll(String order) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connessione = ds.getConnection();
+		String Query="SELECT * FROM dls ODER BY ?";
+		
+		PreparedStatement ps= connessione.prepareStatement(Query);
+		if(order!=null && order!="") 
+		{
+		ps.setString(1, order);
+		}else { ps.setString(1, "prodotto asc");}
+		
+		ResultSet rs= ps.executeQuery();
+		ArrayList<DlcBean> a= new ArrayList<DlcBean>();
+		
+		while(rs.next())
+		{
+		DlcBean app= new DlcBean();
+		app.setProdotto(rs.getInt("prodotto"));
+		app.setDimensione(rs.getDouble("dimensione"));
+		app.setDescrizione(rs.getString("descrizione"));
+		a.add(app);
+		}
+		rs.close();
+		ps.close();
+		connessione.close();
+		return a;
 	}
 
 	@Override

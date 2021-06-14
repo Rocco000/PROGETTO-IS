@@ -1,5 +1,8 @@
 package it.unisa.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -23,13 +26,37 @@ public class ConsoleModelDAO implements OperazioniModel<ConsoleBean> {
 	@Override
 	public ArrayList<ConsoleBean> doRetriveAll(String order) throws SQLException {
 		
-		return null;
+	Connection connessione = ds.getConnection();
+	String Query="SELECT * FROM console ODER BY ?";
+	
+	PreparedStatement ps= connessione.prepareStatement(Query);
+	if(order!=null && order!="") 
+	{
+	ps.setString(1, order);
+	}else { ps.setString(1, "prodotto asc");}
+	
+	ResultSet rs= ps.executeQuery();
+	ArrayList<ConsoleBean> a= new ArrayList<ConsoleBean>();
+	
+	while(rs.next())
+	{
+	ConsoleBean app= new ConsoleBean();
+	app.setProdotto(rs.getInt("prodotto"));
+	app.setSpecifica(rs.getString("specifica"));
+	app.setColore(rs.getString("colore"));
+	
+	a.add(app);
 	}
+	rs.close();
+	ps.close();
+	connessione.close();
+	return a;
+	}//fine doRetriveAll
 
 	@Override
 	public void doSave(ConsoleBean item) throws SQLException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
