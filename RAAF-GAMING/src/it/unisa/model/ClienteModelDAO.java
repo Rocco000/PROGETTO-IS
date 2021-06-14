@@ -18,8 +18,26 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 	
 	@Override
 	public ClienteBean doRetriveByKey(String code) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connessione= ds.getConnection();
+		String query= "SELECT * FROM cliente WHERE email=?;";
+		
+		PreparedStatement ps= connessione.prepareStatement(query);
+		ps.setString(1, code);
+		ResultSet risultato= ps.executeQuery();
+		if(risultato.next()) {
+			ClienteBean app= new ClienteBean();
+			app.setEmail(risultato.getString("email"));
+			app.setNome(risultato.getString("nome"));
+			app.setCognome(risultato.getString("cognome"));
+			app.setPassword(risultato.getString("password"));
+			app.setData_di_nascita(risultato.getDate("data_di_nascita"));
+			app.setIban(risultato.getString("iban"));
+			app.setCarta_fedelta(risultato.getString("carta_fedelta"));
+			
+			return app;
+		}
+		else
+			return null;
 	}
 
 	@Override
