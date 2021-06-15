@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+@font-face{
+	font-family:font-personalizzato;
+	src:url(../fontCss/OriginTech.otf)
+}
+
+#corpo{
+	width: 100%;
+	height: 100%;	
+	top: 0;	
+	left: 0;	
+	background: url(../immagini/tavolo.jpg) no-repeat center top;	
+	position: fixed;	
+	z-index: -1;	
+	-webkit-background-size: cover;	
+	-moz-background-size: cover;	
+	-o-background-size: cover;	
+	background-size: cover;
+
+}
+
+
+#divForm{
+	background-color: rgba(254,254,233,0.5); 
+	width:100%; 
+	height:110%;
+}
+
+#stileForm{
+	padding-top:10px; 
+	padding-left:10px;
+	padding-right:10px;
+	color: black;
+	font-family: font-personalizzato;
+	
+}
+
+#testoForm{
+	padding-top:5%;
+	text-align:center;	
+	font-weight: normal;
+	color: rgb(35,35,35);
+	font-size:300%;
+}
+
+#invio{
+	font-family: Eras Demi ITC;
+	background-color: black;
+	width: 60%;
+	font-weight: bold;
+	color:white;
+	border-radius: 15px;
+	margin-left:20%;
+}
+
+a{
+	font-family: Eras Demi ITC;
+	color:black;
+}
+
+a:hover{
+	text-decoration: none;
+	color:#FF6600;
+}
+
+p{
+	text-align:center;
+}
+
+@media screen and (max-width: 765px){
+	img{width:20%;
+		left:50%;
+		align-items:center;
+	}
+	
+}

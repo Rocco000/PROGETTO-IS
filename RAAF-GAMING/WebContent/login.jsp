@@ -30,7 +30,6 @@
 	<title>LOGIN</title>
 </head>
 <body>
-
 <div id="corpo">
 		<div class="row">
 			<div class="col-md-12"><!-- immagine raff-gaming -->
@@ -59,7 +58,7 @@
     								<i class='fas fa-user-alt' style='font-size:20px'></i>
     							</span>
   							</div>
-  							<input type="text" class="form-control" style="border-radius:0px 5px 5px 0px;" placeholder="email" name="email">
+  							<input type="text" class="form-control" style="border-radius:0px 5px 5px 0px;" placeholder="Email" name="email">
   						</div>
 
 	  					<div class="input-group mb-3" style="margin-top:5%; width:80%; margin-left:10%">
@@ -83,7 +82,7 @@
 	  					
 					</form>				
 				</div>
-	
+					
 			</div>
 			<div class="col-md-4"></div>
 			
