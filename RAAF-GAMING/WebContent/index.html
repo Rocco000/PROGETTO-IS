@@ -23,17 +23,28 @@
 	
 	<!-- css mio -->
 	<link rel="stylesheet" href="css/StileIndex.css" type="text/css">
-
+	<!--  js mio -->
+	<script src="javascript/controlloIndex.js">
+	</script>
 <title>RAAF-GAMING</title>
 </head>
 <body>
 		<div id="contenitore">
-			<div class="row">
+			<div class="row" >
 				<div class="col-md-12">
 				<nav class="navbar" style="background-color: rgba(35,35,35,0.8); border-radius: 0px 0px 40px 40px;">
 					
 						<div class="col-md-4">
 						<img src="immagini/logo.png" alt="RAAF-GAMING" style="width:75px; position: static; left:0px; top:5px;margin-bottom:5px;">
+						<button class="openbtn" onclick="openNav()" style="font-size: 20px; cursor: pointer; background-color: rgba(35,35,35,0.8);padding: 10px 15px; border-radius: 20px; border-color: white; color:white; margin-left:30px; padding-top:2px; padding-bottom:3px; ">
+						☰</button>
+						<div id="mySidepanel" class="sidepanel">
+  						<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  						<a href="#">About</a>
+  						<a href="#">Services</a>
+ 						<a href="#">Clients</a>
+  						<a href="#">Contact</a>
+						</div>
 						</div>
 							<div class="col-md-4">
 							<form class="form-inline">
@@ -41,21 +52,48 @@
 							</form>
 							
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-1">
+							</div>
+							<div class="col-md-1" style="margin:0; padding-left:30px;">
+							</div>
+							<div class="col-md-1" style="margin:0; padding-left:3%;">
+							<a href="#">
+							<i class='fas fa-shopping-cart' style='font-size:27px; color:white;'></i>
+							</a>
+							</div>
+							<div class="col-md-1" style="margin:0; padding:0;">
 								<div class="dropdown">
-									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 70px; background-color :rgba(35,35,35,0.8); border-color: #D2D2D2; border-width:2px; position:static; margin-left:70%;">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 70px; background-color :rgba(35,35,35,0.8); border-color: #D2D2D2; border-width:2px;">
    										<i class='fas fa-user-astronaut' style='font-size:24px'></i>
   									</button>
   									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-  										<a class="dropdown-item" href="#" style="color:white;">Login</a>
-  										<a class="dropdown-item" href="#" style="color:white;">Account</a>
+  										<a class="dropdown-item" href="#" style="color:white;" onmouseover="myFunction(this)" onmouseout="myFunctionlol(this)">Login</a>
+  										<a class="dropdown-item" href="#" style="color:white;" onmouseover="myFunction(this)" onmouseout="myFunctionlol(this)">Account</a>
   									</div>
-  								</div>
+  								</div>  								
 							</div>
-							
 				</nav>
 				</div>
 			</div>
+			<div class="row" style="margin-top:-21px; padding:0;">
+			<div class="col-md-2">
+			</div>
+			<div class="col-md-8" style="background-color: rgba(230,230,230,0.5); margin:0px; padding:0; border-radius:10px; height:500px;">
+			
+			</div>
+			<div class="col-md-2">
+			</div>
+		</div>
+		<div class="row" style=" height:100px;">
+		<div class="col-md-12" style="background-color: rgba(35,35,35,0.9);">
+		<div class="col-md-4">
+		</div>
+		<div class="col-md-4" style="text-align:center; color:white;">
+		RAAF GAMING@
+		</div>
+		<div class="col-md-4">
+		</div>
+		</div>
 		</div>
 </body>
 </html>
