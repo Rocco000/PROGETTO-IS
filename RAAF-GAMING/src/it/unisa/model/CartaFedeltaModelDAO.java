@@ -50,13 +50,20 @@ public class CartaFedeltaModelDAO implements OperazioniModel<CartaFedeltaBean> {
 
 	@Override
 	public void doSave(CartaFedeltaBean item) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Connection connessione = ds.getConnection();//ottengo la connessione
+		String query="INSERT INTO cartafedelta VALUES(?,?);";
+		PreparedStatement ps= connessione.prepareStatement(query);
+		
+		ps.setString(1, item.getCodice());
+		ps.setInt(2, item.getPunti());
+		ps.executeUpdate();
+		ps.close();
+		connessione.close();
 	}
 
 	@Override
 	public void doUpdate(CartaFedeltaBean item) throws SQLException {
-		// TODO Auto-generated method stub
+		
 
 	}
 

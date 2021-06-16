@@ -9,7 +9,7 @@ public class VideogiocoBean implements Serializable {
 	private int prodotto;
 	private double dimensione;
 	private int pegi;
-	private int edizione_limitata;
+	private boolean edizione_limitata;
 	private int ncd;
 	private String vkey;
 	private String software_house;
@@ -18,7 +18,7 @@ public class VideogiocoBean implements Serializable {
 		prodotto=0;
 		dimensione=0;
 		pegi=0;
-		edizione_limitata=0;
+		edizione_limitata=false;
 		ncd=0;
 		vkey=null;
 		software_house=null;
@@ -45,11 +45,11 @@ public class VideogiocoBean implements Serializable {
 		this.pegi=pegi;
 	}
 	
-	public int getEdizione_limitata() {
+	public boolean getEdizione_limitata() {
 		return edizione_limitata;
 	}
 	
-	public void setEdizione_limitata(int edizione_limitata) {
+	public void setEdizione_limitata(boolean edizione_limitata) {
 		this.edizione_limitata=edizione_limitata;
 	}
 	public int getNcd() {

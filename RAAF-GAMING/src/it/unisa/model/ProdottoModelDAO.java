@@ -22,7 +22,7 @@ public class ProdottoModelDAO implements OperazioniModel<ProdottoBean>{
 		ps.setString(1,code);
 		ResultSet st = ps.executeQuery();
 		ProdottoBean bean = new ProdottoBean();
-		while(st.next())
+		if(st.next())
 		{
 			bean.setCodice_prodotto(st.getInt("codice_prodotto"));
 			bean.setCopertina(st.getBytes("copertina"));
