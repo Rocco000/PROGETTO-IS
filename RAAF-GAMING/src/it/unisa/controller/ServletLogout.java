@@ -33,7 +33,7 @@ public class ServletLogout extends HttpServlet {
     	boolean flag=(boolean) request.getAttribute("omino");
     	flag=false;
     	request.setAttribute("omino", flag);
-    	RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("index.jsp");//ritorno alla index
+    	RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/index.html");//ritorno alla index
 		dispatcher.forward(request, response);
 	}
 

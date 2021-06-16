@@ -1,0 +1,65 @@
+@charset "ISO-8859-1";
+
+@font-face{
+	font-family:font-registrazione;
+	src:url(../fontCss/Vogue.otf)
+}
+
+label{
+	font-family:font-registrazione;
+	font-size:21px;
+	font-weight:bold;
+}
+
+#corpo{
+	width: 100%;
+	height: 100%;	
+	top: 0;	
+	left: 0;	
+	background: url(../immagini/theWitcher.jpg) no-repeat center top;	
+	position: fixed;	
+	z-index: -1;	
+	-webkit-background-size: cover;	
+	-moz-background-size: cover;	
+	-o-background-size: cover;	
+	background-size: cover;
+
+}
+
+#divForm{
+	background-color: rgba(254,254,233,0.5); 
+	width:100%; 
+	height:110%;
+}
+
+#testoForm{
+	padding-top:5%;
+	text-align:center;	
+	font-weight: normal;
+	color: rgb(35,35,35);
+}
+
+.spaziaturaSx{
+	margin-left:10%;
+}
+
+.spaziaturaDx{
+	margin-right:10%;
+	margin-left:5%;
+	
+}
+
+#invio{
+	font-family: Eras Demi ITC;
+	background-color: #FF6600;
+	width:50%;
+	font-weight: bold;
+	color:white;
+	border-radius: 15px;
+	margin-left:150px;
+	margin-top:5px;
+}
+
+@media screen and(max-width:767px){
+	
+}
