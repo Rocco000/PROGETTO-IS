@@ -1,18 +1,15 @@
 @charset "UTF-8";
 
-#corpo{
+body{
 	width: 100%;
 	height: 100%;	
-	top: 0;	
-	left: 0;	
-	background: url(../immagini/theWitcher.jpg) no-repeat center top;	
-	position: fixed;	
+	background: url(../immagini/tlou.jpg) no-repeat;
+	background-attachment: fixed;		
 	z-index: -1;	
 	-webkit-background-size: cover;	
 	-moz-background-size: cover;	
 	-o-background-size: cover;	
 	background-size: cover;
-
 }
 
 
