@@ -68,5 +68,26 @@ public class RecensisceModelDAO implements OperazioniModel<RecensisceBean>{
 
 		
 	}
+	
+	public ArrayList<RecensisceBean> getRecensioniCriterio(String condizione,String order) throws SQLException{
+		Connection connessione= ds.getConnection();
+		String query="SELECT recensisce.cliente,recensisce.prodotto,recensisce.voto FROM recensisce WHERE ? ORDER BY ?;";
+		PreparedStatement ps=connessione.prepareStatement(query);
+		
+		ps.setString(1, condizione);
+		ps.setString(2, order);
+		ResultSet risultato= ps.executeQuery();
+		ArrayList<RecensisceBean> recensioni= new ArrayList<RecensisceBean>();
+		while(risultato.next()) {
+			RecensisceBean app= new RecensisceBean();
+			app.setCliente(risultato.getString("recensisce.cliente"));
+			app.setProdotto(risultato.getInt("recensisce.prodotto"));
+			app.setVoto(risultato.getInt("recensisce.voto"));
+			
+			recensioni.add(app);
+		}
+		
+		return recensioni;
+	}
 
 }
