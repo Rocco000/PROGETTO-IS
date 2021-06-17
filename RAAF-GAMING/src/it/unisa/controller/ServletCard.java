@@ -1,10 +1,8 @@
 package it.unisa.controller;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import it.unisa.model.VideogiocoBean;
-import it.unisa.model.VideogiocoModelDAO;
+import it.unisa.model.ProdottoBean;
+import it.unisa.model.ProdottoModelDAO;
 
 /**
  * Servlet implementation class ServletCard
@@ -29,29 +27,21 @@ public class ServletCard extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		VideogiocoModelDAO vdao= new VideogiocoModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+		response.setContentType("image/*");
+		DataSource ds = (DataSource) super.getServletContext().getAttribute("DataSource");
 		try {
-			VideogiocoBean migliorVideogioco= vdao.getTopRecensione();
-			VideogiocoBean ultimoUscito= vdao.getUltimoUscito();
-			ArrayList<VideogiocoBean> scontati= vdao.getVideogiochiScontati();
-			
-			
-			
-			request.setAttribute("migliorVideogioco", migliorVideogioco);
-			request.setAttribute("ultimoUscito", ultimoUscito);
-			request.setAttribute("scontati", scontati);
-			RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("lol.jsp");
-			dispatcher.forward(request, response);	
+			ProdottoModelDAO dao = new ProdottoModelDAO(ds);
+			ProdottoBean bean = dao.doRetriveByKey(request.getParameter("id"));
+			OutputStream out = response.getOutputStream();
+			out.write(bean.getCopertina());
+			out.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
