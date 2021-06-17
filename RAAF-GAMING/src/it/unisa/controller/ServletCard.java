@@ -30,24 +30,11 @@ public class ServletCard extends HttpServlet {
 		response.setContentType("image/*");
 		DataSource ds = (DataSource) super.getServletContext().getAttribute("DataSource");
 		try {
-<<<<<<< HEAD
-			VideogiocoBean migliorVideogioco= vdao.getTopRecensione();
-			VideogiocoBean ultimoUscito= vdao.getUltimoUscito();
-			ArrayList<VideogiocoBean> scontati= vdao.getVideogiochiScontati();
-			
-			
-			request.setAttribute("migliorVideogioco", migliorVideogioco);
-			request.setAttribute("ultimoUscito", ultimoUscito);
-			request.setAttribute("scontati", scontati);
-			RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("lol.jsp");
-			dispatcher.forward(request, response);	
-=======
 			ProdottoModelDAO dao = new ProdottoModelDAO(ds);
 			ProdottoBean bean = dao.doRetriveByKey(request.getParameter("id"));
 			OutputStream out = response.getOutputStream();
 			out.write(bean.getCopertina());
 			out.close();
->>>>>>> refs/heads/alfredo
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
