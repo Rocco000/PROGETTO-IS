@@ -35,10 +35,17 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 			app.setIban(risultato.getString("iban"));
 			app.setCarta_fedelta(risultato.getString("carta_fedelta"));
 			
+			risultato.close();
+			ps.close();
+			connessione.close();
 			return app;
 		}
-		else
+		else {
+			risultato.close();
+			ps.close();
+			connessione.close();
 			return null;
+		}
 	}
 
 	@Override

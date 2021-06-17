@@ -40,32 +40,89 @@ public class ServletRegistrazione extends HttpServlet {
 	
 	 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession sessioneExists= request.getSession(false);//controllo se esiste gia† una sessione
-		System.out.println(sessioneExists.getId());
-		if(sessioneExists!=null) {
-			RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/index.html");//ritorno alla index
-			dispatcher.forward(request, response);
+		HttpSession sessione= request.getSession(true);//controllo se esiste gia una sessione se no la creo
+		Object logB= sessione.getAttribute("log");
+		if(logB!=null) {//se il campo log esiste
+			
+			Boolean log= (Boolean) logB;
+			if(log==true) {// se l'utente √® loggato non pu√≤ registrarsi
+				RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/index.html");//ritorno alla index
+				dispatcher.forward(request, response);
+			}
+			else {
+				//ottengo i dati dal form
+				String nome=request.getParameter("nome");
+				String cognome=request.getParameter("cognome");
+				String email=request.getParameter("email");
+				String iban=request.getParameter("iban");
+				String data=request.getParameter("data");
+				SimpleDateFormat dataN=new SimpleDateFormat("yyyy-MM-dd");//formato della data
+				try {
+					Date nuovaData=dataN.parse(data);//converto la data del form nel tipo Date
+					System.out.println(nuovaData);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				String password=request.getParameter("password");
+				ClienteModelDAO cmd=new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+				try {
+					ClienteBean cb=cmd.doRetriveByKey(email);
+					
+					if(cb!=null) { //il cliente e' gia registrato
+						String message="Sei gia' iscritto al nostro sito!";
+						request.setAttribute("message", message);
+						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/registrazione.jsp");//ritorno alla registrazione
+						dispatcher.forward(request, response);
+					}else {
+						CartaFedeltaModelDAO cf=new CartaFedeltaModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+						ArrayList<CartaFedeltaBean>carte=cf.doRetriveAll("codice desc");//otteniamo tutte le carte fedelta in ordine decrescente
+						CartaFedeltaBean maxcarta=carte.get(0);//carta con codice massimo
+						String max=maxcarta.getCodice();
+						int a=Integer.parseInt(max);
+						a=a+1;
+						String nuovaCarta=""+a;
+						ClienteBean nuovoCliente=new ClienteBean(); //creiamo il nuovo utente
+						nuovoCliente.setNome(nome);
+						nuovoCliente.setCognome(cognome);
+						nuovoCliente.setEmail(email);
+						nuovoCliente.setIban(iban);
+						nuovoCliente.setData_di_nascita(null);//da correggere
+						nuovoCliente.setPassword(password);
+						nuovoCliente.setCarta_fedelta(nuovaCarta);
+						cmd.doSave(nuovoCliente);
+						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/login.jsp");//ritorno alla pagina di login dopo l'iscrizione
+						dispatcher.forward(request, response);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		else {
+		else {//se non √® loggato
+			//ottengo i dati dal form
 			String nome=request.getParameter("nome");
 			String cognome=request.getParameter("cognome");
 			String email=request.getParameter("email");
-			String iban=request.getParameter("Iban");
+			String iban=request.getParameter("iban");
 			String data=request.getParameter("data");
-			SimpleDateFormat dataN=new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dataN=new SimpleDateFormat("yyyy-MM-dd");//formato della data
 			try {
-				Date nuovaData=dataN.parse(data);
+				Date nuovaData=dataN.parse(data);//converto la data del form nel tipo Date
 				System.out.println(nuovaData);
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			/*String password=request.getParameter("password");
+			String password=request.getParameter("password");
 			ClienteModelDAO cmd=new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 			try {
 				ClienteBean cb=cmd.doRetriveByKey(email);
-				if(cb!=null) { //il cliente Ë gia registrato
-					RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("registrazione.jsp");//ritorno alla index
+				
+				if(cb!=null) { //il cliente e' gia registrato
+					String message="Sei gia' iscritto al nostro sito!";
+					request.setAttribute("message", message);
+					RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/registrazione.jsp");//ritorno alla registrazione
 					dispatcher.forward(request, response);
 				}else {
 					CartaFedeltaModelDAO cf=new CartaFedeltaModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
@@ -84,16 +141,13 @@ public class ServletRegistrazione extends HttpServlet {
 					nuovoCliente.setPassword(password);
 					nuovoCliente.setCarta_fedelta(nuovaCarta);
 					cmd.doSave(nuovoCliente);
-					RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("login.jsp");//ritorno alla pagina di login dopo l'iscrizione
+					RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/login.jsp");//ritorno alla pagina di login dopo l'iscrizione
 					dispatcher.forward(request, response);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}*/
+			}
 				
-				
-			
-			
 		}
 	}
 }

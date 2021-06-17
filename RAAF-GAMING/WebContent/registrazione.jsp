@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<!--Latest compiled and minified CSS -->
@@ -19,7 +18,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 	
-	<!-- css nostri -->
+	<!-- css nostro -->
 	<link rel="stylesheet" href="css/stileRegistrazione.css" type="text/css">
 	
 	<!-- javascript nostro -->
@@ -30,66 +29,88 @@
 	<title>REGISTRAZIONE</title>
 </head>
 <body>
-<div id="corpo">
-		<div class="row">
-			<div class="col-md-12"><!-- immagine raff-gaming -->
-				<img src="immagini/logo.png" alt="RAAF-GAMING" style="width:15%; position: static; left:20px; top:20px; padding-left:20px; padding-top:10px;">
-			</div>
+	<div class="row" style="width:70%;">
+		<div class="col-md-12 ml-3 mt-3"><!-- immagine raff-gaming -->
+			<img src="immagini/logo.png" alt="RAAF-GAMING" class="rounded float-left" style="width:180px; position: static;">
 		</div>
-		
-		<div class="row">
-			
-			<div class="col-md-4"></div>
-			<div class="col-md-4" ><!-- form -->
-				<div id="divForm">
-					<form action="ServletRegistrazione" method="POST" id="stileForm" onSubmit="return controlloRegistrazione(this);">
-						<h3 id="testoForm" style="margin-bottom:4%">INSERISCI I TUOI DATI :</h3>
-						<div class="form-row">
-	    					<div class="form-group col-md-6">
-	      						<label class="spaziaturaSx" for="inputNome">Nome:</label>
-	      						<input  type="text" class="form-control spaziaturaSx" id="inputNome" placeholder="Antonio" name="nome" style="border-radius:5px 5px 5px 5px; width:80%;" required>
-	      					</div>
-	      					<div class="form-group col-md-6">
-	      						<label class="spaziaturaDx" for="inputCognome">Cognome:</label>
-	      						<input type="text" class="form-control spaziaturaDx" id="inputCognome" placeholder="Rossi" name="cognome" style="border-radius:5px 5px 5px 5px; width:80%;" required>
-	      					</div>
-	    				</div>
-	  					<div class="form-row">
-	  						<div class="form-group col-md-6">
-	      						<label class="spaziaturaSx" for="inputData">Data di nascita:</label>
-	      						<input  type="date" class="form-control spaziaturaSx" id="inputData" placeholder="Antonio" name="data" style="border-radius:5px 5px 5px 5px; width:80%;" required>
-	      					</div>
-	      					<div class="form-group col-md-6">
-	      						<label class="spaziaturaDx" for="inputIban">Iban:</label>
-	      						<input  type="text" class="form-control spaziaturaDx" id="inputIban" placeholder="" name="Iban" style="border-radius:5px 5px 5px 5px; width:80%;" required>
-	      					</div>
-	  					</div>
-	  					<div class="form-row">
-	  						<div class="form-group col-md-6">
-	      						<label class="spaziaturaSx" for="inputEmail">Email:</label>
-	      						<input  type="text" class="form-control spaziaturaSx" id="inputEmail" placeholder="antoniorossi@gmail.com" name="email" style="border-radius:5px 5px 5px 5px; width:80%;" required>
-	      					</div>
-	      					<div class="form-group col-md-6">
-	      						<label class="spaziaturaDx" for="inputPassword">Password:</label>
-	      						<input  type="password" class="form-control spaziaturaDx" id="inputPassword" placeholder="********" name="password" style="border-radius:5px 5px 5px 5px; width:80%;" required>
-	      					</div>
-	      				</div>
-	  					<div class="form-row">
-	  						<div class="form-group col-md-12">
-	      						<input   type="submit" class="form-control" id="invio" value="REGISTRATI!">
-	      					</div>
-	  					</div>
-					</form>				
+	</div>
+	
+	<div class="container" style="background-color: rgba(254,254,233,0.5); width:50%">
+		<form action="ServletRegistrazione" method="POST" class="needs-validation" onSubmit="return controlloRegistrazione(this);" novalidate>
+			<div class="form-row">
+				<div class="col-md-12 mb-3 mt-2 d-flex justify-content-center">
+					<p class="h2" style="font-family: Acunim Variable Consent;">INSERISCI I TUOI DATI</p>
 				</div>
-					
 			</div>
-			<div class="col-md-4"></div>
-			
-		</div>
-	
-	
-</div>
+			<%
+				String messaggio= (String)request.getAttribute("message");
+				if(messaggio!=null){
+			%>
+					<div class="form-row">
+						<div class="col-md-12 mb-1 mt-1 d-flex justify-content-center">
+							<p class="h5" style="color:red;"><%=messaggio %></p>
+						</div>
+					</div>
+			<%
+				}
+			%>
+			<div class="form-row">
+		    	<div class="col-md-6 mb-3">
+			      <label for="validationCustom01">Nome:</label>
+			      <input type="text" name="nome" class="form-control" id="validationCustom01" placeholder="Rocco" required style="width:80%;">
+		    	</div>
+		    	<div class="col-md-6 mb-3">
+		      		<label for="validationCustom02">Cognome:</label>
+		      		<input type="text" name="cognome" class="form-control" id="validationCustom02" placeholder="Iuliano" required style="width:80%;">
+		    	</div>
+		  </div>
+		  <div class="form-row">
+		  		<div class="col-md-6 mb-3">
+		  			<label for="validationCustom05">Data di nascita:</label>
+			      	<input type="date" name="data" class="form-control" id="validationCustom05" required style="width:80%;">
+		  		</div>
+		  		<div class="col-md-6 mb-3">
+		  			<label for="validationCustom06">Iban:</label>
+			      	<input type="text" name="iban" class="form-control" id="validationCustom06" placeholder="IT0000000000000000000000000" required style="width:80%;">
+		  		</div>
+		  </div>
+		  <div class="form-row">
+		  	<div class="col-md-6 mb-3">
+		    	<label for="validationCustomUsername">Email</label>
+		      	<div class="input-group">
+		        	<div class="input-group-prepend">
+		          		<span class="input-group-text" id="inputGroupPrepend">@</span>
+		        	</div>
+		        	<input type="text" name="email" class="form-control" id="validationCustomUsername" placeholder="r.iuliano13@gmail.com" aria-describedby="inputGroupPrepend" required style="width:80%; border-radius:0px 5px 5px 0px;">
+		      	</div>
+		    </div>
+		    <div class="col-md-6 mb-3">
+		    	<label for="validationCustom04">Password</label>
+		    	<div class="input-group">
+		    		<div class="input-group-prepend">
+		          		<i class="input-group-text fa fa-lock" style="font-size:24px;" id="inputGroupPrepend"></i>
+		        	</div>
+			      	<input type="password" name="password" class="form-control was-validated" id="validationCustom04" placeholder="**************" required style="width:80%; border-radius:0px 5px 5px 0px;">
+		      	</div>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		  	<div class="form-check">
+		    	<input class="form-check-input" type="checkbox" name="ricordati" value="" id="invalidCheck">
+		      	<label class="form-check-label" for="invalidCheck">
+		        	Remember me!
+		      	</label>
+		    </div>
+		  </div>
+		  <div class="form-row">
+		  	<div class="col-md-12 d-flex justify-content-center mb-3">
+		  		<input class="btn btn-outline-warning" type="submit" value="REGISTRATI" style="font-family: Eras Demi ITC;">
+		  	</div>
+		  </div>
+		  
+		</form>
+	</div>
 
-	
+
 </body>
 </html>

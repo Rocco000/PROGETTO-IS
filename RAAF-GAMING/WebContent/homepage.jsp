@@ -18,81 +18,116 @@
 	
 	<!-- CSS per le card -->
 	<link rel="stylesheet" href="css/stileCard.css" type="text/css" >
+	
+	<!-- script per il carrello -->
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	
 </head>
 <body>
 
-<div class="container">
-	<div class="col-md-2"></div>
-	<div class="col-md-8">
-		<ul class="cards">
-  			<li>
-    			<a href="" class="card">
-	      			<img src="https://i.imgur.com/oYiTqum.jpg" class="card__image" alt="" />
-	      			<div class="card__overlay">
-	        			<div class="card__header">
-	          				<svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                     
-	          				<img class="card__thumb" src="https://i.imgur.com/7D7I6dI.png" alt="" />
-	          				<div class="card__header-text">
-	            				<h3 class="card__title">Jessica Parker</h3>            
-	            				<span class="card__status">1 hour ago</span>
-	          				</div>
-	        			</div>
-	        			<p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-	      			</div>
-    			</a>      
-  			</li>
-  			<li>
-    			<a href="" class="card">
-      				<img src="https://i.imgur.com/2DhmtJ4.jpg" class="card__image" alt="" />
-      				<div class="card__overlay">        
-        				<div class="card__header">
-          					<svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                 
-          					<img class="card__thumb" src="https://i.imgur.com/sjLMNDM.png" alt="" />
-          					<div class="card__header-text">
-            					<h3 class="card__title">kim Cattrall</h3>
-            					<span class="card__status">3 hours ago</span>
-          					</div>
-        				</div>
-        				<p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-      				</div>
-    			</a>
- 	 		</li>
-  			<li>
-    			<a href="" class="card">
-			      <img src="https://i.imgur.com/oYiTqum.jpg" class="card__image" alt="" />
-			      <div class="card__overlay">
-			       	<div class="card__header">
-			          <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                     
-			          <img class="card__thumb" src="https://i.imgur.com/7D7I6dI.png" alt="" />
-			          <div class="card__header-text">
-			            <h3 class="card__title">Jessica Parker</h3>
-			            <span class="card__tagline">Lorem ipsum dolor sit amet consectetur</span>            
-			            <span class="card__status">1 hour ago</span>
-			          </div>
-			        </div>
-			        <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-			      </div>
-			    </a>
-  			</li>
-  			<li>
-				<a href="" class="card">
-			      <img src="https://i.imgur.com/2DhmtJ4.jpg" class="card__image" alt="" />
-			      <div class="card__overlay">
-			        <div class="card__header">
-			          <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                 
-			          <img class="card__thumb" src="https://i.imgur.com/sjLMNDM.png" alt="" />
-			          <div class="card__header-text">
-			            <h3 class="card__title">kim Cattrall</h3>
-			            <span class="card__status">3 hours ago</span>
-			          </div>          
-			        </div>
-			        <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-			      </div>
-			    </a>
-  			</li>    
-		</ul>
+<div class="container" style="background-color: rgba(35,35,35,0.5);  height:50%;">
+	<div class="row">
+		<div class="col-md-12 inline-block">
+			<ul class="cards">
+	  			<li style="height:300px; width:90%;">
+	    			<a href="" class="card">
+		      			<img src="immagini/godOfWar.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title">God Of War</h3>            
+		            				<span class="card__status" style="color:red;">PREZZO</span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">DESCRIZIONE: TUTTO 10, DOVE MI POTTI?</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			<li style="height:300px;  width:90%;">
+	    			<a href="" class="card">
+		      			<img src="immagini/godOfWar.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title">God Of War</h3>            
+		            				<span class="card__status" style="color:red;">PREZZO</span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">DESCRIZIONE: TUTTO 10, DOVE MI POTTI?</p>
+		      			</div>
+	    			</a>      
+	  			</li> 
+	  			<li style="height:300px;  width:90%;">
+	    			<a href="" class="card">
+		      			<img src="immagini/godOfWar.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title">God Of War</h3>            
+		            				<span class="card__status" style="color:red;">PREZZO</span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">DESCRIZIONE: TUTTO 10, DOVE MI POTTI?</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+			</ul>
+		</div>
 	</div>
-	<div class="col-md-2"></div>
+	<div class="row">
+		<div class="col-md-12 inline-block">
+			<ul class="cards">
+	  			<li style="height:300px;  width:90%;">
+	    			<a href="" class="card">
+		      			<img src="immagini/godOfWar.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title">God Of War</h3>            
+		            				<span class="card__status" style="color:red;">PREZZO</span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">DESCRIZIONE: TUTTO 10, DOVE MI POTTI?</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			<li style="height:300px;  width:90%;">
+	    			<a href="" class="card">
+		      			<img src="immagini/godOfWar.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title">God Of War</h3>            
+		            				<span class="card__status" style="color:red;">PREZZO</span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">DESCRIZIONE: TUTTO 10, DOVE MI POTTI?</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			<li style="height:300px;  width:90%;">
+	    			<a href="" class="card">
+		      			<img src="immagini/godOfWar.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title">God Of War</h3>            
+		            				<span class="card__status" style="color:red;">PREZZO</span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">DESCRIZIONE: TUTTO 10, DOVE MI POTTI?</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+  			</ul>
+		</div>
+	</div>
 </div>
 
 
