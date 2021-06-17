@@ -103,7 +103,7 @@ public class VideogiocoModelDAO implements OperazioniModel<VideogiocoBean> {
 	public VideogiocoBean getTopRecensione() throws SQLException{
 		Connection connessione=ds.getConnection();
 		//ottengo per ogni videogioco il suo voto medio, li ordino in senso decrescente
-		String query="SELECT v.*,recensione.voto_medio_assegnato FROM videogioco v,(SELECT r.prodotto as codice_prodotto, avg(voto) as voto_medio_assegnato FROM recensisce GROUP BY r.prodotto) as recensione WHERE v.prodotto = recensione.codice_prodotto ORDER BY recensione.voto_medio_assegnato desc;";
+		String query="SELECT v.*,recensione.voto_medio_assegnato FROM videogioco v,(SELECT r.prodotto as codice_prodotto, avg(voto) as voto_medio_assegnato FROM recensisce r GROUP BY r.prodotto) as recensione WHERE v.prodotto = recensione.codice_prodotto ORDER BY recensione.voto_medio_assegnato desc;";
 		PreparedStatement ps= connessione.prepareStatement(query);
 		ResultSet risultato= ps.executeQuery();
 		
@@ -173,7 +173,6 @@ public class VideogiocoModelDAO implements OperazioniModel<VideogiocoBean> {
 			app.setProdotto(risultato.getInt("videogioco.prodotto"));
 			app.setSoftware_house(risultato.getString("videogioco.software_house"));
 			app.setVkey(risultato.getString("videogioco.vkey"));
-			
 			a.add(app);
 			i++;
 		}
