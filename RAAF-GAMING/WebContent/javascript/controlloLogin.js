@@ -35,7 +35,7 @@ function controlloRegistrazione(x){
 		var c=x.elements["cognome"];
 		if(c.value.length<=15 && c.value.length>0){ //lunghezza cognome corretta
 			c.style.border="2px solid green";
-			var i=x.elements["Iban"];
+			var i=x.elements["iban"];
 			if(i.value.length==27 && i.value.length>0){ //iban corretto
 				i.style.border="2px solid green";
 				return controlloValori(x);

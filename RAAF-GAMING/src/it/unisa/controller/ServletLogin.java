@@ -37,9 +37,10 @@ public class ServletLogin extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession sessioneExists= request.getSession(false);//controllo se esiste già una sessione
-		if(sessioneExists!=null) {
-			RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("index.jsp");//ritorno alla index
+		HttpSession sessione= request.getSession(true);//controllo se esiste già una sessione se no ne creo una nuova
+		Boolean log= (Boolean)sessione.getAttribute("log");
+		if(log==true) {
+			RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/index.jsp");//ritorno alla index
 			dispatcher.forward(request, response);
 		}		
 		else {
@@ -48,7 +49,7 @@ public class ServletLogin extends HttpServlet {
 			ClienteModelDAO cmd=new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 			try {
 				ClienteBean cb=cmd.doRetriveByKey(email);
-				if(cb!=null) {
+				if(cb!=null) {//se l'utente è nel DB
 					MessageDigest md = MessageDigest.getInstance("MD5"); 
 					byte[] digest = md.digest(password.getBytes()); 
 					BigInteger big=new BigInteger(1,digest);
@@ -58,11 +59,17 @@ public class ServletLogin extends HttpServlet {
 					}
 					if(str.equals(cb.getPassword())) {   //se la password e l'email coincidono nel DB
 						System.out.println("Sei loggato");
-						HttpSession sessione= request.getSession(true);//crea la sessione
-						sessione.setAttribute("emailSession", email);
-						sessione.setAttribute("passwordSession", str);
-						boolean flag= true;
-						request.setAttribute("omino", flag);
+						sessione.setAttribute("emailSession", email);//aggiungio il campo dell'email alla sessione
+						sessione.setAttribute("passwordSession", str);//aggiungo la password criptata alla sessione
+						if(log==null) {//controllo se il campo log nella sessione è null
+							Boolean loggato= true;
+							request.setAttribute("log", loggato);//aggiungo questo campo per dire che E' STATO EFFETTUATO L'ACCESSO
+						}
+						else {
+							log=true;
+							request.setAttribute("log", log);
+						}
+						//URL rewriting
 						String url="index.jsp";
 						url=response.encodeURL(url);
 						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);
