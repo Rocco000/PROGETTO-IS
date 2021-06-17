@@ -37,7 +37,6 @@ public class ServletCard extends HttpServlet {
 			ArrayList<VideogiocoBean> scontati= vdao.getVideogiochiScontati();
 			
 			
-			
 			request.setAttribute("migliorVideogioco", migliorVideogioco);
 			request.setAttribute("ultimoUscito", ultimoUscito);
 			request.setAttribute("scontati", scontati);
