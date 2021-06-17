@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>PROVA</title>
+	<title>RAAF-GAMING</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<!--Latest compiled and minified CSS -->
@@ -16,16 +16,22 @@
 	<!--Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	
+	<!-- Css navbar -->
+	<link rel="stylesheet" href="css/StileIndex.css" type="text/css">
+	
 	<!-- CSS per le card -->
 	<link rel="stylesheet" href="css/stileCard.css" type="text/css" >
 	
 	<!-- script per il carrello -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 	
 </head>
 <body>
 
-<div class="container" style="background-color: rgba(35,35,35,0.5);  height:50%;">
+<%@include file="navbar.jsp" %>
+
+<div class="container" style="background-color:rgba(230,230,230,0.5); height:50%;">
 	<div class="row">
 		<div class="col-md-12 inline-block">
 			<ul class="cards">
@@ -130,6 +136,7 @@
 	</div>
 </div>
 
+<%@include file="footer.jsp" %>
 
 </body>
 </html>
