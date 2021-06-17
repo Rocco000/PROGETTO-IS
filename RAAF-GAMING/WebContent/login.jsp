@@ -30,20 +30,12 @@
 	<title>LOGIN</title>
 </head>
 <body>
-<div id="corpo">
-		<div class="row">
-			<div class="col-md-12"><!-- immagine raff-gaming -->
-				<img src="immagini/logo.png" alt="RAAF-GAMING" style="width:15%; position: static; left:20px; top:20px; padding-left:20px; padding-top:10px;">
-			</div>
+	<div class="container ml-5 mb-3 mt-2">
+		<img src="immagini/logo.png" alt="RAAF-GAMING" style="width:180px; position: static;">
 		</div>
-		
-		<div class="row">
-			
-			<div class="col-md-4"></div>
-			<div class="col-md-4" ><!-- form -->
-				<div id="divForm">
-					<form action="servletlogin" method="POST" id="stileForm" onSubmit="return controlloValori(this);">
-						<h3 id="testoForm">BENVENUTO GIOCATORE!</h3>
+		<div class="container d-flex justify-content-center" style="background-color: rgba(254,254,233,0.5); width:50%;" >
+			<form action="servletAdmin" method="POST" id="stileForm" onSubmit="return controlloValori(this);">
+						<h4 class="h4 mt-3 ml-2" style="font-family: Acunim Variable Consent;">BENVENUTO GIOCATORE!</h4>
 							<%
 							String str=(String)request.getAttribute("message");
 							if(str!=null){
@@ -52,45 +44,35 @@
 								<%
 							}
 							%>
-						<div class="input-group mb-3" style="margin-top:10%; width:80%; margin-left:10%">
-  							<div class="input-group-prepend">
-    							<span class="input-group-text" id="basic-addon1">
-    								<i class='fas fa-user-alt' style='font-size:20px'></i>
-    							</span>
-  							</div>
-  							<input type="text" class="form-control" style="border-radius:0px 5px 5px 0px;" placeholder="Email" name="email">
-  						</div>
+	 	  <div class="input-group mb-3 mt-3 ml-4 w-75">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <i class='fas fa-user-alt' style='font-size:20px'></i>
+                        </span>
+                      </div>
+                      <input type="text" class="form-control" style="border-radius:0px 5px 5px 0px;" placeholder="Email" name="email">
+                  </div>
 
-	  					<div class="input-group mb-3" style="margin-top:5%; width:80%; margin-left:10%">
-	  						<div class="input-group-prepend">
-    							<span class="input-group-text" id="basic-addon2">
-    								<i class="fa fa-lock" style="font-size:20px"></i>
-    							</span>
-  							</div>
-	  						<input type="password" name="password" class="form-control" style="border-radius:0px 5px 5px 0px;" placeholder="************"><br>
-	  					</div>
-	  					
-	  					 <div class="form-check mb-2 mr-sm-2" style="margin-left:10%;">
-    						<input class="form-check-input" type="checkbox" name="collegato" id="inlineFormCheck">
-    						<label class="form-check-label" for="inlineFormCheck">
-      							Resta collegato
-    						</label>
-  						</div>
-	  					
-	  					<input type="submit" value="ACCEDI" id="invio"><br>
-	  					<p>oppure <a href="#" target="_self">REGISTRATI</a></p>
-	  					
-					</form>				
-				</div>
-					
-			</div>
-			<div class="col-md-4"></div>
-			
-		</div>
-	
-	
-</div>
-
-	
+                  <div class="input-group mb-3 mt-3 ml-4 w-75">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">
+                            <i class="fa fa-lock" style="font-size:20px"></i>
+                        </span>
+                      </div>
+                      <input type="password" name="password" class="form-control" style="border-radius:0px 5px 5px 0px;" placeholder="************"><br>
+                  </div>
+                  
+                   <div class="form-check mb-2 mr-sm-2 ml-4">
+                    <input class="form-check-input" type="checkbox" name="collegato" id="inlineFormCheck">
+                    <label class="form-check-label" for="inlineFormCheck">
+                          Resta collegato
+                    </label>
+                  </div>
+                  
+                  <input type="submit" value="ACCEDI" class="invio ml-5" style="font-family: Eras Demi ITC;
+					background-color: #FF6600; width: 60%;font-weight: bold;color:white;border-radius: 15px;"><br>
+             	  <p class="mr-2">oppure<a href="#" target="_self">&nbsp;REGISTRATI</a></p>
+	</form>
+	</div>
 </body>
 </html>
