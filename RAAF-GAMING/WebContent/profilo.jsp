@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Profilo</title>
+	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<!--Latest compiled and minified CSS -->
@@ -16,75 +16,78 @@
 	<!--Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	
-	<!-- css mio -->
-	<link rel="stylesheet" href="css/stileProfilo.css" type="text/css">
-</head>
-<body style="background: url(../immagini/tlou.jpg) no-repeat;">
-
-<div class="d-md-flex flex-md-row ml-3 mt-3" style="width:100%; height:40%;">
-	<div class="col-md-6">
+	<!-- javascript nostro -->
+	<script src="javascript/controlloCambio.js"></script>
 	
-	<div class="flip-card">
-		<div class="flip-card-inner">
-	    	<div class="flip-card-front">
-	    	
-	      		<div class="card text-white" style="border-radius: 20px;">
-					<img class="card-img" src="immagini/cartafedelta.png" alt="Carta fedelta">
-					<div class="card-img-overlay">
-					    <h5 class="card-title text-center font-weight-bold"  style="color:orange;">YOUR CARD</h5>
-						<br><br>
-					    <p class="card-text text-left font-weight-bold">NOME: </p>
-					    <p class="card-text text-left font-weight-bold">COGNOME:</p>
-					    <p class="card-text text-left font-weight-bold">DATA DI NASCITA:</p>
-					    <p class="card-text text-left font-weight-bold">IBAN:</p>
-					    <p class="card-text text-left font-weight-bold">EMAIL:</p>
-					</div>
+	<title>PROFILO</title>
+	<style>
+		body{
+			width: 100%;
+			height: 100%;	
+			background: url(immagini/sky.jpg) no-repeat;
+			background-attachment: fixed;		
+			z-index: -1;	
+			-webkit-background-size: cover;	
+			-moz-background-size: cover;	
+			-o-background-size: cover;	
+			background-size: cover;
+			color:white;
+		}
+	</style>
+</head>
+<body>
+
+
+<div class="container">
+	<div class="row mt-3">
+		<div class="col-md-6">
+			<div class="card text-white" style=" border-style:none; border-radius:20px;">
+				<img src="immagini/cartafedelta.png" class="rounded float-left card-img" alt="carta fedelta" style="height:300px;">
+				<div class="card-img-overlay">
+					<br><br><br>
+					<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">EMAIL:</li>  <li class="list-inline-item">r.iuliano@gmail.com</li></ul>
+    				<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">NOME:</li>  <li class="list-inline-item">rocco</li></ul>
+    				<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">COGNOME:</li>  <li class="list-inline-item">iuliano</li></ul>
+    				<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">IBAN:</li>  <li class="list-inline-item">ITxxxxx</li></ul>
+    				<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">CODICE CARTA:</li>  <li class="list-inline-item">123456789</li></ul>
 				</div>
 				
-	    	</div>
-	    <div class="flip-card-back">
-	    
-	    	<div class="card text-white" style="border-radius: 20px;">
-				<img class="card-img" src="immagini/cartafedelta.png" alt="Carta fedelta">
-				<div class="card-img-overlay">
-				    <h5 class="card-title text-center font-weight-bold"  style="color:orange;">YOUR CARD</h5>
-					<br><br><br>
-				    <p class="card-text text-left font-weight-bold">CODICE: </p>
-				    <p class="card-text text-left font-weight-bold">PUNTI:</p>
-				</div>
 			</div>
-	    
-	    </div>
-	  </div>
-	</div> 
-	
-	</div><!-- colonna -->
-	<div class="col-md-6">
-	
-	<form action="#" method="POST">
-		<div class="form-group">
-		    <label for="exampleInputPassword1">Nuova password</label>
-		     <input type="password" name="password1" class="form-control" id="exampleInputPassword1" placeholder="********" style="width:70%;">
-	  	</div>
-	  	<div class="form-group">
-		    <label for="exampleInputPassword2">Conferma password</label>
-		    <input type="password" name="password2" class="form-control" id="exampleInputPassword2" placeholder="********" style="width:70%;">
-	  	</div>
-	  	<input type="submit" class="btn btn-primary" value="INVIA">
-	</form>
-	
+		</div>
+		<div class="col-md-6">
+			<form action="#" method="POST" onsubmit="return controlloCambioCredenziali(this);">
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<p class="h2 text-center">Vuoi cambiare password e/o IBAN?</p>
+					</div>
+				</div>
+		  		<div class="form-row">
+		    		<div class="form-group col-md-6">
+				      <label for="inputPassword3">Nuova password</label>
+				      <input type="password" name="password1" class="form-control w-75" id="inputPassword3" placeholder="*******">
+		    		</div>
+		  			<div class="form-group col-md-6">
+				      <label for="inputPassword4">Conferma password</label>
+				      <input type="password" name="password2" class="form-control w-75" id="inputPassword4" placeholder="******">
+		  			</div>
+		  		</div>
+		  		<div class="form-row">
+		  			<div class="form-group col-md-12">
+		  				<label for="inputIban1">Nuovo IBAN</label>
+		  				<input type="text" name="iban" class="form-control w-50" id="inputIban1" placeholder="ITxxxxxxxxxxxxxxxxxxxxxxxxx">
+		  			</div>
+		  		</div>
+		  		<div class="form-row">
+		  			<div class="col-md-12">
+		  				<input type="submit" class="btn btn-primary" value="INVIA">
+		  			</div>
+		  		</div>
+			</form>
+		</div>
 	</div>
 	
 	
 </div>
-
-			
-
-  
-		   	
-
-    
-
 
 </body>
 </html>
