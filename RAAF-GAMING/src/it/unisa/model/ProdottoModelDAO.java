@@ -34,6 +34,9 @@ public class ProdottoModelDAO implements OperazioniModel<ProdottoBean>{
 			bean.setSconto(st.getInt("sconto"));
 			bean.setUltima_fornitura(st.getDate("ultima_fornitura"));
 		}
+		st.close();
+		ps.close();
+		con.close();
 	return bean;
 	}
 
@@ -63,6 +66,9 @@ public class ProdottoModelDAO implements OperazioniModel<ProdottoBean>{
 			bean.setUltima_fornitura(st.getDate("ultima_fornitura"));
 			array.add(bean);
 		}
+		st.close();
+		ps.close();
+		con.close();
 	return array;
 	}
 

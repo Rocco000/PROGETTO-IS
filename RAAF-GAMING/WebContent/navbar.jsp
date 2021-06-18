@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="it.unisa.model.VideogiocoBean , java.util.ArrayList,it.unisa.model.ProdottoBean" %>
 
 <nav class="navbar navbar-dark">
 	<div class="d-inline-flex mr-0 pr-0">
@@ -19,8 +19,11 @@
    		<i class='fas fa-user-astronaut' style='font-size:24px'></i>
   		</button>						
   		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-  		<a class="dropdown-item" href="#" style="color:white;">Login</a>
-  		<a class="dropdown-item" href="#" style="color:white;">Account</a>
+  		<% ArrayList<String> array = (ArrayList<String>) request.getAttribute("impostazione");
+  		for(String string : array){
+  		%>
+  		<a class="dropdown-item" href="#" style="color:white;"><%=string%></a>
+  		<% } %>
 		</div>
 		</div>
 		  <a href="#" style="margin-right:10px; margin-top:6px;">

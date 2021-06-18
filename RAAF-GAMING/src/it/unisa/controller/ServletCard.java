@@ -27,18 +27,17 @@ public class ServletCard extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("image/*");
-		DataSource ds = (DataSource) super.getServletContext().getAttribute("DataSource");
-		try {
-			ProdottoModelDAO dao = new ProdottoModelDAO(ds);
-			ProdottoBean bean = dao.doRetriveByKey(request.getParameter("id"));
-			OutputStream out = response.getOutputStream();
-			out.write(bean.getCopertina());
-			out.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+			response.setContentType("image/*");
+			DataSource ds = (DataSource) super.getServletContext().getAttribute("DataSource");
+			try {
+				ProdottoModelDAO dao = new ProdottoModelDAO(ds);
+				ProdottoBean bean = dao.doRetriveByKey(request.getParameter("id"));
+				OutputStream out = response.getOutputStream();
+				out.write(bean.getCopertina());
+				out.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
