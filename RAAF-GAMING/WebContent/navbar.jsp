@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="it.unisa.model.VideogiocoBean , java.util.ArrayList,it.unisa.model.ProdottoBean" %>
 
+<%
+
+	String str1 = "servletindex";
+	String url1 = response.encodeURL(str1);
+%>
+
 <nav class="navbar navbar-dark">
 	<div class="d-inline-flex mr-0 pr-0">
-  <a class="navbar-brand" href="#"><img src="immagini/logo.png" alt="RAAF-GAMING"></a>
+  <a class="navbar-brand" href="<%=url1%>"><img src="immagini/logo.png" alt="RAAF-GAMING"></a>
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="border-color: white;">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -20,10 +26,12 @@
   		</button>						
   		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
   		<% ArrayList<String> array = (ArrayList<String>) request.getAttribute("impostazione");
+  		ArrayList<String> array2 = (ArrayList<String>) request.getAttribute("impostazione2");
+  		int i=0;
   		for(String string : array){
   		%>
-  		<a class="dropdown-item" href="#" style="color:white;"><%=string%></a>
-  		<% } %>
+  		<a class="dropdown-item" href="<%=response.encodeRedirectURL(array2.get(i)) %>" style="color:white;"><%=string%></a>
+  		<% i++;} %>
 		</div>
 		</div>
 		  <a href="#" style="margin-right:10px; margin-top:6px;">

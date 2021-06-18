@@ -1,8 +1,6 @@
 package it.unisa.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,12 +27,12 @@ public class ServletLogout extends HttpServlet {
     	HttpSession sessione= request.getSession(false);//ottengo la sessione
     	sessione.removeAttribute("emailSession");
     	sessione.removeAttribute("passwordSession");
+    	sessione.removeAttribute("flag");
     	sessione.invalidate();//elimino la sessione
-    	boolean flag=(boolean) request.getAttribute("omino");
-    	flag=false;
-    	request.setAttribute("omino", flag);
-    	RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/index.html");//ritorno alla index
-		dispatcher.forward(request, response);
+    	String url="servletindex";
+		url=response.encodeURL(url);
+		response.sendRedirect(url);
+		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -55,6 +55,14 @@ public class ServletIndex extends HttpServlet {
 				array.add(impostazione2);
 				array.add(impostazione3);
 				request.setAttribute("impostazione",array);
+				String impostazione4 = "servletlogout";
+				String impostazione5="#";
+				String impostazione6="#";
+				ArrayList<String> array2 = new ArrayList<String>();
+				array2.add(impostazione4);
+				array2.add(impostazione5);
+				array2.add(impostazione6);
+				request.setAttribute("impostazione2",array2);
 			}
 			else
 			{
@@ -64,6 +72,12 @@ public class ServletIndex extends HttpServlet {
 				array.add(impostazione1);
 				array.add(impostazione2);
 				request.setAttribute("impostazione",array);
+				String impostazione4 = "servletloginfirst";
+				String impostazione5="#";
+				ArrayList<String> array2 = new ArrayList<String>();
+				array2.add(impostazione4);
+				array2.add(impostazione5);
+				request.setAttribute("impostazione2",array2);
 			}
 		}
 		

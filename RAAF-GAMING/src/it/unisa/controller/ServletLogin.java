@@ -38,14 +38,86 @@ public class ServletLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession sessione= request.getSession(true);//controllo se esiste già una sessione se no ne creo una nuova
-		Boolean log= (Boolean)sessione.getAttribute("log");
-		if(log==true) {
-			RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/index.jsp");//ritorno alla index
-			dispatcher.forward(request, response);
-		}		
+		Object log1= sessione.getAttribute("log");
+		if(log1!=null)
+		{
+			boolean log = (Boolean) log1;
+			
+			if(log==true) {
+				String url="servletindex";
+				url=response.encodeURL(url);
+				response.sendRedirect(url);
+				return;
+			}		
+			else {
+				String email=request.getParameter("email");
+				String password=request.getParameter("password");
+				if(email==null && password==null)
+				{
+					String url="servletloginfirst";
+					url=response.encodeURL(url);
+					response.sendRedirect(url);
+					return;
+				}
+					
+				ClienteModelDAO cmd=new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+				try {
+					ClienteBean cb=cmd.doRetriveByKey(email);
+					if(cb!=null) {//se l'utente è nel DB
+						MessageDigest md = MessageDigest.getInstance("MD5"); 
+						byte[] digest = md.digest(password.getBytes()); 
+						BigInteger big=new BigInteger(1,digest);
+						String str=big.toString(16);
+						while(str.length()<32) {
+							str="0"+str;
+						}
+						if(str.equals(cb.getPassword())) {   //se la password e l'email coincidono nel DB
+							System.out.println("Sei loggato");
+							sessione.setAttribute("emailSession", email);//aggiungio il campo dell'email alla sessione
+							sessione.setAttribute("passwordSession", str);//aggiungo la password criptata alla sessione
+							log=true;
+							sessione.setAttribute("log",log);
+							//URL rewriting
+							String url="servletindex";
+							url=response.encodeURL(url);
+							response.sendRedirect(url);
+							return;
+						}
+						else {
+							String message="";
+							request.setAttribute("message",message);
+							RequestDispatcher view=super.getServletContext().getRequestDispatcher("/login.jsp");
+							view.forward(request, response);
+						}
+					}
+					else {
+						String message="";
+						request.setAttribute("message",message);
+						RequestDispatcher view=super.getServletContext().getRequestDispatcher("/login.jsp");
+						view.forward(request, response);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
 		else {
+			boolean log;
 			String email=request.getParameter("email");
 			String password=request.getParameter("password");
+			if(email.equals("") && password.equals(""))
+			{
+				String url="/servletloginfirst";
+				url=response.encodeURL(url);
+				response.sendRedirect(url);
+				return;
+			}
+				
 			ClienteModelDAO cmd=new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 			try {
 				ClienteBean cb=cmd.doRetriveByKey(email);
@@ -61,31 +133,29 @@ public class ServletLogin extends HttpServlet {
 						System.out.println("Sei loggato");
 						sessione.setAttribute("emailSession", email);//aggiungio il campo dell'email alla sessione
 						sessione.setAttribute("passwordSession", str);//aggiungo la password criptata alla sessione
-						if(log==null) {//controllo se il campo log nella sessione è null
-							Boolean loggato= true;
-							request.setAttribute("log", loggato);//aggiungo questo campo per dire che E' STATO EFFETTUATO L'ACCESSO
-						}
-						else {
-							log=true;
-							request.setAttribute("log", log);
-						}
+						log=true;
+						sessione.setAttribute("log",log);
 						//URL rewriting
-						String url="index.jsp";
+						String url="/servletindex";
 						url=response.encodeURL(url);
-						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);
-						dispatcher.forward(request, response);
+						response.sendRedirect(url);
+						return;
 					}
 					else {
 						String message="";
 						request.setAttribute("message",message);
-						RequestDispatcher view=super.getServletContext().getRequestDispatcher("/login.jsp");
+						String url="/login.jsp";
+						url=response.encodeURL(url);
+						RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
 						view.forward(request, response);
 					}
 				}
 				else {
 					String message="";
 					request.setAttribute("message",message);
-					RequestDispatcher view=super.getServletContext().getRequestDispatcher("/login.jsp");
+					String url="/login.jsp";
+					url=response.encodeURL(url);
+					RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
 					view.forward(request, response);
 				}
 			} catch (SQLException e) {
@@ -95,6 +165,8 @@ public class ServletLogin extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		
 	}
+		
 
 }

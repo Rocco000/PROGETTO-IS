@@ -29,12 +29,28 @@
 
 	<title>LOGIN</title>
 </head>
+
+<%
+	String str1 = (String) request.getAttribute("visita");
+	if(str1==null)
+	{
+		str1 = "servletloginfirst";
+		String url = request.getRequestURL() + "";
+		response.sendRedirect(response.encodeURL(url.replaceAll("login.jsp",str1)));
+		return;
+	}
+%>
+
 <body>
 	<div class="container ml-5 mb-3 mt-2">
 		<img src="immagini/logo.png" alt="RAAF-GAMING" style="width:180px; position: static;">
 		</div>
 		<div class="container d-flex justify-content-center" style="background-color: rgba(254,254,233,0.5); width:50%;" >
-			<form action="servletAdmin" method="POST" id="stileForm" onSubmit="return controlloValori(this);">
+		<%
+		String str2 = "servletlogin";
+		String url2 = response.encodeRedirectURL(str2);
+		%>
+			<form action="<%=url2 %>" method="POST" id="stileForm" onSubmit="return controlloValori(this);">
 						<h4 class="h4 mt-3 ml-2" style="font-family: Acunim Variable Consent;">BENVENUTO GIOCATORE!</h4>
 							<%
 							String str=(String)request.getAttribute("message");
