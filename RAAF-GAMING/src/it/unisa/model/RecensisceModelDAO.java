@@ -86,7 +86,9 @@ public class RecensisceModelDAO implements OperazioniModel<RecensisceBean>{
 			
 			recensioni.add(app);
 		}
-		
+		risultato.close();
+		ps.close();
+		connessione.close();
 		return recensioni;
 	}
 

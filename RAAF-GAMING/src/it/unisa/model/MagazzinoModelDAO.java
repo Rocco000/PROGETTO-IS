@@ -29,7 +29,12 @@ public class MagazzinoModelDAO implements OperazioniModel<MagazzinoBean>{
 			bean.setIndirizzo(st.getString("indirizzo"));
 			bean.setCapienza(st.getInt("capienza"));
 		}
-	return bean;
+		
+		st.close();
+		ps.close();
+		con.close();
+		
+		return bean;
 		
 	}
 
@@ -52,7 +57,11 @@ public class MagazzinoModelDAO implements OperazioniModel<MagazzinoBean>{
 			bean.setCapienza(st.getInt("capienza"));
 			array.add(bean);
 		}
-	return array;
+		
+		st.close();
+		ps.close();
+		con.close();
+		return array;
 	}
 
 	public void doSave(MagazzinoBean item) throws SQLException {

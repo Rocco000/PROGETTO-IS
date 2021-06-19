@@ -37,7 +37,7 @@ public class ProdottoModelDAO implements OperazioniModel<ProdottoBean>{
 		st.close();
 		ps.close();
 		con.close();
-	return bean;
+		return bean;
 	}
 
 	public ArrayList<ProdottoBean> doRetriveAll(String order) throws SQLException {
@@ -69,7 +69,7 @@ public class ProdottoModelDAO implements OperazioniModel<ProdottoBean>{
 		st.close();
 		ps.close();
 		con.close();
-	return array;
+		return array;
 	}
 
 

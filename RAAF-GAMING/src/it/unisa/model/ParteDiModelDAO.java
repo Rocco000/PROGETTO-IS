@@ -30,7 +30,11 @@ public class ParteDiModelDAO implements OperazioniModel<ParteDiBean>{
 			bean.setCategoria(st.getString("categoria"));
 			bean.setVideogioco(st.getInt("videogioco"));
 		}
-	return bean;
+		
+		st.close();
+		ps.close();
+		con.close();
+		return bean;
 	}
 
 
@@ -53,7 +57,10 @@ public class ParteDiModelDAO implements OperazioniModel<ParteDiBean>{
 			bean.setVideogioco(st.getInt("videogioco"));
 			array.add(bean);
 		}
-	return array;
+		st.close();
+		ps.close();
+		con.close();
+		return array;
 	}
 
 

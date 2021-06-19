@@ -141,7 +141,7 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 				
 				ps2.setString(1, item.getIban());
 				ps2.setString(2, item.getEmail());
-				if(ps2.execute())
+				if(ps2.executeUpdate()==1)
 					;
 				else
 					System.out.println("query errata");
@@ -149,8 +149,10 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 				ps2.close();
 			}
 			else{ //se l'iban non è cambiato vuol dire che deve aggiornare la password
+				
 				String aggiornamento= "UPDATE cliente SET password=MD5(?) WHERE email=? ;";
 				PreparedStatement ps2= connessione.prepareStatement(aggiornamento);
+				
 				
 				ps2.setString(1, item.getPassword());
 				ps2.setString(2, item.getEmail());

@@ -34,7 +34,12 @@ public class OrdineModelDAO implements OperazioniModel<OrdineBean> {
 			bean.setCliente(st.getString("cliente"));
 			bean.setPrezzo_totale(st.getDouble("prezzo_totale"));
 		}
-	return bean;
+		
+		st.close();
+		ps.close();
+		con.close();
+		
+		return bean;
 	}
 
 	public ArrayList<OrdineBean> doRetriveAll(String order) throws SQLException {
@@ -60,7 +65,11 @@ public class OrdineModelDAO implements OperazioniModel<OrdineBean> {
 			bean.setPrezzo_totale(st.getDouble("prezzo_totale"));
 			array.add(bean);
 		}
-	return array;
+		
+		st.close();
+		ps.close();
+		con.close();
+		return array;
 	}
 
 	public void doSave(OrdineBean item) throws SQLException {

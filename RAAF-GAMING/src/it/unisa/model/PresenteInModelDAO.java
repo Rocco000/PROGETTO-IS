@@ -34,7 +34,11 @@ public class PresenteInModelDAO implements OperazioniModel<PresenteInBean>{
 			bean.setProdotto(st.getInt("prodotto"));
 			bean.setQuantita_disponibile(st.getInt("quantita_disponibile"));
 		}
-	return bean;
+		
+		st.close();
+		ps.close();
+		con.close();
+		return bean;
 	}
 
 
@@ -59,7 +63,11 @@ public class PresenteInModelDAO implements OperazioniModel<PresenteInBean>{
 			bean.setQuantita_disponibile(st.getInt("quantita_disponibile"));
 			array.add(bean);
 		}
-	return array;
+		
+		st.close();
+		ps.close();
+		con.close();
+		return array;
 	}
 
 
