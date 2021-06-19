@@ -36,8 +36,6 @@
 	</style>
 </head>
 <body>
-
-
 <div class="container">
 	<div class="row mt-3">
 		<div class="col-md-6">
@@ -55,7 +53,7 @@
 			</div>
 		</div>
 		<div class="col-md-6">
-			<form action="#" method="POST" onsubmit="return controlloCambioCredenziali(this);">
+			<form action="#" method="POST" onSubmit="return controlloCambioCredenziali(this);">
 				<div class="form-row">
 					<div class="form-group col-md-12">
 						<p class="h2 text-center">Vuoi cambiare password e/o IBAN?</p>
