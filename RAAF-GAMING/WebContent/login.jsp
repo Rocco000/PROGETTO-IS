@@ -78,12 +78,7 @@
                       <input type="password" name="password" class="form-control" style="border-radius:0px 5px 5px 0px;" placeholder="************"><br>
                   </div>
                   
-                   <div class="form-check mb-2 mr-sm-2 ml-4">
-                    <input class="form-check-input" type="checkbox" name="collegato" id="inlineFormCheck">
-                    <label class="form-check-label" for="inlineFormCheck">
-                          Resta collegato
-                    </label>
-                  </div>
+         
                   
                   <input type="submit" value="ACCEDI" class="invio ml-5" style="font-family: Eras Demi ITC;
 					background-color: #FF6600; width: 60%;font-weight: bold;color:white;border-radius: 15px;"><br>

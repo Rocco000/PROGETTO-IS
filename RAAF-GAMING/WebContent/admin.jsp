@@ -52,10 +52,6 @@
 	    <label for="exampleInputPassword1"></label>
 	    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="************" name="password">
 	  </div>
-	  <div class="form-check">
-	    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-	    <label class="form-check-label" for="exampleCheck1">Resta collegato</label>
-	  </div>
 	  
 	  <button type="submit" class="btn btn-dark mb-4">Accedi</button>
 	</form>
