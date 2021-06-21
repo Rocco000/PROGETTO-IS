@@ -99,11 +99,10 @@
 		//if(controlloCambioCredenziali()){
 
 			var o= {
-					passwordNuova: $("inputPassword1").val(),
-					ibanNuovo: $("inputIban1").val()
+					passwordNuova: $("#inputPassword1").val(),
+					ibanNuovo: $("#inputIban1").val()
 			};
 			var parametriJson= JSON.stringify(o);
-			
 			$.ajax({
 					
 					type: "POST",

@@ -36,35 +36,18 @@ public class ServletProfilo extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
-		System.out.println("ciao sei nella servlet json");
 		
 		BufferedReader body= request.getReader();
 		StringBuffer jb = new StringBuffer();
 		String campo="";
 		
-		if((campo=body.readLine())!=null){
-			System.out.println("campo= "+campo);
+		while((campo=body.readLine())!=null){
 			jb.append(campo);
-			System.out.println("jb= "+jb);
-			
-			String prova= URLDecoder.decode(campo, "utf-8");
-			System.out.println(prova);
-			
 		}
-		/*BufferedReader body= request.getReader();//mi restituisce il body della richiesta
-		String campo="";
-		if((campo=body.readLine())!=null){//leggo un campo alla volta del body della richiesta
-			System.out.println(campo);
-			StringBuffer jb = new StringBuffer();
-			jb.append(campo);
-			
-			JSONObject oggettoJson =  HTTP.toJSONObject(campo);//mi posso riferire all'oggetto json della request
-			
-			String conversionePass= oggettoJson.getString("passwordNuova");
-			String conversioneIban= oggettoJson.getString("ibanNuovo");
-			System.out.println(conversionePass+" "+conversioneIban);
-		}*/
-
+		String encode = jb.toString();
+		System.out.println(encode);
+		String decode = URLDecoder.decode(encode,"UTF-8");
+		System.out.println(decode);
 		
 	}
 
