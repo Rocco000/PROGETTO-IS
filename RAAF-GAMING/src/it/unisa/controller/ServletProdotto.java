@@ -18,14 +18,13 @@ import it.unisa.model.ProdottoModelDAO;
 import it.unisa.model.VideogiocoBean;
 import it.unisa.model.VideogiocoModelDAO;
 
-/**
- * Servlet implementation class ServletIndex
- */
-@WebServlet("/servletindex")
-public class ServletIndex extends HttpServlet {
+
+@WebServlet("/servletprodotto")
+public class ServletProdotto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-    public ServletIndex() {
+       
+
+    public ServletProdotto() {
         super();
     }
 
@@ -80,35 +79,41 @@ public class ServletIndex extends HttpServlet {
 				request.setAttribute("impostazione2",array2);
 			}
 		}
+		String id = request.getParameter("id");
+		if(id==null)
+		{
+			response.setStatus(response.SC_NOT_FOUND);
+			response.sendError(response.SC_NOT_FOUND,"PRODOTTO NON ESISTENTE");
+			return;
+		}
 		
 		DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-		VideogiocoModelDAO vdao= new VideogiocoModelDAO(ds);
+		ProdottoModelDAO dao = new ProdottoModelDAO(ds);
 		try {
-			VideogiocoBean migliorVideogioco= vdao.getTopRecensione();
-			VideogiocoBean ultimoUscito= vdao.getUltimoUscito();
-			ArrayList<VideogiocoBean> scontati= vdao.getVideogiochiScontati();
-			ProdottoModelDAO dao = new ProdottoModelDAO(ds);
-			ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-			prod.add(dao.doRetriveByKey(""+migliorVideogioco.getProdotto()));
-			prod.add(dao.doRetriveByKey(""+ultimoUscito.getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(0).getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(1).getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(2).getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(3).getProdotto()));
-			request.setAttribute("Prodotti",prod);
+
+			ProdottoBean prod = dao.doRetriveByKey(id);
+			if(prod==null)
+			{
+				response.setStatus(response.SC_NOT_FOUND);
+				response.sendError(response.SC_NOT_FOUND,"PRODOTTO NON ESISTENTE");
+				return;
+			}
+			
+			request.setAttribute("Prodotto",prod);
 			request.setAttribute("visitato","");
-			RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/homepage.jsp");
+			RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/lol.jsp");
 			dispatcher.forward(request, response);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
+
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.doGet(request, response);
 	}
-	
 
 }

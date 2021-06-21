@@ -87,28 +87,7 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 
 	@Override
 	public void doSave(ClienteBean item) throws SQLException {
-		Connection connessione = ds.getConnection();//ottengo la connessione
 		
-		String query="INSERT INTO cliente VALUES(?,?,?,?,?,?,?);";
-		PreparedStatement ps= connessione.prepareStatement(query);
-		
-		ps.setString(1, item.getEmail());
-		ps.setString(2, item.getNome());
-		ps.setString(3, item.getCognome());
-		ps.setDate(4, (Date) item.getData_di_nascita());
-		ps.setString(5, item.getPassword());
-		ps.setString(6, item.getIban());
-		ps.setString(7, item.getCarta_fedelta());
-		
-		CartaFedeltaBean carta= new CartaFedeltaBean();	//creao la carta fedeltà del nuovo cliente
-		carta.setCodice(item.getCarta_fedelta());
-		carta.setPunti(0);
-		CartaFedeltaModelDAO cartaDAO= new CartaFedeltaModelDAO(this.ds);//eseguo la insert della carta
-		cartaDAO.doSave(carta);
-		
-		ps.executeUpdate();//eseguo la insert del cliente
-		ps.close();
-		connessione.close();
 		
 	}
 
@@ -173,6 +152,28 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 	@Override
 	public void doDelete(ClienteBean item) throws SQLException {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public void doSave(ClienteBean item,CartaFedeltaBean carta) throws SQLException {
+		Connection connessione = ds.getConnection();//ottengo la connessione
+		
+		String query="INSERT INTO cliente VALUES(?,?,?,?,MD5(?),?,?);";
+		PreparedStatement ps= connessione.prepareStatement(query);
+		
+		ps.setString(1, item.getEmail());
+		ps.setString(2, item.getNome());
+		ps.setString(3, item.getCognome());
+		ps.setDate(4, (Date) item.getData_di_nascita());
+		ps.setString(5, item.getPassword());
+		ps.setString(6, item.getIban());
+		ps.setString(7, item.getCarta_fedelta());
+		CartaFedeltaModelDAO cartaDAO= new CartaFedeltaModelDAO(this.ds);//eseguo la insert della carta
+		cartaDAO.doSave(carta);
+		
+		ps.executeUpdate();//eseguo la insert del cliente
+		ps.close();
+		connessione.close();
 		
 	}
 

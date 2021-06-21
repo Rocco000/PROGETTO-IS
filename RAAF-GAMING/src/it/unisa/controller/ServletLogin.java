@@ -38,6 +38,8 @@ public class ServletLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession sessione= request.getSession(true);//controllo se esiste già una sessione se no ne creo una nuova
+		synchronized(sessione)
+		{
 		Object log1= sessione.getAttribute("log");
 		if(log1!=null)
 		{
@@ -164,6 +166,7 @@ public class ServletLogin extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
 		}
 		
 	}
