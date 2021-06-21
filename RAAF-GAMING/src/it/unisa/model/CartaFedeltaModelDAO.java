@@ -28,10 +28,10 @@ public class CartaFedeltaModelDAO implements OperazioniModel<CartaFedeltaBean> {
 		String query="SELECT * FROM cartafedelta ORDER BY ?;";
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
-		if(order!=null && !order.equals(""))
+		if(order!=null && !(order.equals("")))
 			ps.setString(1, order);
 		else
-			ps.setString(1, "codice asc");
+			ps.setString(1, "codice desc");
 		
 		ArrayList<CartaFedeltaBean> a= new ArrayList<CartaFedeltaBean>();
 		ResultSet risultato= ps.executeQuery();
@@ -39,6 +39,7 @@ public class CartaFedeltaModelDAO implements OperazioniModel<CartaFedeltaBean> {
 			CartaFedeltaBean app= new CartaFedeltaBean();
 			app.setCodice(risultato.getString("codice"));
 			app.setPunti(risultato.getInt("punti"));
+			a.add(app);
 		}
 		
 		risultato.close();
@@ -72,5 +73,5 @@ public class CartaFedeltaModelDAO implements OperazioniModel<CartaFedeltaBean> {
 		// TODO Auto-generated method stub
 
 	}
-
+	
 }
