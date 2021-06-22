@@ -149,7 +149,7 @@ public class ServletProdotto extends HttpServlet {
 						if(dlc!=null)
 						{
 							request.setAttribute("tipo","dlc");
-							request.setAttribute("dlco",dlc);
+							request.setAttribute("dlc",dlc);
 							request.setAttribute("Prodotto",prod);
 							request.setAttribute("visitato","");
 							RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaGioco.jsp");
