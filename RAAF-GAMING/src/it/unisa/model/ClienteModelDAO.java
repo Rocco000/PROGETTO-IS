@@ -96,15 +96,55 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 		
 		Connection connessione= ds.getConnection();//ottengo la connessione al DB
 		
-		String query= "UPDATE cliente SET iban=?,password=MD5(?) WHERE email=? ;";
+		String query= "SELECT * FROM cliente WHERE email=?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
-		ps.setString(1, item.getIban());
-		ps.setString(2, item.getPassword());
-		ps.setString(3, item.getEmail());
+		ps.setString(1, item.getEmail());
 		
-		ps.executeUpdate();
+		ResultSet risultato= ps.executeQuery();
+		if(risultato.next()) {
+			ClienteBean app= new ClienteBean();
+			app.setEmail(risultato.getString("email"));
+			app.setNome(risultato.getString("nome"));
+			app.setCognome(risultato.getString("cognome"));
+			app.setPassword(risultato.getString("password"));
+			app.setData_di_nascita(risultato.getDate("data_di_nascita"));
+			app.setIban(risultato.getString("iban"));
+			app.setCarta_fedelta(risultato.getString("carta_fedelta"));
+			
+			if(!item.getIban().equals(app.getIban())) {//se l'iban non corrisponde con quello del db allora devo aggiornare l'IBAN
+				
+				String aggiornamento= "UPDATE cliente SET iban=? WHERE email=? ;";
+				PreparedStatement ps2= connessione.prepareStatement(aggiornamento);
+				
+				ps2.setString(1, item.getIban());
+				ps2.setString(2, item.getEmail());
+				if(ps2.executeUpdate()==1)
+					;
+				else
+					System.out.println("query errata");
+				
+				ps2.close();
+			}
+			else{ //se l'iban non è cambiato vuol dire che deve aggiornare la password
+				
+				String aggiornamento= "UPDATE cliente SET password=MD5(?) WHERE email=? ;";
+				PreparedStatement ps2= connessione.prepareStatement(aggiornamento);
+				
+				
+				ps2.setString(1, item.getPassword());
+				ps2.setString(2, item.getEmail());
+				if(ps2.execute())
+					;
+				else
+					System.out.println("query errata");
+				
+				ps2.close();
+			}
+		}
+		
+		risultato.close();
 		ps.close();
 		connessione.close();
 	}

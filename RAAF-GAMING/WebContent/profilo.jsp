@@ -61,7 +61,7 @@
 				<div class="form-row">
 					<div class="form-group col-md-12">
 						<p class="h2 text-center">Vuoi cambiare password e/o IBAN?</p>
-						<p id="notifica" style="visibility:hidden; text-align:center; font-weight:bold;"></p>
+						<p hidden id="notifica"></p>
 					</div>
 				</div>
 		  		<div class="form-row">
@@ -96,44 +96,46 @@
 	
 	function aggiornamentoCredenziali(f){
 		
-		if(controlloCambioCredenziali()){
+		//if(controlloCambioCredenziali()){
 
 			var o= {
 					passwordNuova: $("#inputPassword1").val(),
 					ibanNuovo: $("#inputIban1").val()
 			};
-			alert(o.passwordNuova);
-			alert(o.ibanNuovo);
 			var parametriJson= JSON.stringify(o);
 			$.ajax({
 					
 					type: "POST",
 					url: "servletprofilo",
 					contentType: "application/json",//tipo di dato che invio
-					dataType:"text",//tipo di dati che mi aspetto dal server
+					dataType:"json",//tipo di dati che mi aspetto dal server
 					data: encodeURIComponent(parametriJson),
 					async: true,
-					success:function(data){//funzione invocata in caso di successo della richiesta 
-								alert(""+data);
-								alert("prima di parse");
-								var risposta= JSON.parse(data);
-								alert("dopo parse");
-								alert(risposta.password+" "+risposta.iban);
-								if(risposta.password==true){
-									alert("password modificata");
-									$("#notifica").css("visibility","visible");
-									$("#notifica").html("PASSWORD MODIFICATA!");
-									$("#notifica").css("color","green");
-										
-								}
-								
-								$("#ibanAggiornato").html(""+risposta.iban);
-							},
-					error: function(xhr,textStatus,errorText){
-								alert("errore: "+textStatus+" "+errorText);
-							}
+					success: 
+						function (data){//funzione invocata in caso di successo della richiesta 
+							$.each(data,function (indice,valore){//chiamo su ogni campo dell'oggetto json ricevuto dal server(servono 2 campi boolean pass, iban nuovo)
+											if(indice==0){//il primo oggetto sarà il booleano se ha modificato la password
+												pass=JSON.parse(valore);
+												if(pass==true){//se ha modificato la password
+													$("notifica").text("PASSWORD MODIFICATA!");
+													$("notifica").css("color","green");
+													$("notifica").css("visibility","visibile");												
+												}
+													
+											}
+											else{
+												ibanNuovo=JSON.parse(valore);
+												$("notifica").text("IBAN MODIFICATO!");
+												$("notifica").css("color","green");
+												$("notifica").css("visibility","visibile");
+												
+												$("ibanAggiornato").text(""+ibanNuovo);
+											}
+										}
+							);
+						},
 			});
-		}
+		//}
 	}
 </script>
 
