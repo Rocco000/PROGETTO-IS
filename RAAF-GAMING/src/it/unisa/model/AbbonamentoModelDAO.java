@@ -18,8 +18,34 @@ public class AbbonamentoModelDAO implements OperazioniModel<AbbonamentoBean> {
 	
 	@Override
 	public AbbonamentoBean doRetriveByKey(String code) throws SQLException {
-		// TODO Auto-generated method stub
+
+		Connection connessione= ds.getConnection();
+		String query="SELECT * FROM abbonamento WHERE prodotto=?;";
+		
+		PreparedStatement ps= connessione.prepareStatement(query);
+		ps.setString(1,code);
+		ResultSet risultato= ps.executeQuery();
+		
+		while(risultato.next()) {
+			AbbonamentoBean app= new AbbonamentoBean();
+			
+			app.setCodice(risultato.getString("abbonamento.codice"));
+			app.setProdotto(risultato.getInt("prodotto.codice_prodotto"));
+			app.setDurata_abbonamento(risultato.getInt("durata_abbonamento"));
+
+			risultato.close();
+			ps.close();
+			connessione.close();
+			
+			return app;
+		}
+
+		risultato.close();
+		ps.close();
+		connessione.close();
+		
 		return null;
+		
 	}
 
 	@Override
