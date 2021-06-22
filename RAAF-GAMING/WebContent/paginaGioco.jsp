@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="it.unisa.model.AbbonamentoBean, it.unisa.model.DlcBean, it.unisa.model.ConsoleBean"%>
 
 <!DOCTYPE html>
 <html>
