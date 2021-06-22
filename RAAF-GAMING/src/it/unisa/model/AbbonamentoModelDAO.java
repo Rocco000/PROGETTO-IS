@@ -29,8 +29,8 @@ public class AbbonamentoModelDAO implements OperazioniModel<AbbonamentoBean> {
 		while(risultato.next()) {
 			AbbonamentoBean app= new AbbonamentoBean();
 			
-			app.setCodice(risultato.getString("abbonamento.codice"));
-			app.setProdotto(risultato.getInt("prodotto.codice_prodotto"));
+			app.setCodice(risultato.getString("codice"));
+			app.setProdotto(risultato.getInt("prodotto"));
 			app.setDurata_abbonamento(risultato.getInt("durata_abbonamento"));
 
 			risultato.close();
@@ -52,7 +52,7 @@ public class AbbonamentoModelDAO implements OperazioniModel<AbbonamentoBean> {
 	public ArrayList<AbbonamentoBean> doRetriveAll(String order) throws SQLException {
 		
 		Connection connessione= ds.getConnection();
-		String query="SELECT * FROM abbonamento WHERE abbonamento.prodotto=prodotto.codice_prodotto ORDER BY ?;";
+		String query="SELECT * FROM abbonamento WHERE prodotto=?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
@@ -67,8 +67,8 @@ public class AbbonamentoModelDAO implements OperazioniModel<AbbonamentoBean> {
 		while(risultato.next()) {
 			AbbonamentoBean app= new AbbonamentoBean();
 			
-			app.setCodice(risultato.getString("abbonamento.codice"));
-			app.setProdotto(risultato.getInt("prodotto.codice_prodotto"));
+			app.setCodice(risultato.getString("codice"));
+			app.setProdotto(risultato.getInt("prodotto"));
 			app.setDurata_abbonamento(risultato.getInt("durata_abbonamento"));
 			
 			a.add(app);
