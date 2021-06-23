@@ -19,8 +19,29 @@ public class ConsoleModelDAO implements OperazioniModel<ConsoleBean> {
 	}
 	@Override
 	public ConsoleBean doRetriveByKey(String code) throws SQLException {
-		// TODO Auto-generated method stub
+		
+		Connection connessione = ds.getConnection();
+		String Query="SELECT * FROM console WHERE prodotto=?;";
+		
+		PreparedStatement ps= connessione.prepareStatement(Query);
+		ps.setString(1,code);		
+		ResultSet rs= ps.executeQuery();		
+		while(rs.next())
+		{
+		ConsoleBean app= new ConsoleBean();
+		app.setProdotto(rs.getInt("prodotto"));
+		app.setSpecifica(rs.getString("specifica"));
+		app.setColore(rs.getString("colore"));
+		rs.close();
+		ps.close();
+		connessione.close();
+		return app;
+		}
+		rs.close();
+		ps.close();
+		connessione.close();
 		return null;
+		
 	}
 
 	@Override

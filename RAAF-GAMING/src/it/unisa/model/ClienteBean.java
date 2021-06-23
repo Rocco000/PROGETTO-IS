@@ -1,7 +1,7 @@
 package it.unisa.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * E' il bean che rappresenta la tabella del DB Cliente
@@ -14,7 +14,7 @@ public class ClienteBean implements Serializable{
 	private String email;
 	private String nome;
 	private String cognome;
-	private java.sql.Date data_di_nascita;
+	private Date data_di_nascita;
 	private String password;
 	private String iban;
 	private String carta_fedelta;
@@ -57,7 +57,7 @@ public class ClienteBean implements Serializable{
 		return data_di_nascita;
 	}
 
-	public void setData_di_nascita(java.sql.Date data_di_nascita) {
+	public void setData_di_nascita(Date data_di_nascita) {
 		this.data_di_nascita = data_di_nascita;
 	}
 
@@ -85,3 +85,4 @@ public class ClienteBean implements Serializable{
 		this.carta_fedelta = carta_fedelta;
 	}
 }
+

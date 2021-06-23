@@ -20,14 +20,35 @@ public class DlcModelDAO implements OperazioniModel<DlcBean> {
 	
 	@Override
 	public DlcBean doRetriveByKey(String code) throws SQLException {
-		// TODO Auto-generated method stub
+		Connection connessione = ds.getConnection();
+		String Query="SELECT * FROM dlc WHERE prodotto=?;";
+		
+		PreparedStatement ps= connessione.prepareStatement(Query);
+		ps.setString(1,code);
+		
+		ResultSet rs= ps.executeQuery();
+		
+		while(rs.next())
+		{
+		DlcBean app= new DlcBean();
+		app.setProdotto(rs.getInt("prodotto"));
+		app.setDimensione(rs.getDouble("dimensione"));
+		app.setDescrizione(rs.getString("descrizione"));
+		rs.close();
+		ps.close();
+		connessione.close();
+		return app;
+		}
+		rs.close();
+		ps.close();
+		connessione.close();
 		return null;
 	}
 
 	@Override
 	public ArrayList<DlcBean> doRetriveAll(String order) throws SQLException {
 		Connection connessione = ds.getConnection();
-		String Query="SELECT * FROM dls ODER BY ?";
+		String Query="SELECT * FROM dlc ODER BY ?";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
 		if(order!=null && order!="") 

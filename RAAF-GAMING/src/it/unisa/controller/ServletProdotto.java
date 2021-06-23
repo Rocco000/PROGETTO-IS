@@ -13,6 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import it.unisa.model.AbbonamentoBean;
+import it.unisa.model.AbbonamentoModelDAO;
+import it.unisa.model.ConsoleBean;
+import it.unisa.model.ConsoleModelDAO;
+import it.unisa.model.DlcBean;
+import it.unisa.model.DlcModelDAO;
 import it.unisa.model.ProdottoBean;
 import it.unisa.model.ProdottoModelDAO;
 import it.unisa.model.VideogiocoBean;
@@ -99,10 +105,66 @@ public class ServletProdotto extends HttpServlet {
 				return;
 			}
 			
-			request.setAttribute("Prodotto",prod);
-			request.setAttribute("visitato","");
-			RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/lol.jsp");
-			dispatcher.forward(request, response);
+			VideogiocoModelDAO vdao = new VideogiocoModelDAO(ds);
+			VideogiocoBean video = vdao.doRetriveByKey(""+prod.getCodice_prodotto());
+			if(video!=null)
+			{
+				request.setAttribute("tipo","videogioco");
+				request.setAttribute("videogioco",video);
+				request.setAttribute("Prodotto",prod);
+				request.setAttribute("visitato","");
+				RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaGioco.jsp");
+				dispatcher.forward(request, response);
+			}
+			else
+			{
+				ConsoleModelDAO cons = new ConsoleModelDAO(ds);
+				ConsoleBean console = cons.doRetriveByKey(""+prod.getCodice_prodotto());
+				if(console!=null)
+				{
+					request.setAttribute("tipo","console");
+					request.setAttribute("console",console);
+					request.setAttribute("Prodotto",prod);
+					request.setAttribute("visitato","");
+					RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaGioco.jsp");
+					dispatcher.forward(request, response);
+				}
+				else
+				{
+					AbbonamentoModelDAO abb = new AbbonamentoModelDAO(ds);
+					AbbonamentoBean abbo = abb.doRetriveByKey(""+prod.getCodice_prodotto());
+					if(abbo!=null)
+					{
+						request.setAttribute("tipo","abbonamento");
+						request.setAttribute("abbonamento",abbo);
+						request.setAttribute("Prodotto",prod);
+						request.setAttribute("visitato","");
+						RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaGioco.jsp");
+						dispatcher.forward(request, response);
+					}
+					else
+					{
+						DlcModelDAO dl = new DlcModelDAO(ds);
+						DlcBean dlc = dl.doRetriveByKey(""+prod.getCodice_prodotto());
+						if(dlc!=null)
+						{
+							request.setAttribute("tipo","dlc");
+							request.setAttribute("dlc",dlc);
+							request.setAttribute("Prodotto",prod);
+							request.setAttribute("visitato","");
+							RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaGioco.jsp");
+							dispatcher.forward(request, response);
+						}
+						else
+						{
+							response.setStatus(response.SC_NOT_FOUND);
+							response.sendError(response.SC_NOT_FOUND,"PRODOTTO NON ESISTENTE");
+							return;
+						}
+					}
+				}
+			}
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
