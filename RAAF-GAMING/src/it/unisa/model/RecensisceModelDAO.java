@@ -2,6 +2,7 @@ package it.unisa.model;
 
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,15 +21,37 @@ public class RecensisceModelDAO implements OperazioniModel<RecensisceBean>{
 	}
 	
 	public RecensisceBean doRetriveByKey(String code) throws SQLException {
-		
 		return null;
 	}
-
+	
+	public RecensisceBean doRetriveByKey(String prodotto, String cliente) throws SQLException {
+		Connection connessione=ds.getConnection();
+		String query="SELECT * FROM recensisce WHERE prodotto=? AND cliente=?;";
+		PreparedStatement ps=connessione.prepareStatement(query);
+		ps.setString(1,prodotto);
+		ps.setString(2,cliente);
+		ResultSet risultato=ps.executeQuery();
+		if(risultato.next()) {
+			RecensisceBean app=new RecensisceBean();
+			app.setCliente(risultato.getString("cliente"));
+			app.setProdotto(risultato.getInt("prodotto"));
+			app.setVoto(risultato.getInt("voto"));
+			risultato.close();
+			ps.close();
+			connessione.close();
+			return app;
+		}
+		risultato.close();
+		ps.close();
+		connessione.close();
+		return null;
+	}
+	
 
 	public ArrayList<RecensisceBean> doRetriveAll(String order) throws SQLException {
 	
 		Connection connessione=ds.getConnection();
-		String query="SELECT * FROM recensisce WHERE recensisce.prodotto=prodotto.codice_prodotto AND recensisce.cliente=cliente.email ORDER BY ?;";
+		String query="SELECT * FROM recensisce ORDER BY ?;";
 		PreparedStatement ps=connessione.prepareStatement(query);
 		if(order!=null && !order.equals(""))
 			ps.setString(1, order);
@@ -39,9 +62,9 @@ public class RecensisceModelDAO implements OperazioniModel<RecensisceBean>{
 		while(risultato.next()) {
 			RecensisceBean app=new RecensisceBean();
 			
-			app.setCliente(risultato.getString("recensisce.cliente"));
-			app.setProdotto(risultato.getInt("recensice.prodotto"));
-			app.setVoto(risultato.getInt("recensice.voto"));
+			app.setCliente(risultato.getString("cliente"));
+			app.setProdotto(risultato.getInt("prodotto"));
+			app.setVoto(risultato.getInt("voto"));
 			a.add(app);
 		}
 		risultato.close();
@@ -54,12 +77,24 @@ public class RecensisceModelDAO implements OperazioniModel<RecensisceBean>{
 
 	
 	public void doSave(RecensisceBean item) throws SQLException {
-	
+		Connection connessione = ds.getConnection();//ottengo la connessione
+		
+		String query="INSERT INTO recensisce VALUES(?,?,?);";
+		PreparedStatement ps= connessione.prepareStatement(query);
+		
+		ps.setString(1,item.getCliente());
+		ps.setInt(2,item.getProdotto());
+		ps.setInt(3,item.getVoto());
+		
+		ps.executeUpdate();//eseguo la insert della recensione
+		ps.close();
+		connessione.close();
 		
 	}
 
 
 	public void doUpdate(RecensisceBean item) throws SQLException {
+		
 		
 	}
 

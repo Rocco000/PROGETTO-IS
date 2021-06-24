@@ -84,6 +84,19 @@ public class ServletProdotto extends HttpServlet {
 				array2.add(impostazione5);
 				request.setAttribute("impostazione2",array2);
 			}
+			ArrayList<String> carr = (ArrayList<String>) session.getAttribute("carrello");
+			if(carr == null)
+			{
+				request.setAttribute("carrello",null);
+			}
+			else if(carr.size()==0)
+			{
+				request.setAttribute("carrello",null);
+			}
+			else
+			{
+				request.setAttribute("carrello",carr);
+			}
 		}
 		String id = request.getParameter("id");
 		if(id==null)

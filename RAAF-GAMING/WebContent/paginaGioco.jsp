@@ -39,11 +39,11 @@ Object obj = request.getAttribute(tipo);
 <!--inizio descrizione-->
 <div class="container d-flex justify-content-center" style="background-color:rgba(230,230,230,0.5); height:100%; width:90%;">
 
-	<div class="row w-100 mt-5" style="width:100%;">
-		<div class="col-sm-4">
-			<div class="d-inline-flex  mt-4 pl-0 ml-3" style="height:60%; width:80%">
-				<img src="servletcard?id=<%=prod.getCodice_prodotto() %>" style="border-radius:15px;">
-			</div>
+	<div class="row w-100" style="width:100%;">
+		<div class="col-md-6 mt-2 mb-2">
+		
+				<img src="servletcard?id=<%=prod.getCodice_prodotto() %>" style="border-radius:15px;height:100%;width:100%;">
+
 		</div>
 		<div class="col-md-6">
 			<div class="container ml-0 mt-4 mr-5" style="background-color:rgba(240,240,230,0.8);height:50%; width:100%; border-radius:15px;overflow:auto;">
@@ -54,16 +54,16 @@ Object obj = request.getAttribute(tipo);
 										</div>
 										<div class="col-md-6" >
 												<span class="star-rating pl-2">
-												  <input type="radio" name="rating" value="1"><i></i>
-												  <input type="radio" name="rating" value="2"><i></i>
-												  <input type="radio" name="rating" value="3"><i></i>
-												  <input type="radio" name="rating" value="4"><i></i>
-												  <input type="radio" name="rating" value="5"><i></i>
-												  <input type="radio" name="rating" value="6"><i></i>
-												  <input type="radio" name="rating" value="7"><i></i>
-												  <input type="radio" name="rating" value="8"><i></i>
-												  <input type="radio" name="rating" value="9"><i></i>
-												  <input type="radio" name="rating" value="10"><i></i>
+												  <input type="radio" name="rating" value="1" onclick="recensione(this);"><i></i>
+												  <input type="radio" name="rating" value="2" onclick="recensione(this);"><i></i>
+												  <input type="radio" name="rating" value="3" onclick="recensione(this);"><i></i>
+												  <input type="radio" name="rating" value="4" onclick="recensione(this);"><i></i>
+												  <input type="radio" name="rating" value="5" onclick="recensione(this);"><i></i>
+												  <input type="radio" name="rating" value="6" onclick="recensione(this);"><i></i>
+												  <input type="radio" name="rating" value="7" onclick="recensione(this);"><i></i>
+												  <input type="radio" name="rating" value="8" onclick="recensione(this);"><i></i>
+												  <input type="radio" name="rating" value="9" onclick="recensione(this);"><i></i>
+												  <input type="radio" name="rating" value="10" onclick="recensione(this);"><i></i>
 											</span>
 										</div>
 										</div>
@@ -73,7 +73,7 @@ Object obj = request.getAttribute(tipo);
 													<%if(tipo=="videogioco")
 													{
 														VideogiocoBean bean = (VideogiocoBean) obj;
-														%><h6>Edisione limitata: <%if(bean.getEdizione_limitata()){%> SI<%} else{%> NO<%} %>,&nbsp;
+														%><h6>Edizione limitata: <%if(bean.getEdizione_limitata()){%> SI<%} else{%> NO<%} %>,&nbsp;
 														Data Uscita: <%=prod.getData_uscita() %>,&nbsp;
 														Dimensione: <%=bean.getDimensione() %>, &nbsp;
 														Tipo: <%if(bean.getVkey()==null){%>FISICO con <%=bean.getNcd()%>cd.<%} else {%>DIGITALE<%} %>,&nbsp;
@@ -139,18 +139,41 @@ Object obj = request.getAttribute(tipo);
 			success: function (data){
 				var obj = JSON.parse(data);
 				alert(obj.message);
+				$("#sostituisciCarrello").removeClass("fas fa-shopping-cart");
+				$("#sostituisciCarrello").addClass( "fa fa-cart-arrow-down");
 				},
 			error: function(){alert("lol");}
 	});
 		
 	}
-	</script>
+	
+	function recensione(stella)
+	{
+		var x = {voto: stella.value, id:<%=prod.getCodice_prodotto()%>};
+		var jisono = JSON.stringify(x);
+		
+	$.ajax({
+			
+			type: "POST",
+			url: "<%=response.encodeURL("servletrecensione")%>",
+			contentType: "application/json",//tipo di dato che invio
+			dataType:"text",//tipo di dati che mi aspetto dal server
+			data: encodeURIComponent(jisono),
+			async: true,
+			success: function (data){
+				var obj = JSON.parse(data);
+				alert(obj.recensione);
+				},
+			error: function(){alert("lol");}
+	});
 
+	}
+	
+	</script>
 	<!-- fine -->
 </div>
+
+<!--fine descrizione-->
 <%@include file="footer.jsp" %>
 </body>
 </html>
-
-
-

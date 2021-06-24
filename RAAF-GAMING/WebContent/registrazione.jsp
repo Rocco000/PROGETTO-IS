@@ -94,14 +94,6 @@
 		      	</div>
 		    </div>
 		  </div>
-		  <div class="form-group">
-		  	<div class="form-check">
-		    	<input class="form-check-input" type="checkbox" name="ricordati" value="" id="invalidCheck">
-		      	<label class="form-check-label" for="invalidCheck">
-		        	Remember me!
-		      	</label>
-		    </div>
-		  </div>
 		  <div class="form-row">
 		  	<div class="col-md-12 d-flex justify-content-center mb-3">
 		  		<input class="btn btn-outline-warning" type="submit" value="REGISTRATI" style="font-family: Eras Demi ITC;">

@@ -34,8 +34,23 @@
   		<% i++;} %>
 		</div>
 		</div>
-		  <a href="#" style="margin-right:10px; margin-top:6px;">
-	<i class='fas fa-shopping-cart' style='font-size:27px; color:white;'></i>
+		<%
+		String carstring = "servletcarrello";
+		carstring = response.encodeURL(carstring);
+		%>
+		  <a href="<%=carstring %>" style="margin-right:10px; margin-top:6px;">
+		  <%
+		  ArrayList<String> carr = (ArrayList<String>) request.getAttribute("carrello");
+		  if(carr==null)
+		  {
+			  %><i id="sostituisciCarrello" class='fas fa-shopping-cart' style='font-size:27px; color:white;'></i><%
+		  }
+		  else
+		  {
+			  %><i class='fa fa-cart-arrow-down' style='font-size:27px; color:white;'></i><%
+		  }
+		  %>
+	
 	</a>
 		</div>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
