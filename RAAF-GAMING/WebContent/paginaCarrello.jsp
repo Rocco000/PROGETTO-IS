@@ -40,9 +40,9 @@ if(str==null)
 %>
 <%@include file="navbar.jsp" %>
 <!--inizio descrizione-->
-		<main class="page">
-	 	<section class="shopping-cart dark">
-	 		<div class="container">
+		<main class="page" >
+	 	<section class="shopping-cart dark" >
+	 		<div class="container" style="min-height:100vh;">
 		        <div class="block-heading">
 		        <%String conferma = (String) request.getAttribute("confermato");
 		        if(conferma==null)
@@ -58,8 +58,8 @@ if(str==null)
 		        %>
 		         
 		        </div>
-		        <div class="content">
-	 				<div class="row">
+		        <div class="content" >
+	 				<div class="row" >
 	 					<div class="col-md-12 col-lg-8">
 	 						<div class="items">
 				 				<%
@@ -77,7 +77,8 @@ if(str==null)
 				 					int j=0;
 				 					for(String string : carrelloo)
 				 					{
-				 						%><div class="product">
+				 						%>
+				 						<div class="product">
 				 					<div class="row">
 					 					<div class="col-md-3 mt-4 ml-1 mr-1">
 					 						<img class="img-fluid mx-auto d-block image" src="servletcard?id=<%=prod.get(j).getCodice_prodotto() %>" style="border-radius:10px;">

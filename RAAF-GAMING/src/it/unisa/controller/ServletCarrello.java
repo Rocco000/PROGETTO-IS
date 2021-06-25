@@ -59,7 +59,7 @@ public class ServletCarrello extends HttpServlet {
 				array.add(impostazione3);
 				request.setAttribute("impostazione",array);
 				String impostazione4 = "servletlogout";
-				String impostazione5="#";
+				String impostazione5="servletaccessoprofilo";
 				String impostazione6="#";
 				ArrayList<String> array2 = new ArrayList<String>();
 				array2.add(impostazione4);

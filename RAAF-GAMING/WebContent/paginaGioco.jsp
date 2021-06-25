@@ -37,10 +37,10 @@ Object obj = request.getAttribute(tipo);
 %>
 <%@include file="navbar.jsp" %>
 <!--inizio descrizione-->
-<div class="container d-flex justify-content-center" style="background-color:rgba(230,230,230,0.5); height:100%; width:90%;">
+<div class="container d-flex justify-content-center" style="background-color:rgba(230,230,230,0.5); min-height:100vh; width:100%;">
 
 	<div class="row w-100" style="width:100%;">
-		<div class="col-md-6 mt-2 mb-2">
+		<div class="col-md-6 mt-4 mb-2">
 		
 				<img src="servletcard?id=<%=prod.getCodice_prodotto() %>" style="border-radius:15px;height:100%;width:100%;">
 
