@@ -3,7 +3,10 @@ package it.unisa.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.net.URLDecoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Enumeration;
 
@@ -84,6 +87,7 @@ public class ServletProfilo extends HttpServlet {
 						String passwordAtt= utente.getPassword();//ottengo la password attuale nel db dell'utente
 						
 						String passwordNuova= oggettoJson.getString("passwordNuova");//ottengo la nuova password che l'utente vuole impostare
+						
 						String ibanAtt= utente.getIban();
 						String ibanNuovo= oggettoJson.getString("ibanNuovo");
 						System.out.println("password db e richiesta: "+passwordAtt+" "+passwordNuova);
@@ -98,17 +102,28 @@ public class ServletProfilo extends HttpServlet {
 						
 						if(passwordNuova!=null) {//se ha modificato la password
 							
-							if(!passwordAtt.equals(passwordNuova)) {//se la nuova password è diversa da quella nel db
+							//codifico la nuova password in MD5 per confrontarla con quella del DB
+							MessageDigest md = MessageDigest.getInstance("MD5"); 
+							byte[] digest = md.digest(passwordNuova.getBytes()); 
+							BigInteger big=new BigInteger(1,digest);
+							String str=big.toString(16);
+							while(str.length()<32) {
+								str="0"+str;
+							}
+							
+							if(!passwordAtt.equals(str)) {//se la nuova password è diversa da quella nel db
 								
 								System.out.println("settato nel bean la nuova password");
-								utenteAggiornato.setPassword(passwordNuova);//setto la nuova password
+								utenteAggiornato.setPassword(str);//setto la nuova password
 								flag=true;
 							}
 							else {
 								//se la password è uguale mando un errore
 								System.out.println("password uguali");
-								response.setStatus(response.SC_FORBIDDEN);//indica che il server ha compreso la richiesta ma si è rifiutato di soddisfarla.
-								response.sendError(response.SC_FORBIDDEN, "LA PASSWORD COINCIDE CON QUELLA GIA' IN USO");
+								JSONObject erroreJson= new JSONObject();
+								erroreJson.put("errorMessage", "LA PASSWORD COINCIDE CON QUELLO GIA' IN USO");
+								PrintWriter out= response.getWriter();//posso scrivere sulla response
+								out.print(erroreJson.toString());
 								return;
 							}
 						}
@@ -128,8 +143,10 @@ public class ServletProfilo extends HttpServlet {
 							else {
 								//se l'iban è uguale mando un errore
 								System.out.println("iban uguale");
-								response.setStatus(response.SC_FORBIDDEN);//indica che il server ha compreso la richiesta ma si è rifiutato di soddisfarla.
-								response.sendError(response.SC_FORBIDDEN, "L'IBAN COINCIDE CON QUELLA GIA' IN USO");
+								JSONObject erroreJson= new JSONObject();
+								erroreJson.put("errorMessage", "L'IBAN COINCIDE CON QUELLO GIA' IN USO");
+								PrintWriter out= response.getWriter();//posso scrivere sulla response
+								out.print(erroreJson.toString());
 								return;
 							}
 						}
@@ -159,6 +176,9 @@ public class ServletProfilo extends HttpServlet {
 						
 					
 					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NoSuchAlgorithmException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
