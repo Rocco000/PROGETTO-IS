@@ -83,7 +83,9 @@ public class ServletRegistrazione extends HttpServlet {
 					if(cb!=null) { //il cliente e' gia registrato
 						String message="Sei gia' iscritto al nostro sito!";
 						request.setAttribute("message", message);
-						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/registrazione.jsp");//ritorno alla registrazione
+						String url = "/registrazione.jsp";
+						url = response.encodeURL(url);
+						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
 						dispatcher.forward(request, response);
 					}else {
 						CartaFedeltaModelDAO cf=new CartaFedeltaModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
@@ -152,7 +154,9 @@ public class ServletRegistrazione extends HttpServlet {
 				if(cb!=null) { //il cliente e' gia registrato
 					String message="Sei gia' iscritto al nostro sito!";
 					request.setAttribute("message", message);
-					RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher("/registrazione.jsp");//ritorno alla registrazione
+					String url = "/registrazione.jsp";
+					url = response.encodeURL(url);
+					RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
 					dispatcher.forward(request, response);
 				}else {
 					CartaFedeltaModelDAO cf=new CartaFedeltaModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));

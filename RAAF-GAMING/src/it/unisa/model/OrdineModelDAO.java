@@ -1,6 +1,7 @@
 package it.unisa.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -73,7 +74,19 @@ public class OrdineModelDAO implements OperazioniModel<OrdineBean> {
 	}
 
 	public void doSave(OrdineBean item) throws SQLException {
-
+		Connection con = ds.getConnection();
+		String str = "insert into ordine values(?,?,?,?,?,?);";
+		PreparedStatement ps = con.prepareStatement(str);
+		ps.setString(1,item.getCodice());
+		ps.setString(2,item.getMetodo_di_pagamento());
+		ps.setDate(3, item.getData_acquisto());
+		ps.setString(4,item.getIndirizzo_di_consegna());
+		ps.setString(5,item.getCliente());
+		ps.setDouble(6,item.getPrezzo_totale());
+		ps.executeUpdate();
+		ps.close();
+		con.close();
+		
 	}
 
 

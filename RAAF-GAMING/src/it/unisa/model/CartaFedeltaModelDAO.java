@@ -18,7 +18,25 @@ public class CartaFedeltaModelDAO implements OperazioniModel<CartaFedeltaBean> {
 	
 	@Override
 	public CartaFedeltaBean doRetriveByKey(String code) throws SQLException {
-		// TODO Auto-generated method stub
+		Connection connessione= ds.getConnection();
+		String query="SELECT * FROM cartafedelta WHERE codice= ?;";
+		PreparedStatement ps= connessione.prepareStatement(query);
+		
+		ps.setString(1,code);
+		
+		ResultSet risultato= ps.executeQuery();
+		while(risultato.next()) {
+			CartaFedeltaBean app= new CartaFedeltaBean();
+			app.setCodice(risultato.getString("codice"));
+			app.setPunti(risultato.getInt("punti"));
+			risultato.close();
+			ps.close();
+			connessione.close();
+			return app;
+		}
+		risultato.close();
+		ps.close();
+		connessione.close();
 		return null;
 	}
 
@@ -64,8 +82,13 @@ public class CartaFedeltaModelDAO implements OperazioniModel<CartaFedeltaBean> {
 
 	@Override
 	public void doUpdate(CartaFedeltaBean item) throws SQLException {
-		
-
+		Connection con = ds.getConnection();
+		String str = "UPDATE cartafedelta SET punti=punti+1 WHERE codice=?";
+		PreparedStatement ps = con.prepareStatement(str);
+		ps.setString(1,item.getCodice());
+		ps.executeUpdate();
+		ps.close();
+		con.close();
 	}
 
 	@Override

@@ -36,7 +36,11 @@
 	</div>
 	
 	<div class="container" style="background-color: rgba(254,254,233,0.5); width:50%">
-		<form action="ServletRegistrazione" method="POST" class="needs-validation" onSubmit="return controlloRegistrazione(this);" novalidate>
+	<%
+		String urlreg = "ServletRegistrazione";
+	urlreg = response.encodeURL(urlreg);
+	%>
+		<form action="<%=urlreg %>" method="POST" class="needs-validation" onSubmit="return controlloRegistrazione(this);" novalidate>
 			<div class="form-row">
 				<div class="col-md-12 mb-3 mt-2 d-flex justify-content-center">
 					<p class="h2" style="font-family: Acunim Variable Consent;">INSERISCI I TUOI DATI</p>

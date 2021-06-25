@@ -19,7 +19,7 @@
   <input class="form-control" type="text" placeholder="cerca" name="ricerca" style="border-radius:15px;background: url(immagini/lente.png) no-repeat scroll 98% 4px; background-size: 23px 23px ; background-color:white; border-color:black; border-width:2px; width:100%;">
   </form>
   </div>
-  <div class="d-inline-flex mr-5 ">>
+  <div class="d-inline-flex mr-5 ">
 	<div class="dropdown mr-4 ml-0 pl-0">
 		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 70px; background-color :rgba(35,35,35,0.8); border-color: #D2D2D2; border-width:2px;">
    		<i class='fas fa-user-astronaut' style='font-size:24px'></i>

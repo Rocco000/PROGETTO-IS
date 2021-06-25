@@ -19,6 +19,8 @@ import it.unisa.model.ConsoleBean;
 import it.unisa.model.ConsoleModelDAO;
 import it.unisa.model.DlcBean;
 import it.unisa.model.DlcModelDAO;
+import it.unisa.model.PresenteInBean;
+import it.unisa.model.PresenteInModelDAO;
 import it.unisa.model.ProdottoBean;
 import it.unisa.model.ProdottoModelDAO;
 import it.unisa.model.VideogiocoBean;
@@ -117,6 +119,19 @@ public class ServletProdotto extends HttpServlet {
 				response.sendError(response.SC_NOT_FOUND,"PRODOTTO NON ESISTENTE");
 				return;
 			}
+			PresenteInModelDAO present = new PresenteInModelDAO(ds);
+			ArrayList<PresenteInBean> presente = present.doRetriveByProdotto(id);
+			
+
+				request.setAttribute("presente",null);
+				for(PresenteInBean l : presente)
+				{
+					if(l.getQuantita_disponibile()>0)
+					{
+						request.setAttribute("presente","");
+						break;
+					}
+				}
 			
 			VideogiocoModelDAO vdao = new VideogiocoModelDAO(ds);
 			VideogiocoBean video = vdao.doRetriveByKey(""+prod.getCodice_prodotto());

@@ -112,7 +112,20 @@ Object obj = request.getAttribute(tipo);
 											</div>
 										</div>
 										<div class="row">
-												<h4 class="col-md-12 pt-5" style="position:relative; bottom:0; left:0;"><%=prod.getPrezzo() %> euro <button style="border:none; background-color:rgba(230,230,230,0);" onclick="aggiungiCarrello();"><i class='fas fa-shopping-cart pl-2' style='font-size:27px; color:black;'></i></button></h4>
+												<h4 class="col-md-12 pt-5" style="position:relative; bottom:0; left:0;"><%=prod.getPrezzo() %> euro 
+												<%
+												String presentein = (String) request.getAttribute("presente");
+												if(presentein!=null)
+												{
+													%><button style="border:none; outline:none; background-color:rgba(230,230,230,0);" onclick="aggiungiCarrello();"><i class='fas fa-shopping-cart pl-2' style='font-size:27px; color:black;'></i></button></h4>
+											<%	}
+												
+												else
+												{
+													%><button style="border:none; outline:none; background-color:rgba(230,230,230,0);" onclick="nonpuoiacquistare();"><i class='fas fa-shopping-cart pl-2' style='font-size:27px; color:black;'></i></button></h4>
+												<%}
+												%>
+												
 										</div>
 						
 						</div>
@@ -167,6 +180,11 @@ Object obj = request.getAttribute(tipo);
 			error: function(){alert("lol");}
 	});
 
+	}
+	
+	function nonpuoiacquistare()
+	{
+		alert("Prodotto non disponibile in magazzino");
 	}
 	
 	</script>

@@ -48,7 +48,15 @@ public class RiguardaModelDAO implements OperazioniModel<RiguardaBean> {
 
 	
 	public void doSave(RiguardaBean item) throws SQLException {
-		
+		Connection con = ds.getConnection();
+		String str = "insert into riguarda values(?,?,?);";
+		PreparedStatement ps = con.prepareStatement(str);
+		ps.setInt(1,item.getProdotto());
+		ps.setString(2,item.getOrdine());
+		ps.setInt(3, item.getQuantita_acquistata());
+		ps.executeUpdate();
+		ps.close();
+		con.close();
 		
 	}
 

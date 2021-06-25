@@ -20,6 +20,28 @@ public class PresenteInModelDAO implements OperazioniModel<PresenteInBean>{
 		return null;
 	}
 	
+	public ArrayList<PresenteInBean> doRetriveByProdotto(String code) throws SQLException {
+		Connection con = ds.getConnection();
+		String str = "SELECT * FROM presente_in WHERE prodotto=?;";
+		PreparedStatement ps = con.prepareStatement(str);
+		ps.setString(1,code);
+		ResultSet st = ps.executeQuery();
+		ArrayList<PresenteInBean> app = new ArrayList<PresenteInBean>();
+		while(st.next())
+		{
+			PresenteInBean bean = new PresenteInBean();
+			bean.setMagazzino(st.getString("magazzino"));
+			bean.setProdotto(st.getInt("prodotto"));
+			bean.setQuantita_disponibile(st.getInt("quantita_disponibile"));
+			app.add(bean);
+		}
+		
+		st.close();
+		ps.close();
+		con.close();
+		return app;
+	}
+	
 	public PresenteInBean doRetriveByKey(int code1,String code2) throws SQLException {
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM presente_in WHERE prodotto=? && magazzino=? ;";
@@ -78,7 +100,14 @@ public class PresenteInModelDAO implements OperazioniModel<PresenteInBean>{
 
 
 	public void doUpdate(PresenteInBean item) throws SQLException {
-		
+		Connection con = ds.getConnection();
+		String str = "UPDATE presente_in SET quantita_disponibile=quantita_disponibile-1 where prodotto=? AND magazzino=?;";
+		PreparedStatement ps = con.prepareStatement(str);
+		ps.setInt(1,item.getProdotto());
+		ps.setString(2,item.getMagazzino());
+		ps.executeUpdate();
+		ps.close();
+		con.close();
 	}
 
 	public void doDelete(PresenteInBean item) throws SQLException {

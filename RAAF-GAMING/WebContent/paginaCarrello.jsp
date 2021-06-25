@@ -44,8 +44,19 @@ if(str==null)
 	 	<section class="shopping-cart dark">
 	 		<div class="container">
 		        <div class="block-heading">
-		          <h2  style="color:orange;">Conferma Acquisto</h2>
-		          <p>Benvenuto nel tuo Carrello, premi Conferma per procedere con l'acquisto.</p>
+		        <%String conferma = (String) request.getAttribute("confermato");
+		        if(conferma==null)
+		        {
+		        	%> <h2  style="color:orange;">Conferma Acquisto</h2>
+			          <p>Benvenuto nel tuo Carrello, premi Conferma per procedere con l'acquisto.</p>
+		       <% }
+		        else
+		        {
+		        	%><h2  style="color:orange;"><%=conferma %></h2>
+		       <%}
+		        
+		        %>
+		         
 		        </div>
 		        <div class="content">
 	 				<div class="row">
@@ -56,7 +67,10 @@ if(str==null)
 				 				ArrayList<ProdottoBean> prod = (ArrayList<ProdottoBean>) request.getAttribute("Prodotti");
 				 				if(carrelloo==null)
 				 				{
-				 					%><p>NON HAI NESSUN PRODOTTO NEL CARRELLO!</p><%
+				 					%>
+				 					<p class="my-5" style="text-align:center; color:orange; font-weight:bold;">NON HAI NESSUN PRODOTTO NEL CARRELLO!
+				 					</p>
+				 					<%
 				 				}
 				 				else
 				 				{
@@ -73,20 +87,25 @@ if(str==null)
 						 						<div class="row">
 							 						<div class="col-md-5 product-name">
 							 							<div class="product-name">
-								 							<h4 style="color:orange;"><%=prod.get(j).getNome() %></h4>
+							 						<%
+							 						String urlprodotto = "servletprodotto?id="+prod.get(j).getCodice_prodotto();
+							 						urlprodotto = response.encodeURL(urlprodotto);
+							 						%>	
+								 							<a href="<%=urlprodotto%>" style="color:orange;"><h4 style="color:orange;"><%=prod.get(j).getNome() %></h4></a>
 								 							<div class="product-info">
-									 							<div>Display: <span class="value">5 inch</span></div>
-									 							<div>RAM: <span class="value">4GB</span></div>
-									 							<div>Memory: <span class="value">32GB</span></div>
+									 							<div>Data Uscita: <span class="value"><%=prod.get(j).getData_uscita() %></span></div>
 									 						</div>
 									 					</div>
 							 						</div>
 							 						<div class="col-md-4 quantity">
-
-							 							<button id="quantity" type="button" value = "1" class="form-control quantity-input btn btn-outline-danger mt-4">elimina</button>
+							 						<%String urlelimina= "servleteliminacarrello?id="+prod.get(j).getCodice_prodotto();
+							 						urlelimina = response.encodeURL(urlelimina);%>
+													<form  method="post" action="<%=urlelimina%>">
+							 							<button id="quantity" type="submit" class="form-control quantity-input btn btn-outline-danger mt-4">elimina</button>
+							 						</form>
 							 						</div>
 							 						<div class="col-md-3 price">
-							 							<span><%=prod.get(j).getPrezzo() %></span>
+							 							<span><%=prod.get(j).getPrezzo() %>&euro;</span>
 							 						</div>
 							 					</div>
 							 				</div>
@@ -99,13 +118,36 @@ if(str==null)
 				 				%>
 				 			</div>
 			 			</div>
-			 			<div class="col-md-12 col-lg-4">
+			 			<div class="col-md-12 col-lg-4" id="#spaziodelcosto">
 			 				<div class="summary" style="border-color:orange;background-color:white;">
 			 					<h3>COSTO TOTALE</h3>
-			 					<div class="summary-item"><span class="text">Costo</span><span class="price">$360</span></div>
-			 					<div class="summary-item"><span class="text">Sconto</span><span class="price">$0</span></div>
-			 					<div class="summary-item"><span class="text">Totale</span><span class="price">$360</span></div>
-			 					<button type="button" class="btn btn-outline-warning btn-lg btn-block">Conferma</button>
+			 					<% 
+			 					if(carrelloo==null){ %>
+			 					<div class="summary-item"><span class="text">Totale</span><span class="price">0&euro;</span></div>
+			 					
+			 					<button type="button" class="btn btn-outline-warning btn-lg btn-block" onclick="noppuoi();">Conferma</button>
+			 					<%}
+			 					else
+			 					{
+			 						double cont=0;
+			 						int k;
+			 						for(k=0;k<prod.size();k++)
+			 							cont+=prod.get(k).getPrezzo();
+			 						%>
+			 					<div class="summary-item mb-3"><span class="text">Totale</span><span class="price"><%=String.format("%.2f",cont) %>&euro;</span></div>
+			 					<%
+			 					String urldiconferma = "servletconfermaacquisto";
+			 					urldiconferma = response.encodeURL(urldiconferma);
+			 					%>
+			 					<form action="<%=urldiconferma %>" method="post">
+			 					<div class="summary-item mb-4"><span class="text mr-4">Indirizzo di consegna:</span><input type="text" name="indirizzodiconsegna" required maxlength="50"></div>
+			 					<input type="hidden" name="prezzototale" value="<%=String.format("%.2f",cont).replaceAll(",",".")%>">
+			 					<button type="submit" class="btn btn-outline-warning btn-lg btn-block">Conferma</button>
+			 					</form>
+			 					<%
+			 					}
+			 					%>
+			 					
 				 			</div>
 			 			</div>
 		 			</div> 
@@ -113,6 +155,12 @@ if(str==null)
 	 		</div>
 		</section>
 	</main>
+	<script>
+	function noppuoi()
+	{
+		alert("Non hai prodotti nel carrello");
+	}
+	</script>
 </body>
 <!--fine descrizione-->
 <%@include file="footer.jsp" %>

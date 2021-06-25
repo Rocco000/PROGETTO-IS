@@ -88,14 +88,18 @@ public class ServletLogin extends HttpServlet {
 						else {
 							String message="";
 							request.setAttribute("message",message);
-							RequestDispatcher view=super.getServletContext().getRequestDispatcher("/login.jsp");
+							String url = "/login.jsp";
+							url = response.encodeURL(url);
+							RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
 							view.forward(request, response);
 						}
 					}
 					else {
 						String message="";
 						request.setAttribute("message",message);
-						RequestDispatcher view=super.getServletContext().getRequestDispatcher("/login.jsp");
+						String url = "/login.jsp";
+						url = response.encodeURL(url);
+						RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
 						view.forward(request, response);
 					}
 				} catch (SQLException e) {
