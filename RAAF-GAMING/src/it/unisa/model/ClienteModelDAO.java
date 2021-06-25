@@ -108,6 +108,22 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 		ps.close();
 		connessione.close();
 	}
+	
+public void doUpdateOnlyIban(ClienteBean item) throws SQLException {
+		
+		Connection connessione= ds.getConnection();//ottengo la connessione al DB
+		
+		String query= "UPDATE cliente SET iban=? WHERE email=?;";
+		
+		PreparedStatement ps= connessione.prepareStatement(query);
+		
+		ps.setString(1, item.getIban());
+		ps.setString(2, item.getEmail());
+		
+		ps.executeUpdate();
+		ps.close();
+		connessione.close();
+	}
 
 	@Override
 	public void doDelete(ClienteBean item) throws SQLException {

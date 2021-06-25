@@ -2,8 +2,10 @@ package it.unisa.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigInteger;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -58,9 +60,6 @@ public class ServletProfilo extends HttpServlet {
 					
 					response.setContentType("application/json");//dico che il tipo di dato che restituisce la servlet è un json
 					
-					System.out.println("ciao sei nella servlet json");
-					
-					
 					BufferedReader body= request.getReader();//ottengo un riferimento al body della request(lo vede come un file)
 					StringBuffer jb = new StringBuffer();
 					String campo="";
@@ -75,7 +74,6 @@ public class ServletProfilo extends HttpServlet {
 					String decodifica= URLDecoder.decode(app, "UTF-8");//decodifichiamo la richiesta
 				
 					JSONObject oggettoJson= new JSONObject(decodifica);//otteniamo l'oggetto json della richiesta
-					System.out.println("richiesta in JSON: "+oggettoJson);
 					
 					ClienteModelDAO cdao= new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));//otteniamo il dao del cliente per effettuare le operazioni sul db
 					
@@ -90,7 +88,6 @@ public class ServletProfilo extends HttpServlet {
 						
 						String ibanAtt= utente.getIban();
 						String ibanNuovo= oggettoJson.getString("ibanNuovo");
-						System.out.println("password db e richiesta: "+passwordAtt+" "+passwordNuova);
 						
 						//creo l'utente con i dati nuovi da passare al DAO per aggiornare il cliente
 						ClienteBean utenteAggiornato= new ClienteBean();
@@ -100,7 +97,7 @@ public class ServletProfilo extends HttpServlet {
 						utenteAggiornato.setCarta_fedelta(utente.getCarta_fedelta());
 						utenteAggiornato.setData_di_nascita(utente.getData_di_nascita());
 						
-						if(passwordNuova!=null) {//se ha modificato la password
+						if(passwordNuova!=null && passwordNuova!="") {//se ha modificato la password
 							
 							//codifico la nuova password in MD5 per confrontarla con quella del DB
 							MessageDigest md = MessageDigest.getInstance("MD5"); 
@@ -112,14 +109,11 @@ public class ServletProfilo extends HttpServlet {
 							}
 							
 							if(!passwordAtt.equals(str)) {//se la nuova password è diversa da quella nel db
-								
-								System.out.println("settato nel bean la nuova password");
-								utenteAggiornato.setPassword(str);//setto la nuova password
+								utenteAggiornato.setPassword(passwordNuova);//setto la nuova password
 								flag=true;
 							}
 							else {
 								//se la password è uguale mando un errore
-								System.out.println("password uguali");
 								JSONObject erroreJson= new JSONObject();
 								erroreJson.put("errorMessage", "LA PASSWORD COINCIDE CON QUELLO GIA' IN USO");
 								PrintWriter out= response.getWriter();//posso scrivere sulla response
@@ -129,20 +123,17 @@ public class ServletProfilo extends HttpServlet {
 						}
 						else {
 							//se non ha modificato la password assegno quella attuale perchè nel dao aggiorno tutti e 2 i campi
-							System.out.println("non ha inviato la password");
-							passwordNuova=passwordAtt;
-							utenteAggiornato.setPassword(passwordAtt);//setto la stessa password
+							passwordNuova = null;
+							utenteAggiornato.setPassword(null);//setto la stessa password
 						}
 						
-						if(ibanNuovo!=null) {//se ha modificato l'iban
+						if(ibanNuovo!=null && ibanNuovo!="") {//se ha modificato l'iban
 							
 							if(!ibanAtt.equals(ibanNuovo)) {//se il nuovo iban è diverso da quello del db
-								System.out.println("settato nel bean il nuovo iban");
 								utenteAggiornato.setIban(ibanNuovo);//setto il nuovo iban
 							}
 							else {
 								//se l'iban è uguale mando un errore
-								System.out.println("iban uguale");
 								JSONObject erroreJson= new JSONObject();
 								erroreJson.put("errorMessage", "L'IBAN COINCIDE CON QUELLO GIA' IN USO");
 								PrintWriter out= response.getWriter();//posso scrivere sulla response
@@ -152,27 +143,30 @@ public class ServletProfilo extends HttpServlet {
 						}
 						else {
 							//se non ha modificato l'iban setto quello attuale
-							System.out.println("non ha messo l'iban");
 							ibanNuovo=ibanAtt;
 							utenteAggiornato.setIban(ibanAtt);//setto lo stesso IBAN
 						}
 						
-						cdao.doUpdate(utenteAggiornato);//aggiorno i dati dell'utente
-						System.out.println("aggiornato il db");
+						
+						if(utenteAggiornato.getPassword()!=null)
+						{
+							cdao.doUpdate(utenteAggiornato);
+						}
+						else
+						{
+							cdao.doUpdateOnlyIban(utenteAggiornato);
+						}
+						//aggiorno i dati dell'utente
 						
 						utente= cdao.doRetriveByKey((String)sessione.getAttribute("emailSession"));//riottengo l'utente aggiornato
 						sessione.setAttribute("passwordSession", utente.getPassword());//aggiorno il campo password della sessione
-						System.out.println("dati aggiornati: "+utente.getPassword()+" "+utente.getIban());
 						
 						
 						JSONObject rispostaJson= new JSONObject();
 						rispostaJson.put("iban", utente.getIban());
-						rispostaJson.put("password", flag);
-						System.out.println(rispostaJson);
-						
+						rispostaJson.put("password", flag);						
 						PrintWriter out= response.getWriter();//posso scrivere sulla response
 						out.print(rispostaJson.toString());
-						System.out.println("scritto l'oggetto json nella risposta");
 						
 					
 					} catch (SQLException e) {

@@ -43,7 +43,7 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 
 <%@include file="navbar.jsp" %>
 
-<div class="container" style="background-color:rgba(230,230,230,0.5); height:50%;">
+<div class="container" style="background-color:rgba(230,230,230,0.5); min-height:100vh;">
 	<div class="row">
 		<div class="col-md-12 inline-block">
 			<ul class="cards">

@@ -62,7 +62,7 @@
 %>
 
 <%@include file="navbar.jsp" %>
-<div class="container">
+<div class="container" style="min-height:100vh;">
 	<div class="row mt-3">
 		<div class="col-md-6">
 			<div class="card text-white" style=" border-style:none; border-radius:20px;">
@@ -127,8 +127,6 @@
 					passwordNuova: $("#inputPassword1").val(),
 					ibanNuovo: $("#inputIban1").val()
 			};
-			alert(o.passwordNuova);
-			alert(o.ibanNuovo);
 			var parametriJson= JSON.stringify(o);
 			
 			$.ajax({
@@ -140,11 +138,7 @@
 					data: encodeURIComponent(parametriJson),
 					async: true,
 					success:function(data){//funzione invocata in caso di successo della richiesta 
-								alert(""+data);
-								alert("prima di parse");
 								var risposta= JSON.parse(data);
-								alert("dopo parse");
-								alert(risposta.password+" "+risposta.iban+" "+risposta.errorMessage);
 								if(risposta.errorMessage!=null){
 									$("#notifica").css("visibility","visible");
 									$("#notifica").html(""+risposta.errorMessage);

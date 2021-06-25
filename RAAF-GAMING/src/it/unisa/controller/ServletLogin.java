@@ -86,7 +86,7 @@ public class ServletLogin extends HttpServlet {
 							return;
 						}
 						else {
-							String message="";
+							String message="Password errata!";
 							request.setAttribute("message",message);
 							String url = "/login.jsp";
 							url = response.encodeURL(url);
@@ -95,7 +95,7 @@ public class ServletLogin extends HttpServlet {
 						}
 					}
 					else {
-						String message="";
+						String message="Email errata!";
 						request.setAttribute("message",message);
 						String url = "/login.jsp";
 						url = response.encodeURL(url);
