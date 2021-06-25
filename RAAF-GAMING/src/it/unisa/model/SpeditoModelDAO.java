@@ -15,8 +15,23 @@ public class SpeditoModelDAO implements OperazioniModel<SpeditoBean> {
 		ds=d;
 	}
 	public SpeditoBean doRetriveByKey(String code) throws SQLException {
-
-		return null;
+		Connection connessione = ds.getConnection();
+		String query="SELECT * FROM spedito WHERE ordine=?;";
+		PreparedStatement ps= connessione.prepareStatement(query);
+		ps.setString(1, code);
+		
+		ResultSet risultato= ps.executeQuery();
+		SpeditoBean app= null;
+		while(risultato.next()) {
+			app= new SpeditoBean();
+			app.setOrdine(risultato.getString("ordine"));
+			app.setData_consegna(risultato.getDate("data_consegna"));
+			app.setCorriere_esprersso(risultato.getString("corriere_espresso"));
+		}
+		risultato.close();
+		ps.close();
+		connessione.close();
+		return app;
 	}
 
 

@@ -97,5 +97,31 @@ public class OrdineModelDAO implements OperazioniModel<OrdineBean> {
 	public void doDelete(OrdineBean item) throws SQLException {
 
 	}
+	
+	public ArrayList<OrdineBean> doRetriveByClient(String cliente) throws SQLException{
+		Connection connessione= ds.getConnection();
+		String query="SELECT * FROM ordine WHERE cliente=? ORDER BY data_acquisto desc;";
+		PreparedStatement ps= connessione.prepareStatement(query);
+		ps.setString(1, cliente);
+		
+		ResultSet risultato= ps.executeQuery();
+		ArrayList<OrdineBean> a= new ArrayList<OrdineBean>();
+		while(risultato.next()) {
+			OrdineBean app= new OrdineBean();
+			app.setCodice(risultato.getString("codice"));
+			app.setIndirizzo_di_consegna(risultato.getString("indirizzo_di_consegna"));
+			app.setMetodo_di_pagamento(risultato.getString("metodo_di_pagamento"));
+			app.setCliente(risultato.getString("cliente"));
+			app.setPrezzo_totale(risultato.getDouble("prezzo_totale"));
+			app.setData_acquisto(risultato.getDate("data_acquisto"));
+			
+			a.add(app);
+		}
+		
+		risultato.close();
+		ps.close();
+		connessione.close();
+		return a;
+	}
 
 }
