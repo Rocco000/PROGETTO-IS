@@ -29,9 +29,10 @@
 
 	<title>Pagina-Amministrazione</title>
 </head>
-<body>
+<body>	
 		<div class="container ml-5 mb-3 mt-2">
 		<img src="immagini/logo.png" alt="RAAF-GAMING" style="width:180px; position: static;">
+		<a class="btn btn-dark mr-3 mt-5 " style="float:right" href=/servletlogoutadmin role="button">LogOut</a>
 		</div>
 		<h4 class="testo" style="font-family: Acunim Variable Consent;text-align:center">Inserisci prodotto o crea spedizione:</h4>
 		<div class="form-row d-flex justify-content-center">
