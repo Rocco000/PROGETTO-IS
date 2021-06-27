@@ -8,12 +8,12 @@ public class AmministratoriBean implements Serializable {
 
 	private String email;
 	private String nome;
-	private String cognome;
+	private String password;
 	
 	public AmministratoriBean() {
 		email="";
 		nome="";
-		cognome="";
+		password="";
 	}
 
 	public String getEmail() {
@@ -32,11 +32,11 @@ public class AmministratoriBean implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getCognome() {
-		return cognome;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

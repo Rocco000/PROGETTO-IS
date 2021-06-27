@@ -24,15 +24,23 @@ public class ServletLogout extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession sessione= request.getSession(false);//ottengo la sessione
-    	sessione.removeAttribute("emailSession");
-    	sessione.removeAttribute("passwordSession");
-    	sessione.removeAttribute("flag");
-    	sessione.invalidate();//elimino la sessione
-    	String url="servletindex";
-		url=response.encodeURL(url);
-		response.sendRedirect(url);
-		return;
+    	HttpSession sessione= request.getSession(true);//ottengo la sessione
+    	Object logB= sessione.getAttribute("log");
+    	if(logB==null) {
+    		String url="servletindex";
+    		url= response.encodeURL(url);
+    		response.sendRedirect(url);
+    		return;
+    	}
+    	else{
+	    	sessione.removeAttribute("log");
+	    	sessione.removeAttribute("emailSession");
+	    	sessione.removeAttribute("passwordSession");
+	    	String url="servletindex";
+			url=response.encodeURL(url);
+			response.sendRedirect(url);
+			return;
+    	}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
