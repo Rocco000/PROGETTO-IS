@@ -1,0 +1,132 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="it.unisa.model.OrdineBean, java.util.ArrayList, it.unisa.model.SpeditoBean"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>RAAF-GAMING</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!--Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!--jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!--Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<!--Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
+	<!-- Css navbar -->
+	<link rel="stylesheet" href="css/StileIndex.css" type="text/css">
+	
+	<!-- script per il carrello -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	
+	<!-- css per la grafica della pagina -->
+	<link rel="stylesheet" href="css/stileOrdini.css" type="text/css">
+	
+	<style>
+		body {
+			width: 100%;
+			height: 100%;
+		    font-family: 'Poppins', sans-serif;
+		    background: url(immagini/fallOut.jpg) no-repeat;
+			background-attachment: fixed;		
+			z-index: -1;	
+			-webkit-background-size: cover;	
+			-moz-background-size: cover;	
+			-o-background-size: cover;	
+			background-size: cover;
+		}
+	</style>
+	
+</head>
+<body>
+
+<%
+	String visitato= (String)request.getAttribute("visitato");
+	if(visitato==null){
+		String url="servletordini";
+		url= response.encodeURL(url);
+		response.sendRedirect(url);
+		return;
+	}
+	
+	ArrayList<OrdineBean> ordiniUtente= (ArrayList<OrdineBean>)request.getAttribute("listaOrdini");
+%>
+
+<%@include file="navbar.jsp" %>
+
+<div class="wrapper rounded" style="min-height:100vh;">
+
+  
+	<p class="text-center font-weight-bold" style="color:white; font-size:20px;">I TUOI ORDINI</p>
+  		         
+    <div class="d-flex justify-content-between align-items-center mt-3">
+    	<p style="widht:75%; color:white; border-bottom: 3px solid white;">History</p>
+    </div>
+    <%
+			if(ordiniUtente==null){
+   	%>
+   				<p style="color:white; text-align:center;">NON HAI EFFETTUATO ANCORA NESSUN ORDINE</p>
+   	<%
+			}
+			else{
+				ArrayList<SpeditoBean> spedizioni= (ArrayList<SpeditoBean>) request.getAttribute("spedizioni");
+   	%>
+			    <div class="table-responsive mt-3">
+			    	
+			        <table class="table table-dark table-borderless table-hover">
+			            <thead>
+			                <tr>
+			                    <th scope="col">ORDER ID</th>
+			                    <th scope="col">INDIRIZZO DI CONSEGNA</th>
+			                    <th scope="col">IBAN</th>
+			                    <th scope="col">DATA ACQUISTO</th>
+			                    <th scope="col">DATA CONSEGNA</th>
+			                    <th scope="col" class="text-right">TOTALE</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+		            	<%
+		            		int indice=0;
+							for(OrdineBean app : ordiniUtente){
+								SpeditoBean spedizioneApp= spedizioni.get(indice);
+		            	%>
+			                <tr>
+			                    <td scope="row"> <%=app.getCodice()%> </td>
+			                    <td><%=app.getIndirizzo_di_consegna()%></td>
+			                    <td><%=app.getMetodo_di_pagamento()%></td>
+			                    <td class="text-muted"><%=app.getData_acquisto()%></td>
+			                    <%
+			                    	if(spedizioneApp==null){
+			                    %>
+			                    		<td>IN FASE DI ELABORAZIONE</td>
+			                    <%
+			                    	}
+			                    	else{
+			                    %>
+			                    		<td><%=spedizioneApp.getData_consegna()%></td>
+			                    <%
+			                    	}
+			                    	indice++;
+			                    %>
+			                    <td class="d-flex justify-content-end align-items-center"><%=app.getPrezzo_totale()%>&euro;</td>
+			                </tr>
+			                <%
+							}
+			                %>
+			            </tbody>
+			        </table>
+			    </div>
+    <%
+			}
+    %>
+</div>
+
+<%@include file="footer.jsp" %>
+
+</body>
+</html>

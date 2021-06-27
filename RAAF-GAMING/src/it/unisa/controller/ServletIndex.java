@@ -56,8 +56,8 @@ public class ServletIndex extends HttpServlet {
 				array.add(impostazione3);
 				request.setAttribute("impostazione",array);
 				String impostazione4 = "servletlogout";
-				String impostazione5="#";
-				String impostazione6="#";
+				String impostazione5="servletaccessoprofilo";
+				String impostazione6="servletordini";
 				ArrayList<String> array2 = new ArrayList<String>();
 				array2.add(impostazione4);
 				array2.add(impostazione5);
