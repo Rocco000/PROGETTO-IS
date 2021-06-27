@@ -32,7 +32,7 @@ public class ServletAccessoAdmin extends HttpServlet {
 				
 				if(logAmministratore==true) {
 					//l'amministratore e' gia loggato e quindi non può andare in admin.jsp
-					String url="servletindex";//pagina fornitura
+					String url="paginaAmministratore.jsp";//pagina fornitura
 					url= response.encodeURL(url);
 					response.sendRedirect(url);
 					return;

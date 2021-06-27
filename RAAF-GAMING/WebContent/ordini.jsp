@@ -68,7 +68,7 @@
     	<p style="widht:75%; color:white; border-bottom: 3px solid; border-color: #FF9900;">History</p>
     </div>
     <%
-			if(ordiniUtente==null){
+			if(ordiniUtente.size()==0){
    	%>
    				<p style="color:white; text-align:center;">NON HAI EFFETTUATO ANCORA NESSUN ORDINE</p>
    	<%
@@ -97,7 +97,7 @@
 		            	%>
 			                <tr>
 			                    <td scope="row"> <%=app.getCodice()%> </td>
-			                    <td><div style="max-width:90px; overflow: auto; text-overflow: ellipsis; white-space: nowrap;"><%=app.getIndirizzo_di_consegna()%></div></td>
+			                    <td><div style="max-width:100%; overflow: auto; white-space: nowrap;"><%=app.getIndirizzo_di_consegna()%></div></td>
 			                    <td><%=app.getMetodo_di_pagamento()%></td>
 			                    <td class="text-muted"><%=app.getData_acquisto()%></td>
 			                    <%

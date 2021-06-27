@@ -123,5 +123,29 @@ public class OrdineModelDAO implements OperazioniModel<OrdineBean> {
 		connessione.close();
 		return a;
 	}
+	
+	public ArrayList<OrdineBean> getOrdiniNonConsegnati() throws SQLException{
+		Connection connessione= ds.getConnection();
+		String query="SELECT * FROM ordine o WHERE NOT EXISTS(SELECT * FROM spedito WHERE o.codice=spedito.ordine);";
+		PreparedStatement ps= connessione.prepareStatement(query);
+		
+		ResultSet risultato= ps.executeQuery();
+		ArrayList<OrdineBean> nonConsegnati= new ArrayList<OrdineBean>();
+		while(risultato.next()) {
+			OrdineBean app= new OrdineBean();
+			app.setCodice(risultato.getString("codice"));
+			app.setIndirizzo_di_consegna(risultato.getString("indirizzo_di_consegna"));
+			app.setMetodo_di_pagamento(risultato.getString("metodo_di_pagamento"));
+			app.setCliente(risultato.getString("cliente"));
+			app.setData_acquisto(risultato.getDate("data_acquisto"));
+			app.setPrezzo_totale(risultato.getDouble("prezzo_totale"));
+			
+			nonConsegnati.add(app);
+		}
+		risultato.close();
+		ps.close();
+		connessione.close();
+		return nonConsegnati;
+	}
 
 }
