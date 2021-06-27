@@ -47,7 +47,7 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 	<div class="row">
 		<div class="col-md-12 inline-block">
 			<ul class="cards">
-	  			<li style="height:300px; width:90%;">
+	  			<li style="height:250px; max-width:250px;">
 	  			<%
 	  				String stringa0 = "servletprodotto?id="+prod.get(0).getCodice_prodotto();
 	  				String stringa1 = "servletprodotto?id="+prod.get(1).getCodice_prodotto();
@@ -76,7 +76,7 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 		      			</div>
 	    			</a>      
 	  			</li>
-	  			<li style="height:300px;  width:90%;">
+	  			<li style="height:250px; max-width:250px;">
 	    			<a href="<%=stringa1 %>" class="card">
 		      			<img src="servletcard?id=<%=prod.get(1).getCodice_prodotto()%>" class="card__image" alt="" />
 		      			<div class="card__overlay">
@@ -91,7 +91,7 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 		      			</div>
 	    			</a>      
 	  			</li> 
-	  			<li style="height:300px;  width:90%;">
+	  			<li style="height:250px; max-width:250px;">
 	    			<a href="<%=stringa2 %>" class="card">
 		      			<img src="servletcard?id=<%=prod.get(2).getCodice_prodotto()%>" class="card__image" alt="" />
 		      			<div class="card__overlay">
@@ -112,7 +112,7 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 	<div class="row">
 		<div class="col-md-12 inline-block">
 			<ul class="cards">
-	  			<li style="height:300px;  width:90%;">
+	  			<li style="height:250px; max-width:250px;">
 	    			<a href="<%=stringa3 %>" class="card">
 		      			<img src="servletcard?id=<%=prod.get(3).getCodice_prodotto()%>" class="card__image" alt="" />
 		      			<div class="card__overlay">
@@ -127,7 +127,7 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 		      			</div>
 	    			</a>      
 	  			</li>
-	  			<li style="height:300px;  width:90%;">
+	  			<li style="height:250px; max-width:250px;">
 	    			<a href="<%=stringa4 %>" class="card">
 		      			<img src="servletcard?id=<%=prod.get(4).getCodice_prodotto()%>" class="card__image" alt="" />
 		      			<div class="card__overlay">
@@ -142,7 +142,7 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 		      			</div>
 	    			</a>      
 	  			</li>
-	  			<li style="height:300px;  width:90%;">
+	  			<li style="height:250px; max-width:250px;">
 	    			<a href="<%=stringa5 %>" class="card">
 		      			<img src="servletcard?id=<%=prod.get(5).getCodice_prodotto()%>" class="card__image" alt="" />
 		      			<div class="card__overlay">

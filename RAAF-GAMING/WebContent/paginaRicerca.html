@@ -16,10 +16,15 @@
 <!-- css mio -->
 <link rel="stylesheet" href="css/StileIndex.css" type="text/css">
 <link rel="stylesheet" href="css/stileGioco.css" type="text/css">
+<link rel="stylesheet" href="css/stileCard.css" type="text/css" >
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- script per il carrello -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+
+
 
 
 <title>RAAF-GAMING</title>
@@ -69,227 +74,191 @@
 </div>
 </nav>
 <!--inizio descrizione-->
-<section class="trasparent">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
 
-                <div class="tab-content" id="nav-tabContent">
-                  <div class="tab-pane fade show active" id="nav-brand" role="tabpanel" aria-labelledby="nav-brand-tab">
-                      <div class="row py-5 my-4">
-                    <div class="col-md-12">
-                        <div class="card-body">
-                                <div class="row pb-2">
-                    <div class="col-md-12">
-                        <h4 style="color:White">Inserisci la categoria</h4>
-                    </div>
-                </div>
-            	<div class="row ">
-            		<div class="col-md-3">
-                       <div class="form-group">
-                          <select id="inputState" class="form-control">
-                            <option selected>.. Seleziona una Piattaforma..</option>
-                            <option>Playstation</option>
-                            <option>XBOX</option>
-                            <option>Nintendo</option>
-                            <option>PC</option>
-                          </select>
-                       </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                          <select id="inputState" class="form-control">
-                            <option selected>.. Seleziona una Categoria..</option>
-                            <option>Azione</option>
-                            <option>MOBA</option>
-                            <option>Sparatutto</option>
-                            <option>Avventura</option>
-                            <option>Sport</option>
-                          </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-        	           <button type="button" class="btn btn-outline-warning btn-block">Cerca</button>
-        	        </div>
-            	</div>
-                            </div>
-                    </div>
-                </div>
-                  </div>
-                  <div class="tab-pane fade" id="nav-price" role="tabpanel" aria-labelledby="nav-price-tab">
-                       <div class="row py-5 my-5">
-            <div class="col-md-12">
-                <div class="card-body">
-                        <div class="row pb-2">
- 
-        </div>
-                    </div>
-            </div>
-        </div>
-                      
-                  </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<div class="my-3"></div>
-<section>
-    <div class="container">
-	<div class="row py-2">
-	    <div class="col-md-12">
-	        <h4 style="color:White">Prodotti ricercati</h4>
-	    </div>
+<div class="container pl-5" style="min-height:100vh;">
+
+<h3 class="ml-3 mt-5 mb-0" style="color:white;">Risultato Ricerca</h3>
+
+	<div class="row" style="width:100%">
+		<div class="col-md-12 inline-block">
+			<ul class="cards ml-1 mr-1 pr-5">
+	  			<li style="height:250px; width:70%;">
+	  			
+	    			<a href="#" class="card">
+		      			<img src="immagini/cyberpunk.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title"></h3>            
+		            				<span class="card__status" style="color:red;"></span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">Data uscita:<br>Sconto:&nbsp;</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			
+	  				<li style="max-height:250px; max-width:70%;">
+	  			
+	    			<a href="#" class="card">
+		      			<img src="immagini/cyberpunk.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title"></h3>            
+		            				<span class="card__status" style="color:red;"></span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">Data uscita:<br>Sconto:&nbsp;</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			
+	  				<li style="max-height:250px; max-width:70%;">
+	  			
+	    			<a href="#" class="card">
+		      			<img src="immagini/cyberpunk.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title"></h3>            
+		            				<span class="card__status" style="color:red;"></span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">Data uscita:<br>Sconto:&nbsp;</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			
+
+	  			
+	  			<li style="max-height:250px; max-width:70%;">
+	  			
+	    			<a href="#" class="card">
+		      			<img src="immagini/cyberpunk.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title"></h3>            
+		            				<span class="card__status" style="color:red;"></span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">Data uscita:<br>Sconto:&nbsp;</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			
+	  			<li style="max-height:250px; max-width:70%;">
+	  			
+	    			<a href="#" class="card">
+		      			<img src="immagini/cyberpunk.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title"></h3>            
+		            				<span class="card__status" style="color:red;"></span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">Data uscita:<br>Sconto:&nbsp;</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			
+	  			<li style="max-height:250px; max-width:70%;">
+	  			
+	    			<a href="#" class="card">
+		      			<img src="immagini/cyberpunk.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title"></h3>            
+		            				<span class="card__status" style="color:red;"></span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">Data uscita:<br>Sconto:&nbsp;</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			
+	  			<li style="max-height:250px; max-width:70%;">
+	  			
+	    			<a href="#" class="card">
+		      			<img src="immagini/cyberpunk.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title"></h3>            
+		            				<span class="card__status" style="color:red;"></span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">Data uscita:<br>Sconto:&nbsp;</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			
+	  			<li style="max-height:250px; max-width:70%;">
+	  			
+	    			<a href="#" class="card">
+		      			<img src="immagini/cyberpunk.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title"></h3>            
+		            				<span class="card__status" style="color:red;"></span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">Data uscita:<br>Sconto:&nbsp;</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			
+	  			<li style="max-height:250px; max-width:70%;">
+	  			
+	    			<a href="#" class="card">
+		      			<img src="immagini/cyberpunk.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title"></h3>            
+		            				<span class="card__status" style="color:red;"></span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">Data uscita:<br>Sconto:&nbsp;</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+	  			
+	  			<li style="max-height:250px; max-width:70%;">
+	  			
+	    			<a href="#" class="card">
+		      			<img src="immagini/cyberpunk.jpg" class="card__image" alt="" />
+		      			<div class="card__overlay">
+		        			<div class="card__header">                  
+		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
+		          				<div class="card__header-text">
+		            				<h3 class="card__title"></h3>            
+		            				<span class="card__status" style="color:red;"></span>
+		          				</div>
+		        			</div>
+		        			<p class="card__description">Data uscita:<br>Sconto:&nbsp;</p>
+		      			</div>
+	    			</a>      
+	  			</li>
+			</ul>
+		</div>
 	</div>
-	<div class="row py-2">
-										<div class="col-md-3  vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
 
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
 </div>
-		         </div>
-		         
-		         					<div class="col-md-3  vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
 
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
-</div>
-		         </div>
-		         
-		         					<div class="col-md-3  vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
-
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
-</div>
-		         </div>
-		         
-		         					<div class="col-md-3  vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
-
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
-</div>
-		         </div>
-		         <!-- inizio -->
-					<div class="col-md-3 mt-2 vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
-
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
-</div>
-		         </div>
-		         
-		         					<div class="col-md-3 mt-2 vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
-
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
-</div>
-		         </div>
-		         
-		         					<div class="col-md-3 mt-2 vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
-
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
-</div>
-		         </div>
-		         
-		         					<div class="col-md-3 mt-2 vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
-
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
-</div>
-		         </div>
-		         
-		         					<div class="col-md-3 mt-2 vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
-
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
-</div>
-		         </div>
-		         
-		         					<div class="col-md-3 mt-2 vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
-
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
-</div>
-		         </div>
-		         
-		         					<div class="col-md-3 mt-2 vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
-
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
-</div>
-		         </div>
-		         
-		         					<div class="col-md-3 mt-2 vertical-box">
-		             <div class="card">
-                      <img class="card-img-top mh200-text" src="immagini/sky.jpg" alt="Card image">
-                      <div class="card-body">
-                        <h4 class="card-title mw30-text">Descrizione</h4>
-                    <h5 class="card-text">Prezzo</h5>
-
-                        <button type="button" class="btn btn-outline-danger">Contact Sellers</button>
-  </div>
-</div>
-		         </div>
-		         <!-- fine -->
-		        
-		     </div>
-	</div>
-</section>
 
 <!--fine descrizione-->
 

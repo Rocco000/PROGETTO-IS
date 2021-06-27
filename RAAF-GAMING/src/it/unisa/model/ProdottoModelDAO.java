@@ -39,6 +39,34 @@ public class ProdottoModelDAO implements OperazioniModel<ProdottoBean>{
 		con.close();
 		return bean;
 	}
+	
+	public ArrayList<ProdottoBean> doRetriveByName(String code) throws SQLException {
+		Connection con = ds.getConnection();
+		String str = "SELECT * FROM prodotto WHERE nome LIKE ? ;";
+		PreparedStatement ps = con.prepareStatement(str);
+		ps.setString(1,"%"+code+"%");
+		ResultSet st = ps.executeQuery();
+		ArrayList<ProdottoBean> b = new ArrayList<ProdottoBean>();
+		while(st.next())
+		{
+			ProdottoBean bean = new ProdottoBean();
+			bean.setCodice_prodotto(st.getInt("codice_prodotto"));
+			bean.setCopertina(st.getBytes("copertina"));
+			bean.setData_uscita(st.getDate("data_uscita"));
+			bean.setFornitore(st.getString("fornitore"));
+			bean.setNome(st.getString("nome"));
+			bean.setPrezzo(st.getDouble("prezzo"));
+			bean.setQuantita_fornitura(st.getInt("quantita_fornitura"));
+			bean.setSconto(st.getInt("sconto"));
+			bean.setUltima_fornitura(st.getDate("ultima_fornitura"));
+			
+			b.add(bean);
+		}
+		st.close();
+		ps.close();
+		con.close();
+		return b;
+	}
 
 	public ArrayList<ProdottoBean> doRetriveAll(String order) throws SQLException {
 		Connection con = ds.getConnection();
