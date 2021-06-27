@@ -26,7 +26,7 @@
 	
 	<!-- css per la grafica della pagina -->
 	<link rel="stylesheet" href="css/stileOrdini.css" type="text/css">
-	
+
 	<style>
 		body {
 			width: 100%;
@@ -62,10 +62,10 @@
 <div class="wrapper rounded" style="min-height:100vh;">
 
   
-	<p class="text-center font-weight-bold" style="color:white; font-size:20px;">I TUOI ORDINI</p>
+	<p class="text-center font-weight-bold" style="color:#FF9900; font-size:20px;">I TUOI ORDINI</p>
   		         
     <div class="d-flex justify-content-between align-items-center mt-3">
-    	<p style="widht:75%; color:white; border-bottom: 3px solid white;">History</p>
+    	<p style="widht:75%; color:white; border-bottom: 3px solid; border-color: #FF9900;">History</p>
     </div>
     <%
 			if(ordiniUtente==null){
@@ -81,12 +81,12 @@
 			        <table class="table table-dark table-borderless table-hover">
 			            <thead>
 			                <tr>
-			                    <th scope="col">ORDER ID</th>
-			                    <th scope="col">INDIRIZZO DI CONSEGNA</th>
-			                    <th scope="col">IBAN</th>
-			                    <th scope="col">DATA ACQUISTO</th>
-			                    <th scope="col">DATA CONSEGNA</th>
-			                    <th scope="col" class="text-right">TOTALE</th>
+			                    <th scope="col" style="color:#00FF7F"><i class='fas fa-shopping-basket' style='font-size:20px; display:inline;'></i> ORDER ID</th>
+			                    <th scope="col" style="color:#00FF7F;"><i class="fa fa-home" style="font-size:20px; display:inline;"></i>INDIRIZZO CONSEGNA</th>
+			                    <th scope="col" style="color:#00FF7F"><i class='far fa-credit-card' style='font-size:20px; display:inline;'></i> IBAN</th>
+			                    <th scope="col" style="color:#00FF7F"><i class='fas fa-calendar' style='font-size:20px; display:inline;'></i> DATA ACQUISTO</th>
+			                    <th scope="col" style="color:#00FF7F"><i class="fa fa-calendar" style="font-size:20px; display:inline;"></i> DATA CONSEGNA</th>
+			                    <th scope="col" style="color:#00FF7F"><i class='fas fa-money-bill-wave' style='font-size:20px; display:inline;'></i>TOTALE</th>
 			                </tr>
 			            </thead>
 			            <tbody>
@@ -97,7 +97,7 @@
 		            	%>
 			                <tr>
 			                    <td scope="row"> <%=app.getCodice()%> </td>
-			                    <td><%=app.getIndirizzo_di_consegna()%></td>
+			                    <td><div style="max-width:90px; overflow: auto; text-overflow: ellipsis; white-space: nowrap;"><%=app.getIndirizzo_di_consegna()%></div></td>
 			                    <td><%=app.getMetodo_di_pagamento()%></td>
 			                    <td class="text-muted"><%=app.getData_acquisto()%></td>
 			                    <%

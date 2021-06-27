@@ -30,11 +30,21 @@
 	<title>LOGIN-ADMIN</title>
 </head>
 <body>
+<%
+	String visitato= (String) request.getAttribute("visitato");
+	if(visitato==null){
+		String str="servletaccessoadmin";
+		String url = request.getRequestURL() + "";
+		response.sendRedirect(response.encodeURL(url.replaceAll("admin.jsp",str)));
+		return;
+	}
+	
+%>
 		<div class="container ml-5 mb-3 mt-2">
 		<img src="immagini/logo.png" alt="RAAF-GAMING" style="width:180px; position: static;">
 		</div>
 		<div class="container d-flex justify-content-center" style="background-color: rgba(254,254,233,0.5); width:40%;" >
-			<form action="servletAdmin" method="POST" id="stileForm" onSubmit="return controlloValori(this);">
+			<form action="<%= response.encodeURL("servletAdmin") %>" method="POST" id="stileForm" onSubmit="return controlloValori(this);">
 						<h3 class="testo mt-3 ml-2" style="font-family: Acunim Variable Consent;">Raaf-Gaming.it</h3>
 							<%
 							String str=(String)request.getAttribute("message");
