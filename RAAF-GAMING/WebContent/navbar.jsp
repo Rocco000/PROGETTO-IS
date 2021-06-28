@@ -16,7 +16,7 @@
   </div>
   <div class="d-inline-flex d-flex justify-content-center ml-0 pl-0 mr-0 pl-0">
   <form action="<%= response.encodeURL("servletricerca") %>" method="get" class="form-inline">
-  <input class="form-control" type="text" placeholder="cerca" name="ricerca" style="border-radius:15px;background: url(immagini/lente.png) no-repeat scroll 98% 4px; background-size: 23px 23px ; background-color:white; border-color:black; border-width:2px; width:100%;">
+  <input class="form-control" type="text" placeholder="cerca" name="ricerca" style="border-radius:15px;background: url(immagini/lente.png) no-repeat scroll 98% 4px; background-size: 23px 23px ; background-color:white; border-color:black; border-width:2px; width:100%; padding-right: 30px;">
   </form>
   </div>
   <div class="d-inline-flex mr-5 ">
