@@ -48,7 +48,7 @@ public class servletAdmin extends HttpServlet {
 				if(logAdmin==true) {
 					//l'admin e' gia' loggato e quindi non puo' utilizzare questa servlet
 					
-					String url="paginaAmministratore.jsp";//url pagina fornitura prodotti
+					String url="servletgestioneadmin";//url pagina fornitura prodotti
 					url= response.encodeURL(url);
 					response.sendRedirect(url);
 					return;
@@ -80,7 +80,7 @@ public class servletAdmin extends HttpServlet {
 								sessione.setAttribute("passwordAdmin", amministratore.getPassword());
 								sessione.setAttribute("logAdmin", true);
 								
-								String url="paginaAmministratore.jsp";//url pagina fornitura prodotti
+								String url="servletgestioneadmin";//url pagina fornitura prodotti
 								url= response.encodeURL(url);
 								response.sendRedirect(url);
 								return;
@@ -141,7 +141,7 @@ public class servletAdmin extends HttpServlet {
 							sessione.setAttribute("passwordAdmin", amministratore.getPassword());
 							sessione.setAttribute("logAdmin", true);
 							
-							String url="paginaAmministratore.jsp";//url pagina fornitura prodotti
+							String url="servletgestioneadmin";//url pagina fornitura prodotti
 							url= response.encodeURL(url);
 							response.sendRedirect(url);
 							return;

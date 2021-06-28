@@ -24,7 +24,7 @@ public class ServletLogoutAdmin extends HttpServlet {
 		HttpSession sessione= request.getSession(true);
 		Object logAdmin= sessione.getAttribute("logAdmin");
 		if(logAdmin==null) {
-			String url="servletindex";
+			String url="servletaccessoadmin";
 			url= response.encodeURL(url);
 			response.sendRedirect(url);
 			return;
@@ -33,7 +33,7 @@ public class ServletLogoutAdmin extends HttpServlet {
 			sessione.removeAttribute("logAdmin");
 	    	sessione.removeAttribute("emailAdmin");
 	    	sessione.removeAttribute("passwordAdmin");
-			String url="admin.jsp";
+			String url="servletaccessoadmin";
 			url= response.encodeURL(url);
 			response.sendRedirect(url);
 			return;

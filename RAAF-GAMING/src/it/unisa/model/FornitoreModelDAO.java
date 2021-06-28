@@ -25,7 +25,7 @@ public class FornitoreModelDAO implements OperazioniModel<FornitoreBean> {
 	@Override
 	public ArrayList<FornitoreBean> doRetriveAll(String order) throws SQLException {
 		Connection connessione = ds.getConnection();
-		String Query="SELECT * FROM fornitore ODER BY ?";
+		String Query="SELECT * FROM fornitore ORDER BY ?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
 		if(order!=null && order!="") 

@@ -29,7 +29,7 @@ public class SoftwarehouseModelDAO implements OperazioniModel<SoftwarehouseBean>
 		if(order!=null && !order.equals(""))
 			ps.setString(1, order);
 		else
-			ps.setString(1,"softwarehouse.nomesfh");
+			ps.setString(1,"softwarehouse.nomesfh asc");
 		ArrayList<SoftwarehouseBean> a=new ArrayList<SoftwarehouseBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {

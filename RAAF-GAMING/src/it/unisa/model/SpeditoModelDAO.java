@@ -1,6 +1,7 @@
 package it.unisa.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,8 +66,15 @@ public class SpeditoModelDAO implements OperazioniModel<SpeditoBean> {
 
 
 	public void doSave(SpeditoBean item) throws SQLException {
-	
+		Connection connessione= ds.getConnection();
+		String query="INSERT INTO spedito VALUES(?,?,?);";
+		PreparedStatement ps= connessione.prepareStatement(query);
+		ps.setString(1, item.getOrdine());
+		ps.setString(2, item.getCorriere_espresso());
+		ps.setDate(3, (Date) item.getData_consegna());
 		
+		ps.executeUpdate();
+		return;
 	}
 
 	

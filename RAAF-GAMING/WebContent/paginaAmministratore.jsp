@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="java.util.ArrayList, it.unisa.model.OrdineBean, it.unisa.model.ProdottoBean, it.unisa.model.FornitoreBean, it.unisa.model.SoftwarehouseBean"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,10 +29,25 @@
 
 	<title>Pagina-Amministrazione</title>
 </head>
-<body>	
+<body>
+<%
+	String visitato= (String)request.getAttribute("visitato");
+	if(visitato==null){
+		String url="servletgestioneadmin";
+		url= response.encodeURL(url);
+		response.sendRedirect(url);
+		return;
+	}
+	
+	//ottengo dalla servletGestioneAdmin gli ordini non consegnati e i prodotti esistenti
+	ArrayList<OrdineBean> ordiniNonConsegnati= (ArrayList<OrdineBean>)request.getAttribute("nonConsegnati");
+	ArrayList<ProdottoBean> prodottiEsistenti= (ArrayList<ProdottoBean>)request.getAttribute("prodottiEsistenti");
+	ArrayList<FornitoreBean> fornitori= (ArrayList<FornitoreBean>)request.getAttribute("fornitori");  
+	ArrayList<SoftwarehouseBean> sfh= (ArrayList<SoftwarehouseBean>)request.getAttribute("softwarehouse");
+%>	
 		<div class="container ml-5 mb-3 mt-2">
-		<img src="immagini/logo.png" alt="RAAF-GAMING" style="width:180px; position: static;">
-		<a class="btn btn-dark mr-3 mt-5 " style="float:right" href=/servletlogoutadmin role="button">LogOut</a>
+			<img src="immagini/logo.png" alt="RAAF-GAMING" style="width:180px; position: static;">
+			<a class="btn btn-dark mr-3 mt-5 " style="float:right" href="<%=response.encodeURL("servletlogoutadmin")%>" role="button">LogOut</a>
 		</div>
 		<h4 class="testo" style="font-family: Acunim Variable Consent;text-align:center">Inserisci prodotto o crea spedizione:</h4>
 		<div class="form-row d-flex justify-content-center">
@@ -45,34 +60,36 @@
 			</div>
 		<div class="container d-flex justify-content-center" style="background-color: rgba(254,254,233,0.5);border-radius:20px;">
 		<div id="ordine" style="display:none">
-		<form>
+		<form action="<%=response.encodeURL("servletformordiniadmin")%>" method="POST" name="ordini">
 		<div class="form-row">
-		<div class="form-group mr-3 mt-3">
-	    <label for="nomeProdotto">Codice ordine:</label><br>
-	    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="numeroOrdine">
-  		<option value="1">Bartolini</option>
-  		<option value="2">DHL</option>
-  		<option value="3">SDA</option>
-  		<option value="4">TNT</option>
-  		<option value="5">UPS</option>
-		</select>
-	    </div>
-	    <div class="form-group mr-3 mt-3">
-	    <label for="nomeProdotto" >Corriere espresso:</label><br>
-	    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="corriere">
-  		<option value="1">Bartolini</option>
-  		<option value="2">DHL</option>
-  		<option value="3">SDA</option>
-  		<option value="4">TNT</option>
-  		<option value="5">UPS</option>
-		</select>
-	    </div>
-	    <div class="form-group mr-3 mt-3">
-	    <label for="nomeProdotto">Data consegna:</label>
-	    <input type="date" class="form-control" id="consegnaOrdine" name="consegnaO" style="border-radius:10px">
-	    </div>
+			<div class="form-group mr-3 mt-3">
+			    <label for="numeroOrdine">Codice ordine:</label><br>
+			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="numeroOrdine">
+		    	<%
+		    		for(OrdineBean app: ordiniNonConsegnati){	
+		    	%>
+			  			<option value="<%=app.getCodice()%>"><%=app.getCodice()%></option>
+			  	<%
+		    		}
+			  	%>
+				</select>
+	    	</div>
+	    	<div class="form-group mr-3 mt-3">
+			    <label for="corriere" >Corriere espresso:</label><br>
+			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="corriere">
+			  		<option value="Bartolini">Bartolini</option>
+			  		<option value="DHL">DHL</option>
+			  		<option value="SDA">SDA</option>
+			  		<option value="TNT">TNT</option>
+			  		<option value="UPS">UPS</option>
+				</select>
+	    	</div>
+	    	<div class="form-group mr-3 mt-3">
+			    <label for="consegnaO">Data consegna:</label>
+			    <input type="date" class="form-control" id="consegnaOrdine" name="consegnaO" style="border-radius:10px">
+	    	</div>
 	     <div class="form-row">
-	     <button class="btn btn-dark ml-3 mt-5" style="border-radius:5px;height:32px">Conferma</button>
+	     	<button class="btn btn-dark ml-3 mt-5" style="border-radius:5px;height:32px">Conferma</button>
 	     </div>
 	    </div>
 		</form>
@@ -80,49 +97,65 @@
 		</div>
 		<div class="container d-flex justify-content-center" style="background-color: rgba(254,254,233,0.5);border-radius:20px;">
 		<div id="esistente" style="display:none">
-		<form>
+		<form action="<%=response.encodeURL("servletformprodesistentiadmin")%>" method="POST" name="prodEsistenti">
 		<div class="form-row">
-		<div class="form-group mr-3 mt-3">
-	    <label for="nomeProdotto">Codice:</label>
-	    <input type="text" class="form-control" id="codiceProdotto" name="codicePnuovo" style="border-radius:10px">
-	    </div>
+			<div class="form-group mr-3 mt-3">
+			    <label for="codicePesistente">Codice:</label><br>
+			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="codicePesistente">
+			    <%
+			    	for(ProdottoBean app: prodottiEsistenti){
+			    %>
+			    		<option value="<%=app.getCodice_prodotto()%>"><%=app.getCodice_prodotto()%></option>
+			    <%
+			    	}
+			    %>
+			    </select>
+	    	</div>
 	    <div class="form-group mr-3 mt-3">
-	    <label for="nomeProdotto">Quantità:</label>
-	    <input type="text" class="form-control" id="quantitaProdotto" name="quantitaPnuovo" style="border-radius:10px">
+		    <label for="quantitaPesistente">Quantità:</label>
+		    <input type="text" class="form-control" id="quantitaProdotto" name="quantitaPesistente" style="border-radius:10px">
 	    </div>
 	     <div class="form-row">
-	     <button class="btn btn-dark ml-3 mt-5" style="border-radius:5px;height:32px">Inserisci</button>
+	     	<button class="btn btn-dark ml-3 mt-5" style="border-radius:5px;height:32px">Inserisci</button>
 	     </div>
 	    </div>
 		</form>
 		</div>
 		<div id=nuovo style="display:none">
-		<form>
+		<form action="<%=response.encodeURL("servletformprodnuovoadmin")%>" method="POST" name="nuovoProdotto">
 			<div class="form-row">		
 	  <div class="form-group mr-3">
-	    <label for="nomeProdotto">Nome:</label>
+	    <label for="nomeP">Nome:</label>
 	    <input type="text" class="form-control" id="nomeProdotto" name="nomeP" style="border-radius:10px">
 	  </div>
 	  <div class="form-group">
-	    <label for="codiceProdotto">Prezzo:</label>
+	    <label for="prezzoP">Prezzo:</label>
 	    <input type="text" class="form-control" id="prezzoProdotto"name="prezzoP" style="border-radius:10px">
 	  </div>
 	  <div class="form-group ml-3">
-	    <label for="codiceProdotto">Sconto:</label>
+	    <label for="scontoP">Sconto:</label>
 	    <input type="text" class="form-control" id="scontoProdotto"name="scontoP" style="border-radius:10px">
 	  </div>
 	  </div>
 	   <div class="form-row">		
 	  <div class="form-group mr-3">
-	    <label for="nomeProdotto">Data uscita:</label>
+	    <label for="dataP">Data uscita:</label>
 	    <input type="date" class="form-control" id="uscitaProdotto" name="dataP" style="border-radius:10px">
 	  </div>
 	  <div class="form-group">
-	    <label for="codiceProdotto">Fornitore:</label>
-	    <input type="text" class="form-control" id="fornitoreProdotto"name="fornitoreP" style="border-radius:10px">
+	    <label for="fornitoreP">Fornitore:</label><br>
+	    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="fornitoreP">
+	    <%
+	    	for(FornitoreBean app: fornitori){
+	    %>
+	    		<option value="<%=app.getNome()%>"><%=app.getNome()%></option>
+	    <%
+	    	}
+	    %>
+	    </select>
 	  </div>
  		<div class="form-group ml-3">
-	    <label for="nomeProdotto">Quantita da rifornire:</label>
+	    <label for="quantitaP">Quantita da rifornire:</label>
 	    <input type="text" class="form-control" id="quantitaProdotto" name="quantitaP" style="border-radius:10px">
 	  </div>
 	  </div>
@@ -148,8 +181,18 @@
 			<label>Pegi:<input type="text" name="pegi" style="border-radius:7px"></label>
 			<label>Numero di cd:<input type="text" name="ncd" style="border-radius:7px"></label>
 			<label>Chiave:<input type="text" name="chiave" style="border-radius:7px"></label>
-			<label>Software House:<input type="text" name="nomesfh" style="border-radius:7px"></label>
-			<label>Edizione limitata:<input type="number" name="ncd" min="0" max="1" style="border-radius:7px"></label>
+			<label>Software House:<br>
+				<select class="form-select" style="border-radius:8px;height:35px;width:110px" name="nomesfh">
+				<%
+					for(SoftwarehouseBean app: sfh){
+				%>
+						<option value="<%=app.getNomesfh()%>"><%=app.getNomesfh()%></option>
+				<%
+					}
+				%>
+				</select>
+			</label>
+			<label>Edizione limitata:<input type="number" name="limitata" min="0" max="1" style="border-radius:7px"></label>
 			<button class="btn btn-dark ml-3" style="border-radius:5px">Inserisci</button>
 			</div>
 			<div id="consoleForm" class="form-group" style="display:none">
