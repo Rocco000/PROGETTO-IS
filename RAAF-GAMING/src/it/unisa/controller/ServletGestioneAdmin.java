@@ -13,10 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import it.unisa.model.FornitoreBean;
+import it.unisa.model.FornitoreModelDAO;
 import it.unisa.model.OrdineBean;
 import it.unisa.model.OrdineModelDAO;
 import it.unisa.model.ProdottoBean;
 import it.unisa.model.ProdottoModelDAO;
+import it.unisa.model.SoftwarehouseBean;
+import it.unisa.model.SoftwarehouseModelDAO;
 
 /**
  * Servlet implementation class ServletGestioneAdmin
@@ -54,6 +58,16 @@ public class ServletGestioneAdmin extends HttpServlet {
 						ProdottoModelDAO pdao= new ProdottoModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 						ArrayList<ProdottoBean> prodottiEsistenti= pdao.doRetriveAll(null);
 						request.setAttribute("prodottiEsistenti", prodottiEsistenti);
+						
+						//ottengo tutti i fornitori
+						FornitoreModelDAO fdao= new FornitoreModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+						ArrayList<FornitoreBean> fornitori= fdao.doRetriveAll(null);
+						request.setAttribute("fornitori", fornitori);
+						
+						//ottengo tutte le softwarehouse
+						SoftwarehouseModelDAO sdao= new SoftwarehouseModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+						ArrayList<SoftwarehouseBean> sfh= sdao.doRetriveAll(null);
+						request.setAttribute("softwarehouse", sfh);
 						
 						String url="/paginaAmministratore.jsp";
 						url= response.encodeURL(url);
