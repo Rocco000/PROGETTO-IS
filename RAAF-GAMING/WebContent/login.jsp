@@ -82,7 +82,7 @@
                   
                   <input type="submit" value="ACCEDI" class="invio ml-5" style="font-family: Eras Demi ITC;
 					background-color: #FF6600; width: 60%;font-weight: bold;color:white;border-radius: 15px;"><br>
-             	  <p class="mr-2">oppure<a href="#" target="_self">&nbsp;REGISTRATI</a></p>
+             	  <p class="mr-2">oppure<a href="<%=response.encodeURL("ServletRegistrazione") %>" target="_self">&nbsp;REGISTRATI</a></p>
 	</form>
 	</div>
 </body>

@@ -86,8 +86,9 @@ public class ServletLogin extends HttpServlet {
 							return;
 						}
 						else {
-							String message="Password errata!";
+							String message="";
 							request.setAttribute("message",message);
+							request.setAttribute("visita","");
 							String url = "/login.jsp";
 							url = response.encodeURL(url);
 							RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
@@ -95,8 +96,9 @@ public class ServletLogin extends HttpServlet {
 						}
 					}
 					else {
-						String message="Email errata!";
+						String message="";
 						request.setAttribute("message",message);
+						request.setAttribute("visita","");
 						String url = "/login.jsp";
 						url = response.encodeURL(url);
 						RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
@@ -150,6 +152,7 @@ public class ServletLogin extends HttpServlet {
 					else {
 						String message="";
 						request.setAttribute("message",message);
+						request.setAttribute("visita","");
 						String url="/login.jsp";
 						url=response.encodeURL(url);
 						RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
@@ -159,6 +162,7 @@ public class ServletLogin extends HttpServlet {
 				else {
 					String message="";
 					request.setAttribute("message",message);
+					request.setAttribute("visita","");
 					String url="/login.jsp";
 					url=response.encodeURL(url);
 					RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
