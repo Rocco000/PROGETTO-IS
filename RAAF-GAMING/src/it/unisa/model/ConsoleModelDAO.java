@@ -76,7 +76,19 @@ public class ConsoleModelDAO implements OperazioniModel<ConsoleBean> {
 
 	@Override
 	public void doSave(ConsoleBean item) throws SQLException {
-		// TODO Auto-generated method stub
+		Connection con = ds.getConnection();
+		String str ="INSERT INTO console VALUES(?,?,?);";
+		PreparedStatement ps = con.prepareStatement(str);
+		
+		ps.setInt(1,item.getProdotto());
+		ps.setString(2,item.getSpecifica());
+		ps.setString(3,item.getColore());
+		
+		ps.executeUpdate();
+		ps.close();
+		con.close();
+		
+		
 
 	}
 

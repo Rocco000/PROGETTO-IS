@@ -64,7 +64,7 @@
 		<div class="form-row">
 			<div class="form-group mr-3 mt-3">
 			    <label for="numeroOrdine">Codice ordine:</label><br>
-			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="numeroOrdine"  required>
+			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="numeroOrdine" >
 		    	<%
 		    		for(OrdineBean app: ordiniNonConsegnati){	
 		    	%>
@@ -76,7 +76,7 @@
 	    	</div>
 	    	<div class="form-group mr-3 mt-3">
 			    <label for="corriere" >Corriere espresso:</label><br>
-			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="corriere"  required>
+			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="corriere"  >
 			  		<option value="Bartolini">Bartolini</option>
 			  		<option value="DHL">DHL</option>
 			  		<option value="SDA">SDA</option>
@@ -86,7 +86,7 @@
 	    	</div>
 	    	<div class="form-group mr-3 mt-3">
 			    <label for="consegnaO">Data consegna:</label>
-			    <input type="date" class="form-control" id="consegnaOrdine" name="consegnaO" style="border-radius:10px"  required>
+			    <input type="date" class="form-control" id="consegnaOrdine" name="consegnaO" style="border-radius:10px" >
 	    	</div>
 	     <div class="form-row">
 	     	<button class="btn btn-dark ml-3 mt-5" style="border-radius:5px;height:32px">Conferma</button>
@@ -101,7 +101,7 @@
 		<div class="form-row">
 			<div class="form-group mr-3 mt-3">
 			    <label for="codicePesistente">Codice:</label><br>
-			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="codicePesistente"  required>
+			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="codicePesistente" >
 			    <%
 			    	for(ProdottoBean app: prodottiEsistenti){
 			    %>
@@ -113,7 +113,7 @@
 	    	</div>
 	    <div class="form-group mr-3 mt-3">
 		    <label for="quantitaPesistente">Quantità:</label>
-		    <input type="number" class="form-control" id="quantitaProdotto" name="quantitaPesistente" min="1" style="border-radius:10px"  required>
+		    <input type="number" class="form-control" id="quantitaProdotto" name="quantitaPesistente" min="1" style="border-radius:10px"  >
 	    </div>
 	     <div class="form-row">
 	     	<button class="btn btn-dark ml-3 mt-5" style="border-radius:5px;height:32px">Inserisci</button>
@@ -122,29 +122,29 @@
 		</form>
 		</div>
 		<div id=nuovo style="display:none">
-		<form action="<%=response.encodeURL("servletformprodnuovoadmin")%>" method="POST" name="nuovoProdotto">
+		<form action="<%=response.encodeURL("servletformprodnuovoadmin")%>" method="POST" name="nuovoProdotto" enctype="multipart/form-data">
 			<div class="form-row">		
 	  <div class="form-group mr-3">
 	    <label for="nomeP">Nome:</label>
-	    <input type="text" class="form-control" id="nomeProdotto" name="nomeP" style="border-radius:10px"  required>
+	    <input type="text" class="form-control" id="nomeProdotto" name="nomeP" style="border-radius:10px"  >
 	  </div>
 	  <div class="form-group">
 	    <label for="prezzoP">Prezzo:</label>
-	    <input type="number" class="form-control" id="prezzoProdotto"name="prezzoP" style="border-radius:10px"  required>
+	    <input type="number" class="form-control" id="prezzoProdotto"name="prezzoP" style="border-radius:10px"  >
 	  </div>
 	  <div class="form-group ml-3">
 	    <label for="scontoP">Sconto:</label>
-	    <input type="number" class="form-control" id="scontoProdotto"name="scontoP" min="0" max="99" style="border-radius:10px"  required>
+	    <input type="number" class="form-control" id="scontoProdotto"name="scontoP" min="0" max="99" style="border-radius:10px" >
 	  </div>
 	  </div>
 	   <div class="form-row">		
 	  <div class="form-group mr-3">
 	    <label for="dataP">Data uscita:</label>
-	    <input type="date" class="form-control" id="uscitaProdotto" name="dataP" style="border-radius:10px"  required>
+	    <input type="date" class="form-control" id="uscitaProdotto" name="dataP" style="border-radius:10px"  >
 	  </div>
 	  <div class="form-group">
 	    <label for="fornitoreP">Fornitore:</label><br>
-	    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="fornitoreP"  required>
+	    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="fornitoreP"  >
 	    <%
 	    	for(FornitoreBean app: fornitori){
 	    %>
@@ -156,33 +156,33 @@
 	  </div>
  		<div class="form-group ml-3">
 	    <label for="quantitaP">Quantita da rifornire:</label>
-	    <input type="number" class="form-control" id="quantitaProdotto" name="quantitaP" min="1" style="border-radius:10px"  required>
+	    <input type="number" class="form-control" id="quantitaProdotto" name="quantitaP" min="1" style="border-radius:10px"  >
 	  </div>
 	  </div>
 	  <div class="form-row">		
 		<div class="form-group">
     	<label for="exampleFormControlFile1">Copertina:</label>
-    	<input type="file" class="form-control-file" id="copertinaP" >
+    	<input type="file" class="form-control-file" id="copertinaP" name="copertina" accept="image/*">
     	</div>
   	</div>
 			<div class="form-group mt-3">
 			<label>VIDEOGIOCO
-			<input type="radio" id="videogiocoRadio"name="sceltaP" onchange="prodottoForm();"></label>&nbsp;&nbsp;&nbsp;
+			<input type="radio" value="videogioco" id="videogiocoRadio"name="sceltaP" onchange="prodottoForm();"></label>&nbsp;&nbsp;&nbsp;
 			<label>CONSOLE
-			<input type="radio" id="consoleRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
+			<input type="radio" value="console" id="consoleRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
 			<label>DLC
-			<input type="radio" id="dlcRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
+			<input type="radio" value="dlc" id="dlcRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
 			<label>ABBONAMENTO
-			<input type="radio"id="abbonamentoRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
+			<input type="radio" value="abbonamento" id="abbonamentoRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
 			</div>
 			<div>
 			<div id="videogiocoForm" class="form-group" style="display:none">
-			<label>Dimensione:<input type="number" name="dimensioni" id="dim" min="1" style="border-radius:7px"  required></label>
-			<label>Pegi:<input type="number" name="pegi" min="3" max="18" style="border-radius:7px"  required></label>
+			<label>Dimensione:<input type="number" name="dimensioni" id="dim" min="1" style="border-radius:7px"  ></label>
+			<label>Pegi:<input type="number" name="pegi" min="3" max="18" style="border-radius:7px"  ></label>
 			<label>Numero di cd:<input type="number" name="ncd" min="1" style="border-radius:7px"></label>
 			<label>Chiave:<input type="text" name="chiave" style="border-radius:7px"></label>
 			<label>Software House:<br>
-				<select class="form-select" style="border-radius:8px;height:35px;width:110px" name="nomesfh"  required>
+				<select class="form-select" style="border-radius:8px;height:35px;width:110px" name="nomesfh"  >
 				<%
 					for(SoftwarehouseBean app: sfh){
 				%>
@@ -192,23 +192,23 @@
 				%>
 				</select>
 			</label>
-			<label>Edizione limitata:<input type="number" name="limitata" min="0" max="1" style="border-radius:7px" required></label>
-			<button class="btn btn-dark ml-3" style="border-radius:5px">Inserisci</button>
+			<label>Edizione limitata:<input type="number" name="limitata" min="0" max="1" style="border-radius:7px" ></label>
+			<button class="btn btn-dark ml-3" type="submit" style="border-radius:5px">Inserisci</button>
 			</div>
 			<div id="consoleForm" class="form-group" style="display:none">
-			<label>Specifiche:<input type="text" name="specifiche" id="dim" style="border-radius:7px" required></label>
-			<label>Colore:<input type="text" name="colore" style="border-radius:7px"  required></label>
-			<button class="btn btn-dark ml-3" style="border-radius:7px">Inserisci</button>
+			<label>Specifiche:<input type="text" name="specifiche" id="dim" style="border-radius:7px" ></label>
+			<label>Colore:<input type="text" name="colore" style="border-radius:7px" ></label>
+			<button class="btn btn-dark ml-3" type="submit" style="border-radius:7px">Inserisci</button>
 			</div>
 			<div id="dlcForm" class="form-group" style="display:none">
-			<label>Descrizione:<input type="text" name="descrizione" id="dim" style="border-radius:7px" required></label>
-			<label>Dimensione:<input type="number" name="dimensioneDlc" min="1" style="border-radius:7px" required></label>
-			<button class="btn btn-dark ml-3" style="border-radius:7px">Inserisci</button>
+			<label>Descrizione:<input type="text" name="descrizione" id="dim" style="border-radius:7px" ></label>
+			<label>Dimensione:<input type="number" name="dimensioneDlc" min="1" style="border-radius:7px" ></label>
+			<button class="btn btn-dark ml-3" type="submit" style="border-radius:7px">Inserisci</button>
 			</div>
 			<div id="abbonamentoForm" class="form-group" style="display:none">
-			<label>Codice:<input type="text" name="codice" id="dim" style="border-radius:7px" required></label>
-			<label>Durata:<input type="number" name="durata" min="1" max="12" style="border-radius:7px" required></label>
-			<button class="btn btn-dark ml-3" style="border-radius:5px">Inserisci</button>
+			<label>Codice:<input type="text" name="codice" id="dim" style="border-radius:7px" ></label>
+			<label>Durata:<input type="number" name="durata" min="1" max="12" style="border-radius:7px" ></label>
+			<button class="btn btn-dark ml-3" type="submit" style="border-radius:5px" >Inserisci</button>
 			</div>
 			</div>
 			</form>
