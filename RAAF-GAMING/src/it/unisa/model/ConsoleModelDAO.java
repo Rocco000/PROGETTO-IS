@@ -48,7 +48,7 @@ public class ConsoleModelDAO implements OperazioniModel<ConsoleBean> {
 	public ArrayList<ConsoleBean> doRetriveAll(String order) throws SQLException {
 		
 	Connection connessione = ds.getConnection();
-	String Query="SELECT * FROM console ODER BY ?";
+	String Query="SELECT * FROM console ORDER BY ?";
 	
 	PreparedStatement ps= connessione.prepareStatement(Query);
 	if(order!=null && order!="") 

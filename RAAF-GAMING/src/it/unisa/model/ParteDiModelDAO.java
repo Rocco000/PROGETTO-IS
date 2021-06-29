@@ -82,5 +82,26 @@ public class ParteDiModelDAO implements OperazioniModel<ParteDiBean>{
 	public ParteDiBean doRetriveByKey(String code) throws SQLException {
 		return null;
 	}
+	
+	public ArrayList<ParteDiBean> doRetriveByCategoria(String code) throws SQLException {
+		Connection con = ds.getConnection();
+		String str = "SELECT * FROM parte_di WHERE categoria=?;";
+		PreparedStatement ps = con.prepareStatement(str);
+		ps.setString(1,code);
+		ResultSet st = ps.executeQuery();
+		ArrayList<ParteDiBean> array = new ArrayList<ParteDiBean>();
+		while(st.next())
+		{
+			ParteDiBean bean = new ParteDiBean();
+			bean.setCategoria(st.getString("categoria"));
+			bean.setVideogioco(st.getInt("videogioco"));
+			array.add(bean);
+		}
+		
+		st.close();
+		ps.close();
+		con.close();
+		return array;
+	}
 
 }

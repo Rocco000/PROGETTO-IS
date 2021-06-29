@@ -52,14 +52,14 @@ public class AbbonamentoModelDAO implements OperazioniModel<AbbonamentoBean> {
 	public ArrayList<AbbonamentoBean> doRetriveAll(String order) throws SQLException {
 		
 		Connection connessione= ds.getConnection();
-		String query="SELECT * FROM abbonamento WHERE prodotto=?;";
+		String query="SELECT * FROM abbonamento ORDER BY ?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
 		if(order!=null && !order.equals(""))
 			ps.setString(1, order);
 		else
-			ps.setString(1, "prodotto.codice_prodotto,abbonamento.codice,prodotto.nome asc");
+			ps.setString(1, "prodotto asc");
 		
 		ArrayList<AbbonamentoBean> a= new ArrayList<AbbonamentoBean>();
 		ResultSet risultato= ps.executeQuery();

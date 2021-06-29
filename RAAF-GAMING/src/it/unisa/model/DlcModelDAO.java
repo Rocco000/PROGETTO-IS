@@ -48,7 +48,7 @@ public class DlcModelDAO implements OperazioniModel<DlcBean> {
 	@Override
 	public ArrayList<DlcBean> doRetriveAll(String order) throws SQLException {
 		Connection connessione = ds.getConnection();
-		String Query="SELECT * FROM dlc ODER BY ?";
+		String Query="SELECT * FROM dlc ORDER BY ?";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
 		if(order!=null && order!="") 

@@ -53,19 +53,70 @@
 	
 	</a>
 		</div>
+		<%
+			String ricercaurlcategorie = "servletcategorie";
+		%>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class=" mr-5 list-inline">
       <li class="nav-item list-inline-item">
-        <a class="nav-link" href="#">Link</a>
+      <%
+      String appoggio = ricercaurlcategorie + "?per=catalogo";
+      %>
+        <a class="nav-link" href="<%=response.encodeURL(appoggio)%>"><i class='fas'>&#xf46d;</i>&nbsp;Catalogo</a>
       </li>
+      <%
+     	appoggio = ricercaurlcategorie + "?per=azione";
+      %>
       <li class="nav-item list-inline-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="<%=response.encodeURL(appoggio)%>"><i class="fa">&#xf05b;</i>&nbsp;Azione</a>
       </li>
+      <%
+     	appoggio = ricercaurlcategorie + "?per=avventura";
+      %>
       <li class="nav-item list-inline-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="<%=response.encodeURL(appoggio)%>"><i class='fab'>&#xf286;</i>&nbsp;Avventura</a>
       </li>
+      <%
+     	appoggio = ricercaurlcategorie + "?per=battleroyale";
+      %>
       <li class="nav-item list-inline-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="<%=response.encodeURL(appoggio)%>"><i class='fas'>&#xf445;</i>&nbsp;Battle Royale</a>
+      </li>
+      <%
+     	appoggio = ricercaurlcategorie + "?per=sport";
+      %>
+      <li class="nav-item list-inline-item">
+        <a class="nav-link" href="<%=response.encodeURL(appoggio)%>"><i class="fa">&#xf1e3;</i>&nbsp;Sport</a>
+      </li>
+      <%
+     	appoggio = ricercaurlcategorie + "?per=horror";
+      %>
+      <li class="nav-item list-inline-item">
+        <a class="nav-link" href="<%=response.encodeURL(appoggio)%>"><i class='fas fa-ghost'></i>&nbsp;Horror</a>
+      </li>
+      <%
+     	appoggio = ricercaurlcategorie + "?per=console";
+      %>
+      <li class="nav-item list-inline-item">
+        <a class="nav-link" href="<%=response.encodeURL(appoggio)%>"><i class='fab'>&#xf3df;</i>&nbsp;Console</a>
+      </li>
+      <%
+     	appoggio = ricercaurlcategorie + "?per=videogiochi";
+      %>
+      <li class="nav-item list-inline-item">
+        <a class="nav-link" href="<%=response.encodeURL(appoggio)%>"><i class="fa">&#xf11b;</i>&nbsp;Videogiochi</a>
+      </li>
+      <%
+     	appoggio = ricercaurlcategorie + "?per=abbonamenti";
+      %>
+      <li class="nav-item list-inline-item">
+        <a class="nav-link" href="<%=response.encodeURL(appoggio)%>"><i class="fa">&#xf274;</i>&nbsp;Abbonamenti</a>
+      </li>
+      <%
+     	appoggio = ricercaurlcategorie + "?per=dlc";
+      %>
+      <li class="nav-item list-inline-item">
+        <a class="nav-link" href="<%=response.encodeURL(appoggio)%>"><i class="fa">&#xf067;</i>&nbsp;DLC</a>
       </li>
     </ul>
   </div>
