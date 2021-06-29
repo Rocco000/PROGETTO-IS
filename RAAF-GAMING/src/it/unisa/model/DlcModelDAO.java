@@ -75,7 +75,17 @@ public class DlcModelDAO implements OperazioniModel<DlcBean> {
 
 	@Override
 	public void doSave(DlcBean item) throws SQLException {
-		// TODO Auto-generated method stub
+		Connection con = ds.getConnection();
+		String str ="INSERT INTO dlc VALUES(?,?,?);";
+		PreparedStatement ps = con.prepareStatement(str);
+		
+		ps.setInt(1,item.getProdotto());
+		ps.setDouble(2,item.getDimensione());
+		ps.setString(3,item.getDescrizione());
+		
+		ps.executeUpdate();
+		ps.close();
+		con.close();
 		
 	}
 

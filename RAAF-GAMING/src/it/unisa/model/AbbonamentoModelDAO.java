@@ -83,7 +83,17 @@ public class AbbonamentoModelDAO implements OperazioniModel<AbbonamentoBean> {
 
 	@Override
 	public void doSave(AbbonamentoBean item) throws SQLException {
-		// TODO Auto-generated method stub
+		Connection con = ds.getConnection();
+		String str ="INSERT INTO abbonamento VALUES(?,?,?);";
+		PreparedStatement ps = con.prepareStatement(str);
+		
+		ps.setString(1,item.getCodice());
+		ps.setInt(2,item.getProdotto());
+		ps.setInt(3,item.getDurata_abbonamento());
+		
+		ps.executeUpdate();
+		ps.close();
+		con.close();
 		
 	}
 

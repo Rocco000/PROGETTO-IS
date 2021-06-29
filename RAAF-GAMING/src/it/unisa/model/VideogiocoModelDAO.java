@@ -84,7 +84,21 @@ public class VideogiocoModelDAO implements OperazioniModel<VideogiocoBean> {
 
 	
 	public void doSave(VideogiocoBean item) throws SQLException {
+		Connection con = ds.getConnection();
+		String str = "INSERT INTO videogioco VALUES(?,?,?,?,?,?,?);";
+		PreparedStatement ps = con.prepareStatement(str);
 		
+		ps.setInt(1,item.getProdotto());
+		ps.setDouble(2,item.getDimensione());
+		ps.setInt(3,item.getPegi());
+		ps.setBoolean(4,item.getEdizione_limitata());
+		ps.setInt(5,item.getNcd());
+		ps.setString(6,item.getVkey());
+		ps.setString(7,item.getSoftware_house());
+		
+		ps.executeUpdate();
+		ps.close();
+		con.close();
 		
 	}
 
