@@ -114,4 +114,25 @@ public class PresenteInModelDAO implements OperazioniModel<PresenteInBean>{
 
 	}
 
+	public ArrayList<PresenteInBean> doRetriveByMagazzino(String code) throws SQLException{
+		Connection cn=ds.getConnection();
+		String str="SELECT* FROM presente_in WHERE magazzino=?;";
+		PreparedStatement ps=cn.prepareStatement(str);
+		ps.setString(1, code);
+		ArrayList<PresenteInBean> pib=new ArrayList<PresenteInBean>();
+		ResultSet rs=ps.executeQuery();
+		while(rs.next()) {
+			PresenteInBean bean = new PresenteInBean();
+			bean.setMagazzino(rs.getString("magazzino"));
+			bean.setProdotto(rs.getInt("prodotto"));
+			bean.setQuantita_disponibile(rs.getInt("quantita_disponibile"));
+			pib.add(bean);
+		}
+		rs.close();
+		ps.close();
+		cn.close();
+		return pib;
+	}
+		
+	
 }
