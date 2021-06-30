@@ -117,6 +117,9 @@
 
 <%@include file="footer.jsp" %>
 
+<%
+	String urlj= response.encodeURL("servletprofilo");
+%>
 <script>
 	
 	function aggiornamentoCredenziali(f){
@@ -132,7 +135,7 @@
 			$.ajax({
 					
 					type: "POST",
-					url: "servletprofilo",
+					url: "<%=urlj %>",
 					contentType: "application/json",//tipo di dato che invio
 					dataType:"text",//tipo di dati che mi aspetto dal server
 					data: encodeURIComponent(parametriJson),

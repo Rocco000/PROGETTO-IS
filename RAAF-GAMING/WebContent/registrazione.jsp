@@ -100,7 +100,8 @@
 		  </div>
 		  <div class="form-row">
 		  	<div class="col-md-12 d-flex justify-content-center mb-3">
-		  		<input class="btn btn-outline-warning" type="submit" value="REGISTRATI" style="font-family: Eras Demi ITC;">
+		  		<input type="submit" value="REGISTRATI" class="invio" style="font-family: Eras Demi ITC;
+					background-color: #FF6600; width: 60%;font-weight: bold;color:white;border-radius: 15px;">
 		  	</div>
 		  </div>
 		  

@@ -123,7 +123,7 @@
 		</form>
 		</div>
 		<div id=nuovo style="display:none">
-		<form action="<%=response.encodeURL("servletformprodnuovoadmin")%>" method="POST" name="nuovoProdotto" enctype="multipart/form-data" onSubmit="return controlloProdNuovo();">
+		<form action="<%=response.encodeURL("servletformprodnuovoadmin")%>" method="POST" name="nuovoProdotto" enctype="multipart/form-data" onsubmit="return controlloProdNuovo();">
 			<div class="form-row">		
 	  <div class="form-group mr-3">
 	    <label for="nomeP">Nome:</label>
