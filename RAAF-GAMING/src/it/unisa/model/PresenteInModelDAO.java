@@ -94,8 +94,15 @@ public class PresenteInModelDAO implements OperazioniModel<PresenteInBean>{
 
 
 	public void doSave(PresenteInBean item) throws SQLException {
-
-		
+		Connection con = ds.getConnection();
+		String str = "INSERT INTO presente_in VALUES(?,?,?);";
+		PreparedStatement ps = con.prepareStatement(str);
+		ps.setString(1,item.getMagazzino());
+		ps.setInt(2,item.getProdotto());
+		ps.setInt(3,item.getQuantita_disponibile());
+		ps.executeUpdate();
+		ps.close();
+		con.close();
 	}
 
 

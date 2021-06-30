@@ -144,6 +144,11 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 										Date dateatt = new Date(Calendar.getInstance().getTime().getTime());
 										prodBean.setUltima_fornitura(dateatt);
 										
+										PresenteInBean pbean = new PresenteInBean();
+										pbean.setProdotto(prodBean.getCodice_prodotto());
+										pbean.setQuantita_disponibile(prodBean.getQuantita_fornitura());
+										pbean.setMagazzino(mb.get(i).getIndirizzo());
+										
 										String scelta = request.getParameter("sceltaP");
 										
 										if(scelta.equals("videogioco")==true)
@@ -162,7 +167,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											videogicocoBean.setSoftware_house(nomesfh);
 											videogicocoBean.setProdotto(prodBean.getCodice_prodotto());
 											
-									
+											
 											
 											boolean flag=false;
 											
@@ -184,8 +189,15 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											}
 											
 											ProdDAO.doSave(prodBean);
+											pid.doSave(pbean);
 											VideogiocoModelDAO vDAO = new VideogiocoModelDAO(ds);
 											vDAO.doSave(videogicocoBean);
+											
+											String messageok = "Prodotto inserito con successo!";
+											request.setAttribute("messageok", messageok);
+											RequestDispatcher dispatcher = request.getRequestDispatcher(response.encodeURL("/servletgestioneadmin"));
+											dispatcher.forward(request, response);
+											return;
 											
 										}
 										else if(scelta.equals("console")==true)
@@ -200,7 +212,14 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											
 											ConsoleModelDAO cDAO = new ConsoleModelDAO(ds);
 											ProdDAO.doSave(prodBean);
+											pid.doSave(pbean);
 											cDAO.doSave(console);
+											
+											String messageok = "Prodotto inserito con successo!";
+											request.setAttribute("messageok", messageok);
+											RequestDispatcher dispatcher = request.getRequestDispatcher(response.encodeURL("/servletgestioneadmin"));
+											dispatcher.forward(request, response);
+											return;
 										}
 										else if(scelta.equals("dlc")==true)
 										{
@@ -214,7 +233,14 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											dlcbean.setDimensione(dimensioneDlc);
 										
 											ProdDAO.doSave(prodBean);
+											pid.doSave(pbean);
 											dDAO.doSave(dlcbean);
+											
+											String messageok = "Prodotto inserito con successo!";
+											request.setAttribute("messageok", messageok);
+											RequestDispatcher dispatcher = request.getRequestDispatcher(response.encodeURL("/servletgestioneadmin"));
+											dispatcher.forward(request, response);
+											return;
 										}
 										else
 										{
@@ -229,12 +255,16 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											abb.setProdotto(prodBean.getCodice_prodotto());
 											
 											ProdDAO.doSave(prodBean);
+											pid.doSave(pbean);
 											abbDAO.doSave(abb);
+											
+											String messageok = "Prodotto inserito con successo!";
+											request.setAttribute("messageok", messageok);
+											RequestDispatcher dispatcher = request.getRequestDispatcher(response.encodeURL("/servletgestioneadmin"));
+											dispatcher.forward(request, response);
+											return;
 										}
-										String messageok = "Prodotto inserito con successo!";
-										request.setAttribute("messageok", messageok);
-										RequestDispatcher dispatcher = request.getRequestDispatcher(response.encodeURL("/servletgestioneadmin"));
-										dispatcher.forward(request, response);
+										
 										}
 								}	
 							
@@ -242,6 +272,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 							String url="/servletgestioneadmin";
 							RequestDispatcher view=super.getServletContext().getRequestDispatcher(response.encodeURL(url));
 							view.forward(request, response);
+							return;
 							
 							//ho visto
 							
