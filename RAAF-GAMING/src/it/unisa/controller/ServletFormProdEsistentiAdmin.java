@@ -82,7 +82,9 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 				if((cont+Integer.parseInt(quantita))<=mb.get(i).getCapienza()) {
 					for(PresenteInBean pib:pb) {
 						if(pib.getProdotto()==Integer.parseInt(codiceP)) {
+							
 							pib.setQuantita_disponibile(pib.getQuantita_disponibile()+Integer.parseInt(quantita));
+							
 							ProdottoModelDAO prod=new ProdottoModelDAO(ds);
 							ProdottoBean prodB=null;
 							try {
@@ -99,7 +101,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 								e.printStackTrace();
 							}
 							try {
-								pid.doUpdate(pib);
+								pid.doUpdateQuantita(pib);
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
@@ -107,6 +109,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 							String url="/servletgestioneadmin";
 							RequestDispatcher view=super.getServletContext().getRequestDispatcher(response.encodeURL(url));
 							view.forward(request, response);
+							return;
 						}
 					}
 				}	
@@ -115,6 +118,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 				String url="/servletgestioneadmin";
 				RequestDispatcher view=super.getServletContext().getRequestDispatcher(response.encodeURL(url));
 				view.forward(request, response);
+				return;
 				}
 				else{
 					//l'admin non e' loggato

@@ -65,7 +65,14 @@ public class ParteDiModelDAO implements OperazioniModel<ParteDiBean>{
 
 
 	public void doSave(ParteDiBean item) throws SQLException {
-
+		Connection connessione= ds.getConnection();
+		String query="INSERT INTO parte_di VALUES(?,?);";
+		PreparedStatement ps= connessione.prepareStatement(query);
+		ps.setInt(1, item.getVideogioco());
+		ps.setString(2, item.getCategoria());
+		ps.executeUpdate();
+		ps.close();
+		connessione.close();
 	}
 
 

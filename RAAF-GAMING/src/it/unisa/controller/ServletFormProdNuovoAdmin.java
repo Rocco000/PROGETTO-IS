@@ -20,12 +20,16 @@ import javax.sql.DataSource;
 
 import it.unisa.model.AbbonamentoBean;
 import it.unisa.model.AbbonamentoModelDAO;
+import it.unisa.model.CategoriaBean;
+import it.unisa.model.CategoriaModelDAO;
 import it.unisa.model.ConsoleBean;
 import it.unisa.model.ConsoleModelDAO;
 import it.unisa.model.DlcBean;
 import it.unisa.model.DlcModelDAO;
 import it.unisa.model.MagazzinoBean;
 import it.unisa.model.MagazzinoModelDAO;
+import it.unisa.model.ParteDiBean;
+import it.unisa.model.ParteDiModelDAO;
 import it.unisa.model.PresenteInBean;
 import it.unisa.model.PresenteInModelDAO;
 import it.unisa.model.ProdottoBean;
@@ -153,10 +157,20 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 										
 										if(scelta.equals("videogioco")==true)
 										{
+											String nomecategoria = request.getParameter("categoria");//prendo la categoria del videogioco 
+											//setto il bean per la tabella PARTE_DI del DB
+											ParteDiBean parteBean= new ParteDiBean();
+											parteBean.setCategoria(nomecategoria);
+											parteBean.setVideogioco(prodBean.getCodice_prodotto());
+											ParteDiModelDAO pdao= new ParteDiModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+											
 											double dimensione  =Double.parseDouble(request.getParameter("dimensioni"));
 											int pegi = Integer.parseInt(request.getParameter("pegi"));
-											int ncd = Integer.parseInt(request.getParameter("ncd"));
 											String chiave = request.getParameter("chiave");
+											int ncd=0;
+											if(chiave==null)
+												ncd = Integer.parseInt(request.getParameter("ncd"));
+											
 											String nomesfh = request.getParameter("nomesfh");
 											boolean edlim = Boolean.parseBoolean(request.getParameter("limitata"));
 											
@@ -192,6 +206,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											pid.doSave(pbean);
 											VideogiocoModelDAO vDAO = new VideogiocoModelDAO(ds);
 											vDAO.doSave(videogicocoBean);
+											pdao.doSave(parteBean);
 											
 											String messageok = "Prodotto inserito con successo!";
 											request.setAttribute("messageok", messageok);

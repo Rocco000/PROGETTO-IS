@@ -99,7 +99,7 @@
 			                    <td scope="row"> <%=app.getCodice()%> </td>
 			                    <td><div style="max-width:100%; overflow: auto; white-space: nowrap;"><%=app.getIndirizzo_di_consegna()%></div></td>
 			                    <td><%=app.getMetodo_di_pagamento()%></td>
-			                    <td class="text-muted"><%=app.getData_acquisto()%></td>
+			                    <td class="text-muted"><%=app.getData_acquisto().toString()%></td>
 			                    <%
 			                    	if(spedizioneApp==null){
 			                    %>
@@ -108,7 +108,7 @@
 			                    	}
 			                    	else{
 			                    %>
-			                    		<td><%=spedizioneApp.getData_consegna()%></td>
+			                    		<td><%=spedizioneApp.getData_consegna().toString()%></td>
 			                    <%
 			                    	}
 			                    	indice++;

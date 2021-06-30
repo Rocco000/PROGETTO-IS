@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,15 +49,21 @@ public class ServletFormOrdiniAdmin extends HttpServlet {
 					String ordine= request.getParameter("numeroOrdine");
 					String corriere= request.getParameter("corriere");
 					String data= request.getParameter("consegnaO");
-					Date dataConsegna= Date.valueOf(data);
+					java.sql.Date dataConsegna= java.sql.Date.valueOf(data);
 					
 					spedizione.setOrdine(ordine);
 					spedizione.setCorriere_esprersso(corriere);
 					spedizione.setData_consegna(dataConsegna);
 					
 					System.out.println(ordine+" "+corriere+" "+dataConsegna);
+					System.out.println(spedizione.getData_consegna());
 					try {
 						sdao.doSave(spedizione);
+						String url="/servletgestioneadmin";
+						url= response.encodeURL(url);
+						request.setAttribute("message", "Ordine spedito con successo!");
+						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
+						dispatcher.forward(request, response);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

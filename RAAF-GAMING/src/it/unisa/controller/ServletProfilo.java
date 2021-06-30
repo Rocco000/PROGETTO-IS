@@ -48,7 +48,6 @@ public class ServletProfilo extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		HttpSession sessione= request.getSession(true);//controllo se esiste gia una sessione se no la creo
 		synchronized(sessione){
 			Object logB= sessione.getAttribute("log");//controlle se c'è il campo di log che mi indica se l'utente è loggato
@@ -57,7 +56,6 @@ public class ServletProfilo extends HttpServlet {
 				Boolean log= (Boolean) logB;
 				if(log==true) {
 					//l'utente è loggato e può vedere la pagina profilo
-					
 					response.setContentType("application/json");//dico che il tipo di dato che restituisce la servlet è un json
 					
 					BufferedReader body= request.getReader();//ottengo un riferimento al body della request(lo vede come un file)
@@ -97,7 +95,7 @@ public class ServletProfilo extends HttpServlet {
 						utenteAggiornato.setCarta_fedelta(utente.getCarta_fedelta());
 						utenteAggiornato.setData_di_nascita(utente.getData_di_nascita());
 						
-						if(passwordNuova!=null && passwordNuova!="") {//se ha modificato la password
+						if(passwordNuova!="" && passwordNuova!=null && (passwordNuova.length()>=8)) {//se ha modificato la password
 							
 							//codifico la nuova password in MD5 per confrontarla con quella del DB
 							MessageDigest md = MessageDigest.getInstance("MD5"); 
@@ -111,6 +109,7 @@ public class ServletProfilo extends HttpServlet {
 							if(!passwordAtt.equals(str)) {//se la nuova password è diversa da quella nel db
 								utenteAggiornato.setPassword(passwordNuova);//setto la nuova password
 								flag=true;
+								
 							}
 							else {
 								//se la password è uguale mando un errore
@@ -125,12 +124,14 @@ public class ServletProfilo extends HttpServlet {
 							//se non ha modificato la password assegno quella attuale perchè nel dao aggiorno tutti e 2 i campi
 							passwordNuova = null;
 							utenteAggiornato.setPassword(null);//setto la stessa password
+							
 						}
 						
-						if(ibanNuovo!=null && ibanNuovo!="") {//se ha modificato l'iban
+						if(ibanNuovo!="" && ibanNuovo!=null && (ibanNuovo.length()==27)) {//se ha modificato l'iban
 							
 							if(!ibanAtt.equals(ibanNuovo)) {//se il nuovo iban è diverso da quello del db
 								utenteAggiornato.setIban(ibanNuovo);//setto il nuovo iban
+								
 							}
 							else {
 								//se l'iban è uguale mando un errore
@@ -145,16 +146,19 @@ public class ServletProfilo extends HttpServlet {
 							//se non ha modificato l'iban setto quello attuale
 							ibanNuovo=ibanAtt;
 							utenteAggiornato.setIban(ibanAtt);//setto lo stesso IBAN
+							
 						}
 						
 						
 						if(utenteAggiornato.getPassword()!=null)
 						{
 							cdao.doUpdate(utenteAggiornato);
+							
 						}
 						else
 						{
 							cdao.doUpdateOnlyIban(utenteAggiornato);
+							
 						}
 						//aggiorno i dati dell'utente
 						

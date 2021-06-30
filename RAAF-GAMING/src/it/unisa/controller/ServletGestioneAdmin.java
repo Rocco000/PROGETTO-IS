@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import it.unisa.model.CategoriaBean;
+import it.unisa.model.CategoriaModelDAO;
 import it.unisa.model.FornitoreBean;
 import it.unisa.model.FornitoreModelDAO;
 import it.unisa.model.OrdineBean;
@@ -68,6 +70,11 @@ public class ServletGestioneAdmin extends HttpServlet {
 						SoftwarehouseModelDAO sdao= new SoftwarehouseModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 						ArrayList<SoftwarehouseBean> sfh= sdao.doRetriveAll(null);
 						request.setAttribute("softwarehouse", sfh);
+						
+						//ottengo tutte le categorie
+						CategoriaModelDAO cdao= new CategoriaModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+						ArrayList<CategoriaBean> categorie= cdao.doRetriveAll(null);
+						request.setAttribute("categorie", categorie);
 						
 						String url="/paginaAmministratore.jsp";
 						url= response.encodeURL(url);

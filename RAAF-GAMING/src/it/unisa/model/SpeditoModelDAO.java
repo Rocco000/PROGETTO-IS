@@ -71,9 +71,12 @@ public class SpeditoModelDAO implements OperazioniModel<SpeditoBean> {
 		PreparedStatement ps= connessione.prepareStatement(query);
 		ps.setString(1, item.getOrdine());
 		ps.setString(2, item.getCorriere_espresso());
-		ps.setDate(3, (Date) item.getData_consegna());
+		System.out.println(item.getData_consegna());
+		ps.setString(3,  item.getData_consegna().toString());
 		
 		ps.executeUpdate();
+		ps.close();
+		connessione.close();
 		return;
 	}
 

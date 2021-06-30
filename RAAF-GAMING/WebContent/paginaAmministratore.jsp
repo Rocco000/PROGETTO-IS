@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.ArrayList, it.unisa.model.OrdineBean, it.unisa.model.ProdottoBean, it.unisa.model.FornitoreBean, it.unisa.model.SoftwarehouseBean"%>
+    pageEncoding="ISO-8859-1" import="java.util.ArrayList, it.unisa.model.OrdineBean, it.unisa.model.ProdottoBean, it.unisa.model.FornitoreBean, it.unisa.model.SoftwarehouseBean, it.unisa.model.CategoriaBean"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="css/stileAdmin.css" type="text/css">
 	
 	<!-- javascript nostro -->
-	<script src="javascript/controlloLogin.js"></script>
+	<script src="javascript/controlloOrdineAdmin.js"></script>
 	
 	<meta charset="UTF-8">
 
@@ -44,6 +44,7 @@
 	ArrayList<ProdottoBean> prodottiEsistenti= (ArrayList<ProdottoBean>)request.getAttribute("prodottiEsistenti");
 	ArrayList<FornitoreBean> fornitori= (ArrayList<FornitoreBean>)request.getAttribute("fornitori");  
 	ArrayList<SoftwarehouseBean> sfh= (ArrayList<SoftwarehouseBean>)request.getAttribute("softwarehouse");
+	ArrayList<CategoriaBean> categorie= (ArrayList<CategoriaBean>) request.getAttribute("categorie");
 %>	
 		<div class="container ml-5 mb-3 mt-2">
 			<img src="immagini/logo.png" alt="RAAF-GAMING" style="width:180px; position: static;">
@@ -60,7 +61,7 @@
 			</div>
 		<div class="container d-flex justify-content-center" style="background-color: rgba(254,254,233,0.5);border-radius:20px;">
 		<div id="ordine" style="display:none">
-		<form action="<%=response.encodeURL("servletformordiniadmin")%>" method="POST" name="ordini">
+		<form action="<%=response.encodeURL("servletformordiniadmin")%>" method="POST" name="ordini" onSubmit="return controlloOrdini(this);">
 		<div class="form-row">
 			<div class="form-group mr-3 mt-3">
 			    <label for="numeroOrdine">Codice ordine:</label><br>
@@ -97,7 +98,7 @@
 		</div>
 		<div class="container d-flex justify-content-center" style="background-color: rgba(254,254,233,0.5);border-radius:20px;">
 		<div id="esistente" style="display:none">
-		<form action="<%=response.encodeURL("servletformprodesistentiadmin")%>" method="POST" name="prodEsistenti">
+		<form action="<%=response.encodeURL("servletformprodesistentiadmin")%>" method="POST" name="prodEsistenti" onSubmit="return controlloProdEsistente(this);">
 		<div class="form-row">
 			<div class="form-group mr-3 mt-3">
 			    <label for="codicePesistente">Codice:</label><br>
@@ -113,7 +114,7 @@
 	    	</div>
 	    <div class="form-group mr-3 mt-3">
 		    <label for="quantitaPesistente">Quantità:</label>
-		    <input type="number" class="form-control" id="quantitaProdotto" name="quantitaPesistente" min="1" style="border-radius:10px"  >
+		    <input type="number" class="form-control" id="quantitaProdottoEx" name="quantitaPesistente" min="1" style="border-radius:10px"  >
 	    </div>
 	     <div class="form-row">
 	     	<button class="btn btn-dark ml-3 mt-5" style="border-radius:5px;height:32px">Inserisci</button>
@@ -122,7 +123,7 @@
 		</form>
 		</div>
 		<div id=nuovo style="display:none">
-		<form action="<%=response.encodeURL("servletformprodnuovoadmin")%>" method="POST" name="nuovoProdotto" enctype="multipart/form-data">
+		<form action="<%=response.encodeURL("servletformprodnuovoadmin")%>" method="POST" name="nuovoProdotto" enctype="multipart/form-data" onSubmit="return controlloProdNuovo();">
 			<div class="form-row">		
 	  <div class="form-group mr-3">
 	    <label for="nomeP">Nome:</label>
@@ -156,7 +157,7 @@
 	  </div>
  		<div class="form-group ml-3">
 	    <label for="quantitaP">Quantita da rifornire:</label>
-	    <input type="number" class="form-control" id="quantitaProdotto" name="quantitaP" min="1" style="border-radius:10px"  >
+	    <input type="number" class="form-control" id="quantitaProdottoNew" name="quantitaP" min="1" style="border-radius:10px"  >
 	  </div>
 	  </div>
 	  <div class="form-row">		
@@ -178,9 +179,9 @@
 			<div>
 			<div id="videogiocoForm" class="form-group" style="display:none">
 			<label>Dimensione:<input type="number" name="dimensioni" id="dim" min="1" style="border-radius:7px"  ></label>
-			<label>Pegi:<input type="number" name="pegi" min="3" max="18" style="border-radius:7px"  ></label>
-			<label>Numero di cd:<input type="number" name="ncd" min="1" style="border-radius:7px"></label>
-			<label>Chiave:<input type="text" name="chiave" style="border-radius:7px"></label>
+			<label>Pegi:<input type="number" name="pegi" id="pegi" min="3" max="18" style="border-radius:7px"  ></label>
+			<label>Numero di cd:<input type="number" name="ncd" id="ncd" min="1" style="border-radius:7px"></label>
+			<label>Chiave:<input type="text" name="chiave" id="chiave" style="border-radius:7px"></label>
 			<label>Software House:<br>
 				<select class="form-select" style="border-radius:8px;height:35px;width:110px" name="nomesfh"  >
 				<%
@@ -192,7 +193,19 @@
 				%>
 				</select>
 			</label>
-			<label>Edizione limitata:<input type="number" name="limitata" min="0" max="1" style="border-radius:7px" ></label>
+			<label>Edizione limitata:<input type="number" name="limitata" id="limitata" min="0" max="1" style="border-radius:7px" ></label>
+			<label>
+				Categoria:
+				<select class="form-select" style="border-radius:8px;height:35px;width:110px" name="categoria">
+				<%
+					for(CategoriaBean app: categorie){
+				%>
+						<option value="<%=app.getNome()%>"><%=app.getNome()%></option>
+				<%
+					}
+				%>
+				</select>
+			</label>
 			<button class="btn btn-dark ml-3" type="submit" style="border-radius:5px">Inserisci</button>
 			</div>
 			<div id="consoleForm" class="form-group" style="display:none">

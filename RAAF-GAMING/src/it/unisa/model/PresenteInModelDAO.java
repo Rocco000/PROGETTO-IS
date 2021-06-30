@@ -116,6 +116,18 @@ public class PresenteInModelDAO implements OperazioniModel<PresenteInBean>{
 		ps.close();
 		con.close();
 	}
+	
+	public void doUpdateQuantita(PresenteInBean item) throws SQLException {
+		Connection con = ds.getConnection();
+		String str = "UPDATE presente_in SET quantita_disponibile=? where prodotto=? AND magazzino=?;";
+		PreparedStatement ps = con.prepareStatement(str);
+		ps.setInt(1, item.getQuantita_disponibile());
+		ps.setInt(2,item.getProdotto());
+		ps.setString(3,item.getMagazzino());
+		ps.executeUpdate();
+		ps.close();
+		con.close();
+	}
 
 	public void doDelete(PresenteInBean item) throws SQLException {
 
