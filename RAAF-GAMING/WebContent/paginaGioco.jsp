@@ -31,18 +31,27 @@ if(str==null)
 	response.sendRedirect(response.encodeURL(url.replaceAll("paginaGioco.jsp",str)));
 	return;
 }
-ProdottoBean prod = (ProdottoBean) request.getAttribute("Prodotto");
-String tipo = (String) request.getAttribute("tipo");
-Object obj = request.getAttribute(tipo);
+
 %>
 <%@include file="navbar.jsp" %>
 <!--inizio descrizione-->
 <div class="container d-flex justify-content-center" style="background-color:rgba(230,230,230,0.5); min-height:100vh; width:100%;">
-
+	<%
+		String message= (String)request.getAttribute("message");
+		if(message!=null){
+	%>
+			<h2 style="color:red; style="text-align:center;"><%=message%></h2>
+	<%
+		}
+		else{
+			ProdottoBean prod = (ProdottoBean) request.getAttribute("Prodotto");
+			String tipo = (String) request.getAttribute("tipo");
+			Object obj = request.getAttribute(tipo);
+	%>
 	<div class="row w-100" style="width:100%;">
 		<div class="col-md-6 mt-4 mb-2">
 		
-				<img src="servletcard?id=<%=prod.getCodice_prodotto() %>" style="border-radius:15px;height:100%;width:100%;">
+				<img src="servletcard?id=<%=prod.getCodice_prodotto() %>" style="border-radius:15px;height:75%;width:75%;">
 
 		</div>
 		<div class="col-md-6">
@@ -112,7 +121,22 @@ Object obj = request.getAttribute(tipo);
 											</div>
 										</div>
 										<div class="row">
-												<h4 class="col-md-12 pt-5" style="position:relative; bottom:0; left:0;"><%=prod.getPrezzo() %> euro 
+												<%
+													double prezzoBase= prod.getPrezzo();
+				            						int sconto= prod.getSconto();
+				            						if(sconto>0){
+					            						double psconto= (prezzoBase*sconto)/100;
+					            						double prezzoScontato= prezzoBase-psconto;
+												%>
+														<h4 class="col-md-12 pt-5" style="position:relative; bottom:0; left:0;"><span style="color:black; text-decoration:line-through;"><%=prod.getPrezzo()%>&euro;</span>&nbsp;&nbsp;<span style="font-weight:bold; color:red;"><%=String.format("%.2f",prezzoScontato)%>&euro;</span>
+												<%
+				            						}
+				            						else{
+												%>
+														<h4 class="col-md-12 pt-5" style="position:relative; bottom:0; left:0;"><%=String.format("%.2f",prod.getPrezzo())%>&euro;
+												<%
+				            						}
+												%>
 												<%
 												String presentein = (String) request.getAttribute("presente");
 												if(presentein!=null)
@@ -133,62 +157,67 @@ Object obj = request.getAttribute(tipo);
 			<div class="container" style="height:315px;"></div>
 		</div>
 	</div>
-	<!-- row -->
-	<script>
-	function aggiungiCarrello()
-	{
-		var x = {id: <%=prod.getCodice_prodotto()%>};
+	
+		<!-- row -->
+		<script>
+		function aggiungiCarrello()
+		{
+			var x = {id: <%=prod.getCodice_prodotto()%>};
+			
+			var jisono = JSON.stringify(x);
+			
+			$.ajax({
+				
+				type: "POST",
+				url: "<%=response.encodeURL("servletaggiungicarrello")%>",
+				contentType: "application/json",//tipo di dato che invio
+				dataType:"text",//tipo di dati che mi aspetto dal server
+				data: encodeURIComponent(jisono),
+				async: true,
+				success: function (data){
+					var obj = JSON.parse(data);
+					alert(obj.message);
+					$("#sostituisciCarrello").removeClass("fas fa-shopping-cart");
+					$("#sostituisciCarrello").addClass( "fa fa-cart-arrow-down");
+					},
+				error: function(){alert("lol");}
+		});
+			
+		}
 		
-		var jisono = JSON.stringify(x);
-		
+		function recensione(stella)
+		{
+			var x = {voto: stella.value, id:<%=prod.getCodice_prodotto()%>};
+			var jisono = JSON.stringify(x);
+			
 		$.ajax({
-			
-			type: "POST",
-			url: "<%=response.encodeURL("servletaggiungicarrello")%>",
-			contentType: "application/json",//tipo di dato che invio
-			dataType:"text",//tipo di dati che mi aspetto dal server
-			data: encodeURIComponent(jisono),
-			async: true,
-			success: function (data){
-				var obj = JSON.parse(data);
-				alert(obj.message);
-				$("#sostituisciCarrello").removeClass("fas fa-shopping-cart");
-				$("#sostituisciCarrello").addClass( "fa fa-cart-arrow-down");
-				},
-			error: function(){alert("lol");}
-	});
+				
+				type: "POST",
+				url: "<%=response.encodeURL("servletrecensione")%>",
+				contentType: "application/json",//tipo di dato che invio
+				dataType:"text",//tipo di dati che mi aspetto dal server
+				data: encodeURIComponent(jisono),
+				async: true,
+				success: function (data){
+					var obj = JSON.parse(data);
+					alert(obj.recensione);
+					},
+				error: function(){alert("lol");}
+		});
+	
+		}
 		
-	}
-	
-	function recensione(stella)
-	{
-		var x = {voto: stella.value, id:<%=prod.getCodice_prodotto()%>};
-		var jisono = JSON.stringify(x);
+		function nonpuoiacquistare()
+		{
+			alert("Prodotto non disponibile in magazzino");
+		}
 		
-	$.ajax({
-			
-			type: "POST",
-			url: "<%=response.encodeURL("servletrecensione")%>",
-			contentType: "application/json",//tipo di dato che invio
-			dataType:"text",//tipo di dati che mi aspetto dal server
-			data: encodeURIComponent(jisono),
-			async: true,
-			success: function (data){
-				var obj = JSON.parse(data);
-				alert(obj.recensione);
-				},
-			error: function(){alert("lol");}
-	});
-
-	}
+		</script>
+		<!-- fine -->
+	<%
+		}
+	%>
 	
-	function nonpuoiacquistare()
-	{
-		alert("Prodotto non disponibile in magazzino");
-	}
-	
-	</script>
-	<!-- fine -->
 </div>
 
 <!--fine descrizione-->

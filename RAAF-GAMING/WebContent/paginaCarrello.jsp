@@ -95,6 +95,7 @@ if(str==null)
 								 							<a href="<%=urlprodotto%>" style="color:orange;"><h4 style="color:orange;"><%=prod.get(j).getNome() %></h4></a>
 								 							<div class="product-info">
 									 							<div>Data Uscita: <span class="value"><%=prod.get(j).getData_uscita() %></span></div>
+									 							<div>Scontato del: <span class="value"><%=prod.get(j).getSconto() %>%</span></div>
 									 						</div>
 									 					</div>
 							 						</div>
@@ -106,7 +107,22 @@ if(str==null)
 							 						</form>
 							 						</div>
 							 						<div class="col-md-3 price">
-							 							<span><%=prod.get(j).getPrezzo() %>&euro;</span>
+							 							<%
+							 								if(prod.get(j).getSconto()==0){
+							 							%>
+							 									<span><%=String.format("%.2f",prod.get(j).getPrezzo())%>&euro;</span>
+							 							<%
+							 								}
+							 								else{
+							 									double prezzoBase= prod.get(j).getPrezzo();
+							            						int sconto= prod.get(j).getSconto();
+							            						double psconto= (prezzoBase*sconto)/100;
+							            						double prezzoScontato= prezzoBase-psconto;
+							 							%>
+							 									<span><%=String.format("%.2f",prezzoScontato)%>&euro;</span>
+							 							<%
+							 								}
+							 							%>
 							 						</div>
 							 					</div>
 							 				</div>
@@ -132,8 +148,17 @@ if(str==null)
 			 					{
 			 						double cont=0;
 			 						int k;
-			 						for(k=0;k<prod.size();k++)
-			 							cont+=prod.get(k).getPrezzo();
+			 						for(k=0;k<prod.size();k++){
+			 							if(prod.get(k).getSconto()==0)
+			 								cont+=prod.get(k).getPrezzo();
+			 							else{
+			 								double prezzoBase= prod.get(k).getPrezzo();
+		            						int sconto= prod.get(k).getSconto();
+		            						double psconto= (prezzoBase*sconto)/100;
+		            						double prezzoScontato= prezzoBase-psconto;
+		            						cont+=prezzoScontato;
+			 							}
+			 						}
 			 						%>
 			 					<div class="summary-item mb-3"><span class="text">Totale</span><span class="price"><%=String.format("%.2f",cont) %>&euro;</span></div>
 			 					<%

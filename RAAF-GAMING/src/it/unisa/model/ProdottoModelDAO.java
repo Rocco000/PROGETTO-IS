@@ -19,7 +19,8 @@ public class ProdottoModelDAO implements OperazioniModel<ProdottoBean>{
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM prodotto WHERE codice_prodotto=? ;";
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1,code);
+		int codice= Integer.parseInt(code);
+		ps.setInt(1,codice);
 		ResultSet st = ps.executeQuery();
 		ProdottoBean bean = null;
 		if(st.next())

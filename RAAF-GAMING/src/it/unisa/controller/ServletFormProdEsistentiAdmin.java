@@ -51,7 +51,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 				try {
 					Object obj=pdo.doRetriveByKey(codiceP);
 					if(obj==null) {
-						request.setAttribute("messaggio", "Prodotto non esistente");
+						request.setAttribute("message", "Prodotto non esistente");
 						String url="/servletgestioneadmin";
 						RequestDispatcher view=super.getServletContext().getRequestDispatcher(response.encodeURL(url));
 						view.forward(request, response);
@@ -105,7 +105,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
-							request.setAttribute("messaggio", "Prodotto Rifornito con Successo");
+							request.setAttribute("messageok", "Prodotto Rifornito con Successo");
 							String url="/servletgestioneadmin";
 							RequestDispatcher view=super.getServletContext().getRequestDispatcher(response.encodeURL(url));
 							view.forward(request, response);
@@ -114,7 +114,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 					}
 				}	
 				}
-				request.setAttribute("messaggio", "Capienza non disponibile");
+				request.setAttribute("message", "Capienza non disponibile");
 				String url="/servletgestioneadmin";
 				RequestDispatcher view=super.getServletContext().getRequestDispatcher(response.encodeURL(url));
 				view.forward(request, response);

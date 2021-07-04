@@ -68,8 +68,23 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 		        			<div class="card__header">                  
 		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
 		          				<div class="card__header-text">
-		            				<h3 class="card__title"><%=prod.get(0).getNome()%></h3>            
-		            				<span class="card__status" style="color:red;"><%=prod.get(0).getPrezzo()%>&euro;</span>
+		            				<h3 class="card__title"><%=prod.get(0).getNome()%></h3> 
+		            				<%
+		            					if(prod.get(0).getSconto()==0){
+		            				%>           
+		            						<span class="card__status" style="color:red;"><%=String.format("%.2f",prod.get(0).getPrezzo())%>&euro;</span>
+		            				<%
+		            					}
+		            					else{
+		            						double prezzoBase= prod.get(0).getPrezzo();
+		            						int sconto= prod.get(0).getSconto();
+		            						double psconto= (prezzoBase*sconto)/100;
+		            						double prezzoScontato= prezzoBase-psconto;
+		            				%>	
+		            						<span class="card__status"><span style="color:black; text-decoration:line-through;"><%=prod.get(0).getPrezzo()%>&euro;</span>&nbsp;&nbsp;<h5 style=" font-weight:bold; color:red;"><%=String.format("%.2f",prezzoScontato)%>&euro;</h5></span>
+		            				<%
+		            					}
+		            				%>
 		          				</div>
 		        			</div>
 		        			<p class="card__description">Data uscita:&nbsp;<%=prod.get(0).getData_uscita()%><br>Sconto:&nbsp;<%=prod.get(0).getSconto()%>%</p>
@@ -84,7 +99,22 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
 		          				<div class="card__header-text">
 		            				<h3 class="card__title"><%=prod.get(1).getNome()%></h3>            
-		            				<span class="card__status" style="color:red;"><%=prod.get(1).getPrezzo()%>&euro;</span>
+		            				<%
+		            					if(prod.get(1).getSconto()==0){
+		            				%>           
+		            						<span class="card__status" style="color:red;"><%=String.format("%.2f",prod.get(1).getPrezzo())%>&euro;</span>
+		            				<%
+		            					}
+		            					else{
+		            						double prezzoBase= prod.get(1).getPrezzo();
+		            						int sconto= prod.get(1).getSconto();
+		            						double psconto= (prezzoBase*sconto)/100;
+		            						double prezzoScontato= prezzoBase-psconto;
+		            				%>	
+		            						<span class="card__status"><span style="color:black; text-decoration:line-through;"><%=prod.get(1).getPrezzo()%>&euro;</span>&nbsp;&nbsp;<h5 style=" font-weight:bold; color:red;"><%=String.format("%.2f",prezzoScontato)%>&euro;</h5></span>
+		            				<%
+		            					}
+		            				%>
 		          				</div>
 		        			</div>
 		        			<p class="card__description">Data uscita:&nbsp;<%=prod.get(1).getData_uscita()%><br>Sconto:&nbsp;<%=prod.get(1).getSconto()%>%</p>
@@ -99,7 +129,22 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
 		          				<div class="card__header-text">
 		            				<h3 class="card__title"><%=prod.get(2).getNome()%></h3>            
-		            				<span class="card__status" style="color:red;"><%=prod.get(2).getPrezzo()%>&euro;</span>
+		            				<%
+		            					if(prod.get(2).getSconto()==0){
+		            				%>           
+		            						<span class="card__status" style="color:red;"><%=String.format("%.2f",prod.get(2).getPrezzo())%>&euro;</span>
+		            				<%
+		            					}
+		            					else{
+		            						double prezzoBase= prod.get(2).getPrezzo();
+		            						int sconto= prod.get(2).getSconto();
+		            						double psconto= (prezzoBase*sconto)/100;
+		            						double prezzoScontato= prezzoBase-psconto;
+		            				%>	
+		            						<span class="card__status"><span style="color:black; text-decoration:line-through;"><%=prod.get(2).getPrezzo()%>&euro;</span>&nbsp;&nbsp;<h5 style=" font-weight:bold; color:red;"><%=String.format("%.2f",prezzoScontato)%>&euro;</h5></span>
+		            				<%
+		            					}
+		            				%>
 		          				</div>
 		        			</div>
 		        			<p class="card__description">Data uscita:&nbsp;<%=prod.get(2).getData_uscita()%><br>Sconto:&nbsp;<%=prod.get(2).getSconto()%>%</p>
@@ -120,7 +165,22 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
 		          				<div class="card__header-text">
 		            				<h3 class="card__title"><%=prod.get(3).getNome()%></h3>            
-		            				<span class="card__status" style="color:red;"><%=prod.get(3).getPrezzo()%>&euro;</span>
+		            				<%
+		            					if(prod.get(3).getSconto()==0){
+		            				%>           
+		            						<span class="card__status" style="color:red;"><%=String.format("%.2f",prod.get(3).getPrezzo())%>&euro;</span>
+		            				<%
+		            					}
+		            					else{
+		            						double prezzoBase= prod.get(3).getPrezzo();
+		            						int sconto= prod.get(3).getSconto();
+		            						double psconto= (prezzoBase*sconto)/100;
+		            						double prezzoScontato= prezzoBase-psconto;
+		            				%>	
+		            						<span class="card__status"><span style="color:black; text-decoration:line-through;"><%=prod.get(3).getPrezzo()%>&euro;</span>&nbsp;&nbsp;<h5 style=" font-weight:bold; color:red;"><%=String.format("%.2f",prezzoScontato)%>&euro;</h5></span>
+		            				<%
+		            					}
+		            				%>
 		          				</div>
 		        			</div>
 		        			<p class="card__description">Data uscita:&nbsp;<%=prod.get(3).getData_uscita()%><br>Sconto:&nbsp;<%=prod.get(3).getSconto()%>%</p>
@@ -135,7 +195,22 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
 		          				<div class="card__header-text">
 		            				<h3 class="card__title"><%=prod.get(4).getNome()%></h3>            
-		            				<span class="card__status" style="color:red;"><%=prod.get(4).getPrezzo()%>&euro;</span>
+		            				<%
+		            					if(prod.get(4).getSconto()==0){
+		            				%>           
+		            						<span class="card__status" style="color:red;"><%=String.format("%.2f",prod.get(4).getPrezzo())%>&euro;</span>
+		            				<%
+		            					}
+		            					else{
+		            						double prezzoBase= prod.get(4).getPrezzo();
+		            						int sconto= prod.get(4).getSconto();
+		            						double psconto= (prezzoBase*sconto)/100;
+		            						double prezzoScontato= prezzoBase-psconto;
+		            				%>	
+		            						<span class="card__status"><span style="color:black; text-decoration:line-through;"><%=prod.get(4).getPrezzo()%>&euro;</span>&nbsp;&nbsp;<h5 style=" font-weight:bold; color:red;"><%=String.format("%.2f",prezzoScontato)%>&euro;</h5></span>
+		            				<%
+		            					}
+		            				%>
 		          				</div>
 		        			</div>
 		        			<p class="card__description">Data uscita:&nbsp;<%=prod.get(4).getData_uscita()%><br>Sconto:&nbsp;<%=prod.get(4).getSconto()%>%</p>
@@ -150,7 +225,22 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
 		          				<div class="card__header-text">
 		            				<h3 class="card__title"><%=prod.get(5).getNome()%></h3>            
-		            				<span class="card__status" style="color:red;"><%=prod.get(5).getPrezzo()%>&euro;</span>
+		            				<%
+		            					if(prod.get(5).getSconto()==0){
+		            				%>           
+		            						<span class="card__status" style="color:red;"><%=String.format("%.2f",prod.get(5).getPrezzo())%>&euro;</span>
+		            				<%
+		            					}
+		            					else{
+		            						double prezzoBase= prod.get(5).getPrezzo();
+		            						int sconto= prod.get(5).getSconto();
+		            						double psconto= (prezzoBase*sconto)/100;
+		            						double prezzoScontato= prezzoBase-psconto;
+		            				%>	
+		            						<span class="card__status"><span style="color:black; text-decoration:line-through;"><%=prod.get(5).getPrezzo()%>&euro;</span>&nbsp;&nbsp;<h5 style=" font-weight:bold; color:red;"><%=String.format("%.2f",prezzoScontato)%>&euro;</h5></span>
+		            				<%
+		            					}
+		            				%>
 		          				</div>
 		        			</div>
 		        			<p class="card__description">Data uscita:&nbsp;<%=prod.get(5).getData_uscita()%><br>Sconto:&nbsp;<%=prod.get(5).getSconto()%>%</p>

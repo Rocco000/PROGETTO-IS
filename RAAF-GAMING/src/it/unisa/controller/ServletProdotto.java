@@ -99,106 +99,133 @@ public class ServletProdotto extends HttpServlet {
 			{
 				request.setAttribute("carrello",carr);
 			}
-		}
+		
 		String id = request.getParameter("id");
-		if(id==null)
+		if(id==null || id.equals(""))
 		{
-			response.setStatus(response.SC_NOT_FOUND);
-			response.sendError(response.SC_NOT_FOUND,"PRODOTTO NON ESISTENTE");
+			String message="PRODOTTO NON ESISTENTE!";
+			request.setAttribute("message", message);
+			request.setAttribute("visitato", "");
+			String url="/paginaGioco.jsp";
+			url= response.encodeURL(url);
+			RequestDispatcher dispatcher= request.getRequestDispatcher(url);
+			dispatcher.forward(request, response);
 			return;
 		}
-		
-		DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-		ProdottoModelDAO dao = new ProdottoModelDAO(ds);
-		try {
-
-			ProdottoBean prod = dao.doRetriveByKey(id);
-			if(prod==null)
-			{
-				response.setStatus(response.SC_NOT_FOUND);
-				response.sendError(response.SC_NOT_FOUND,"PRODOTTO NON ESISTENTE");
-				return;
-			}
-			PresenteInModelDAO present = new PresenteInModelDAO(ds);
-			ArrayList<PresenteInBean> presente = present.doRetriveByProdotto(id);
-			
-
-				request.setAttribute("presente",null);
-				for(PresenteInBean l : presente)
+		else {
+			DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
+			ProdottoModelDAO dao = new ProdottoModelDAO(ds);
+			try {
+	
+				ProdottoBean prod = dao.doRetriveByKey(id);
+				
+				if(prod==null)//prodotto non esiste nel db
 				{
-					if(l.getQuantita_disponibile()>0)
-					{
-						request.setAttribute("presente","");
-						break;
-					}
-				}
-			
-			VideogiocoModelDAO vdao = new VideogiocoModelDAO(ds);
-			VideogiocoBean video = vdao.doRetriveByKey(""+prod.getCodice_prodotto());
-			if(video!=null)
-			{
-				request.setAttribute("tipo","videogioco");
-				request.setAttribute("videogioco",video);
-				request.setAttribute("Prodotto",prod);
-				request.setAttribute("visitato","");
-				RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaGioco.jsp");
-				dispatcher.forward(request, response);
-			}
-			else
-			{
-				ConsoleModelDAO cons = new ConsoleModelDAO(ds);
-				ConsoleBean console = cons.doRetriveByKey(""+prod.getCodice_prodotto());
-				if(console!=null)
-				{
-					request.setAttribute("tipo","console");
-					request.setAttribute("console",console);
-					request.setAttribute("Prodotto",prod);
-					request.setAttribute("visitato","");
-					RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaGioco.jsp");
+					String message="PRODOTTO NON ESISTENTE!";
+					request.setAttribute("message", message);
+					request.setAttribute("visitato", "");
+					String url="/paginaGioco.jsp";
+					url= response.encodeURL(url);
+					RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 					dispatcher.forward(request, response);
+					return;
 				}
-				else
-				{
-					AbbonamentoModelDAO abb = new AbbonamentoModelDAO(ds);
-					AbbonamentoBean abbo = abb.doRetriveByKey(""+prod.getCodice_prodotto());
-					if(abbo!=null)
+				else {//esiste il prodotto nel db e vedo se c'è in magazzino
+					
+					PresenteInModelDAO present = new PresenteInModelDAO(ds);
+					ArrayList<PresenteInBean> presente = present.doRetriveByProdotto(id);
+		
+					request.setAttribute("presente",null);
+					for(PresenteInBean l : presente)
 					{
-						request.setAttribute("tipo","abbonamento");
-						request.setAttribute("abbonamento",abbo);
+						if(l.getQuantita_disponibile()>0)
+						{
+							request.setAttribute("presente","");
+							break;
+						}
+					}
+					
+					VideogiocoModelDAO vdao = new VideogiocoModelDAO(ds);
+					VideogiocoBean video = vdao.doRetriveByKey(""+prod.getCodice_prodotto());
+					if(video!=null)
+					{
+						request.setAttribute("tipo","videogioco");
+						request.setAttribute("videogioco",video);
 						request.setAttribute("Prodotto",prod);
 						request.setAttribute("visitato","");
-						RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaGioco.jsp");
-						dispatcher.forward(request, response);
+						String url="/paginaGioco.jsp";
+						url= response.encodeURL(url);
+						request.getRequestDispatcher(url).forward(request, response);
+						return;
 					}
 					else
 					{
-						DlcModelDAO dl = new DlcModelDAO(ds);
-						DlcBean dlc = dl.doRetriveByKey(""+prod.getCodice_prodotto());
-						if(dlc!=null)
+						ConsoleModelDAO cons = new ConsoleModelDAO(ds);
+						ConsoleBean console = cons.doRetriveByKey(""+prod.getCodice_prodotto());
+						if(console!=null)
 						{
-							request.setAttribute("tipo","dlc");
-							request.setAttribute("dlc",dlc);
+							request.setAttribute("tipo","console");
+							request.setAttribute("console",console);
 							request.setAttribute("Prodotto",prod);
 							request.setAttribute("visitato","");
-							RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaGioco.jsp");
-							dispatcher.forward(request, response);
+							String url="/paginaGioco.jsp";
+							url= response.encodeURL(url);
+							request.getRequestDispatcher(url).forward(request, response);
+							return;
 						}
 						else
 						{
-							response.setStatus(response.SC_NOT_FOUND);
-							response.sendError(response.SC_NOT_FOUND,"PRODOTTO NON ESISTENTE");
-							return;
+							AbbonamentoModelDAO abb = new AbbonamentoModelDAO(ds);
+							AbbonamentoBean abbo = abb.doRetriveByKey(""+prod.getCodice_prodotto());
+							if(abbo!=null)
+							{
+								request.setAttribute("tipo","abbonamento");
+								request.setAttribute("abbonamento",abbo);
+								request.setAttribute("Prodotto",prod);
+								request.setAttribute("visitato","");
+								String url="/paginaGioco.jsp";
+								url= response.encodeURL(url);
+								request.getRequestDispatcher(url).forward(request, response);
+								return;
+							}
+							else
+							{
+								DlcModelDAO dl = new DlcModelDAO(ds);
+								DlcBean dlc = dl.doRetriveByKey(""+prod.getCodice_prodotto());
+								if(dlc!=null)
+								{
+									request.setAttribute("tipo","dlc");
+									request.setAttribute("dlc",dlc);
+									request.setAttribute("Prodotto",prod);
+									request.setAttribute("visitato","");
+									String url="/paginaGioco.jsp";
+									url= response.encodeURL(url);
+									request.getRequestDispatcher(url).forward(request, response);
+									return;
+								}
+								else
+								{
+									String message="PRODOTTO NON ESISTENTE!";
+									request.setAttribute("message", message);
+									request.setAttribute("visitato", "");
+									String url="/paginaGioco.jsp";
+									url= response.encodeURL(url);
+									RequestDispatcher dispatcher= request.getRequestDispatcher(url);
+									dispatcher.forward(request, response);
+									return;
+								}
+							}
 						}
 					}
 				}
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		
-		
+		}
 	}
 
 

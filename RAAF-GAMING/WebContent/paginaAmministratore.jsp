@@ -51,6 +51,23 @@
 			<a class="btn btn-dark mr-3 mt-5 " style="float:right" href="<%=response.encodeURL("servletlogoutadmin")%>" role="button">LogOut</a>
 		</div>
 		<h4 class="testo" style="font-family: Acunim Variable Consent;text-align:center">Inserisci prodotto o crea spedizione:</h4>
+		<%
+			String message= (String)request.getAttribute("message");
+			String messageOk= (String)request.getAttribute("messageok");
+			if(message!=null || messageOk!=null){
+				if(messageOk!=null){
+					
+		%>
+					<h4 style="color:green; text-align:center;"><%=messageOk%></h4>
+		<%
+				}
+				else if(message!=null){
+		%>
+					<h4 style="color:red; text-align:center;"><%=message%></h4>	
+		<%
+				}
+			}
+		%>
 		<div class="form-row d-flex justify-content-center">
 		<label>Nuovo prodotto
 			<input type="radio" id="nuovoProdotto"name="sceltaP" onchange="formEsistente()"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

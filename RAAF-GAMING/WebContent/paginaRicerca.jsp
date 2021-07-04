@@ -69,7 +69,22 @@ if(str==null)
 		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
 		          				<div class="card__header-text">
 		            				<h3 class="card__title"><%=prodric.get(l).getNome() %></h3>            
-		            					<span class="card__status" style="color:red;"><%= prodric.get(l).getPrezzo()%>&euro;</span>
+		            				<%
+		            					if(prodric.get(l).getSconto()==0){
+		            				%>           
+		            						<span class="card__status" style="color:red;"><%=String.format("%.2f",prodric.get(l).getPrezzo())%>&euro;</span>
+		            				<%
+		            					}
+		            					else{
+		            						double prezzoBase= prodric.get(l).getPrezzo();
+		            						int sconto= prodric.get(l).getSconto();
+		            						double psconto= (prezzoBase*sconto)/100;
+		            						double prezzoScontato= prezzoBase-psconto;
+		            				%>	
+		            						<span class="card__status"><span style="color:black; text-decoration:line-through;"><%=prodric.get(l).getPrezzo()%>&euro;</span>&nbsp;&nbsp;<h5 style=" font-weight:bold; color:red;"><%=String.format("%.2f",prezzoScontato)%>&euro;</h5></span>
+		            				<%
+		            					}
+		            				%>
 		          				</div>
 		        			</div>
 		        			<p class="card__description">Data uscita:&nbsp;<%=prodric.get(l).getData_uscita()%><br>Sconto:&nbsp;<%= prodric.get(l).getSconto()%>%</p>

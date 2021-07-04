@@ -61,7 +61,7 @@ public class ServletFormOrdiniAdmin extends HttpServlet {
 						sdao.doSave(spedizione);
 						String url="/servletgestioneadmin";
 						url= response.encodeURL(url);
-						request.setAttribute("message", "Ordine spedito con successo!");
+						request.setAttribute("messageok", "Ordine spedito con successo!");
 						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 						dispatcher.forward(request, response);
 					} catch (SQLException e) {
