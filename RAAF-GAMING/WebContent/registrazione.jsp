@@ -71,7 +71,7 @@
 		  <div class="form-row">
 		  		<div class="col-md-6 mb-3">
 		  			<label for="validationCustom05">Data di nascita:</label>
-			      	<input type="date" name="data" class="form-control" id="validationCustom05" required style="width:80%;">
+			      	<input id="datadinascita" type="date"name="data" class="form-control" id="validationCustom05" required style="width:80%;">
 		  		</div>
 		  		<div class="col-md-6 mb-3">
 		  			<label for="validationCustom06">Iban:</label>
