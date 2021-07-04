@@ -98,8 +98,8 @@ public class ServletIndex extends HttpServlet {
 		VideogiocoModelDAO vdao= new VideogiocoModelDAO(ds);
 		try {
 			VideogiocoBean migliorVideogioco= vdao.getTopRecensione();
-			VideogiocoBean ultimoUscito= vdao.getUltimoUscito();
-			ArrayList<VideogiocoBean> scontati= vdao.getVideogiochiScontati();
+			VideogiocoBean ultimoUscito= vdao.getUltimoUscito(migliorVideogioco.getProdotto());
+			ArrayList<VideogiocoBean> scontati= vdao.getVideogiochiScontati(migliorVideogioco.getProdotto(),ultimoUscito.getProdotto());
 			ProdottoModelDAO dao = new ProdottoModelDAO(ds);
 			ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 			prod.add(dao.doRetriveByKey(""+migliorVideogioco.getProdotto()));

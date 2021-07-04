@@ -145,15 +145,16 @@ public class VideogiocoModelDAO implements OperazioniModel<VideogiocoBean> {
 		
 	}
 	
-	public VideogiocoBean getUltimoUscito() throws SQLException{
+	public VideogiocoBean getUltimoUscito(int code) throws SQLException{
 		Connection connessione=ds.getConnection();
 		//ottengo i videogiochi con data di uscita ultima
-		String query="SELECT MAX(data_uscita) AS ultimaData,prodotto.codice_prodotto FROM prodotto,videogioco WHERE prodotto.codice_prodotto=videogioco.prodotto GROUP BY prodotto.codice_prodotto;";
+		String query="SELECT videogioco.* FROM videogioco,prodotto,(SELECT MAX(prodotto.data_uscita) AS ultimo FROM prodotto,videogioco WHERE prodotto.codice_prodotto=videogioco.prodotto AND prodotto.codice_prodotto!=?) AS temp WHERE videogioco.prodotto=prodotto.codice_prodotto AND prodotto.data_uscita=temp.ultimo;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
+		ps.setInt(1, code);
 		ResultSet risultato= ps.executeQuery();
 		if(risultato.next()) {
-			int codiceVideogioco= risultato.getInt("prodotto.codice_prodotto");//ottengo il codice del videogioco con data ultima
+			int codiceVideogioco= risultato.getInt("videogioco.prodotto");//ottengo il codice del videogioco con data ultima
 			VideogiocoBean ultimoUscito= this.doRetriveByKey(""+codiceVideogioco);//ottengo quel videogioco
 			
 			risultato.close();
@@ -169,11 +170,13 @@ public class VideogiocoModelDAO implements OperazioniModel<VideogiocoBean> {
 		}
 	}
 	
-	public ArrayList<VideogiocoBean> getVideogiochiScontati() throws SQLException{
+	public ArrayList<VideogiocoBean> getVideogiochiScontati(int code1,int code2) throws SQLException{
 		Connection connessione=ds.getConnection();
 		//ottengo tutti i videogiochi che sono scontati
-		String query="SELECT videogioco.prodotto,videogioco.dimensione,videogioco.pegi,videogioco.edizione_limitata,videogioco.ncd,videogioco.vkey,videogioco.software_house FROM prodotto,videogioco WHERE prodotto.codice_prodotto=videogioco.prodotto AND sconto>0;";
+		String query="SELECT videogioco.* FROM prodotto,videogioco WHERE prodotto.codice_prodotto=videogioco.prodotto AND sconto>0 AND prodotto.codice_prodotto!=? AND prodotto.codice_prodotto!=?;";
 		PreparedStatement ps= connessione.prepareStatement(query);
+		ps.setInt(1, code1);
+		ps.setInt(2, code2);
 		ResultSet risultato= ps.executeQuery();
 		
 		int i=1;
