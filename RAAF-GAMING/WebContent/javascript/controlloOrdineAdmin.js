@@ -1,6 +1,5 @@
 
 function controlloOrdini(x){
-	alert($("#consegnaOrdine").val());
 	x.elements["numeroOrdine"].style.border="2px solid green";
 	x.elements["corriere"].style.border="2px solid green";
 	const dataAttuale= new Date();
@@ -37,12 +36,12 @@ function controlloProdEsistente(x){
 function controlloProdNuovo(){
 	var prezzo=$("#prezzoProdotto").val().length; 
 	if(($("#prezzoProdotto").val()>=0) && (prezzo>0)){
-		alert("prezzo ok");
+		
 		$("#prezzoProdotto").css("border","2px solid green");
 		
 		var sconto=$("#scontoProdotto").val().length;
 		if(($("#scontoProdotto").val()>=0) && ($("#scontoProdotto").val()<=99) && (sconto>0)){
-			alert("sconto ok");
+			
 			$("#scontoProdotto").css("border","2px solid green");
 			
 			var quantita=$("#quantitaProdottoNew").val().length;

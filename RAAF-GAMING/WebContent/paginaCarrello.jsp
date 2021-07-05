@@ -165,7 +165,7 @@ if(str==null)
 			 					String urldiconferma = "servletconfermaacquisto";
 			 					urldiconferma = response.encodeURL(urldiconferma);
 			 					%>
-			 					<form action="<%=urldiconferma %>" method="post">
+			 					<form action="<%=urldiconferma %>" method="post" onsubmit="return controllo(this);">
 			 					<div class="summary-item mb-4"><span class="text mr-4">Indirizzo di consegna:</span><input type="text" name="indirizzodiconsegna" required maxlength="50"></div>
 			 					<input type="hidden" name="prezzototale" value="<%=String.format("%.2f",cont).replaceAll(",",".")%>">
 			 					<button type="submit" class="btn btn-outline-warning btn-lg btn-block">Conferma</button>
@@ -182,6 +182,16 @@ if(str==null)
 		</section>
 	</main>
 	<script>
+	
+	function controllo(x){
+		if(x.elements["indirizzodiconsegna"].value.length>0 && x.elements["indirizzodiconsegna"].value.length<=49)
+			return true;
+		else{
+			alert("INDIRIZZO DI CONSEGNA NON VALIDO!");
+			return false;
+		}
+	}
+	
 	function noppuoi()
 	{
 		alert("Non hai prodotti nel carrello");

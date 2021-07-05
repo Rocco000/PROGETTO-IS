@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="css/stileRegistrazione.css" type="text/css">
 	
 	<!-- javascript nostro -->
-	<script src="javascript/controlloLogin.js"></script>
+	<script src="javascript/controlloRegistrazione.js"></script>
 	
 	<meta charset="UTF-8">
 
