@@ -60,17 +60,22 @@ public class ServletRegistrazione extends HttpServlet {
 			}
 			else {
 				//ottengo i dati dal form
+				
 				String nome=request.getParameter("nome");
 				String cognome=request.getParameter("cognome");
 				String email=request.getParameter("email");
 				String iban=request.getParameter("iban");
 				String data=request.getParameter("data");
-				if(nome==null || cognome==null || email==null || iban==null || data==null)
+				if(nome==null || nome.length()==0 || cognome==null || cognome.length()==0 || email==null || email.length()==0 || iban==null ||iban.length()==0 || data==null || data.length()==0)
 				{
-					String url="registrazione.jsp";
+					
+					request.setAttribute("visitato", "");
+					String url="/registrazione.jsp";
 					url=response.encodeURL(url);
-					response.sendRedirect(url);
+					RequestDispatcher di = request.getRequestDispatcher(url);
+					di.forward(request, response);
 					return;
+					
 				}
 				
 				
@@ -83,6 +88,9 @@ public class ServletRegistrazione extends HttpServlet {
 					if(cb!=null) { //il cliente e' gia registrato
 						String message="Sei gia' iscritto al nostro sito!";
 						request.setAttribute("message", message);
+						
+						request.setAttribute("visitato", "");
+						
 						String url = "/registrazione.jsp";
 						url = response.encodeURL(url);
 						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
@@ -136,11 +144,13 @@ public class ServletRegistrazione extends HttpServlet {
 			String email=request.getParameter("email");
 			String iban=request.getParameter("iban");
 			String data=request.getParameter("data");
-			if(nome==null || cognome==null || email==null || iban==null || data==null)
+			if(nome==null || nome.length()==0 || cognome==null || cognome.length()==0 || email==null || email.length()==0 || iban==null ||iban.length()==0 || data==null || data.length()==0)
 			{
-				String url="registrazione.jsp";
+				request.setAttribute("visitato", "");
+				String url="/registrazione.jsp";
 				url=response.encodeURL(url);
-				response.sendRedirect(url);
+				RequestDispatcher di = request.getRequestDispatcher(url);
+				di.forward(request, response);
 				return;
 			}
 			

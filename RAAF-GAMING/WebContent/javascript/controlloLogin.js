@@ -35,16 +35,40 @@ function controlloRegistrazione(x){
 		var c=x.elements["cognome"];
 		if(c.value.length<=15 && c.value.length>0){ //lunghezza cognome corretta
 			c.style.border="2px solid green";
-			var i=x.elements["iban"];
-			if(i.value.length==27 && i.value.length>0){ //iban corretto
-				i.style.border="2px solid green";
-				return controlloValori(x);
-			} else{
-				alert("Hai inserito un'Iban non valido");
-				i.value="";
-				i.style.border="2px solid red";
+			
+			const dataAttuale= new Date();
+			const dataForm= new Date(x.elements["data"].value);
+			
+			var eta=(dataAttuale.getFullYear()-dataForm.getFullYear());
+			
+			
+			if(eta>=10 && eta<=110)
+			{
+			
+				x.elements["data"].style.border="2px solid green";
+				var i=x.elements["iban"];
+				if(i.value.length==27 && i.value.length>0)
+				{ //iban corretto
+					i.style.border="2px solid green";
+					return controlloValori(x);
+				}
+				else{
+					alert("Hai inserito un'Iban non valido");
+					i.value="";
+					i.style.border="2px solid red";
+					return false;
+					}
+				
+			}
+			else
+			{
+				x.elements["data"].style.border="2px solid red";
+				x.elements["data"].value="";
+				alert("Non hai l'età per registrarti!");
 				return false;
 			}
+			
+		
 		} else{
 			alert("Hai inserito un cognome non valido");
 			c.value="";

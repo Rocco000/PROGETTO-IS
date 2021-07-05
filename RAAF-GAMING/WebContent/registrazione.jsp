@@ -29,6 +29,16 @@
 	<title>REGISTRAZIONE</title>
 </head>
 <body>
+	<%String visitato = (String)request.getAttribute("visitato");
+	if(visitato==null)
+	{
+		String url = "ServletRegistrazione";
+		url = response.encodeURL(url);
+		response.sendRedirect(url);
+		return;
+	}
+	%>
+	
 	<div class="row" style="width:70%;">
 		<div class="col-md-12 ml-3 mt-3"><!-- immagine raff-gaming -->
 			<img src="immagini/logo.png" alt="RAAF-GAMING" class="rounded float-left" style="width:180px; position: static;">
@@ -70,8 +80,8 @@
 		  </div>
 		  <div class="form-row">
 		  		<div class="col-md-6 mb-3">
-		  			<label for="validationCustom05">Data di nascita:</label>
-			      	<input id="datadinascita" type="date"name="data" class="form-control" id="validationCustom05" required style="width:80%;">
+		  			<label for="dataNascita">Data di nascita:</label>
+			      	<input id="datadinascita" type="date" name="data" class="form-control" id="dataNascita" required style="width:80%;">
 		  		</div>
 		  		<div class="col-md-6 mb-3">
 		  			<label for="validationCustom06">Iban:</label>
