@@ -63,6 +63,19 @@ public class ServletOrdini extends HttpServlet {
 				array2.add(impostazione5);
 				array2.add(impostazione6);
 				request.setAttribute("impostazione2",array2);
+				ArrayList<String> carr = (ArrayList<String>) sessione.getAttribute("carrello");
+				if(carr == null)
+				{
+					request.setAttribute("carrello",null);
+				}
+				else if(carr.size()==0)
+				{
+					request.setAttribute("carrello",null);
+				}
+				else
+				{
+					request.setAttribute("carrello",carr);
+				}
 				
 				//ottengo dal DB tutti gli ordini effettuati dall'utente loggato
 				OrdineModelDAO odao= new OrdineModelDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
