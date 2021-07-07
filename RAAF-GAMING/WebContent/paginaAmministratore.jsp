@@ -24,6 +24,7 @@
 	
 	<!-- javascript nostro -->
 	<script src="javascript/controlloOrdineAdmin.js"></script>
+	<script src="javascript/controlloSpedizione.js"></script>
 	
 	<meta charset="UTF-8">
 

@@ -103,7 +103,7 @@ if(str==null)
 													else if(tipo=="abbonamento")
 													{
 														AbbonamentoBean bean = (AbbonamentoBean) obj;
-														%><h6>Durata Abbonamento: <%=bean.getDurata_abbonamento()%>,&nbsp;
+														%><h6>Durata Abbonamento: <%=bean.getDurata_abbonamento()%> mesi,&nbsp;
 														Data Uscita: <%=prod.getData_uscita() %>,&nbsp;
 														Sconto: <%=prod.getSconto() %>%</h6>
 														<%
