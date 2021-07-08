@@ -59,7 +59,7 @@ if(str==null)
 						<div class="row justify-content-md-center">
 							<div class="row w-110 pl-1" style="background-color:rgb(35,35,35);width:112%">
 										<div class="col-md-6">
-												<h2 style="color:red;"><%=prod.getNome() %></h2>
+												<h2 class="nome pl-3 pt-1" style="color:white; font-family:Impact; text-transform:uppercase; font-weight:bold; "><%=prod.getNome() %></h2>
 										</div>
 										<div class="col-md-6" >
 												<span class="star-rating pl-2">
