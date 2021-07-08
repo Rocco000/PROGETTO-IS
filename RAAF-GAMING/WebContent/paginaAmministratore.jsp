@@ -23,8 +23,9 @@
 	<link rel="stylesheet" href="css/stileAdmin.css" type="text/css">
 	
 	<!-- javascript nostro -->
-	<script src="javascript/controlloOrdineAdmin.js"></script>
+	<script src="javascript/controlloProdEsistente.js"></script>
 	<script src="javascript/controlloSpedizione.js"></script>
+	<script src="javascript/controlloNuovoProd.js"></script>
 	
 	<meta charset="UTF-8">
 
@@ -149,7 +150,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="prezzoP">Prezzo:</label>
-	    <input type="number" class="form-control" id="prezzoProdotto"name="prezzoP" style="border-radius:10px"  >
+	    <input type="number" class="form-control" id="prezzoProdotto"name="prezzoP" step="0.01" style="border-radius:10px"  >
 	  </div>
 	  <div class="form-group ml-3">
 	    <label for="scontoP">Sconto:</label>
@@ -227,18 +228,18 @@
 			<button class="btn btn-dark ml-3" type="submit" style="border-radius:5px">Inserisci</button>
 			</div>
 			<div id="consoleForm" class="form-group" style="display:none">
-			<label>Specifiche:<input type="text" name="specifiche" id="dim" style="border-radius:7px" ></label>
-			<label>Colore:<input type="text" name="colore" style="border-radius:7px" ></label>
+			<label>Specifiche:<input type="text" name="specifiche" id="specifiche" style="border-radius:7px" ></label>
+			<label>Colore:<input type="text" name="colore" id="colore" style="border-radius:7px" ></label>
 			<button class="btn btn-dark ml-3" type="submit" style="border-radius:7px">Inserisci</button>
 			</div>
 			<div id="dlcForm" class="form-group" style="display:none">
-			<label>Descrizione:<input type="text" name="descrizione" id="dim" style="border-radius:7px" ></label>
-			<label>Dimensione:<input type="number" name="dimensioneDlc" min="1" style="border-radius:7px" ></label>
+			<label>Descrizione:<input type="text" name="descrizione" id="descDLC" style="border-radius:7px" ></label>
+			<label>Dimensione:<input type="number" name="dimensioneDlc" id="dimDLC" min="1" style="border-radius:7px" ></label>
 			<button class="btn btn-dark ml-3" type="submit" style="border-radius:7px">Inserisci</button>
 			</div>
 			<div id="abbonamentoForm" class="form-group" style="display:none">
-			<label>Codice:<input type="text" name="codice" id="dim" style="border-radius:7px" ></label>
-			<label>Durata:<input type="number" name="durata" min="1" max="12" style="border-radius:7px" ></label>
+			<label>Codice:<input type="text" name="codice" id="codiceAbb" style="border-radius:7px" ></label>
+			<label>Durata:<input type="number" name="durata" id="durAbb" min="1" max="12" style="border-radius:7px" ></label>
 			<button class="btn btn-dark ml-3" type="submit" style="border-radius:5px" >Inserisci</button>
 			</div>
 			</div>
