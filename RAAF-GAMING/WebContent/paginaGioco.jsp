@@ -61,8 +61,8 @@ if(str==null)
 										<div class="col-md-6">
 												<h2 class="nome pl-3 pt-1" style="color:white; font-family:Impact; text-transform:uppercase; font-weight:bold; "><%=prod.getNome() %></h2>
 										</div>
-										<div class="col-md-6" >
-												<span class="star-rating pl-2">
+										<div class="col-md-6 pt-2" >
+												<span class="star-rating pr-1"><!-- modifica -->
 												  <input type="radio" name="rating" value="1" onclick="recensione(this);"><i></i>
 												  <input type="radio" name="rating" value="2" onclick="recensione(this);"><i></i>
 												  <input type="radio" name="rating" value="3" onclick="recensione(this);"><i></i>
