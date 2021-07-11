@@ -105,14 +105,12 @@ function controlloProdNuovo(){
 			}
 		}
 		else{
-			alert("sconto no");
 			$("#scontoProdotto").css("border","2px solid red");
 			return false;		
 		}
 		
 	}
 	else{
-		alert("prezzo no");
 		$("#prezzoProdotto").css("border","2px solid red");	
 		return false;
 	}

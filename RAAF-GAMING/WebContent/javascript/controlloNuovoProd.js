@@ -20,6 +20,15 @@ function controlloProdNuovo(){
 			
 			$("#scontoProdotto").css("border","2px solid green");
 			
+			var dataUscita= $("#uscitaProdotto").val().length;
+			if(dataUscita==10){
+				$("#uscitaProdotto").css("border","2px solid green");
+			}
+			else{
+				$("#uscitaProdotto").css("border","2px solid red");
+				return false;
+			}
+			
 			var quantita=$("#quantitaProdottoNew").val().length;
 			if(($("#quantitaProdottoNew").val()>=1) && (quantita<=9) && (quantita>0)){
 				$("#quantitaProdottoNew").css("border","2px solid green");
@@ -36,12 +45,12 @@ function controlloProdNuovo(){
 				if(document.getElementById("videogiocoRadio").checked){ //se e' un videogioco
 
 					var dim= $("#dim").val().length; 
-					alert(dim);
+					
 					if((dim>0) && dim<=3 && $("#dim").val()>=1 &&  ($("#dim").val()<=900)){//se la dimensione del videogioco e' ok
 						$("#dim").css("border","2px solid green");
 						
 						var pegi=$("#pegi").val().length;
-						alert(pegi);
+						
 						if(($("#pegi").val()>=3) && ($("#pegi").val()<=18) && (pegi>0)){//se la pegi e' ok
 							$("#pegi").css("border","2px solid green");
 							
@@ -173,14 +182,12 @@ function controlloProdNuovo(){
 			}
 		}
 		else{
-			alert("sconto no");
 			$("#scontoProdotto").css("border","2px solid red");
 			return false;		
 		}
 		
 	}
 	else{
-		alert("prezzo no");
 		$("#prezzoProdotto").css("border","2px solid red");	
 		return false;
 	}
