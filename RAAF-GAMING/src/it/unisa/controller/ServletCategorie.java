@@ -38,8 +38,9 @@ public class ServletCategorie extends HttpServlet {
 		
 		if(per==null)
 		{
-			response.setStatus(response.SC_NOT_FOUND);
-			response.sendError(response.SC_NOT_FOUND,"Errore parametri");
+			String url="servletindex";
+			url= response.encodeURL(url);
+			response.sendRedirect(url);
 			return;
 		}
 		
@@ -314,8 +315,9 @@ public class ServletCategorie extends HttpServlet {
 			}
 			else
 			{
-				response.setStatus(response.SC_NOT_FOUND);
-				response.sendError(response.SC_NOT_FOUND,"Errore parametri");
+				String url="servletindex";
+				url= response.encodeURL(url);
+				response.sendRedirect(url);
 				return;
 			}
 		}
