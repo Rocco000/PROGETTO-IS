@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class AbbonamentoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	//commento prova ahudbefwnocnvsiusncbskjhf
 	private String codice;
 	private int prodotto;
 	private int durata_abbonamento;
