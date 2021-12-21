@@ -17,7 +17,9 @@ public class ProdottoBean implements Serializable{
 	private int quantita_fornitura;
 	private Date ultima_fornitura;
 	private String fornitore;
+	private String gestore;
 	
+
 	public ProdottoBean()
 	{
 		codice_prodotto=0;
@@ -30,6 +32,14 @@ public class ProdottoBean implements Serializable{
 		fornitore="";
 	}
 
+	public String getGestore() {
+		return gestore;
+	}
+
+	public void setGestore(String gestore) {
+		this.gestore = gestore;
+	}
+	
 	public int getCodice_prodotto() {
 		return codice_prodotto;
 	}
