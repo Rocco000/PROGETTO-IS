@@ -32,7 +32,7 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 			app.setCognome(risultato.getString("cognome"));
 			app.setPassword(risultato.getString("password"));
 			app.setData_di_nascita(risultato.getDate("data_di_nascita"));
-			app.setIban(risultato.getString("iban"));
+			app.setCartadicredito(risultato.getInt("cartadicredito"));
 			app.setCarta_fedelta(risultato.getString("carta_fedelta"));
 			
 			risultato.close();
@@ -74,7 +74,7 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 			app.setCognome(risultato.getString("cognome"));
 			app.setPassword(risultato.getString("password"));
 			app.setData_di_nascita(risultato.getDate("data_di_nascita"));
-			app.setIban(risultato.getString("iban"));
+			app.setCartadicredito(risultato.getInt("cartadicredito"));
 			app.setCarta_fedelta(risultato.getString("carta_fedelta"));
 			
 			a.add(app);//aggiungo il bean all'arraylist
@@ -96,11 +96,11 @@ public class ClienteModelDAO implements OperazioniModel<ClienteBean> {
 		
 		Connection connessione= ds.getConnection();//ottengo la connessione al DB
 		
-		String query= "UPDATE cliente SET iban=?,password=MD5(?) WHERE email=? ;";
+		String query= "UPDATE cliente SET cartadicredito=?,password=MD5(?) WHERE email=? ;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
-		ps.setString(1, item.getIban());
+		ps.setInt(1, item.getCartadicredito());
 		ps.setString(2, item.getPassword());
 		ps.setString(3, item.getEmail());
 		
@@ -113,11 +113,11 @@ public void doUpdateOnlyIban(ClienteBean item) throws SQLException {
 		
 		Connection connessione= ds.getConnection();//ottengo la connessione al DB
 		
-		String query= "UPDATE cliente SET iban=? WHERE email=?;";
+		String query= "UPDATE cliente SET cartadicredito=? WHERE email=?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
-		ps.setString(1, item.getIban());
+		ps.setInt(1, item.getCartadicredito());
 		ps.setString(2, item.getEmail());
 		
 		ps.executeUpdate();
@@ -142,8 +142,8 @@ public void doUpdateOnlyIban(ClienteBean item) throws SQLException {
 		ps.setString(3, item.getCognome());
 		ps.setDate(4, (Date) item.getData_di_nascita());
 		ps.setString(5, item.getPassword());
-		ps.setString(6, item.getIban());
-		ps.setString(7, item.getCarta_fedelta());
+		ps.setString(6, item.getCarta_fedelta());
+		ps.setInt(7, item.getCartadicredito());
 		CartaFedeltaModelDAO cartaDAO= new CartaFedeltaModelDAO(this.ds);//eseguo la insert della carta
 		cartaDAO.doSave(carta);
 		
