@@ -16,7 +16,7 @@ public class ClienteBean implements Serializable{
 	private String cognome;
 	private Date data_di_nascita;
 	private String password;
-	private String iban;
+	private int cartadicredito;
 	private String carta_fedelta;
 	
 	public ClienteBean() {
@@ -25,8 +25,8 @@ public class ClienteBean implements Serializable{
 		cognome="";
 		data_di_nascita=null;
 		password="";
-		iban="";
 		carta_fedelta="";
+		cartadicredito = 0;
 	}
 
 	public String getEmail() {
@@ -69,14 +69,6 @@ public class ClienteBean implements Serializable{
 		this.password = password;
 	}
 
-	public String getIban() {
-		return iban;
-	}
-
-	public void setIban(String iban) {
-		this.iban = iban;
-	}
-
 	public String getCarta_fedelta() {
 		return carta_fedelta;
 	}
@@ -84,5 +76,14 @@ public class ClienteBean implements Serializable{
 	public void setCarta_fedelta(String carta_fedelta) {
 		this.carta_fedelta = carta_fedelta;
 	}
+	
+	public int getCartadicredito() {
+		return cartadicredito;
+	}
+
+	public void setCartadicredito(int cartadicredito) {
+		this.cartadicredito = cartadicredito;
+	}
+	
 }
 

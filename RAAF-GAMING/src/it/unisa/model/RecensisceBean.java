@@ -9,11 +9,13 @@ public class RecensisceBean implements Serializable {
 	private String cliente;
 	private int prodotto;
 	private int voto;
+	private String commento;
 	
 	public RecensisceBean() {
 		cliente="";
 		prodotto=0;
 		voto=0;
+		commento="";
 	}
 	public String getCliente() {
 		return cliente;
@@ -38,4 +40,14 @@ public class RecensisceBean implements Serializable {
 	public void setVoto(int voto) {
 		this.voto=voto;
 	}
+	
+	public String getCommento() {
+		return commento;
+	}
+	
+	public void setCommento(String commento) {
+		this.commento = commento;
+	}
+	
+	
 }

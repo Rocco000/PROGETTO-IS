@@ -9,20 +9,24 @@ public class OrdineBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String codice;
-	private String metodo_di_pagamento;
+	private int metodo_di_pagamento;
 	private Date data_acquisto;
 	private String indirizzo_di_consegna;
 	private String cliente;
 	private double prezzo_totale;
+	private String gestore;
+	private String stato;
 	
 	public OrdineBean()
 	{
 		codice="";
-		metodo_di_pagamento="";
+		metodo_di_pagamento=0;
 		data_acquisto=null;
 		indirizzo_di_consegna="";
 		cliente="";
 		prezzo_totale=0;
+		gestore="";
+		stato="";
 	}
 
 	public String getCodice() {
@@ -33,11 +37,11 @@ public class OrdineBean implements Serializable {
 		this.codice = codice;
 	}
 
-	public String getMetodo_di_pagamento() {
+	public int getMetodo_di_pagamento() {
 		return metodo_di_pagamento;
 	}
 
-	public void setMetodo_di_pagamento(String metodo_di_pagamento) {
+	public void setMetodo_di_pagamento(int metodo_di_pagamento) {
 		this.metodo_di_pagamento = metodo_di_pagamento;
 	}
 
@@ -71,6 +75,22 @@ public class OrdineBean implements Serializable {
 
 	public void setPrezzo_totale(double prezzo_totale) {
 		this.prezzo_totale = prezzo_totale;
+	}
+	
+	public String getGestore() {
+		return gestore;
+	}
+
+	public void setGestore(String gestore) {
+		this.gestore = gestore;
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 	
 	
