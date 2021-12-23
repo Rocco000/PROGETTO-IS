@@ -1,4 +1,4 @@
-package it.unisa.controller;
+package presentazioneprodotto;
 
 import java.io.IOException;
 import java.sql.SQLException;

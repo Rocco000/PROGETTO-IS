@@ -1,4 +1,4 @@
-package it.unisa.controller;
+package presentazioneprodotto;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,21 +15,21 @@ import javax.sql.DataSource;
 
 import it.unisa.model.ProdottoBean;
 import it.unisa.model.ProdottoModelDAO;
-import it.unisa.model.VideogiocoBean;
-import it.unisa.model.VideogiocoModelDAO;
 
-/**
- * Servlet implementation class ServletIndex
- */
-@WebServlet("/servletindex")
-public class ServletIndex extends HttpServlet {
+
+@WebServlet("/servletricerca")
+public class ServletRicerca extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-    public ServletIndex() {
+       
+
+    public ServletRicerca() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//setto navbar
 		response.setContentType("text/html");
 		HttpSession session = request.getSession(true);
 		synchronized(session)
@@ -93,35 +93,29 @@ public class ServletIndex extends HttpServlet {
 				request.setAttribute("carrello",carr);
 			}
 		}
-		
+		String str = request.getParameter("ricerca");
 		DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-		VideogiocoModelDAO vdao= new VideogiocoModelDAO(ds);
-		try {
-			VideogiocoBean migliorVideogioco= vdao.getTopRecensione();
-			VideogiocoBean ultimoUscito= vdao.getUltimoUscito(migliorVideogioco.getProdotto());
-			ArrayList<VideogiocoBean> scontati= vdao.getVideogiochiScontati(migliorVideogioco.getProdotto(),ultimoUscito.getProdotto());
-			ProdottoModelDAO dao = new ProdottoModelDAO(ds);
-			ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-			prod.add(dao.doRetriveByKey(""+migliorVideogioco.getProdotto()));
-			prod.add(dao.doRetriveByKey(""+ultimoUscito.getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(0).getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(1).getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(2).getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(3).getProdotto()));
-			request.setAttribute("Prodotti",prod);
-			request.setAttribute("visitato","");
-			RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/homepage.jsp");
-			dispatcher.forward(request, response);
-			
+		 ProdottoModelDAO dao = new  ProdottoModelDAO(ds);
+		 ArrayList<ProdottoBean> bean = new ArrayList<ProdottoBean>();
+		 try {
+			bean = dao.doRetriveByName(str);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 System.out.println(str);
+		 request.setAttribute("prodotti",bean);
+	//reindirizzo la pagina
+		request.setAttribute("visitato","");
+		RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+		view.forward(request, response);
+	//
+	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		this.doGet(request, response);
 	}
-	
 
 }

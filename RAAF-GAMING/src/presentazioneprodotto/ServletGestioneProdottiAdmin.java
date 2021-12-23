@@ -1,4 +1,4 @@
-package it.unisa.controller;
+package presentazioneprodotto;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -28,11 +28,11 @@ import it.unisa.model.SoftwarehouseModelDAO;
  * Servlet implementation class ServletGestioneAdmin
  */
 @WebServlet("/servletgestioneadmin")
-public class ServletGestioneAdmin extends HttpServlet {
+public class ServletGestioneProdottiAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public ServletGestioneAdmin() {
+    public ServletGestioneProdottiAdmin() {
         super();
         // TODO Auto-generated constructor stub
     }
