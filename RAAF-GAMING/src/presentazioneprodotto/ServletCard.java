@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import it.unisa.model.ProdottoBean;
-import it.unisa.model.ProdottoModelDAO;
+import prodotto.ProdottoBean;
+import prodotto.ProdottoDAO;
 
 /**
  * Servlet implementation class ServletCard
@@ -30,7 +30,7 @@ public class ServletCard extends HttpServlet {
 			response.setContentType("image/*");
 			DataSource ds = (DataSource) super.getServletContext().getAttribute("DataSource");
 			try {
-				ProdottoModelDAO dao = new ProdottoModelDAO(ds);
+				ProdottoDAO dao = new ProdottoDAO(ds);
 				ProdottoBean bean = dao.doRetriveByKey(request.getParameter("id"));
 				OutputStream out = response.getOutputStream();
 				out.write(bean.getCopertina());

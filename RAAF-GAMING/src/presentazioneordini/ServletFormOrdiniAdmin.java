@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.SpeditoBean;
-import it.unisa.model.SpeditoModelDAO;
+import acquisto.SpeditoBean;
+import acquisto.SpeditoDAO;
 
 /**
  * Servlet implementation class ServletFormAdmin
@@ -44,7 +44,7 @@ public class ServletFormOrdiniAdmin extends HttpServlet {
 				if(logAdmin==true) {
 					//l'admin e' loggato e può eseguire il form
 					
-					SpeditoModelDAO sdao= new SpeditoModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+					SpeditoDAO sdao= new SpeditoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 					SpeditoBean spedizione= new SpeditoBean();
 					String ordine= request.getParameter("numeroOrdine");
 					String corriere= request.getParameter("corriere");

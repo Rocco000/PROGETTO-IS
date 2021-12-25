@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.ClienteBean;
-import it.unisa.model.ClienteModelDAO;
+import profilo.ClienteBean;
+import profilo.ClienteDAO;
 
 
 @WebServlet("/servletlogin")
@@ -62,7 +62,7 @@ public class ServletLogin extends HttpServlet {
 					return;
 				}
 					
-				ClienteModelDAO cmd=new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+				ClienteDAO cmd=new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 				try {
 					ClienteBean cb=cmd.doRetriveByKey(email);
 					if(cb!=null) {//se l'utente è nel DB
@@ -126,7 +126,7 @@ public class ServletLogin extends HttpServlet {
 				return;
 			}
 				
-			ClienteModelDAO cmd=new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+			ClienteDAO cmd=new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 			try {
 				ClienteBean cb=cmd.doRetriveByKey(email);
 				if(cb!=null) {//se l'utente è nel DB

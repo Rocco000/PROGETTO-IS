@@ -16,8 +16,8 @@ import javax.sql.DataSource;
 
 import org.json.JSONObject;
 
-import it.unisa.model.RecensisceBean;
-import it.unisa.model.RecensisceModelDAO;
+import prodotto.RecensisceBean;
+import prodotto.RecensisceDAO;
 
 @WebServlet("/servletrecensione")
 public class ServletRecensione extends HttpServlet {
@@ -67,7 +67,7 @@ public class ServletRecensione extends HttpServlet {
 					int voto = json.getInt("voto");
 					int id = json.getInt("id");
 					DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-					RecensisceModelDAO dao = new RecensisceModelDAO(ds);
+					RecensisceDAO dao = new RecensisceDAO(ds);
 					
 					try {
 						if(dao.doRetriveByKey(id+"",email)==null)

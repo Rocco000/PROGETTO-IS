@@ -18,10 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.CartaFedeltaModelDAO;
-import it.unisa.model.ClienteBean;
-import it.unisa.model.ClienteModelDAO;
-import it.unisa.model.CartaFedeltaBean;
+import profilo.CartaFedeltaBean;
+import profilo.CartaFedeltaDAO;
+import profilo.ClienteBean;
+import profilo.ClienteDAO;
 
 @WebServlet("/ServletRegistrazione")
 public class ServletRegistrazione extends HttpServlet {
@@ -82,7 +82,7 @@ public class ServletRegistrazione extends HttpServlet {
 				java.sql.Date nuovaData = java.sql.Date.valueOf(data);
 				
 				String password=request.getParameter("password");
-				ClienteModelDAO cmd=new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+				ClienteDAO cmd=new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 				try {
 					ClienteBean cb=cmd.doRetriveByKey(email);
 					if(cb!=null) { //il cliente e' gia registrato
@@ -96,7 +96,7 @@ public class ServletRegistrazione extends HttpServlet {
 						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
 						dispatcher.forward(request, response);
 					}else {
-						CartaFedeltaModelDAO cf=new CartaFedeltaModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+						CartaFedeltaDAO cf=new CartaFedeltaDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 						ArrayList<CartaFedeltaBean>carte=cf.doRetriveAll("codice desc");//otteniamo tutte le carte fedelta in ordine decrescente
 						CartaFedeltaBean carta = new CartaFedeltaBean();
 						Random ran= new Random();
@@ -157,7 +157,7 @@ public class ServletRegistrazione extends HttpServlet {
 			java.sql.Date nuovaData = java.sql.Date.valueOf(data);
 			
 			String password=request.getParameter("password");
-			ClienteModelDAO cmd=new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+			ClienteDAO cmd=new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 			try {
 				ClienteBean cb=cmd.doRetriveByKey(email);
 				
@@ -169,7 +169,7 @@ public class ServletRegistrazione extends HttpServlet {
 					RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
 					dispatcher.forward(request, response);
 				}else {
-					CartaFedeltaModelDAO cf=new CartaFedeltaModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+					CartaFedeltaDAO cf=new CartaFedeltaDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 					ArrayList<CartaFedeltaBean>carte=cf.doRetriveAll("codice desc");//otteniamo tutte le carte fedelta in ordine decrescente
 					CartaFedeltaBean carta = new CartaFedeltaBean();
 					Random ran= new Random();

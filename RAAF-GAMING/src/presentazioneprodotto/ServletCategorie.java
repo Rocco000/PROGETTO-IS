@@ -13,18 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.AbbonamentoBean;
-import it.unisa.model.AbbonamentoModelDAO;
-import it.unisa.model.ConsoleBean;
-import it.unisa.model.ConsoleModelDAO;
-import it.unisa.model.DlcBean;
-import it.unisa.model.DlcModelDAO;
-import it.unisa.model.ParteDiBean;
-import it.unisa.model.ParteDiModelDAO;
-import it.unisa.model.ProdottoBean;
-import it.unisa.model.ProdottoModelDAO;
-import it.unisa.model.VideogiocoBean;
-import it.unisa.model.VideogiocoModelDAO;
+import prodotto.AbbonamentoBean;
+import prodotto.AbbonamentoDAO;
+import prodotto.ConsoleBean;
+import prodotto.ConsoleDAO;
+import prodotto.DlcBean;
+import prodotto.DlcDAO;
+import prodotto.ParteDiBean;
+import prodotto.ParteDiDAO;
+import prodotto.ProdottoBean;
+import prodotto.ProdottoDAO;
+import prodotto.VideogiocoBean;
+import prodotto.VideogiocoDAO;
 
 @WebServlet("/servletcategorie")
 public class ServletCategorie extends HttpServlet {
@@ -111,7 +111,7 @@ public class ServletCategorie extends HttpServlet {
 			DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
 			if(per.equals("catalogo"))
 			{
-				ProdottoModelDAO dao = new  ProdottoModelDAO(ds);
+				ProdottoDAO dao = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> bean = new ArrayList<ProdottoBean>();
 				try {
 						bean = dao.doRetriveAll("");
@@ -126,9 +126,9 @@ public class ServletCategorie extends HttpServlet {
 			}
 			else if(per.equals("azione"))
 			{
-				ProdottoModelDAO dap = new  ProdottoModelDAO(ds);
+				ProdottoDAO dap = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-				ParteDiModelDAO dao = new ParteDiModelDAO(ds);
+				ParteDiDAO dao = new ParteDiDAO(ds);
 				try {
 					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Azione");
 					for(ParteDiBean b : bean)
@@ -147,9 +147,9 @@ public class ServletCategorie extends HttpServlet {
 			}
 			else if(per.equals("avventura"))
 			{
-				ProdottoModelDAO dap = new  ProdottoModelDAO(ds);
+				ProdottoDAO dap = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-				ParteDiModelDAO dao = new ParteDiModelDAO(ds);
+				ParteDiDAO dao = new ParteDiDAO(ds);
 				try {
 					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Avventura");
 					for(ParteDiBean b : bean)
@@ -168,9 +168,9 @@ public class ServletCategorie extends HttpServlet {
 			}
 			else if(per.equals("battleroyale"))
 			{
-				ProdottoModelDAO dap = new  ProdottoModelDAO(ds);
+				ProdottoDAO dap = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-				ParteDiModelDAO dao = new ParteDiModelDAO(ds);
+				ParteDiDAO dao = new ParteDiDAO(ds);
 				try {
 					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Battle Royale");
 					for(ParteDiBean b : bean)
@@ -189,9 +189,9 @@ public class ServletCategorie extends HttpServlet {
 			}
 			else if(per.equals("sport"))
 			{
-				ProdottoModelDAO dap = new  ProdottoModelDAO(ds);
+				ProdottoDAO dap = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-				ParteDiModelDAO dao = new ParteDiModelDAO(ds);
+				ParteDiDAO dao = new ParteDiDAO(ds);
 				try {
 					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Sport");
 					for(ParteDiBean b : bean)
@@ -210,9 +210,9 @@ public class ServletCategorie extends HttpServlet {
 			}
 			else if(per.equals("horror"))
 			{
-				ProdottoModelDAO dap = new  ProdottoModelDAO(ds);
+				ProdottoDAO dap = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-				ParteDiModelDAO dao = new ParteDiModelDAO(ds);
+				ParteDiDAO dao = new ParteDiDAO(ds);
 				try {
 					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Survival horror");
 					for(ParteDiBean b : bean)
@@ -231,9 +231,9 @@ public class ServletCategorie extends HttpServlet {
 			}
 			else if(per.equals("console"))
 			{
-				ProdottoModelDAO dap = new  ProdottoModelDAO(ds);
+				ProdottoDAO dap = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-				ConsoleModelDAO dao = new ConsoleModelDAO(ds);
+				ConsoleDAO dao = new ConsoleDAO(ds);
 				try {
 					ArrayList<ConsoleBean> bean = dao.doRetriveAll("");
 					for(ConsoleBean b : bean)
@@ -252,9 +252,9 @@ public class ServletCategorie extends HttpServlet {
 			}
 			else if(per.equals("videogiochi"))
 			{
-				ProdottoModelDAO dap = new  ProdottoModelDAO(ds);
+				ProdottoDAO dap = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-				VideogiocoModelDAO dao = new VideogiocoModelDAO(ds);
+				VideogiocoDAO dao = new VideogiocoDAO(ds);
 				try {
 					ArrayList<VideogiocoBean> bean = dao.doRetriveAll("");
 					for(VideogiocoBean b : bean)
@@ -273,9 +273,9 @@ public class ServletCategorie extends HttpServlet {
 			}
 			else if(per.equals("abbonamenti"))
 			{
-				ProdottoModelDAO dap = new  ProdottoModelDAO(ds);
+				ProdottoDAO dap = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-				AbbonamentoModelDAO dao = new AbbonamentoModelDAO(ds);
+				AbbonamentoDAO dao = new AbbonamentoDAO(ds);
 				try {
 					ArrayList<AbbonamentoBean> bean = dao.doRetriveAll("");
 					for(AbbonamentoBean b : bean)
@@ -294,9 +294,9 @@ public class ServletCategorie extends HttpServlet {
 			}
 			else if(per.equals("dlc"))
 			{
-				ProdottoModelDAO dap = new  ProdottoModelDAO(ds);
+				ProdottoDAO dap = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-				DlcModelDAO dao = new DlcModelDAO(ds);
+				DlcDAO dao = new DlcDAO(ds);
 				try {
 					ArrayList<DlcBean> bean = dao.doRetriveAll("");
 					for(DlcBean b : bean)

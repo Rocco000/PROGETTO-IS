@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import it.unisa.controller.*;
-import it.unisa.model.MagazzinoBean;
-import it.unisa.model.MagazzinoModelDAO;
-import it.unisa.model.PresenteInBean;
-import it.unisa.model.PresenteInModelDAO;
-import it.unisa.model.ProdottoBean;
-import it.unisa.model.ProdottoModelDAO;
+import magazzino.MagazzinoBean;
+import magazzino.MagazzinoDAO;
+import magazzino.PresenteInBean;
+import magazzino.PresenteInDAO;
+import prodotto.ProdottoBean;
+import prodotto.ProdottoDAO;
 
 @WebServlet("/servletformprodesistentiadmin")
 public class ServletFormProdEsistentiAdmin extends HttpServlet {
@@ -47,7 +47,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 				String codiceP=request.getParameter("codicePesistente");
 				String quantita=request.getParameter("quantitaPesistente");
 				DataSource ds=(DataSource)super.getServletContext().getAttribute("DataSource");
-				ProdottoModelDAO pdo=new ProdottoModelDAO(ds);
+				ProdottoDAO pdo=new ProdottoDAO(ds);
 				try {
 					Object obj=pdo.doRetriveByKey(codiceP);
 					if(obj==null) {
@@ -59,14 +59,14 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				MagazzinoModelDAO mmd=new MagazzinoModelDAO(ds);
+				MagazzinoDAO mmd=new MagazzinoDAO(ds);
 				ArrayList<MagazzinoBean> mb=null;
 				try {
 					mb=mmd.doRetriveAll("");
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				PresenteInModelDAO pid=new PresenteInModelDAO(ds);
+				PresenteInDAO pid=new PresenteInDAO(ds);
 				for(int i=0;i<mb.size();i++) {
 				ArrayList<PresenteInBean> pb=null;
 				try {
@@ -85,7 +85,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 							
 							pib.setQuantita_disponibile(pib.getQuantita_disponibile()+Integer.parseInt(quantita));
 							
-							ProdottoModelDAO prod=new ProdottoModelDAO(ds);
+							ProdottoDAO prod=new ProdottoDAO(ds);
 							ProdottoBean prodB=null;
 							try {
 								prodB=prod.doRetriveByKey(codiceP);

@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.CategoriaBean;
-import it.unisa.model.CategoriaModelDAO;
-import it.unisa.model.FornitoreBean;
-import it.unisa.model.FornitoreModelDAO;
-import it.unisa.model.OrdineBean;
-import it.unisa.model.OrdineModelDAO;
-import it.unisa.model.ProdottoBean;
-import it.unisa.model.ProdottoModelDAO;
-import it.unisa.model.SoftwarehouseBean;
-import it.unisa.model.SoftwarehouseModelDAO;
+import acquisto.OrdineBean;
+import acquisto.OrdineDAO;
+import prodotto.CategoriaBean;
+import prodotto.CategoriaDAO;
+import prodotto.FornitoreBean;
+import prodotto.FornitoreDAO;
+import prodotto.ProdottoBean;
+import prodotto.ProdottoDAO;
+import prodotto.SoftwarehouseBean;
+import prodotto.SoftwarehouseDAO;
 
 /**
  * Servlet implementation class ServletGestioneAdmin
@@ -48,7 +48,7 @@ public class ServletGestioneProdottiAdmin extends HttpServlet {
 				if(logAdmin==true) {
 					//l'admin e' loggato e può andare alla pagine di gestione(paginaAmministratore)
 					
-					OrdineModelDAO odao= new OrdineModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+					OrdineDAO odao= new OrdineDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 					try {
 						request.setAttribute("visitato", "");
 						
@@ -57,22 +57,22 @@ public class ServletGestioneProdottiAdmin extends HttpServlet {
 						request.setAttribute("nonConsegnati", ordiniNonConsegnati);
 						
 						//ottengo tutti i prodotti esistenti
-						ProdottoModelDAO pdao= new ProdottoModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+						ProdottoDAO pdao= new ProdottoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 						ArrayList<ProdottoBean> prodottiEsistenti= pdao.doRetriveAll(null);
 						request.setAttribute("prodottiEsistenti", prodottiEsistenti);
 						
 						//ottengo tutti i fornitori
-						FornitoreModelDAO fdao= new FornitoreModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+						FornitoreDAO fdao= new FornitoreDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 						ArrayList<FornitoreBean> fornitori= fdao.doRetriveAll(null);
 						request.setAttribute("fornitori", fornitori);
 						
 						//ottengo tutte le softwarehouse
-						SoftwarehouseModelDAO sdao= new SoftwarehouseModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+						SoftwarehouseDAO sdao= new SoftwarehouseDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 						ArrayList<SoftwarehouseBean> sfh= sdao.doRetriveAll(null);
 						request.setAttribute("softwarehouse", sfh);
 						
 						//ottengo tutte le categorie
-						CategoriaModelDAO cdao= new CategoriaModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+						CategoriaDAO cdao= new CategoriaDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 						ArrayList<CategoriaBean> categorie= cdao.doRetriveAll(null);
 						request.setAttribute("categorie", categorie);
 						

@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.ProdottoBean;
-import it.unisa.model.ProdottoModelDAO;
+import prodotto.ProdottoBean;
+import prodotto.ProdottoDAO;
 
 
 @WebServlet("/servletcarrello")
@@ -95,7 +95,7 @@ public class ServletCarrello extends HttpServlet {
 			{
 				request.setAttribute("carrello",carr);
 				DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-				ProdottoModelDAO dao = new ProdottoModelDAO(ds);
+				ProdottoDAO dao = new ProdottoDAO(ds);
 				ArrayList<ProdottoBean> array = new ArrayList<ProdottoBean>();
 				
 				for(String str : carr)

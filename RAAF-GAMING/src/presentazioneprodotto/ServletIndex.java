@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.ProdottoBean;
-import it.unisa.model.ProdottoModelDAO;
-import it.unisa.model.VideogiocoBean;
-import it.unisa.model.VideogiocoModelDAO;
+import prodotto.ProdottoBean;
+import prodotto.ProdottoDAO;
+import prodotto.VideogiocoBean;
+import prodotto.VideogiocoDAO;
 
 /**
  * Servlet implementation class ServletIndex
@@ -95,12 +95,12 @@ public class ServletIndex extends HttpServlet {
 		}
 		
 		DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-		VideogiocoModelDAO vdao= new VideogiocoModelDAO(ds);
+		VideogiocoDAO vdao= new VideogiocoDAO(ds);
 		try {
 			VideogiocoBean migliorVideogioco= vdao.getTopRecensione();
 			VideogiocoBean ultimoUscito= vdao.getUltimoUscito(migliorVideogioco.getProdotto());
 			ArrayList<VideogiocoBean> scontati= vdao.getVideogiochiScontati(migliorVideogioco.getProdotto(),ultimoUscito.getProdotto());
-			ProdottoModelDAO dao = new ProdottoModelDAO(ds);
+			ProdottoDAO dao = new ProdottoDAO(ds);
 			ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 			prod.add(dao.doRetriveByKey(""+migliorVideogioco.getProdotto()));
 			prod.add(dao.doRetriveByKey(""+ultimoUscito.getProdotto()));

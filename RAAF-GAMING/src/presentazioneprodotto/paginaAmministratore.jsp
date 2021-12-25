@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.ArrayList, it.unisa.model.OrdineBean, it.unisa.model.ProdottoBean, it.unisa.model.FornitoreBean, it.unisa.model.SoftwarehouseBean, it.unisa.model.CategoriaBean"%>
+    pageEncoding="ISO-8859-1" import="java.util.ArrayList,acquisto.OrdineBean,prodotto.ProdottoBean,prodotto.FornitoreBean,prodotto.SoftwarehouseBean,prodotto.CategoriaBean"%>
 <!DOCTYPE html>
 <html>
 <head>

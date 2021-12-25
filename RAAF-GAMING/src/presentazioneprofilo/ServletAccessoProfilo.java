@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.CartaFedeltaBean;
-import it.unisa.model.CartaFedeltaModelDAO;
-import it.unisa.model.ClienteBean;
-import it.unisa.model.ClienteModelDAO;
+import profilo.CartaFedeltaBean;
+import profilo.CartaFedeltaDAO;
+import profilo.ClienteBean;
+import profilo.ClienteDAO;
 
 /**
  * Servlet implementation class ServletAccessoProfilo
@@ -75,7 +75,7 @@ public class ServletAccessoProfilo extends HttpServlet {
 					}
 					
 					
-					ClienteModelDAO cdao= new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+					ClienteDAO cdao= new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 					try {
 						//prendo i dati dell'utente loggato per far stampare i suoi dati sulla carta fedeltà
 						
@@ -83,7 +83,7 @@ public class ServletAccessoProfilo extends HttpServlet {
 						request.setAttribute("visitato", "");//per vedere nel profilo.jsp se sono passato prima in questa servlet
 						request.setAttribute("datiUtenteCarta", utente);
 						
-						CartaFedeltaModelDAO cartadao= new CartaFedeltaModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+						CartaFedeltaDAO cartadao= new CartaFedeltaDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 						CartaFedeltaBean carta= cartadao.doRetriveByKey(utente.getCarta_fedelta());
 						request.setAttribute("puntiCarta", carta);
 						

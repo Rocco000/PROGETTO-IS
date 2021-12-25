@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.ProdottoBean;
-import it.unisa.model.ProdottoModelDAO;
+import prodotto.ProdottoBean;
+import prodotto.ProdottoDAO;
 
 
 @WebServlet("/servletricerca")
@@ -95,7 +95,7 @@ public class ServletRicerca extends HttpServlet {
 		}
 		String str = request.getParameter("ricerca");
 		DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-		 ProdottoModelDAO dao = new  ProdottoModelDAO(ds);
+		 ProdottoDAO dao = new  ProdottoDAO(ds);
 		 ArrayList<ProdottoBean> bean = new ArrayList<ProdottoBean>();
 		 try {
 			bean = dao.doRetriveByName(str);

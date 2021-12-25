@@ -18,24 +18,24 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
-import it.unisa.model.AbbonamentoBean;
-import it.unisa.model.AbbonamentoModelDAO;
-import it.unisa.model.CategoriaBean;
-import it.unisa.model.CategoriaModelDAO;
-import it.unisa.model.ConsoleBean;
-import it.unisa.model.ConsoleModelDAO;
-import it.unisa.model.DlcBean;
-import it.unisa.model.DlcModelDAO;
-import it.unisa.model.MagazzinoBean;
-import it.unisa.model.MagazzinoModelDAO;
-import it.unisa.model.ParteDiBean;
-import it.unisa.model.ParteDiModelDAO;
-import it.unisa.model.PresenteInBean;
-import it.unisa.model.PresenteInModelDAO;
-import it.unisa.model.ProdottoBean;
-import it.unisa.model.ProdottoModelDAO;
-import it.unisa.model.VideogiocoBean;
-import it.unisa.model.VideogiocoModelDAO;
+import magazzino.MagazzinoBean;
+import magazzino.MagazzinoDAO;
+import magazzino.PresenteInBean;
+import magazzino.PresenteInDAO;
+import prodotto.AbbonamentoBean;
+import prodotto.AbbonamentoDAO;
+import prodotto.CategoriaBean;
+import prodotto.CategoriaDAO;
+import prodotto.ConsoleBean;
+import prodotto.ConsoleDAO;
+import prodotto.DlcBean;
+import prodotto.DlcDAO;
+import prodotto.ParteDiBean;
+import prodotto.ParteDiDAO;
+import prodotto.ProdottoBean;
+import prodotto.ProdottoDAO;
+import prodotto.VideogiocoBean;
+import prodotto.VideogiocoDAO;
 
 /**
  * Servlet implementation class ServletFormProdNuovoAdmin
@@ -77,7 +77,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 					
 					DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
 					System.out.println("dopo datasource");
-					ProdottoModelDAO ProdDAO = new ProdottoModelDAO(ds);
+					ProdottoDAO ProdDAO = new ProdottoDAO(ds);
 					
 					try {
 						ArrayList<ProdottoBean> prodEsistenti = ProdDAO.doRetriveByNameProd(nomeProd);
@@ -93,7 +93,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 						else //il nuovo prodotto non e presente nel database
 						{
 							//vedo se nel magazino c'e spazio
-							MagazzinoModelDAO mmd=new MagazzinoModelDAO(ds);
+							MagazzinoDAO mmd=new MagazzinoDAO(ds);
 							ArrayList<MagazzinoBean> mb=null;
 							try {
 								mb=mmd.doRetriveAll("");
@@ -102,7 +102,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 								{
 								e.printStackTrace();
 								}
-							PresenteInModelDAO pid=new PresenteInModelDAO(ds);
+							PresenteInDAO pid=new PresenteInDAO(ds);
 							for(int i=0;i<mb.size();i++)
 								{
 									ArrayList<PresenteInBean> pb=null;
@@ -162,7 +162,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											ParteDiBean parteBean= new ParteDiBean();
 											parteBean.setCategoria(nomecategoria);
 											parteBean.setVideogioco(prodBean.getCodice_prodotto());
-											ParteDiModelDAO pdao= new ParteDiModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+											ParteDiDAO pdao= new ParteDiDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 											
 											double dimensione  =Double.parseDouble(request.getParameter("dimensioni"));
 											int pegi = Integer.parseInt(request.getParameter("pegi"));
@@ -204,7 +204,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											
 											ProdDAO.doSave(prodBean);
 											pid.doSave(pbean);
-											VideogiocoModelDAO vDAO = new VideogiocoModelDAO(ds);
+											VideogiocoDAO vDAO = new VideogiocoDAO(ds);
 											vDAO.doSave(videogicocoBean);
 											pdao.doSave(parteBean);
 											
@@ -225,7 +225,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											console.setProdotto(prodBean.getCodice_prodotto());
 											console.setSpecifica(specifica);
 											
-											ConsoleModelDAO cDAO = new ConsoleModelDAO(ds);
+											ConsoleDAO cDAO = new ConsoleDAO(ds);
 											ProdDAO.doSave(prodBean);
 											pid.doSave(pbean);
 											cDAO.doSave(console);
@@ -242,7 +242,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											int dimensioneDlc = Integer.parseInt(request.getParameter("dimensioneDlc"));
 											
 											DlcBean dlcbean = new DlcBean();
-											DlcModelDAO dDAO = new DlcModelDAO(ds);
+											DlcDAO dDAO = new DlcDAO(ds);
 											dlcbean.setProdotto(prodBean.getCodice_prodotto());
 											dlcbean.setDescrizione(descrizione);
 											dlcbean.setDimensione(dimensioneDlc);
@@ -263,7 +263,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											int durata = Integer.parseInt(request.getParameter("durata"));
 											
 											AbbonamentoBean abb = new AbbonamentoBean();
-											AbbonamentoModelDAO abbDAO = new AbbonamentoModelDAO(ds);
+											AbbonamentoDAO abbDAO = new AbbonamentoDAO(ds);
 											
 											abb.setCodice(codice);
 											abb.setDurata_abbonamento(durata);

@@ -18,8 +18,8 @@ import javax.sql.DataSource;
 
 import it.unisa.model.AmministratoriBean;
 import it.unisa.model.AmministratoriModelDAO;
-import it.unisa.model.ClienteBean;
-import it.unisa.model.ClienteModelDAO;
+import profilo.ClienteBean;
+import profilo.ClienteDAO;
 
 
 @WebServlet("/servletAdmin")

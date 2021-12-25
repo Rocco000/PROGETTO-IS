@@ -25,8 +25,8 @@ import org.apache.tomcat.util.json.ParseException;
 import org.json.HTTP;
 import org.json.JSONObject;
 
-import it.unisa.model.ClienteBean;
-import it.unisa.model.ClienteModelDAO;
+import profilo.ClienteBean;
+import profilo.ClienteDAO;
 
 
 
@@ -73,7 +73,7 @@ public class ServletProfilo extends HttpServlet {
 				
 					JSONObject oggettoJson= new JSONObject(decodifica);//otteniamo l'oggetto json della richiesta
 					
-					ClienteModelDAO cdao= new ClienteModelDAO((DataSource)super.getServletContext().getAttribute("DataSource"));//otteniamo il dao del cliente per effettuare le operazioni sul db
+					ClienteDAO cdao= new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));//otteniamo il dao del cliente per effettuare le operazioni sul db
 					
 					try {
 						boolean flag= false;//indica se l'utente ha modificato la password

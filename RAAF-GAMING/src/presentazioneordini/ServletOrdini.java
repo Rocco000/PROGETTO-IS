@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.OrdineBean;
-import it.unisa.model.OrdineModelDAO;
-import it.unisa.model.SpeditoBean;
-import it.unisa.model.SpeditoModelDAO;
+import acquisto.OrdineBean;
+import acquisto.OrdineDAO;
+import acquisto.SpeditoBean;
+import acquisto.SpeditoDAO;
 
 /**
  * Servlet implementation class servletOrdini
@@ -78,14 +78,14 @@ public class ServletOrdini extends HttpServlet {
 				}
 				
 				//ottengo dal DB tutti gli ordini effettuati dall'utente loggato
-				OrdineModelDAO odao= new OrdineModelDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
+				OrdineDAO odao= new OrdineDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
 				String emailUtente= (String)sessione.getAttribute("emailSession");
 				try {
 					ArrayList<OrdineBean> ordiniUtente= odao.doRetriveByClient(emailUtente);
 					request.setAttribute("listaOrdini", ordiniUtente);//metto l'array degli ordini nella request che passero a ordini.jsp
 					
 					//ottengo il corriere espresso e le date di consegna di ogni ordine dell'utente
-					SpeditoModelDAO sdao= new SpeditoModelDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
+					SpeditoDAO sdao= new SpeditoDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
 					ArrayList<SpeditoBean> spedizione= new ArrayList<SpeditoBean>();
 					SpeditoBean app= new SpeditoBean();
 					

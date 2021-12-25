@@ -166,7 +166,7 @@ if(str==null)
 			 					urldiconferma = response.encodeURL(urldiconferma);
 			 					%>
 			 					<form action="<%=urldiconferma %>" method="post" onsubmit="return controllo(this);">
-			 					<div class="summary-item mb-4"><span class="text mr-4">Indirizzo di consegna:</span><input type="text" name="indirizzodiconsegna" required maxlength="50"></div>
+			 					<div class="summary-item mb-4"><span class="text mr-4">Indirizzo di consegna:</span><input type="text" name="indirizzodiconsegna" required maxlength="200"></div>
 			 					<input type="hidden" name="prezzototale" value="<%=String.format("%.2f",cont).replaceAll(",",".")%>">
 			 					<button type="submit" class="btn btn-outline-warning btn-lg btn-block">Conferma</button>
 			 					</form>

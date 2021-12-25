@@ -13,18 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.AbbonamentoBean;
-import it.unisa.model.AbbonamentoModelDAO;
-import it.unisa.model.ConsoleBean;
-import it.unisa.model.ConsoleModelDAO;
-import it.unisa.model.DlcBean;
-import it.unisa.model.DlcModelDAO;
-import it.unisa.model.PresenteInBean;
-import it.unisa.model.PresenteInModelDAO;
-import it.unisa.model.ProdottoBean;
-import it.unisa.model.ProdottoModelDAO;
-import it.unisa.model.VideogiocoBean;
-import it.unisa.model.VideogiocoModelDAO;
+import magazzino.PresenteInBean;
+import magazzino.PresenteInDAO;
+import prodotto.AbbonamentoBean;
+import prodotto.AbbonamentoDAO;
+import prodotto.ConsoleBean;
+import prodotto.ConsoleDAO;
+import prodotto.DlcBean;
+import prodotto.DlcDAO;
+import prodotto.ProdottoBean;
+import prodotto.ProdottoDAO;
+import prodotto.VideogiocoBean;
+import prodotto.VideogiocoDAO;
 
 
 @WebServlet("/servletprodotto")
@@ -114,7 +114,7 @@ public class ServletProdotto extends HttpServlet {
 		}
 		else {
 			DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-			ProdottoModelDAO dao = new ProdottoModelDAO(ds);
+			ProdottoDAO dao = new ProdottoDAO(ds);
 			try {
 	
 				ProdottoBean prod = dao.doRetriveByKey(id);
@@ -132,7 +132,7 @@ public class ServletProdotto extends HttpServlet {
 				}
 				else {//esiste il prodotto nel db e vedo se c'è in magazzino
 					
-					PresenteInModelDAO present = new PresenteInModelDAO(ds);
+					PresenteInDAO present = new PresenteInDAO(ds);
 					ArrayList<PresenteInBean> presente = present.doRetriveByProdotto(id);
 		
 					request.setAttribute("presente",null);
@@ -145,7 +145,7 @@ public class ServletProdotto extends HttpServlet {
 						}
 					}
 					
-					VideogiocoModelDAO vdao = new VideogiocoModelDAO(ds);
+					VideogiocoDAO vdao = new VideogiocoDAO(ds);
 					VideogiocoBean video = vdao.doRetriveByKey(""+prod.getCodice_prodotto());
 					if(video!=null)
 					{
@@ -160,7 +160,7 @@ public class ServletProdotto extends HttpServlet {
 					}
 					else
 					{
-						ConsoleModelDAO cons = new ConsoleModelDAO(ds);
+						ConsoleDAO cons = new ConsoleDAO(ds);
 						ConsoleBean console = cons.doRetriveByKey(""+prod.getCodice_prodotto());
 						if(console!=null)
 						{
@@ -175,7 +175,7 @@ public class ServletProdotto extends HttpServlet {
 						}
 						else
 						{
-							AbbonamentoModelDAO abb = new AbbonamentoModelDAO(ds);
+							AbbonamentoDAO abb = new AbbonamentoDAO(ds);
 							AbbonamentoBean abbo = abb.doRetriveByKey(""+prod.getCodice_prodotto());
 							if(abbo!=null)
 							{
@@ -190,7 +190,7 @@ public class ServletProdotto extends HttpServlet {
 							}
 							else
 							{
-								DlcModelDAO dl = new DlcModelDAO(ds);
+								DlcDAO dl = new DlcDAO(ds);
 								DlcBean dlc = dl.doRetriveByKey(""+prod.getCodice_prodotto());
 								if(dlc!=null)
 								{

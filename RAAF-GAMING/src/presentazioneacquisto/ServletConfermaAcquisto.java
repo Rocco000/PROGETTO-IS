@@ -15,16 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.CartaFedeltaBean;
-import it.unisa.model.CartaFedeltaModelDAO;
-import it.unisa.model.ClienteBean;
-import it.unisa.model.ClienteModelDAO;
-import it.unisa.model.OrdineBean;
-import it.unisa.model.OrdineModelDAO;
-import it.unisa.model.PresenteInBean;
-import it.unisa.model.PresenteInModelDAO;
-import it.unisa.model.RiguardaBean;
-import it.unisa.model.RiguardaModelDAO;
+import acquisto.OrdineBean;
+import acquisto.OrdineDAO;
+import acquisto.RiguardaBean;
+import acquisto.RiguardaDAO;
+import magazzino.PresenteInBean;
+import magazzino.PresenteInDAO;
+import profilo.CartaFedeltaBean;
+import profilo.CartaFedeltaDAO;
+import profilo.ClienteBean;
+import profilo.ClienteDAO;
 
 
 @WebServlet("/servletconfermaacquisto")
@@ -85,7 +85,7 @@ public class ServletConfermaAcquisto extends HttpServlet {
 					else
 					{
 						DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-						OrdineModelDAO cf=new OrdineModelDAO(ds);
+						OrdineDAO cf=new OrdineDAO(ds);
 						ArrayList<OrdineBean> ordini = null;
 						try {
 							ordini = cf.doRetriveAll("");
@@ -114,7 +114,7 @@ public class ServletConfermaAcquisto extends HttpServlet {
 						ordine.setCliente((String)session.getAttribute("emailSession"));
 						java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 						ordine.setData_acquisto(date);
-						ClienteModelDAO clien = new ClienteModelDAO(ds);
+						ClienteDAO clien = new ClienteDAO(ds);
 						ClienteBean cliente = null;
 						try {
 							cliente = clien.doRetriveByKey((String)session.getAttribute("emailSession"));
@@ -130,7 +130,7 @@ public class ServletConfermaAcquisto extends HttpServlet {
 							e1.printStackTrace();
 						}
 						
-						RiguardaModelDAO rig = new RiguardaModelDAO(ds);
+						RiguardaDAO rig = new RiguardaDAO(ds);
 						
 						for(String id : carrello)
 						{
@@ -144,7 +144,7 @@ public class ServletConfermaAcquisto extends HttpServlet {
 								e1.printStackTrace();
 							}
 							
-							PresenteInModelDAO presente = new PresenteInModelDAO(ds);
+							PresenteInDAO presente = new PresenteInDAO(ds);
 							ArrayList<PresenteInBean> present = null;
 							try {
 								present = presente.doRetriveByProdotto(id);
@@ -166,7 +166,7 @@ public class ServletConfermaAcquisto extends HttpServlet {
 							}
 						}
 						
-						CartaFedeltaModelDAO cart = new CartaFedeltaModelDAO(ds);
+						CartaFedeltaDAO cart = new CartaFedeltaDAO(ds);
 						try {
 							CartaFedeltaBean cartaf = cart.doRetriveByKey(cliente.getCarta_fedelta());
 							cart.doUpdate(cartaf);

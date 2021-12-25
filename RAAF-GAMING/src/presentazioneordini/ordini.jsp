@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="it.unisa.model.OrdineBean, java.util.ArrayList, it.unisa.model.SpeditoBean"%>
+    pageEncoding="UTF-8" import="acquisto.OrdineBean, java.util.ArrayList,acquisto.SpeditoBean"%>
 <!DOCTYPE html>
 <html>
 <head>
