@@ -6,23 +6,23 @@ import java.sql.Date;
 public class CartaDiCreditoBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private int codicecarta;
+	private String codicecarta;
 	private Date data_scadenza;
 	private int codice_cvv;
 	
 	
 	
 	public CartaDiCreditoBean() {
-		codicecarta=0;
+		codicecarta="";
 		data_scadenza=null;
 		codice_cvv=0;
 	}
 	
-	public int getCodicecarta() {
+	public String getCodicecarta() {
 		return codicecarta;
 	}
 	
-	public void setCodicecarta(int codicecarta) {
+	public void setCodicecarta(String codicecarta) {
 		this.codicecarta = codicecarta;
 	}
 	
