@@ -20,43 +20,47 @@ public class DlcDAO implements OperazioniModel<DlcBean> {
 		ds=d;
 	}
 	
-	@Override
-	public DlcBean doRetriveByKey(String code) throws SQLException {
-		Connection connessione = ds.getConnection();
-		String Query="SELECT * FROM dlc WHERE prodotto=?;";
-		
-		PreparedStatement ps= connessione.prepareStatement(Query);
-		ps.setString(1,code);
-		
-		ResultSet rs= ps.executeQuery();
-		
-		while(rs.next())
-		{
-		DlcBean app= new DlcBean();
-		app.setProdotto(rs.getInt("prodotto"));
-		app.setDimensione(rs.getDouble("dimensione"));
-		app.setDescrizione(rs.getString("descrizione"));
-		rs.close();
-		ps.close();
-		connessione.close();
-		return app;
+	public DlcBean ricercaPerChiave(String code) throws SQLException {
+		if(code==null || code.equals(""))
+			throw new NullPointerException("code e' null");
+		else {
+			Connection connessione = ds.getConnection();
+			String Query="SELECT * FROM dlc WHERE prodotto=?;";
+			
+			PreparedStatement ps= connessione.prepareStatement(Query);
+			ps.setString(1,code);
+			
+			ResultSet rs= ps.executeQuery();
+			
+			while(rs.next())
+			{
+				DlcBean app= new DlcBean();
+				app.setProdotto(rs.getInt("prodotto"));
+				app.setDimensione(rs.getDouble("dimensione"));
+				app.setDescrizione(rs.getString("descrizione"));
+				rs.close();
+				ps.close();
+				connessione.close();
+				return app;
+			}
+			rs.close();
+			ps.close();
+			connessione.close();
+			return null;
 		}
-		rs.close();
-		ps.close();
-		connessione.close();
-		return null;
 	}
 
-	@Override
-	public ArrayList<DlcBean> doRetriveAll(String order) throws SQLException {
+	public ArrayList<DlcBean> allElements(String ordinamento) throws SQLException {
 		Connection connessione = ds.getConnection();
 		String Query="SELECT * FROM dlc ORDER BY ?";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
-		if(order!=null && order!="") 
+		if(ordinamento!=null && ordinamento!="") 
 		{
-		ps.setString(1, order);
-		}else { ps.setString(1, "prodotto asc");}
+			ps.setString(1, ordinamento);
+		}else { 
+			ps.setString(1, "prodotto asc");
+		}
 		
 		ResultSet rs= ps.executeQuery();
 		ArrayList<DlcBean> a= new ArrayList<DlcBean>();
@@ -75,20 +79,22 @@ public class DlcDAO implements OperazioniModel<DlcBean> {
 		return a;
 	}
 
-	@Override
-	public void doSave(DlcBean item) throws SQLException {
-		Connection con = ds.getConnection();
-		String str ="INSERT INTO dlc VALUES(?,?,?);";
-		PreparedStatement ps = con.prepareStatement(str);
-		
-		ps.setInt(1,item.getProdotto());
-		ps.setDouble(2,item.getDimensione());
-		ps.setString(3,item.getDescrizione());
-		
-		ps.executeUpdate();
-		ps.close();
-		con.close();
-		
+	public void newInsert(DlcBean item) throws SQLException {
+		if(item==null)
+			throw new NullPointerException("l'item e' null");
+		else {
+			Connection con = ds.getConnection();
+			String str ="INSERT INTO dlc VALUES(?,?,?);";
+			PreparedStatement ps = con.prepareStatement(str);
+			
+			ps.setInt(1,item.getProdotto());
+			ps.setDouble(2,item.getDimensione());
+			ps.setString(3,item.getDescrizione());
+			
+			ps.executeUpdate();
+			ps.close();
+			con.close();
+		}
 	}
 
 	@Override
@@ -99,6 +105,24 @@ public class DlcDAO implements OperazioniModel<DlcBean> {
 
 	@Override
 	public void doDelete(DlcBean item) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public DlcBean doRetriveByKey(String code) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<DlcBean> doRetriveAll(String order) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void doSave(DlcBean item) throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
