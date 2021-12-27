@@ -26,16 +26,18 @@ public class CorriereEspressoDAO implements OperazioniModel<CorriereEspressoBean
 		return null;
 	}
 
-	@Override
-	public ArrayList<CorriereEspressoBean> doRetriveAll(String order) throws SQLException {
+	
+	public ArrayList<CorriereEspressoBean> allElements(String ordinamento) throws SQLException {
 		Connection connessione = ds.getConnection();
 		String Query="SELECT * FROM corriereespresso ODER BY ?";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
-		if(order!=null && order!="") 
+		if(ordinamento!=null && ordinamento!="") 
 		{
-		ps.setString(1, order);
-		}else { ps.setString(1, "nome asc");}
+			ps.setString(1, ordinamento);
+		}else { 
+			ps.setString(1, "nome asc");
+		}
 		
 		ResultSet rs= ps.executeQuery();
 		ArrayList<CorriereEspressoBean> a= new ArrayList<CorriereEspressoBean>();
@@ -69,6 +71,12 @@ public class CorriereEspressoDAO implements OperazioniModel<CorriereEspressoBean
 	public void doDelete(CorriereEspressoBean item) throws SQLException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public ArrayList<CorriereEspressoBean> doRetriveAll(String order) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
