@@ -9,9 +9,8 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
 
-public class ClienteDAO implements OperazioniModel<ClienteBean> {
+public class ClienteDAO {
 
 	DataSource ds= null;//la connessione al DB la ottengo dal Controller che se la va a prendere dal ServletContext
 	
@@ -19,13 +18,17 @@ public class ClienteDAO implements OperazioniModel<ClienteBean> {
 		ds=d;
 	}
 	
-	@Override
-	public ClienteBean doRetriveByKey(String code) throws SQLException {
+
+	public ClienteBean ricercaPerChiave(String id) throws SQLException {
+		
+		if(id==null || id=="")
+			throw new NullPointerException("Inserito un id null o vuoto");
+		
 		Connection connessione= ds.getConnection();
 		String query= "SELECT * FROM cliente WHERE email=?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
-		ps.setString(1, code);
+		ps.setString(1, id);
 		ResultSet risultato= ps.executeQuery();
 		if(risultato.next()) {
 			ClienteBean app= new ClienteBean();
@@ -50,20 +53,19 @@ public class ClienteDAO implements OperazioniModel<ClienteBean> {
 		}
 	}
 
-	@Override
-	public ArrayList<ClienteBean> doRetriveAll(String order) throws SQLException {
+
+	public ArrayList<ClienteBean> allElements(String ordinamento) throws SQLException {
+		
+		if(ordinamento==null || ordinamento=="")
+			throw new NullPointerException("Inserito un ordinamento null o vuoto");
 		
 		Connection connessione= ds.getConnection();//ottengo la connessione al DB
 		
 		String query="SELECT * FROM cliente ORDER BY ?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
-		if(order!=null && !order.equals("")) {
-			ps.setString(1, order);
-		}
-		else {
-			ps.setString(1, "email asc");
-		}
+		
+		ps.setString(1, ordinamento);
 		
 		ResultSet risultato= ps.executeQuery();//eseguo la query
 		ArrayList<ClienteBean> a= new ArrayList<ClienteBean>();//mi salvo tutte le righe dei clienti che ho ottenuto dalla query
@@ -87,53 +89,12 @@ public class ClienteDAO implements OperazioniModel<ClienteBean> {
 		return a;
 	}
 
-	@Override
-	public void doSave(ClienteBean item) throws SQLException {
-		
-		
-	}
 
-	@Override
-	public void doUpdate(ClienteBean item) throws SQLException {
+	public void newInsert(ClienteBean item) throws SQLException {
 		
-		Connection connessione= ds.getConnection();//ottengo la connessione al DB
+		if(item==null)
+			throw new NullPointerException("Inserito un item null");
 		
-		String query= "UPDATE cliente SET cartadicredito=?,password=MD5(?) WHERE email=? ;";
-		
-		PreparedStatement ps= connessione.prepareStatement(query);
-		
-		ps.setString(1, item.getCartadicredito());
-		ps.setString(2, item.getPassword());
-		ps.setString(3, item.getEmail());
-		
-		ps.executeUpdate();
-		ps.close();
-		connessione.close();
-	}
-	
-public void doUpdateOnlyIban(ClienteBean item) throws SQLException {
-		
-		Connection connessione= ds.getConnection();//ottengo la connessione al DB
-		
-		String query= "UPDATE cliente SET cartadicredito=? WHERE email=?;";
-		
-		PreparedStatement ps= connessione.prepareStatement(query);
-		
-		ps.setString(1, item.getCartadicredito());
-		ps.setString(2, item.getEmail());
-		
-		ps.executeUpdate();
-		ps.close();
-		connessione.close();
-	}
-
-	@Override
-	public void doDelete(ClienteBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void doSave(ClienteBean item,CartaFedeltaBean carta) throws SQLException {
 		Connection connessione = ds.getConnection();//ottengo la connessione
 		
 		String query="INSERT INTO cliente VALUES(?,?,?,?,MD5(?),?,?);";
@@ -146,14 +107,32 @@ public void doUpdateOnlyIban(ClienteBean item) throws SQLException {
 		ps.setString(5, item.getPassword());
 		ps.setString(6, item.getCarta_fedelta());
 		ps.setString(7, item.getCartadicredito());
-		CartaFedeltaDAO cartaDAO= new CartaFedeltaDAO(this.ds);//eseguo la insert della carta
-		cartaDAO.doSave(carta);
 		
 		ps.executeUpdate();//eseguo la insert del cliente
 		ps.close();
 		connessione.close();
-		
 	}
+
+
+	public void doUpdate(ClienteBean item) throws SQLException {
+		
+		if(item==null)
+			throw new NullPointerException("Inserito un item null");
+		
+		Connection connessione= ds.getConnection();//ottengo la connessione al DB
+		
+		String query= "UPDATE cliente SET password=MD5(?) WHERE email=? ;";
+		
+		PreparedStatement ps= connessione.prepareStatement(query);
+		
+		ps.setString(1, item.getPassword());
+		ps.setString(2, item.getEmail());
+		
+		ps.executeUpdate();
+		ps.close();
+		connessione.close();
+	}
+	
 
 	
 }
