@@ -1,6 +1,7 @@
 package prodotto;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,9 +9,7 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
-
-public class AbbonamentoDAO implements OperazioniModel<AbbonamentoBean> {
+public class AbbonamentoDAO{
 
 	DataSource ds;
 	
@@ -18,9 +17,9 @@ public class AbbonamentoDAO implements OperazioniModel<AbbonamentoBean> {
 		ds=d;
 	}
 	
-	@Override
-	public AbbonamentoBean doRetriveByKey(String code) throws SQLException {
 
+	public AbbonamentoBean ricercaPerChiave(String code) throws SQLException {
+		if(code==null || code =="")throw new NullPointerException();
 		Connection connessione= ds.getConnection();
 		String query="SELECT * FROM abbonamento WHERE prodotto=?;";
 		
@@ -50,16 +49,16 @@ public class AbbonamentoDAO implements OperazioniModel<AbbonamentoBean> {
 		
 	}
 
-	@Override
-	public ArrayList<AbbonamentoBean> doRetriveAll(String order) throws SQLException {
+
+	public ArrayList<AbbonamentoBean> allElements(String ordinamento) throws SQLException {
 		
 		Connection connessione= ds.getConnection();
 		String query="SELECT * FROM abbonamento ORDER BY ?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
-		if(order!=null && !order.equals(""))
-			ps.setString(1, order);
+		if(ordinamento!=null && !ordinamento.equals(""))
+			ps.setString(1, ordinamento);
 		else
 			ps.setString(1, "prodotto asc");
 		
@@ -83,8 +82,9 @@ public class AbbonamentoDAO implements OperazioniModel<AbbonamentoBean> {
 		return a;
 	}
 
-	@Override
-	public void doSave(AbbonamentoBean item) throws SQLException {
+
+	public void newInsert(AbbonamentoBean item) throws SQLException {
+		if(item==null)throw new NullPointerException();
 		Connection con = ds.getConnection();
 		String str ="INSERT INTO abbonamento VALUES(?,?,?);";
 		PreparedStatement ps = con.prepareStatement(str);
@@ -98,17 +98,4 @@ public class AbbonamentoDAO implements OperazioniModel<AbbonamentoBean> {
 		con.close();
 		
 	}
-
-	@Override
-	public void doUpdate(AbbonamentoBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doDelete(AbbonamentoBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

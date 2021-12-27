@@ -1,6 +1,7 @@
 package magazzino;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,25 +9,21 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
 
-public class PresenteInDAO implements OperazioniModel<PresenteInBean>{
+public class PresenteInDAO{
 	DataSource ds = null;
 	
 	public PresenteInDAO(DataSource ds)
 	{
 		this.ds = ds;
 	}
-	public PresenteInBean doRetriveByKey(String code) throws SQLException {
-
-		return null;
-	}
 	
-	public ArrayList<PresenteInBean> doRetriveByProdotto(String code) throws SQLException {
+	public ArrayList<PresenteInBean> ricercaPerProdotto(String id) throws SQLException {
+		if(id==null || id=="")throw new NullPointerException();
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM presente_in WHERE prodotto=?;";
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1,code);
+		ps.setString(1,id);
 		ResultSet st = ps.executeQuery();
 		ArrayList<PresenteInBean> app = new ArrayList<PresenteInBean>();
 		while(st.next())
@@ -44,12 +41,12 @@ public class PresenteInDAO implements OperazioniModel<PresenteInBean>{
 		return app;
 	}
 	
-	public PresenteInBean doRetriveByKey(int code1,String code2) throws SQLException {
+	public PresenteInBean ricercaPerChiave(int id1,String id2) throws SQLException {
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM presente_in WHERE prodotto=? && magazzino=? ;";
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setInt(1,code1);
-		ps.setString(2,code2);
+		ps.setInt(1,id1);
+		ps.setString(2,id2);
 		ResultSet st = ps.executeQuery();
 		PresenteInBean bean = new PresenteInBean();
 		while(st.next())
@@ -66,12 +63,12 @@ public class PresenteInDAO implements OperazioniModel<PresenteInBean>{
 	}
 
 
-	public ArrayList<PresenteInBean> doRetriveAll(String order) throws SQLException {
+	    public ArrayList<PresenteInBean> allElements(String ordinamento) throws SQLException {
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM presente_in ORDER BY ?;";
 		PreparedStatement ps = con.prepareStatement(str);
-		if(order!=null && order!="") {
-			ps.setString(1, order);
+		if(ordinamento!=null && ordinamento!="") {
+			ps.setString(1, ordinamento);
 		}
 		else {
 			ps.setString(1, "prodotto asc");
@@ -95,7 +92,8 @@ public class PresenteInDAO implements OperazioniModel<PresenteInBean>{
 	}
 
 
-	public void doSave(PresenteInBean item) throws SQLException {
+	public void newInsert(PresenteInBean item) throws SQLException {
+		if(item==null)throw new NullPointerException();
 		Connection con = ds.getConnection();
 		String str = "INSERT INTO presente_in VALUES(?,?,?);";
 		PreparedStatement ps = con.prepareStatement(str);
@@ -109,6 +107,7 @@ public class PresenteInDAO implements OperazioniModel<PresenteInBean>{
 
 
 	public void doUpdate(PresenteInBean item) throws SQLException {
+		if(item==null)throw new NullPointerException();
 		Connection con = ds.getConnection();
 		String str = "UPDATE presente_in SET quantita_disponibile=quantita_disponibile-1 where prodotto=? AND magazzino=?;";
 		PreparedStatement ps = con.prepareStatement(str);
@@ -119,7 +118,8 @@ public class PresenteInDAO implements OperazioniModel<PresenteInBean>{
 		con.close();
 	}
 	
-	public void doUpdateQuantita(PresenteInBean item) throws SQLException {
+	public void rifornitura(PresenteInBean item) throws SQLException {
+		if(item==null)throw new NullPointerException();
 		Connection con = ds.getConnection();
 		String str = "UPDATE presente_in SET quantita_disponibile=? where prodotto=? AND magazzino=?;";
 		PreparedStatement ps = con.prepareStatement(str);
@@ -131,15 +131,13 @@ public class PresenteInDAO implements OperazioniModel<PresenteInBean>{
 		con.close();
 	}
 
-	public void doDelete(PresenteInBean item) throws SQLException {
 
-	}
-
-	public ArrayList<PresenteInBean> doRetriveByMagazzino(String code) throws SQLException{
+	public ArrayList<PresenteInBean> ricercaPerMagazzino(String id) throws SQLException{
+		if(id==null || id=="")throw new NullPointerException();
 		Connection cn=ds.getConnection();
-		String str="SELECT* FROM presente_in WHERE magazzino=?;";
+		String str="SELECT * FROM presente_in WHERE magazzino=?;";
 		PreparedStatement ps=cn.prepareStatement(str);
-		ps.setString(1, code);
+		ps.setString(1, id);
 		ArrayList<PresenteInBean> pib=new ArrayList<PresenteInBean>();
 		ResultSet rs=ps.executeQuery();
 		while(rs.next()) {

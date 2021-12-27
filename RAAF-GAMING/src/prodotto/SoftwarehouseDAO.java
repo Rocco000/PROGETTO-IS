@@ -1,6 +1,7 @@
 package prodotto;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,9 +9,7 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
-
-public class SoftwarehouseDAO implements OperazioniModel<SoftwarehouseBean> {
+public class SoftwarehouseDAO{
 	DataSource ds;
 	public SoftwarehouseDAO(DataSource d) {
 		ds=d;
@@ -22,14 +21,14 @@ public class SoftwarehouseDAO implements OperazioniModel<SoftwarehouseBean> {
 	}
 
 	
-	public ArrayList<SoftwarehouseBean> doRetriveAll(String order) throws SQLException {
+	public ArrayList<SoftwarehouseBean> allElements(String ordinamento) throws SQLException {
 		Connection connessione=ds.getConnection();
 		String query="SELECT * FROM softwarehouse ORDER BY ?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
-		if(order!=null && !order.equals(""))
-			ps.setString(1, order);
+		if(ordinamento!=null && !ordinamento.equals(""))
+			ps.setString(1, ordinamento);
 		else
 			ps.setString(1,"softwarehouse.nomesfh asc");
 		ArrayList<SoftwarehouseBean> a=new ArrayList<SoftwarehouseBean>();
@@ -48,23 +47,4 @@ public class SoftwarehouseDAO implements OperazioniModel<SoftwarehouseBean> {
 		
 		
 	}
-
-	
-	public void doSave(SoftwarehouseBean item) throws SQLException {
-		
-		
-	}
-
-	
-	public void doUpdate(SoftwarehouseBean item) throws SQLException {
-	
-		
-	}
-
-	
-	public void doDelete(SoftwarehouseBean item) throws SQLException {
-		
-		
-	}
-
 }

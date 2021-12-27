@@ -1,6 +1,7 @@
 package prodotto;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,9 +9,7 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
-
-public class FornitoreDAO implements OperazioniModel<FornitoreBean> {
+public class FornitoreDAO{
 
 	DataSource ds =null;
 	
@@ -18,21 +17,15 @@ public class FornitoreDAO implements OperazioniModel<FornitoreBean> {
 	{
 		ds=d;
 	}
-	@Override
-	public FornitoreBean doRetriveByKey(String code) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public ArrayList<FornitoreBean> doRetriveAll(String order) throws SQLException {
+	public ArrayList<FornitoreBean> allElements(String ordinamento) throws SQLException {
 		Connection connessione = ds.getConnection();
 		String Query="SELECT * FROM fornitore ORDER BY ?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
-		if(order!=null && order!="") 
+		if(ordinamento!=null && ordinamento!="") 
 		{
-		ps.setString(1, order);
+		ps.setString(1, ordinamento);
 		}else { ps.setString(1, "nome asc");}
 		
 		ResultSet rs= ps.executeQuery();
@@ -51,23 +44,4 @@ public class FornitoreDAO implements OperazioniModel<FornitoreBean> {
 		connessione.close();
 		return a;
 	}
-
-	@Override
-	public void doSave(FornitoreBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doUpdate(FornitoreBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doDelete(FornitoreBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

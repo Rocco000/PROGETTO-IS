@@ -1,6 +1,7 @@
 package magazzino;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,9 +9,8 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
 
-public class MagazzinoDAO implements OperazioniModel<MagazzinoBean>{
+public class MagazzinoDAO{
 	
 	DataSource ds = null;
 	
@@ -19,11 +19,12 @@ public class MagazzinoDAO implements OperazioniModel<MagazzinoBean>{
 		this.ds = ds;
 	}
 
-	public MagazzinoBean doRetriveByKey(String code) throws SQLException {
+	public MagazzinoBean  ricercaPerChiave(String id) throws SQLException {
+		if(id==null || id=="")throw new NullPointerException();
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM magazzino WHERE indirizzo=? ;";
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1,code);
+		ps.setString(1,id);
 		ResultSet st = ps.executeQuery();
 		MagazzinoBean bean = new MagazzinoBean();
 		while(st.next())
@@ -40,12 +41,12 @@ public class MagazzinoDAO implements OperazioniModel<MagazzinoBean>{
 		
 	}
 
-	public ArrayList<MagazzinoBean> doRetriveAll(String order) throws SQLException {
+	public ArrayList<MagazzinoBean> allElements(String ordinamento) throws SQLException {
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM magazzino ORDER BY ?;";
 		PreparedStatement ps = con.prepareStatement(str);
-		if(order!=null && order!="") {
-			ps.setString(1, order);
+		if(ordinamento!=null && ordinamento!="") {
+			ps.setString(1, ordinamento);
 		}
 		else {
 			ps.setString(1, "indirizzo asc");
@@ -65,19 +66,4 @@ public class MagazzinoDAO implements OperazioniModel<MagazzinoBean>{
 		con.close();
 		return array;
 	}
-
-	public void doSave(MagazzinoBean item) throws SQLException {
-
-	}
-
-	public void doUpdate(MagazzinoBean item) throws SQLException {
-
-	}
-
-
-	public void doDelete(MagazzinoBean item) throws SQLException {
-
-	}
-
-
 }
