@@ -70,7 +70,7 @@ public class ServletCategorie extends HttpServlet {
 					array.add(impostazione2);
 					array.add(impostazione3);
 					request.setAttribute("impostazione",array);
-					String impostazione4 = "servletlogout";
+					String impostazione4 ="servletlogout";
 					String impostazione5="servletaccessoprofilo";
 					String impostazione6="servletordini";
 					ArrayList<String> array2 = new ArrayList<String>();
@@ -114,7 +114,7 @@ public class ServletCategorie extends HttpServlet {
 				ProdottoDAO dao = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> bean = new ArrayList<ProdottoBean>();
 				try {
-						bean = dao.doRetriveAll("");
+						bean = dao.allElements("");
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -133,7 +133,7 @@ public class ServletCategorie extends HttpServlet {
 					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Azione");
 					for(ParteDiBean b : bean)
 					{
-						prod.add(dap.doRetriveByKey(b.getVideogioco()+""));
+						prod.add(dap.ricercaPerChiave(b.getVideogioco()+""));
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -154,7 +154,7 @@ public class ServletCategorie extends HttpServlet {
 					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Avventura");
 					for(ParteDiBean b : bean)
 					{
-						prod.add(dap.doRetriveByKey(b.getVideogioco()+""));
+						prod.add(dap.ricercaPerChiave(b.getVideogioco()+""));
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -175,7 +175,7 @@ public class ServletCategorie extends HttpServlet {
 					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Battle Royale");
 					for(ParteDiBean b : bean)
 					{
-						prod.add(dap.doRetriveByKey(b.getVideogioco()+""));
+						prod.add(dap.ricercaPerChiave(b.getVideogioco()+""));
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -196,7 +196,7 @@ public class ServletCategorie extends HttpServlet {
 					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Sport");
 					for(ParteDiBean b : bean)
 					{
-						prod.add(dap.doRetriveByKey(b.getVideogioco()+""));
+						prod.add(dap.ricercaPerChiave(b.getVideogioco()+""));
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -217,7 +217,7 @@ public class ServletCategorie extends HttpServlet {
 					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Survival horror");
 					for(ParteDiBean b : bean)
 					{
-						prod.add(dap.doRetriveByKey(b.getVideogioco()+""));
+						prod.add(dap.ricercaPerChiave(b.getVideogioco()+""));
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -238,7 +238,7 @@ public class ServletCategorie extends HttpServlet {
 					ArrayList<ConsoleBean> bean = dao.allElements("");
 					for(ConsoleBean b : bean)
 					{
-						prod.add(dap.doRetriveByKey(b.getProdotto()+""));
+						prod.add(dap.ricercaPerChiave(b.getProdotto()+""));
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -259,7 +259,7 @@ public class ServletCategorie extends HttpServlet {
 					ArrayList<VideogiocoBean> bean = dao.allElements("");
 					for(VideogiocoBean b : bean)
 					{
-						prod.add(dap.doRetriveByKey(b.getProdotto()+""));
+						prod.add(dap.ricercaPerChiave(b.getProdotto()+""));
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -280,7 +280,7 @@ public class ServletCategorie extends HttpServlet {
 					ArrayList<AbbonamentoBean> bean = dao.allElements("");
 					for(AbbonamentoBean b : bean)
 					{
-						prod.add(dap.doRetriveByKey(b.getProdotto()+""));
+						prod.add(dap.ricercaPerChiave(b.getProdotto()+""));
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -298,10 +298,10 @@ public class ServletCategorie extends HttpServlet {
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 				DlcDAO dao = new DlcDAO(ds);
 				try {
-					ArrayList<DlcBean> bean = dao.doRetriveAll("");
+					ArrayList<DlcBean> bean = dao.allElements("");
 					for(DlcBean b : bean)
 					{
-						prod.add(dap.doRetriveByKey(b.getProdotto()+""));
+						prod.add(dap.ricercaPerChiave(b.getProdotto()+""));
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block

@@ -102,7 +102,7 @@ public class ServletCarrello extends HttpServlet {
 				{
 					ProdottoBean prod;
 					try {
-						prod = dao.doRetriveByKey(str);
+						prod = dao.ricercaPerChiave(str);
 						array.add(prod);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block

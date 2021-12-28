@@ -24,8 +24,6 @@ import magazzino.PresenteInBean;
 import magazzino.PresenteInDAO;
 import prodotto.AbbonamentoBean;
 import prodotto.AbbonamentoDAO;
-import prodotto.CategoriaBean;
-import prodotto.CategoriaDAO;
 import prodotto.ConsoleBean;
 import prodotto.ConsoleDAO;
 import prodotto.DlcBean;
@@ -59,7 +57,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 		HttpSession sessione = request.getSession(true);
 		synchronized(sessione) {
 			Object logAdminB= sessione.getAttribute("logAdmin");
-
+			
 			if(logAdminB!=null) {
 				//l'admin potrebbe essere loggato
 				
@@ -80,7 +78,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 					ProdottoDAO ProdDAO = new ProdottoDAO(ds);
 					
 					try {
-						ArrayList<ProdottoBean> prodEsistenti = ProdDAO.doRetriveByNameProd(nomeProd);
+						ArrayList<ProdottoBean> prodEsistenti = ProdDAO.ricercaPerNome(nomeProd);
 						System.out.println("dopo Arraylist");
 						if(prodEsistenti.size()!=0)//se il nuovo prodotto e gia  nel database 
 						{
@@ -96,7 +94,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 							MagazzinoDAO mmd=new MagazzinoDAO(ds);
 							ArrayList<MagazzinoBean> mb=null;
 							try {
-								mb=mmd.doRetriveAll("");
+								mb=mmd.allElements("");
 								} 
 								catch (SQLException e)
 								{
@@ -108,7 +106,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 									ArrayList<PresenteInBean> pb=null;
 									try 
 									{
-										pb=pid.doRetriveByMagazzino(mb.get(i).getIndirizzo());
+										pb=pid.ricercaPerMagazzino(mb.get(i).getIndirizzo());
 									}
 										catch (SQLException e)
 										{
@@ -202,11 +200,11 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 												videogicocoBean.setNcd(0);
 											}
 											
-											ProdDAO.doSave(prodBean);
-											pid.doSave(pbean);
+											ProdDAO.newInsert(prodBean);
+											pid.newInsert(pbean);
 											VideogiocoDAO vDAO = new VideogiocoDAO(ds);
-											vDAO.doSave(videogicocoBean);
-											pdao.doSave(parteBean);
+											vDAO.newInsert(videogicocoBean);
+											pdao.newInsert(parteBean);
 											
 											String messageok = "Prodotto inserito con successo!";
 											request.setAttribute("messageok", messageok);
@@ -226,9 +224,9 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											console.setSpecifica(specifica);
 											
 											ConsoleDAO cDAO = new ConsoleDAO(ds);
-											ProdDAO.doSave(prodBean);
-											pid.doSave(pbean);
-											cDAO.doSave(console);
+											ProdDAO.newInsert(prodBean);
+											pid.newInsert(pbean);
+											cDAO.newInsert(console);
 											
 											String messageok = "Prodotto inserito con successo!";
 											request.setAttribute("messageok", messageok);
@@ -247,9 +245,9 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											dlcbean.setDescrizione(descrizione);
 											dlcbean.setDimensione(dimensioneDlc);
 										
-											ProdDAO.doSave(prodBean);
-											pid.doSave(pbean);
-											dDAO.doSave(dlcbean);
+											ProdDAO.newInsert(prodBean);
+											pid.newInsert(pbean);
+											dDAO.newInsert(dlcbean);
 											
 											String messageok = "Prodotto inserito con successo!";
 											request.setAttribute("messageok", messageok);
@@ -269,9 +267,9 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											abb.setDurata_abbonamento(durata);
 											abb.setProdotto(prodBean.getCodice_prodotto());
 											
-											ProdDAO.doSave(prodBean);
-											pid.doSave(pbean);
-											abbDAO.doSave(abb);
+											ProdDAO.newInsert(prodBean);
+											pid.newInsert(pbean);
+											abbDAO.newInsert(abb);
 											
 											String messageok = "Prodotto inserito con successo!";
 											request.setAttribute("messageok", messageok);

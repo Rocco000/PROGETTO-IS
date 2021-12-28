@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 import it.unisa.model.OperazioniModel;
 
-public class SpeditoDAO implements OperazioniModel<SpeditoBean> {
+public class SpeditoDAO{
 
 	DataSource ds;
 	public SpeditoDAO(DataSource d) {
@@ -88,33 +88,6 @@ public class SpeditoDAO implements OperazioniModel<SpeditoBean> {
 			connessione.close();
 			return;
 		}
-	}
-
-	
-	public void doUpdate(SpeditoBean item) throws SQLException {
-	
-		
-	}
-
-	
-	public void doDelete(SpeditoBean item) throws SQLException {
-		
-		
-	}
-	@Override
-	public SpeditoBean doRetriveByKey(String code) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public ArrayList<SpeditoBean> doRetriveAll(String order) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void doSave(SpeditoBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

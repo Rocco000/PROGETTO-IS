@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
-import it.unisa.controller.*;
 import magazzino.MagazzinoBean;
 import magazzino.MagazzinoDAO;
 import magazzino.PresenteInBean;
@@ -49,7 +48,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 				DataSource ds=(DataSource)super.getServletContext().getAttribute("DataSource");
 				ProdottoDAO pdo=new ProdottoDAO(ds);
 				try {
-					Object obj=pdo.doRetriveByKey(codiceP);
+					Object obj=pdo.ricercaPerChiave(codiceP);
 					if(obj==null) {
 						request.setAttribute("message", "Prodotto non esistente");
 						String url="/servletgestioneadmin";
@@ -62,7 +61,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 				MagazzinoDAO mmd=new MagazzinoDAO(ds);
 				ArrayList<MagazzinoBean> mb=null;
 				try {
-					mb=mmd.doRetriveAll("");
+					mb=mmd.allElements("");
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -70,7 +69,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 				for(int i=0;i<mb.size();i++) {
 				ArrayList<PresenteInBean> pb=null;
 				try {
-					 pb=pid.doRetriveByMagazzino(mb.get(i).getIndirizzo());
+					 pb=pid.ricercaPerMagazzino(mb.get(i).getIndirizzo());
 				} catch (SQLException e) {
 					
 					e.printStackTrace();
@@ -88,7 +87,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 							ProdottoDAO prod=new ProdottoDAO(ds);
 							ProdottoBean prodB=null;
 							try {
-								prodB=prod.doRetriveByKey(codiceP);
+								prodB=prod.ricercaPerChiave(codiceP);
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
@@ -101,7 +100,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 								e.printStackTrace();
 							}
 							try {
-								pid.doUpdateQuantita(pib);
+								pid.rifornitura(pib);
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}

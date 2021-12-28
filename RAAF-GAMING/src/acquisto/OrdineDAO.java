@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 import it.unisa.model.OperazioniModel;
 
-public class OrdineDAO implements OperazioniModel<OrdineBean> {
+public class OrdineDAO {
 	
 	DataSource ds = null;
 	
@@ -181,24 +181,5 @@ public class OrdineDAO implements OperazioniModel<OrdineBean> {
 		connessione.close();
 		return nonConsegnati;
 	}
-
-	@Override
-	public OrdineBean doRetriveByKey(String code) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<OrdineBean> doRetriveAll(String order) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void doSave(OrdineBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-	
 
 }

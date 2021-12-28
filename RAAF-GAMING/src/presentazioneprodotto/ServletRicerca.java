@@ -98,7 +98,7 @@ public class ServletRicerca extends HttpServlet {
 		 ProdottoDAO dao = new  ProdottoDAO(ds);
 		 ArrayList<ProdottoBean> bean = new ArrayList<ProdottoBean>();
 		 try {
-			bean = dao.doRetriveByName(str);
+			bean = dao.ricercaPerNome(str);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

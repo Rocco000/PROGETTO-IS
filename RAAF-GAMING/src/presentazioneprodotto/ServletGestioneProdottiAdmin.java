@@ -58,22 +58,22 @@ public class ServletGestioneProdottiAdmin extends HttpServlet {
 						
 						//ottengo tutti i prodotti esistenti
 						ProdottoDAO pdao= new ProdottoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-						ArrayList<ProdottoBean> prodottiEsistenti= pdao.doRetriveAll(null);
+						ArrayList<ProdottoBean> prodottiEsistenti= pdao.allElements(null);
 						request.setAttribute("prodottiEsistenti", prodottiEsistenti);
 						
 						//ottengo tutti i fornitori
 						FornitoreDAO fdao= new FornitoreDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-						ArrayList<FornitoreBean> fornitori= fdao.doRetriveAll(null);
+						ArrayList<FornitoreBean> fornitori= fdao.allElements(null);
 						request.setAttribute("fornitori", fornitori);
 						
 						//ottengo tutte le softwarehouse
 						SoftwarehouseDAO sdao= new SoftwarehouseDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-						ArrayList<SoftwarehouseBean> sfh= sdao.doRetriveAll(null);
+						ArrayList<SoftwarehouseBean> sfh= sdao.allElements(null);
 						request.setAttribute("softwarehouse", sfh);
 						
 						//ottengo tutte le categorie
 						CategoriaDAO cdao= new CategoriaDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-						ArrayList<CategoriaBean> categorie= cdao.doRetriveAll(null);
+						ArrayList<CategoriaBean> categorie= cdao.allElements(null);
 						request.setAttribute("categorie", categorie);
 						
 						String url="/paginaAmministratore.jsp";

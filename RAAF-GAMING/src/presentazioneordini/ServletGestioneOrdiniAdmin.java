@@ -1,11 +1,19 @@
 package presentazioneordini;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
+
+import acquisto.SpeditoBean;
+import acquisto.SpeditoDAO;
 
 /**
  * Servlet implementation class ServletGestioneOrdiniAdmin
@@ -15,27 +23,72 @@ public class ServletGestioneOrdiniAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
-     * @see HttpServlet#HttpServlet()
+     * consente di spedire un ordine
      */
     public ServletGestioneOrdiniAdmin() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession sessione = request.getSession(true);
+		synchronized(sessione) {
+			Object logAdminB= sessione.getAttribute("logAdmin");
+			if(logAdminB!=null) {
+				//l'admin potrebbe essere loggato
+				
+				boolean logAdmin= (Boolean) logAdminB;
+				if(logAdmin==true) {
+					//l'admin e' loggato e può eseguire il form
+					
+					SpeditoDAO sdao= new SpeditoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+					SpeditoBean spedizione= new SpeditoBean();
+					String ordine= request.getParameter("numeroOrdine");
+					String corriere= request.getParameter("corriere");
+					String data= request.getParameter("consegnaO");
+					java.sql.Date dataConsegna= java.sql.Date.valueOf(data);
+					
+					spedizione.setOrdine(ordine);
+					spedizione.setCorriere_esprersso(corriere);
+					spedizione.setData_consegna(dataConsegna);
+					
+					System.out.println(ordine+" "+corriere+" "+dataConsegna);
+					System.out.println(spedizione.getData_consegna());
+					try {
+						sdao.newInsert(spedizione);
+						String url="/servletgestioneadmin";
+						url= response.encodeURL(url);
+						request.setAttribute("messageok", "Ordine spedito con successo!");
+						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
+						dispatcher.forward(request, response);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
+				}
+				else{
+					//l'admin non e' loggato
+					String url="servletaccessoadmin";
+					url= response.encodeURL(url);
+					response.sendRedirect(url);
+					return;
+				}
+			}
+			else {
+				//l'admin non e' loggato
+				String url="servletaccessoadmin";
+				url= response.encodeURL(url);
+				response.sendRedirect(url);
+				return;
+			}
+		}
 	}
 
 }

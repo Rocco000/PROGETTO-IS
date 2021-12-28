@@ -10,17 +10,11 @@ import javax.sql.DataSource;
 
 import it.unisa.model.OperazioniModel;
 
-public class RiguardaDAO implements OperazioniModel<RiguardaBean> {
+public class RiguardaDAO{
 	DataSource ds;
 	public RiguardaDAO(DataSource d) {
 		ds=d;
 	}
-	
-	public RiguardaBean doRetriveByKey(String code) throws SQLException {
-		
-		return null;
-	}
-
 	
 	public ArrayList<RiguardaBean> allElements(String ordinamento) throws SQLException {
 		Connection connessione= ds.getConnection();
@@ -65,28 +59,5 @@ public class RiguardaDAO implements OperazioniModel<RiguardaBean> {
 		}
 	}
 
-	
-	public void doUpdate(RiguardaBean item) throws SQLException {
-		
-		
-	}
-
-
-	public void doDelete(RiguardaBean item) throws SQLException {
-		
-		
-	}
-
-	@Override
-	public ArrayList<RiguardaBean> doRetriveAll(String order) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void doSave(RiguardaBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
