@@ -2,11 +2,9 @@ package presentazioneprofilo;
 
 import java.io.IOException;
 
+
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
@@ -18,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import profilo.CartaDiCreditoBean;
+import profilo.CartaDiCreditoDAO;
 import profilo.CartaFedeltaBean;
 import profilo.CartaFedeltaDAO;
 import profilo.ClienteBean;
@@ -64,9 +64,12 @@ public class ServletRegistrazione extends HttpServlet {
 				String nome=request.getParameter("nome");
 				String cognome=request.getParameter("cognome");
 				String email=request.getParameter("email");
-				String iban=request.getParameter("iban");
+				String codicecarta=request.getParameter("codicecarta");
+				String data_scadenza=request.getParameter("data_scadenza");
+				String codice_cvv=request.getParameter("codice_cvv");
 				String data=request.getParameter("data");
-				if(nome==null || nome.length()==0 || cognome==null || cognome.length()==0 || email==null || email.length()==0 || iban==null ||iban.length()==0 || data==null || data.length()==0)
+				String password=request.getParameter("password");
+				if(password==null || password.length()==0 || nome==null || nome.length()==0 || cognome==null || cognome.length()==0 || email==null || email.length()==0 || data==null || data.length()==0 || codicecarta==null || codicecarta.length()==0 || codice_cvv==null || codice_cvv.length()==0 || data_scadenza==null || data_scadenza.length()==0)
 				{
 					
 					request.setAttribute("visitato", "");
@@ -80,11 +83,13 @@ public class ServletRegistrazione extends HttpServlet {
 				
 				
 				java.sql.Date nuovaData = java.sql.Date.valueOf(data);
+				java.sql.Date nuovaDatacarta = java.sql.Date.valueOf(data_scadenza);
 				
-				String password=request.getParameter("password");
-				ClienteDAO cmd=new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+				DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
+				ClienteDAO cmd = new ClienteDAO(ds);
+				
 				try {
-					ClienteBean cb=cmd.doRetriveByKey(email);
+					ClienteBean cb=cmd.ricercaPerChiave(email);
 					if(cb!=null) { //il cliente e' gia registrato
 						String message="Sei gia' iscritto al nostro sito!";
 						request.setAttribute("message", message);
@@ -96,8 +101,33 @@ public class ServletRegistrazione extends HttpServlet {
 						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
 						dispatcher.forward(request, response);
 					}else {
-						CartaFedeltaDAO cf=new CartaFedeltaDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-						ArrayList<CartaFedeltaBean>carte=cf.doRetriveAll("codice desc");//otteniamo tutte le carte fedelta in ordine decrescente
+						//Inserisco la carta di credito e vedo se si puo regostrare con quella carta
+						CartaDiCreditoDAO cc = new CartaDiCreditoDAO(ds);
+						
+						CartaDiCreditoBean cartacredito = new CartaDiCreditoBean();
+						
+						cartacredito.setCodice_cvv(Integer.parseInt(codice_cvv));
+						cartacredito.setData_scadenza(nuovaDatacarta);
+						cartacredito.setCodicecarta(codicecarta);
+						
+						try {
+						cc.newInsert(cartacredito);
+						}
+						catch (SQLException e)
+						{
+							String message="Non puoi registrarti con questa carta";
+							request.setAttribute("message", message);
+							request.setAttribute("visitato", "");
+							String url = "/registrazione.jsp";
+							url = response.encodeURL(url);
+							RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
+							dispatcher.forward(request, response);
+							return;
+						}
+						
+						
+						CartaFedeltaDAO cf = new CartaFedeltaDAO(ds);
+						ArrayList<CartaFedeltaBean>carte=cf.allElements("codice desc");//otteniamo tutte le carte fedelta in ordine decrescente
 						CartaFedeltaBean carta = new CartaFedeltaBean();
 						Random ran= new Random();
 						int i=0;
@@ -118,15 +148,16 @@ public class ServletRegistrazione extends HttpServlet {
 						
 						carta.setCodice(nuovaCarta);
 						carta.setPunti(0);
+						cf.newInsert(carta);
 						ClienteBean nuovoCliente=new ClienteBean(); //creiamo il nuovo utente
 						nuovoCliente.setNome(nome);
 						nuovoCliente.setCognome(cognome);
 						nuovoCliente.setEmail(email);
-						nuovoCliente.setIban(iban);
+						nuovoCliente.setCartadicredito(codicecarta);
 						nuovoCliente.setData_di_nascita(nuovaData);//da correggere
 						nuovoCliente.setPassword(password);
 						nuovoCliente.setCarta_fedelta(nuovaCarta);
-						cmd.doSave(nuovoCliente,carta);
+						cmd.newInsert(nuovoCliente);
 						String url="servletloginfirst";
 						url=response.encodeURL(url);
 						response.sendRedirect(url);
@@ -139,38 +170,74 @@ public class ServletRegistrazione extends HttpServlet {
 		}
 		else {//se non è loggato
 			//ottengo i dati dal form
+
 			String nome=request.getParameter("nome");
 			String cognome=request.getParameter("cognome");
 			String email=request.getParameter("email");
-			String iban=request.getParameter("iban");
+			String codicecarta=request.getParameter("codicecarta");
+			String data_scadenza=request.getParameter("data_scadenza");
+			String codice_cvv=request.getParameter("codice_cvv");
 			String data=request.getParameter("data");
-			if(nome==null || nome.length()==0 || cognome==null || cognome.length()==0 || email==null || email.length()==0 || iban==null ||iban.length()==0 || data==null || data.length()==0)
+			String password=request.getParameter("password");
+			if(password==null || password.length()==0 || nome==null || nome.length()==0 || cognome==null || cognome.length()==0 || email==null || email.length()==0 || data==null || data.length()==0 || codicecarta==null || codicecarta.length()==0 || codice_cvv==null || codice_cvv.length()==0 || data_scadenza==null || data_scadenza.length()==0)
 			{
+				
 				request.setAttribute("visitato", "");
 				String url="/registrazione.jsp";
 				url=response.encodeURL(url);
 				RequestDispatcher di = request.getRequestDispatcher(url);
 				di.forward(request, response);
 				return;
+				
 			}
 			
-			java.sql.Date nuovaData = java.sql.Date.valueOf(data);
 			
-			String password=request.getParameter("password");
-			ClienteDAO cmd=new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+			java.sql.Date nuovaData = java.sql.Date.valueOf(data);
+			java.sql.Date nuovaDatacarta = java.sql.Date.valueOf(data_scadenza);
+			
+			DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
+			ClienteDAO cmd = new ClienteDAO(ds);
+			
 			try {
-				ClienteBean cb=cmd.doRetriveByKey(email);
-				
+				ClienteBean cb=cmd.ricercaPerChiave(email);
 				if(cb!=null) { //il cliente e' gia registrato
 					String message="Sei gia' iscritto al nostro sito!";
 					request.setAttribute("message", message);
+					
+					request.setAttribute("visitato", "");
+					
 					String url = "/registrazione.jsp";
 					url = response.encodeURL(url);
 					RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
 					dispatcher.forward(request, response);
 				}else {
-					CartaFedeltaDAO cf=new CartaFedeltaDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-					ArrayList<CartaFedeltaBean>carte=cf.doRetriveAll("codice desc");//otteniamo tutte le carte fedelta in ordine decrescente
+					//Inserisco la carta di credito e vedo se si puo regostrare con quella carta
+					CartaDiCreditoDAO cc = new CartaDiCreditoDAO(ds);
+					
+					CartaDiCreditoBean cartacredito = new CartaDiCreditoBean();
+					
+					cartacredito.setCodice_cvv(Integer.parseInt(codice_cvv));
+					cartacredito.setData_scadenza(nuovaDatacarta);
+					cartacredito.setCodicecarta(codicecarta);
+					
+					try {
+					cc.newInsert(cartacredito);
+					}
+					catch (SQLException e)
+					{
+						String message="Non puoi registrarti con questa carta";
+						request.setAttribute("message", message);
+						request.setAttribute("visitato", "");
+						String url = "/registrazione.jsp";
+						url = response.encodeURL(url);
+						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
+						dispatcher.forward(request, response);
+						return;
+					}
+					
+					
+					CartaFedeltaDAO cf = new CartaFedeltaDAO(ds);
+					ArrayList<CartaFedeltaBean>carte=cf.allElements("codice desc");//otteniamo tutte le carte fedelta in ordine decrescente
 					CartaFedeltaBean carta = new CartaFedeltaBean();
 					Random ran= new Random();
 					int i=0;
@@ -188,17 +255,19 @@ public class ServletRegistrazione extends HttpServlet {
 						else
 							i++;
 					}
+					
 					carta.setCodice(nuovaCarta);
 					carta.setPunti(0);
+					cf.newInsert(carta);
 					ClienteBean nuovoCliente=new ClienteBean(); //creiamo il nuovo utente
 					nuovoCliente.setNome(nome);
 					nuovoCliente.setCognome(cognome);
 					nuovoCliente.setEmail(email);
-					nuovoCliente.setIban(iban);
+					nuovoCliente.setCartadicredito(codicecarta);
 					nuovoCliente.setData_di_nascita(nuovaData);//da correggere
 					nuovoCliente.setPassword(password);
 					nuovoCliente.setCarta_fedelta(nuovaCarta);
-					cmd.doSave(nuovoCliente,carta);
+					cmd.newInsert(nuovoCliente);
 					String url="servletloginfirst";
 					url=response.encodeURL(url);
 					response.sendRedirect(url);

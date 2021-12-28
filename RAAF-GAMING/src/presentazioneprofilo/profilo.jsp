@@ -128,7 +128,7 @@
 
 			var o= {
 					passwordNuova: $("#inputPassword1").val(),
-					ibanNuovo: $("#inputIban1").val()
+					ibanNuovo: $("#inputIban1").val() //qui bisogna mettere i campi giusti
 			};
 			var parametriJson= JSON.stringify(o);
 			
@@ -158,7 +158,7 @@
 										
 									}
 									if(risposta.iban!=null)
-										$("#ibanAggiornato").html(""+risposta.iban);
+										$("#ibanAggiornato").html(""+risposta.iban); //questo va cambiato va messo .carta e il tag # va cambiato
 								}
 							}
 			});

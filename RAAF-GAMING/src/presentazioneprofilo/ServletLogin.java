@@ -64,7 +64,7 @@ public class ServletLogin extends HttpServlet {
 					
 				ClienteDAO cmd=new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 				try {
-					ClienteBean cb=cmd.doRetriveByKey(email);
+					ClienteBean cb=cmd.ricercaPerChiave(email);
 					if(cb!=null) {//se l'utente è nel DB
 						MessageDigest md = MessageDigest.getInstance("MD5"); 
 						byte[] digest = md.digest(password.getBytes()); 
@@ -128,7 +128,7 @@ public class ServletLogin extends HttpServlet {
 				
 			ClienteDAO cmd=new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 			try {
-				ClienteBean cb=cmd.doRetriveByKey(email);
+				ClienteBean cb=cmd.ricercaPerChiave(email);
 				if(cb!=null) {//se l'utente è nel DB
 					MessageDigest md = MessageDigest.getInstance("MD5"); 
 					byte[] digest = md.digest(password.getBytes()); 

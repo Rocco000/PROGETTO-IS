@@ -2,15 +2,12 @@ package presentazioneprofilo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigInteger;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,11 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import org.apache.tomcat.util.json.JSONParser;
-import org.apache.tomcat.util.json.ParseException;
-import org.json.HTTP;
 import org.json.JSONObject;
 
+import profilo.CartaDiCreditoBean;
+import profilo.CartaDiCreditoDAO;
 import profilo.ClienteBean;
 import profilo.ClienteDAO;
 
@@ -78,14 +74,16 @@ public class ServletProfilo extends HttpServlet {
 					try {
 						boolean flag= false;//indica se l'utente ha modificato la password
 						
-						ClienteBean utente= cdao.doRetriveByKey((String)sessione.getAttribute("emailSession"));//ottengo i dati dell'utente loggato che sta visitanto la pagina profilo
+						ClienteBean utente= cdao.ricercaPerChiave((String)sessione.getAttribute("emailSession"));//ottengo i dati dell'utente loggato che sta visitanto la pagina profilo
 						
 						String passwordAtt= utente.getPassword();//ottengo la password attuale nel db dell'utente
 						
 						String passwordNuova= oggettoJson.getString("passwordNuova");//ottengo la nuova password che l'utente vuole impostare
 						
-						String ibanAtt= utente.getIban();
-						String ibanNuovo= oggettoJson.getString("ibanNuovo");
+						String cartaNuova= oggettoJson.getString("cartaNuova");
+						String dataScadNuova = oggettoJson.getString("dataScadNuova");
+						int codice_cvv = oggettoJson.getInt("codiceNuovo");
+								
 						
 						//creo l'utente con i dati nuovi da passare al DAO per aggiornare il cliente
 						ClienteBean utenteAggiornato= new ClienteBean();
@@ -127,16 +125,23 @@ public class ServletProfilo extends HttpServlet {
 							
 						}
 						
-						if(ibanNuovo!="" && ibanNuovo!=null && (ibanNuovo.length()==27)) {//se ha modificato l'iban
+						CartaDiCreditoDAO cc = new CartaDiCreditoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+						CartaDiCreditoBean carta = new CartaDiCreditoBean();
+						
+						if(cartaNuova!="" && cartaNuova!=null && (cartaNuova.length()==16) && dataScadNuova!="" && dataScadNuova!=null &&  (codice_cvv>=100 && codice_cvv<=999)) {//se ha modificato l'iban
 							
-							if(!ibanAtt.equals(ibanNuovo)) {//se il nuovo iban è diverso da quello del db
-								utenteAggiornato.setIban(ibanNuovo);//setto il nuovo iban
+							if(!utente.getCarta_fedelta().equals(cartaNuova)) {//se il nuovo iban è diverso da quello del db
+								utenteAggiornato.setCartadicredito(cartaNuova);//setto il nuovo iban
+								carta.setCodicecarta(cartaNuova);
+								carta.setCodice_cvv(codice_cvv);
+								carta.setData_scadenza(java.sql.Date.valueOf(dataScadNuova));
+								
 								
 							}
 							else {
 								//se l'iban è uguale mando un errore
 								JSONObject erroreJson= new JSONObject();
-								erroreJson.put("errorMessage", "L'IBAN COINCIDE CON QUELLO GIA' IN USO");
+								erroreJson.put("errorMessage", "LA CARTA COINCIDE CON QUELLA GIA' IN USO");
 								PrintWriter out= response.getWriter();//posso scrivere sulla response
 								out.print(erroreJson.toString());
 								return;
@@ -144,8 +149,8 @@ public class ServletProfilo extends HttpServlet {
 						}
 						else {
 							//se non ha modificato l'iban setto quello attuale
-							ibanNuovo=ibanAtt;
-							utenteAggiornato.setIban(ibanAtt);//setto lo stesso IBAN
+							carta = cc.ricercaPerChiave(utente.getCartadicredito());
+							utenteAggiornato.setCartadicredito(utente.getCartadicredito());//setto la stessa Carta
 							
 						}
 						
@@ -154,20 +159,42 @@ public class ServletProfilo extends HttpServlet {
 						{
 							cdao.doUpdate(utenteAggiornato);
 							
+							try {
+							cc.doUpdate(carta, utente.getCartadicredito());
+							}
+							catch(SQLException e)
+							{
+								JSONObject erroreJson= new JSONObject();
+								erroreJson.put("errorMessage", "Non puoi utilizzare questa carta ma la password e' stata cambiata");
+								PrintWriter out= response.getWriter();//posso scrivere sulla response
+								out.print(erroreJson.toString());
+								return;
+							}
+							
 						}
 						else
 						{
-							cdao.doUpdateOnlyIban(utenteAggiornato);
-							
+							try {
+								cc.doUpdate(carta, utente.getCartadicredito());
+								}
+								catch(SQLException e)
+								{
+									JSONObject erroreJson= new JSONObject();
+									erroreJson.put("errorMessage", "Non puoi utilizzare questa carta");
+									PrintWriter out= response.getWriter();//posso scrivere sulla response
+									out.print(erroreJson.toString());
+									return;
+								}
 						}
 						//aggiorno i dati dell'utente
 						
-						utente= cdao.doRetriveByKey((String)sessione.getAttribute("emailSession"));//riottengo l'utente aggiornato
+						utente= cdao.ricercaPerChiave((String)sessione.getAttribute("emailSession"));//riottengo l'utente aggiornato
 						sessione.setAttribute("passwordSession", utente.getPassword());//aggiorno il campo password della sessione
 						
 						
 						JSONObject rispostaJson= new JSONObject();
-						rispostaJson.put("iban", utente.getIban());
+						String cardmod = utente.getCartadicredito();
+						rispostaJson.put("carta", "*****"+cardmod.substring(12,16));
 						rispostaJson.put("password", flag);						
 						PrintWriter out= response.getWriter();//posso scrivere sulla response
 						out.print(rispostaJson.toString());
