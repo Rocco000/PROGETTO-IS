@@ -20,7 +20,7 @@ public class ConsoleDAO{
 		ds=d;
 	}
 	
-	public ConsoleBean ricercaPerCHiave(String code) throws SQLException {
+	public ConsoleBean ricercaPerChiave(String code) throws SQLException {
 		if(code==null || code=="")throw new NullPointerException("code è null oppure è una stringa vuota");
 		Connection connessione = ds.getConnection();
 		String Query="SELECT * FROM console WHERE prodotto=?;";

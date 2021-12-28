@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
 
-public class DlcDAO implements OperazioniModel<DlcBean> {
+
+public class DlcDAO {
 
 	DataSource ds =null;//la connessione al DB la ottengo dal Controller che se la va a prendere dal ServletContext
 
@@ -97,34 +97,8 @@ public class DlcDAO implements OperazioniModel<DlcBean> {
 		}
 	}
 
-	@Override
-	public void doUpdate(DlcBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
-	@Override
-	public void doDelete(DlcBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public DlcBean doRetriveByKey(String code) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<DlcBean> doRetriveAll(String order) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void doSave(DlcBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

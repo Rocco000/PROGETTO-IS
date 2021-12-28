@@ -31,7 +31,7 @@ public class ServletCard extends HttpServlet {
 			DataSource ds = (DataSource) super.getServletContext().getAttribute("DataSource");
 			try {
 				ProdottoDAO dao = new ProdottoDAO(ds);
-				ProdottoBean bean = dao.doRetriveByKey(request.getParameter("id"));
+				ProdottoBean bean = dao.ricercaPerChiave(request.getParameter("id"));
 				OutputStream out = response.getOutputStream();
 				out.write(bean.getCopertina());
 				out.close();

@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
 
-public class ProdottoDAO implements OperazioniModel<ProdottoBean>{
+
+public class ProdottoDAO{
 	DataSource ds = null;
 	
 	public ProdottoDAO(DataSource ds)
@@ -216,22 +216,6 @@ public class ProdottoDAO implements OperazioniModel<ProdottoBean>{
 		
 	}
 
-	@Override
-	public ProdottoBean doRetriveByKey(String code) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<ProdottoBean> doRetriveAll(String order) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void doSave(ProdottoBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

@@ -66,19 +66,21 @@ public class ServletRecensione extends HttpServlet {
 					
 					int voto = json.getInt("voto");
 					int id = json.getInt("id");
+					String commento=json.getString("commento");
 					DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
 					RecensisceDAO dao = new RecensisceDAO(ds);
 					
 					try {
-						if(dao.doRetriveByKey(id+"",email)==null)
+						if(dao.ricercaPerChiave(id+"",email)==null)
 						{
 							RecensisceBean bean = new RecensisceBean();
 							bean.setCliente(email);
 							bean.setProdotto(id);
 							bean.setVoto(voto);
+							bean.setCommento(commento);
 							
 							try {
-								dao.doSave(bean);
+								dao.newInsert(bean);
 								JSONObject mess = new JSONObject();
 								mess.put("recensione","Recensione effettuata con voto "+voto);
 								PrintWriter out = response.getWriter();

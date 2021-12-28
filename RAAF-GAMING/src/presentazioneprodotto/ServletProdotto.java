@@ -117,7 +117,7 @@ public class ServletProdotto extends HttpServlet {
 			ProdottoDAO dao = new ProdottoDAO(ds);
 			try {
 	
-				ProdottoBean prod = dao.doRetriveByKey(id);
+				ProdottoBean prod = dao.ricercaPerChiave(id);
 				
 				if(prod==null)//prodotto non esiste nel db
 				{
@@ -133,7 +133,7 @@ public class ServletProdotto extends HttpServlet {
 				else {//esiste il prodotto nel db e vedo se c'è in magazzino
 					
 					PresenteInDAO present = new PresenteInDAO(ds);
-					ArrayList<PresenteInBean> presente = present.doRetriveByProdotto(id);
+					ArrayList<PresenteInBean> presente = present.ricercaPerProdotto(id);
 		
 					request.setAttribute("presente",null);
 					for(PresenteInBean l : presente)
@@ -146,7 +146,7 @@ public class ServletProdotto extends HttpServlet {
 					}
 					
 					VideogiocoDAO vdao = new VideogiocoDAO(ds);
-					VideogiocoBean video = vdao.doRetriveByKey(""+prod.getCodice_prodotto());
+					VideogiocoBean video = vdao.ricercaPerChiave(""+prod.getCodice_prodotto());
 					if(video!=null)
 					{
 						request.setAttribute("tipo","videogioco");
@@ -161,7 +161,7 @@ public class ServletProdotto extends HttpServlet {
 					else
 					{
 						ConsoleDAO cons = new ConsoleDAO(ds);
-						ConsoleBean console = cons.doRetriveByKey(""+prod.getCodice_prodotto());
+						ConsoleBean console = cons.ricercaPerChiave(""+prod.getCodice_prodotto());
 						if(console!=null)
 						{
 							request.setAttribute("tipo","console");
@@ -176,7 +176,7 @@ public class ServletProdotto extends HttpServlet {
 						else
 						{
 							AbbonamentoDAO abb = new AbbonamentoDAO(ds);
-							AbbonamentoBean abbo = abb.doRetriveByKey(""+prod.getCodice_prodotto());
+							AbbonamentoBean abbo = abb.ricercaPerChiave(""+prod.getCodice_prodotto());
 							if(abbo!=null)
 							{
 								request.setAttribute("tipo","abbonamento");
@@ -191,7 +191,7 @@ public class ServletProdotto extends HttpServlet {
 							else
 							{
 								DlcDAO dl = new DlcDAO(ds);
-								DlcBean dlc = dl.doRetriveByKey(""+prod.getCodice_prodotto());
+								DlcBean dlc = dl.ricercaPerChiave(""+prod.getCodice_prodotto());
 								if(dlc!=null)
 								{
 									request.setAttribute("tipo","dlc");

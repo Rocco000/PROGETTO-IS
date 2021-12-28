@@ -102,12 +102,12 @@ public class ServletIndex extends HttpServlet {
 			ArrayList<VideogiocoBean> scontati= vdao.getVideogiochiScontati(migliorVideogioco.getProdotto(),ultimoUscito.getProdotto());
 			ProdottoDAO dao = new ProdottoDAO(ds);
 			ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
-			prod.add(dao.doRetriveByKey(""+migliorVideogioco.getProdotto()));
-			prod.add(dao.doRetriveByKey(""+ultimoUscito.getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(0).getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(1).getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(2).getProdotto()));
-			prod.add(dao.doRetriveByKey(""+scontati.get(3).getProdotto()));
+			prod.add(dao.ricercaPerChiave(""+migliorVideogioco.getProdotto()));
+			prod.add(dao.ricercaPerChiave(""+ultimoUscito.getProdotto()));
+			prod.add(dao.ricercaPerChiave(""+scontati.get(0).getProdotto()));
+			prod.add(dao.ricercaPerChiave(""+scontati.get(1).getProdotto()));
+			prod.add(dao.ricercaPerChiave(""+scontati.get(2).getProdotto()));
+			prod.add(dao.ricercaPerChiave(""+scontati.get(3).getProdotto()));
 			request.setAttribute("Prodotti",prod);
 			request.setAttribute("visitato","");
 			RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/homepage.jsp");
