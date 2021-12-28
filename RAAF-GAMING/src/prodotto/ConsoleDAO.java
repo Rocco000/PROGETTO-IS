@@ -8,20 +8,20 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
 
-public class ConsoleDAO implements OperazioniModel<ConsoleBean> {
+
+public class ConsoleDAO{
 	
-	DataSource ds =null;//la connessione al DB la ottengo dal Controller che se la va a prendere dal ServletContext
+	DataSource ds =null;
 
 	
 	public ConsoleDAO(DataSource d)
 	{
 		ds=d;
 	}
-	@Override
-	public ConsoleBean doRetriveByKey(String code) throws SQLException {
-		
+	
+	public ConsoleBean ricercaPerCHiave(String code) throws SQLException {
+		if(code==null || code=="")throw new NullPointerException("code è null oppure è una stringa vuota");
 		Connection connessione = ds.getConnection();
 		String Query="SELECT * FROM console WHERE prodotto=?;";
 		
@@ -46,16 +46,16 @@ public class ConsoleDAO implements OperazioniModel<ConsoleBean> {
 		
 	}
 
-	@Override
-	public ArrayList<ConsoleBean> doRetriveAll(String order) throws SQLException {
+	
+	public ArrayList<ConsoleBean> allElements(String ordinamento) throws SQLException {
 		
 	Connection connessione = ds.getConnection();
 	String Query="SELECT * FROM console ORDER BY ?";
 	
 	PreparedStatement ps= connessione.prepareStatement(Query);
-	if(order!=null && order!="") 
+	if(ordinamento!=null && !ordinamento.equals("")) 
 	{
-	ps.setString(1, order);
+	ps.setString(1, ordinamento);
 	}else { ps.setString(1, "prodotto asc");}
 	
 	ResultSet rs= ps.executeQuery();
@@ -74,10 +74,11 @@ public class ConsoleDAO implements OperazioniModel<ConsoleBean> {
 	ps.close();
 	connessione.close();
 	return a;
-	}//fine doRetriveAll
+	}
 
-	@Override
-	public void doSave(ConsoleBean item) throws SQLException {
+	
+	public void newInsert(ConsoleBean item) throws SQLException {
+		if(item==null)throw new NullPointerException("item è null");
 		Connection con = ds.getConnection();
 		String str ="INSERT INTO console VALUES(?,?,?);";
 		PreparedStatement ps = con.prepareStatement(str);
@@ -94,16 +95,6 @@ public class ConsoleDAO implements OperazioniModel<ConsoleBean> {
 
 	}
 
-	@Override
-	public void doUpdate(ConsoleBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doDelete(ConsoleBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

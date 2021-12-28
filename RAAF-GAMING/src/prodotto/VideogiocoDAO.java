@@ -8,16 +8,16 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
 
-public class VideogiocoDAO implements OperazioniModel<VideogiocoBean> {
+public class VideogiocoDAO{
 
 	DataSource ds;
 	public VideogiocoDAO(DataSource d) {
 		ds=d;
 	}
 	
-	public VideogiocoBean doRetriveByKey(String code) throws SQLException {
+	public VideogiocoBean ricercaPerChiave(String code) throws SQLException {
+		if(code==null||code=="")throw new NullPointerException("code vuoto o null");
 		Connection connessione = ds.getConnection();
 		String query="SELECT * FROM videogioco WHERE prodotto=?;";
 		
@@ -51,14 +51,15 @@ public class VideogiocoDAO implements OperazioniModel<VideogiocoBean> {
 	}
 
 	
-	public ArrayList<VideogiocoBean> doRetriveAll(String order) throws SQLException {
+	public ArrayList<VideogiocoBean> allElements(String ordinamento) throws SQLException {
+		if(ordinamento==null||ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione=ds.getConnection();
 		String query="SELECT * FROM videogioco,prodotto WHERE videogioco.prodotto=prodotto.codice_prodotto ORDER BY ?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
-		if(order!=null && !order.equals(""))
-			ps.setString(1, order);
+		if(ordinamento!=null && !ordinamento.equals(""))
+			ps.setString(1, ordinamento);
 		else
 			ps.setString(1,"videogioco.prodotto");
 		ArrayList<VideogiocoBean>a=new ArrayList<VideogiocoBean>();
@@ -85,7 +86,8 @@ public class VideogiocoDAO implements OperazioniModel<VideogiocoBean> {
 	}
 
 	
-	public void doSave(VideogiocoBean item) throws SQLException {
+	public void newInsert(VideogiocoBean item) throws SQLException {
+		if(item==null)throw new NullPointerException("item null");
 		Connection con = ds.getConnection();
 		String str = "INSERT INTO videogioco VALUES(?,?,?,?,?,?,?);";
 		PreparedStatement ps = con.prepareStatement(str);
@@ -105,20 +107,9 @@ public class VideogiocoDAO implements OperazioniModel<VideogiocoBean> {
 	}
 
 	
-	public void doUpdate(VideogiocoBean item) throws SQLException {
-	
-		
-	}
-
-	
-	public void doDelete(VideogiocoBean item) throws SQLException {
-		
-		
-	}
 	
 	public VideogiocoBean getTopRecensione() throws SQLException{
 		Connection connessione=ds.getConnection();
-		//ottengo per ogni videogioco il suo voto medio, li ordino in senso decrescente
 		String query="SELECT v.*,recensione.voto_medio_assegnato FROM videogioco v,(SELECT r.prodotto as codice_prodotto, avg(voto) as voto_medio_assegnato FROM recensisce r GROUP BY r.prodotto) as recensione WHERE v.prodotto = recensione.codice_prodotto ORDER BY recensione.voto_medio_assegnato desc;";
 		PreparedStatement ps= connessione.prepareStatement(query);
 		ResultSet risultato= ps.executeQuery();
@@ -148,8 +139,8 @@ public class VideogiocoDAO implements OperazioniModel<VideogiocoBean> {
 	}
 	
 	public VideogiocoBean getUltimoUscito(int code) throws SQLException{
+		if(code<=0)throw new NullPointerException("code minore di 0");
 		Connection connessione=ds.getConnection();
-		//ottengo i videogiochi con data di uscita ultima
 		String query="SELECT videogioco.* FROM videogioco,prodotto,(SELECT MAX(prodotto.data_uscita) AS ultimo FROM prodotto,videogioco WHERE prodotto.codice_prodotto=videogioco.prodotto AND prodotto.codice_prodotto!=?) AS temp WHERE videogioco.prodotto=prodotto.codice_prodotto AND prodotto.data_uscita=temp.ultimo;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
@@ -157,7 +148,7 @@ public class VideogiocoDAO implements OperazioniModel<VideogiocoBean> {
 		ResultSet risultato= ps.executeQuery();
 		if(risultato.next()) {
 			int codiceVideogioco= risultato.getInt("videogioco.prodotto");//ottengo il codice del videogioco con data ultima
-			VideogiocoBean ultimoUscito= this.doRetriveByKey(""+codiceVideogioco);//ottengo quel videogioco
+			VideogiocoBean ultimoUscito= this.ricercaPerChiave(""+codiceVideogioco);//ottengo quel videogioco
 			
 			risultato.close();
 			ps.close();
@@ -173,8 +164,8 @@ public class VideogiocoDAO implements OperazioniModel<VideogiocoBean> {
 	}
 	
 	public ArrayList<VideogiocoBean> getVideogiochiScontati(int code1,int code2) throws SQLException{
+		if((code1<=0 && code2<=0) && code1==code2)throw new NullPointerException("code1 e code2 minoro o uguale a 0 oppure sono uguali");
 		Connection connessione=ds.getConnection();
-		//ottengo tutti i videogiochi che sono scontati
 		String query="SELECT videogioco.* FROM prodotto,videogioco WHERE prodotto.codice_prodotto=videogioco.prodotto AND sconto>0 AND prodotto.codice_prodotto!=? AND prodotto.codice_prodotto!=?;";
 		PreparedStatement ps= connessione.prepareStatement(query);
 		ps.setInt(1, code1);

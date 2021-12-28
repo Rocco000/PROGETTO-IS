@@ -2,7 +2,7 @@ package prodotto;
 
 
 import java.sql.Connection;
-import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
 
 
 
-public class RecensisceDAO implements OperazioniModel<RecensisceBean>{
+
+public class RecensisceDAO{
 
 	DataSource ds;
 	
@@ -22,43 +22,45 @@ public class RecensisceDAO implements OperazioniModel<RecensisceBean>{
 		ds=d;
 	}
 	
-	public RecensisceBean doRetriveByKey(String code) throws SQLException {
-		return null;
-	}
-	
-	public RecensisceBean doRetriveByKey(String prodotto, String cliente) throws SQLException {
-		Connection connessione=ds.getConnection();
-		String query="SELECT * FROM recensisce WHERE prodotto=? AND cliente=?;";
-		PreparedStatement ps=connessione.prepareStatement(query);
-		ps.setString(1,prodotto);
-		ps.setString(2,cliente);
-		ResultSet risultato=ps.executeQuery();
-		if(risultato.next()) {
-			RecensisceBean app=new RecensisceBean();
-			app.setCliente(risultato.getString("cliente"));
-			app.setProdotto(risultato.getInt("prodotto"));
-			app.setVoto(risultato.getInt("voto"));
-			risultato.close();
-			ps.close();
-			connessione.close();
-			return app;
+	public RecensisceBean ricercaPerChiave(String code) throws SQLException {
+		if(code==null || code=="")throw new NullPointerException("code è null oppure vuota");
+		Connection connessione = ds.getConnection();
+		String Query="SELECT * FROM console WHERE prodotto=?;";
+		
+		PreparedStatement ps= connessione.prepareStatement(Query);
+		ps.setString(1,code);		
+		ResultSet rs= ps.executeQuery();		
+		while(rs.next())
+		{
+		RecensisceBean app= new RecensisceBean();
+		app.setCliente(rs.getString("cliente"));
+		app.setProdotto(rs.getInt("prodotto"));
+		app.setVoto(rs.getInt("voto"));
+		app.setCommento(rs.getString("commento"));
+		rs.close();
+		ps.close();
+		connessione.close();
+		return app;
 		}
-		risultato.close();
+		rs.close();
 		ps.close();
 		connessione.close();
 		return null;
+
 	}
 	
 
-	public ArrayList<RecensisceBean> doRetriveAll(String order) throws SQLException {
+
+
+	public ArrayList<RecensisceBean> allElements(String ordinamento) throws SQLException {
 	
 		Connection connessione=ds.getConnection();
 		String query="SELECT * FROM recensisce ORDER BY ?;";
 		PreparedStatement ps=connessione.prepareStatement(query);
-		if(order!=null && !order.equals(""))
-			ps.setString(1, order);
-		else
-			ps.setString(1,"recensisce.voto asc");
+		if(ordinamento!=null && !ordinamento.equals("")) 
+			ps.setString(1, ordinamento);
+		else {
+			ps.setString(1,"recensisce.voto asc");}
 		ArrayList<RecensisceBean >a=new ArrayList<RecensisceBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {
@@ -67,6 +69,7 @@ public class RecensisceDAO implements OperazioniModel<RecensisceBean>{
 			app.setCliente(risultato.getString("cliente"));
 			app.setProdotto(risultato.getInt("prodotto"));
 			app.setVoto(risultato.getInt("voto"));
+			app.setCommento(risultato.getString("commento"));
 			a.add(app);
 		}
 		risultato.close();
@@ -78,41 +81,34 @@ public class RecensisceDAO implements OperazioniModel<RecensisceBean>{
 	}
 
 	
-	public void doSave(RecensisceBean item) throws SQLException {
-		Connection connessione = ds.getConnection();//ottengo la connessione
+	public void newInsert(RecensisceBean item) throws SQLException {
+		if(item==null) throw new NullPointerException("item è null");
+		Connection connessione = ds.getConnection();
 		
-		String query="INSERT INTO recensisce VALUES(?,?,?);";
+		String query="INSERT INTO recensisce VALUES(?,?,?,?);";
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
 		ps.setString(1,item.getCliente());
 		ps.setInt(2,item.getProdotto());
 		ps.setInt(3,item.getVoto());
+		ps.setString(4,item.getCommento());
 		
-		ps.executeUpdate();//eseguo la insert della recensione
+		ps.executeUpdate();
 		ps.close();
 		connessione.close();
 		
 	}
 
 
-	public void doUpdate(RecensisceBean item) throws SQLException {
-		
-		
-	}
-
-
-	public void doDelete(RecensisceBean item) throws SQLException {
-
-		
-	}
 	
-	public ArrayList<RecensisceBean> getRecensioniCriterio(String condizione,String order) throws SQLException{
+	public ArrayList<RecensisceBean> getRecensioniCriterio(String condizione,String ordinamento) throws SQLException{
+		if((condizione==null || condizione=="")&&(ordinamento==null || ordinamento=="")) throw new NullPointerException("ordimanento e condizione sono null o vuoti");
 		Connection connessione= ds.getConnection();
-		String query="SELECT recensisce.cliente,recensisce.prodotto,recensisce.voto FROM recensisce WHERE ? ORDER BY ?;";
+		String query="SELECT recensisce.cliente,recensisce.prodotto,recensisce.voto,recensisce.commento FROM recensisce WHERE ? ORDER BY ?;";
 		PreparedStatement ps=connessione.prepareStatement(query);
 		
 		ps.setString(1, condizione);
-		ps.setString(2, order);
+		ps.setString(2, ordinamento);
 		ResultSet risultato= ps.executeQuery();
 		ArrayList<RecensisceBean> recensioni= new ArrayList<RecensisceBean>();
 		while(risultato.next()) {
@@ -120,7 +116,7 @@ public class RecensisceDAO implements OperazioniModel<RecensisceBean>{
 			app.setCliente(risultato.getString("recensisce.cliente"));
 			app.setProdotto(risultato.getInt("recensisce.prodotto"));
 			app.setVoto(risultato.getInt("recensisce.voto"));
-			
+			app.setCommento(risultato.getString("recensice.commento"));
 			recensioni.add(app);
 		}
 		risultato.close();

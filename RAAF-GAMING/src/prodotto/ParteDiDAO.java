@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
 
-public class ParteDiDAO implements OperazioniModel<ParteDiBean>{
+
+public class ParteDiDAO{
 	DataSource ds = null;
 	
 	public ParteDiDAO(DataSource ds)
@@ -19,12 +19,12 @@ public class ParteDiDAO implements OperazioniModel<ParteDiBean>{
 	}
 
 
-	public ParteDiBean doRetriveByKey(String code1, String code2) throws SQLException {
+	public ParteDiBean ricercaPerChiave(String id) throws SQLException {
+		if(id==null || id=="")throw new NullPointerException("id null o vuoto");
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM parte_di WHERE videogioco=? && categoria=? ;";
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1,code1);
-		ps.setString(2,code2);
+		ps.setString(1,id);
 		ResultSet st = ps.executeQuery();
 		ParteDiBean bean = new ParteDiBean();
 		while(st.next())
@@ -40,12 +40,12 @@ public class ParteDiDAO implements OperazioniModel<ParteDiBean>{
 	}
 
 
-	public ArrayList<ParteDiBean> doRetriveAll(String order) throws SQLException {
+	public ArrayList<ParteDiBean> allElements(String ordinamento) throws SQLException {
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM parte_di ORDER BY ?;";
 		PreparedStatement ps = con.prepareStatement(str);
-		if(order!=null && order!="") {
-			ps.setString(1, order);
+		if(ordinamento!=null && !ordinamento.equals("")) {
+			ps.setString(1, ordinamento);
 		}
 		else {
 			ps.setString(1, "categoria asc");
@@ -66,7 +66,8 @@ public class ParteDiDAO implements OperazioniModel<ParteDiBean>{
 	}
 
 
-	public void doSave(ParteDiBean item) throws SQLException {
+	public void newInsert(ParteDiBean item) throws SQLException {
+		if(item==null)throw new NullPointerException("item null");
 		Connection connessione= ds.getConnection();
 		String query="INSERT INTO parte_di VALUES(?,?);";
 		PreparedStatement ps= connessione.prepareStatement(query);
@@ -78,25 +79,13 @@ public class ParteDiDAO implements OperazioniModel<ParteDiBean>{
 	}
 
 
-	public void doUpdate(ParteDiBean item) throws SQLException {
-
-	}
-
-
-	public void doDelete(ParteDiBean item) throws SQLException {
-
-	}
-
-
-	public ParteDiBean doRetriveByKey(String code) throws SQLException {
-		return null;
-	}
 	
-	public ArrayList<ParteDiBean> doRetriveByCategoria(String code) throws SQLException {
+	public ArrayList<ParteDiBean> doRetriveByCategoria(String id) throws SQLException {
+		if(id==null || id=="")throw new NullPointerException("id null o vuoto");
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM parte_di WHERE categoria=?;";
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1,code);
+		ps.setString(1,id);
 		ResultSet st = ps.executeQuery();
 		ArrayList<ParteDiBean> array = new ArrayList<ParteDiBean>();
 		while(st.next())
