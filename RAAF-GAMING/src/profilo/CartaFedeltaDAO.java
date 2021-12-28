@@ -85,15 +85,15 @@ public class CartaFedeltaDAO {
 	}
 	
 
-	public void doUpdate(String id) throws SQLException {
+	public void doUpdate(CartaFedeltaBean item) throws SQLException {
 		
-		if(id==null || id=="")
+		if(item.getCodice()==null || item.getCodice()=="")
 			throw new NullPointerException("Inserito un id null o vuoto");
 		
 		Connection con = ds.getConnection();
 		String str = "UPDATE cartafedelta SET punti=punti+1 WHERE codice=?";
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1,id);
+		ps.setString(1,item.getCodice());
 		ps.executeUpdate();
 		ps.close();
 		con.close();
