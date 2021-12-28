@@ -22,13 +22,14 @@ public class RecensisceDAO{
 		ds=d;
 	}
 	
-	public RecensisceBean ricercaPerChiave(String code) throws SQLException {
-		if(code==null || code=="")throw new NullPointerException("code è null oppure vuota");
+	public RecensisceBean ricercaPerChiave(String cliente,String prodotto) throws SQLException {
+		if((prodotto==null || prodotto=="")&&(cliente==null || cliente==""))throw new NullPointerException("prodotto o cliente è vuoto o null");
 		Connection connessione = ds.getConnection();
-		String Query="SELECT * FROM console WHERE prodotto=?;";
+		String Query="SELECT * FROM console WHERE prodotto=? and cliente=?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
-		ps.setString(1,code);		
+		ps.setString(1,prodotto);
+		ps.setString(2,cliente);
 		ResultSet rs= ps.executeQuery();		
 		while(rs.next())
 		{
