@@ -81,7 +81,7 @@ public class ServletOrdini extends HttpServlet {
 				OrdineDAO odao= new OrdineDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
 				String emailUtente= (String)sessione.getAttribute("emailSession");
 				try {
-					ArrayList<OrdineBean> ordiniUtente= odao.doRetriveByClient(emailUtente);
+					ArrayList<OrdineBean> ordiniUtente= odao.ricercaPerCliente(emailUtente);
 					request.setAttribute("listaOrdini", ordiniUtente);//metto l'array degli ordini nella request che passero a ordini.jsp
 					
 					//ottengo il corriere espresso e le date di consegna di ogni ordine dell'utente
@@ -90,7 +90,7 @@ public class ServletOrdini extends HttpServlet {
 					SpeditoBean app= new SpeditoBean();
 					
 					for(OrdineBean ordineApp : ordiniUtente) {
-						app= sdao.doRetriveByKey(ordineApp.getCodice());
+						app= sdao.ricercaPerChiave(ordineApp.getCodice());
 						spedizione.add(app);
 					}
 					request.setAttribute("spedizioni", spedizione);//metto l'array delle spedizioni nella request che passero a ordini.jsp

@@ -21,6 +21,10 @@ import acquisto.RiguardaBean;
 import acquisto.RiguardaDAO;
 import magazzino.PresenteInBean;
 import magazzino.PresenteInDAO;
+import prodotto.ProdottoBean;
+import prodotto.ProdottoDAO;
+import profilo.CartaDiCreditoBean;
+import profilo.CartaDiCreditoDAO;
 import profilo.CartaFedeltaBean;
 import profilo.CartaFedeltaDAO;
 import profilo.ClienteBean;
@@ -85,14 +89,59 @@ public class ServletConfermaAcquisto extends HttpServlet {
 					else
 					{
 						DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-						OrdineDAO cf=new OrdineDAO(ds);
+						
+						ArrayList<PresenteInBean> magazziniDisponibili= new ArrayList<PresenteInBean>(); //per salvarmi i magazzini che hanno disponibilità di quel prodotto da acquistare
+						
+						for(String idProdotto : carrello) {//controllo se i prodotti nel carrello sono ancora disponibili in magazzino
+							
+							PresenteInDAO presentedao = new PresenteInDAO(ds);
+							ArrayList<PresenteInBean> presenteInMagazzino = null;
+							try {
+								presenteInMagazzino = presentedao.ricercaPerProdotto(idProdotto); //ottengo tutti i magazzini che tengono il prodotto acquistato
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+							int flag=0;
+							
+							for(PresenteInBean b : presenteInMagazzino)
+							{
+								if(b.getQuantita_disponibile()>0) //appena trovo un magazzino che ha il prodotto da acquistare disponibile allora ok 
+								{
+									magazziniDisponibili.add(b);//mi salvo il magazzino che ha disponibilità
+									flag=1;
+									break;
+								}
+							}
+							
+							if(flag==0) { //il prodotto non è più disponibile e deve essere tolto dal carrello
+								System.out.println("Prodotto non piu' disponibile");
+								
+								carrello.remove(idProdotto);	//elimino il prodotto dal carrello
+								if(carrello.size()==0)			
+									session.setAttribute("carrello", null);
+								
+								request.setAttribute("eliminatoProdotto", "");
+								String url="/paginaCarrello.jsp"; //rimostro la pagina del carrello senza quel prodotto con un messaggio
+								url=response.encodeURL(url);
+								RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher(url);
+								dispatcher.forward(request, response);
+								return;
+								
+							}
+						}
+						
+						OrdineDAO odao=new OrdineDAO(ds);
 						ArrayList<OrdineBean> ordini = null;
 						try {
-							ordini = cf.doRetriveAll("");
+							ordini = odao.allElements("");
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
-						OrdineBean ordine = new OrdineBean();
+						OrdineBean ordine = new OrdineBean();//è il nuovo ordine
+						
+						//generiamo un codice randomico da assegnare al nuovo ordine, lo generiamo finchè non otteniamo un codice diverso da quelli nel DB
 						Random ran= new Random();
 						int i=0;
 						String nuovoCodice = null;
@@ -110,22 +159,45 @@ public class ServletConfermaAcquisto extends HttpServlet {
 								i++;
 						}
 						
+						//settiamo i dati del nuovo ordine
 						ordine.setCodice(nuovoCodice);
 						ordine.setCliente((String)session.getAttribute("emailSession"));
 						java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 						ordine.setData_acquisto(date);
-						ClienteDAO clien = new ClienteDAO(ds);
+						
+						ClienteDAO cdao= new ClienteDAO(ds);
 						ClienteBean cliente = null;
+						
 						try {
-							cliente = clien.doRetriveByKey((String)session.getAttribute("emailSession"));
+							cliente = cdao.ricercaPerChiave((String)session.getAttribute("emailSession"));
+							
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
-						ordine.setMetodo_di_pagamento(cliente.getIban());
+						
+						ordine.setMetodo_di_pagamento(cliente.getCartadicredito());
 						ordine.setIndirizzo_di_consegna(request.getParameter("indirizzodiconsegna"));
-						ordine.setPrezzo_totale(Double.parseDouble(request.getParameter("prezzototale")));
+						
+						//calcolo il prezzo totale dell'ordine
+						double prezzoTotale=0;
+						ProdottoDAO proddao= new ProdottoDAO(ds); 
+						for(String idProdotto: carrello) { //prendo tutti i prodotti dal carrello
+							
+							try {
+								ProdottoBean prodotto= proddao.ricercaPerChiave(idProdotto);	//ottengo il prodotto dal DB
+								double sconto=(prodotto.getPrezzo()*prodotto.getSconto())/100;	//calcolo lo sconto
+								prezzoTotale= prezzoTotale+ (prodotto.getPrezzo()-sconto);		//sommo il prezzo al prezzo totale
+								
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						}
+						
+						
+						ordine.setPrezzo_totale(prezzoTotale);//inserisco il prezzo totale nell'ordine
+						
 						try {
-							cf.doSave(ordine);
+							odao.newInsert(ordine);//salvo l'ordine nel DB
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}
@@ -134,42 +206,33 @@ public class ServletConfermaAcquisto extends HttpServlet {
 						
 						for(String id : carrello)
 						{
-							RiguardaBean riguarda = new RiguardaBean();
+							RiguardaBean riguarda = new RiguardaBean(); //inseriamo nel DB quest ordine quali prodotti contiene
 							riguarda.setProdotto(Integer.parseInt(id));
 							riguarda.setOrdine(ordine.getCodice());
 							riguarda.setQuantita_acquistata(1);
 							try {
-								rig.doSave(riguarda);
+								rig.newInsert(riguarda); //salvo nel DB
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
 							
-							PresenteInDAO presente = new PresenteInDAO(ds);
-							ArrayList<PresenteInBean> present = null;
-							try {
-								present = presente.doRetriveByProdotto(id);
-							} catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							for(PresenteInBean b : present)
+							PresenteInDAO pdao= new PresenteInDAO(ds);
+							for(PresenteInBean b : magazziniDisponibili) //prendo i magazzini calcolati prima e decremento di 1 la quantità disponibile di quel prodotto
 							{
-								if(b.getQuantita_disponibile()>0)
-								{
-									try {
-										presente.doUpdate(b);
-									} catch (SQLException e) {
-										e.printStackTrace();
-									}
-									break;
+								
+								try {
+									pdao.doUpdate(b);
+								} catch (SQLException e) {
+									e.printStackTrace();
 								}
+									
 							}
 						}
 						
 						CartaFedeltaDAO cart = new CartaFedeltaDAO(ds);
 						try {
-							CartaFedeltaBean cartaf = cart.doRetriveByKey(cliente.getCarta_fedelta());
-							cart.doUpdate(cartaf);
+							CartaFedeltaBean cartaf = cart.ricercaPerChiave(cliente.getCarta_fedelta());
+							cart.doUpdate(cartaf);	//aggiungo 1 punto alla carta fedeltà
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}

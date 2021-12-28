@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 import it.unisa.model.OperazioniModel;
 
-public class CorriereEspressoDAO implements OperazioniModel<CorriereEspressoBean> {
+public class CorriereEspressoDAO{
 	
 	DataSource ds =null;//la connessione al DB la ottengo dal Controller che se la va a prendere dal ServletContext
 
@@ -19,13 +19,6 @@ public class CorriereEspressoDAO implements OperazioniModel<CorriereEspressoBean
 	{
 		ds=d;
 	}
-
-	@Override
-	public CorriereEspressoBean doRetriveByKey(String code) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 	public ArrayList<CorriereEspressoBean> allElements(String ordinamento) throws SQLException {
 		Connection connessione = ds.getConnection();
@@ -53,30 +46,6 @@ public class CorriereEspressoDAO implements OperazioniModel<CorriereEspressoBean
 		ps.close();
 		connessione.close();
 		return a;
-	}
-
-	@Override
-	public void doSave(CorriereEspressoBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doUpdate(CorriereEspressoBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doDelete(CorriereEspressoBean item) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public ArrayList<CorriereEspressoBean> doRetriveAll(String order) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

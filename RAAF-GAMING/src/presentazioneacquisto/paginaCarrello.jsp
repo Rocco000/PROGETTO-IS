@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="prodotto.ProdottoBean, java.util.ArrayList"%>
 
 <!DOCTYPE html>
 <html>
@@ -29,14 +29,15 @@
 </head>
 <body>
 <%
-String str = (String) request.getAttribute("visitato");
-if(str==null)
-{
-	str = "servletcarrello";
-	String url = request.getRequestURL() + "";
-	response.sendRedirect(response.encodeURL(url.replaceAll("paginaCarrello.jsp",str)));
-	return;
-}
+	String str = (String) request.getAttribute("visitato");
+	if(str==null)
+	{
+		str = "servletcarrello";
+		String url = request.getRequestURL() + "";
+		response.sendRedirect(response.encodeURL(url.replaceAll("paginaCarrello.jsp",str)));
+		return;
+	}
+
 %>
 <%@include file="navbar.jsp" %>
 <!--inizio descrizione-->
@@ -44,19 +45,28 @@ if(str==null)
 	 	<section class="shopping-cart dark" >
 	 		<div class="container" style="min-height:100vh;">
 		        <div class="block-heading">
-		        <%String conferma = (String) request.getAttribute("confermato");
-		        if(conferma==null)
-		        {
-		        	%> <h2  style="color:orange;">Conferma Acquisto</h2>
-			          <p>Benvenuto nel tuo Carrello, premi Conferma per procedere con l'acquisto.</p>
-		       <% }
-		        else
-		        {
-		        	%><h2  style="color:orange;"><%=conferma %></h2>
-		       <%}
-		        
+		        <%
+			        String conferma = (String) request.getAttribute("confermato");
+			        if(conferma==null)
+			        {
+		        %> 
+			        	<h2  style="color:orange;">Conferma Acquisto</h2>
+				        <p>Benvenuto nel tuo Carrello, premi Conferma per procedere con l'acquisto.</p>
+		       <% 
+		       		}
+		        	else
+		        	{
 		        %>
-		         
+		        		<h2  style="color:orange;"><%=conferma %></h2>
+		       <%
+		       		}
+			        String eliminato= (String) request.getAttribute("eliminatoPrdotto");
+			        if(eliminato.equals("")){
+		        %>
+		         		<h2 style="style:red;">Qualche o tutti i prodotti nel carrello non sono più disponibili</h2>
+		        <%
+			        }
+		        %>
 		        </div>
 		        <div class="content" >
 	 				<div class="row" >
@@ -167,7 +177,6 @@ if(str==null)
 			 					%>
 			 					<form action="<%=urldiconferma %>" method="post" onsubmit="return controllo(this);">
 			 					<div class="summary-item mb-4"><span class="text mr-4">Indirizzo di consegna:</span><input type="text" name="indirizzodiconsegna" required maxlength="200"></div>
-			 					<input type="hidden" name="prezzototale" value="<%=String.format("%.2f",cont).replaceAll(",",".")%>">
 			 					<button type="submit" class="btn btn-outline-warning btn-lg btn-block">Conferma</button>
 			 					</form>
 			 					<%
