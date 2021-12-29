@@ -2,6 +2,7 @@ package presentazioneordini;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,19 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import acquisto.CorriereEspressoBean;
+import acquisto.CorriereEspressoDAO;
+import acquisto.OrdineBean;
+import acquisto.OrdineDAO;
 import acquisto.SpeditoBean;
 import acquisto.SpeditoDAO;
 
 /**
- * Servlet implementation class ServletGestioneOrdiniAdmin
+ * Servlet per VEDERE GLI ORDINI NON SPEDITI
  */
 @WebServlet("/ServletGestioneOrdiniAdmin")
 public class ServletGestioneOrdiniAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * consente di spedire un ordine
-     */
+   
     public ServletGestioneOrdiniAdmin() {
         super();
         // TODO Auto-generated constructor stub
@@ -42,38 +45,40 @@ public class ServletGestioneOrdiniAdmin extends HttpServlet {
 			if(logAdminB!=null) {
 				//l'admin potrebbe essere loggato
 				
-				boolean logAdmin= (Boolean) logAdminB;
-				if(logAdmin==true) {
-					//l'admin e' loggato e può eseguire il form
+				String logAdmin= (String) logAdminB;
+				if(logAdmin.equals("ordine")) {
+					//l'admin e' loggato e vedere gli ordini non spediti perchè è un GESTORE ORDINI
 					
-					SpeditoDAO sdao= new SpeditoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-					SpeditoBean spedizione= new SpeditoBean();
-					String ordine= request.getParameter("numeroOrdine");
-					String corriere= request.getParameter("corriere");
-					String data= request.getParameter("consegnaO");
-					java.sql.Date dataConsegna= java.sql.Date.valueOf(data);
+					OrdineDAO odao= new OrdineDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+					CorriereEspressoDAO sdao= new CorriereEspressoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 					
-					spedizione.setOrdine(ordine);
-					spedizione.setCorriere_esprersso(corriere);
-					spedizione.setData_consegna(dataConsegna);
-					
-					System.out.println(ordine+" "+corriere+" "+dataConsegna);
-					System.out.println(spedizione.getData_consegna());
 					try {
-						sdao.newInsert(spedizione);
-						String url="/servletgestioneadmin";
+						ArrayList<OrdineBean> ordiniNonSpediti= odao.getOrdiniNonConsegnati();
+						ArrayList<CorriereEspressoBean> corrieri= sdao.allElements("");
+						
+						request.setAttribute("visitato", "");
+						request.setAttribute("ordiniNonSpediti", ordiniNonSpediti);
+						request.setAttribute("corrieri", corrieri);
+						
+						String url="/paginaGestioneOrdini.jsp";
 						url= response.encodeURL(url);
-						request.setAttribute("messageok", "Ordine spedito con successo!");
 						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 						dispatcher.forward(request, response);
+						return;
+						
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
 					
 				}
-				else{
+				else if(logAdmin.equals("prodotto")){ //se è un GESTORE PRODOTTI 
+					String url="servletgestioneadmin";
+					url= response.encodeURL(url);
+					response.sendRedirect(url);
+					return;
+				}
+				else {
 					//l'admin non e' loggato
 					String url="servletaccessoadmin";
 					url= response.encodeURL(url);

@@ -22,7 +22,7 @@ import acquisto.SpeditoBean;
 import acquisto.SpeditoDAO;
 
 /**
- * Servlet per mostrare gli ordini non spediti al gestore ordine
+ * Servlet per SPEDIRE UN ORDINE
  */
 @WebServlet("/servletformordiniadmin")
 public class ServletFormOrdiniAdmin extends HttpServlet {
@@ -45,34 +45,44 @@ public class ServletFormOrdiniAdmin extends HttpServlet {
 			if(logAdminB!=null) {
 				//l'admin potrebbe essere loggato
 				
-				boolean logAdmin= (Boolean) logAdminB;
-				if(logAdmin==true) {
-					//l'admin e' loggato e può eseguire il form
+				String logAdmin= (String) logAdminB;
+				if(logAdmin.equals("ordine")) {
+					//l'admin e' loggato e può eseguire il form perchè è un GESTORE ORDINI
 					
-					OrdineDAO odao= new OrdineDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-					CorriereEspressoDAO sdao= new CorriereEspressoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+					SpeditoDAO sdao= new SpeditoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+					SpeditoBean spedizione= new SpeditoBean();
+					String ordine= request.getParameter("numeroOrdine");
+					String corriere= request.getParameter("corriere");
+					String data= request.getParameter("consegnaO");
+					java.sql.Date dataConsegna= java.sql.Date.valueOf(data);
 					
+					spedizione.setOrdine(ordine);
+					spedizione.setCorriere_esprersso(corriere);
+					spedizione.setData_consegna(dataConsegna);
+					
+					System.out.println(ordine+" "+corriere+" "+dataConsegna);
+					System.out.println(spedizione.getData_consegna());
 					try {
-						ArrayList<OrdineBean> ordiniNonSpediti= odao.getOrdiniNonConsegnati();
-						ArrayList<CorriereEspressoBean> corrieri= sdao.allElements("");
-						
-						request.setAttribute("visitato", "");
-						request.setAttribute("ordiniNonSpediti", ordiniNonSpediti);
-						request.setAttribute("corrieri", corrieri);
-						
-						String url="/paginaGestioneOrdini.jsp";
+						sdao.newInsert(spedizione);
+						String url="/servletgestioneadmin";
 						url= response.encodeURL(url);
+						request.setAttribute("messageok", "Ordine spedito con successo!");
 						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 						dispatcher.forward(request, response);
-						return;
-						
 					} catch (SQLException e) {
+						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
 					
 				}
-				else{
+				else if(logAdmin.equals("prodotto")){ //se è un GESTORE PRODOTTI
+					String url="servletgestioneadmin";
+					url= response.encodeURL(url);
+					response.sendRedirect(url);
+					return;
+				}
+				else {
 					//l'admin non e' loggato
 					String url="servletaccessoadmin";
 					url= response.encodeURL(url);

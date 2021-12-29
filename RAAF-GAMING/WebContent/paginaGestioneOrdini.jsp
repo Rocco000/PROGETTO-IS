@@ -11,7 +11,7 @@
 <%
 	String visitato= (String)request.getAttribute("visitato");
 	if(visitato==null){
-		String url="servletformordiniadmin";
+		String url="ServletGestioneOrdiniAdmin";
 		url= response.encodeURL(url);
 		response.sendRedirect(url);
 		return;
