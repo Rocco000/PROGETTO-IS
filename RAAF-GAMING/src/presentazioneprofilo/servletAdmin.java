@@ -20,6 +20,8 @@ import it.unisa.model.AmministratoriBean;
 import it.unisa.model.AmministratoriModelDAO;
 import profilo.ClienteBean;
 import profilo.ClienteDAO;
+import profilo.GestoreBean;
+import profilo.GestoreDAO;
 
 
 @WebServlet("/servletAdmin")
@@ -44,25 +46,33 @@ public class servletAdmin extends HttpServlet {
 			Object logAmB= sessione.getAttribute("logAdmin");
 			if(logAmB!=null) {
 				//potrebbe essere gia' loggato
-				boolean logAdmin= (Boolean) logAmB;
-				if(logAdmin==true) {
+				String logAdmin= (String) logAmB;
+				if(logAdmin.equals("ordine")) {
 					//l'admin e' gia' loggato e quindi non puo' utilizzare questa servlet
-					
-					String url="servletgestioneadmin";//url pagina fornitura prodotti
+					String url="ServletGestioneOrdiniAdmin";//pagina ordini
 					url= response.encodeURL(url);
 					response.sendRedirect(url);
 					return;
 				}
+				
+				else if(logAdmin.equals("prodotto"))
+				{
+					String url="servletgestioneadmin";//pagina fornitura
+					url= response.encodeURL(url);
+					response.sendRedirect(url);
+					return;
+				}
+				
 				else {
 					//l'admin non e' loggato quindi posso controllare i campi del form
 					
 					String emailAm= request.getParameter("email");
 					String passwordAm= request.getParameter("password");
 					
-					AmministratoriModelDAO adao= new AmministratoriModelDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
+					GestoreDAO gs = new GestoreDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
 					try {
 						//cerco l'amministratore con quella email
-						AmministratoriBean amministratore= adao.doRetriveByKey(emailAm);
+						GestoreBean amministratore= gs.ricercaPerChiave(emailAm);
 						if(amministratore!=null) {
 							//l'amministratore esiste nel DB controllo se la password corrisponde
 							//cripto la password della request
@@ -78,18 +88,32 @@ public class servletAdmin extends HttpServlet {
 								//se la password corrisponde lo mando alla pagina di fornitura prodotti
 								sessione.setAttribute("emailAdmin", amministratore.getEmail());
 								sessione.setAttribute("passwordAdmin", amministratore.getPassword());
-								sessione.setAttribute("logAdmin", true);
+								sessione.setAttribute("logAdmin", amministratore.getRuolo());
 								
-								String url="servletgestioneadmin";//url pagina fornitura prodotti
-								url= response.encodeURL(url);
-								response.sendRedirect(url);
-								return;
+								
+								if(amministratore.getRuolo().equals("ordine"))
+								{
+									String url="ServletGestioneOrdiniAdmin";//url pagina fornitura prodotti
+									url= response.encodeURL(url);
+									response.sendRedirect(url);
+									return;
+								}
+								
+								else if(amministratore.getRuolo().equals("prodotto"))
+								{
+									String url="servletgestioneadmin";//url pagina fornitura prodotti
+									url= response.encodeURL(url);
+									response.sendRedirect(url);
+									return;
+								}
+								
 							}
 							else {
 								//se la password non corrisponde
 								request.setAttribute("message", "");
 								String url="/admin.jsp";
 								url= response.encodeURL(url);
+								sessione.setAttribute("logAdmin", null);
 								RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 								dispatcher.forward(request, response);
 								return;
@@ -101,6 +125,7 @@ public class servletAdmin extends HttpServlet {
 							request.setAttribute("message", "");
 							String url="/admin.jsp";
 							url= response.encodeURL(url);
+							sessione.setAttribute("logAdmin", null);
 							RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 							dispatcher.forward(request, response);
 							return;
@@ -120,10 +145,10 @@ public class servletAdmin extends HttpServlet {
 				String emailAm= request.getParameter("email");
 				String passwordAm= request.getParameter("password");
 				
-				AmministratoriModelDAO adao= new AmministratoriModelDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
+				GestoreDAO gs = new GestoreDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
 				try {
 					//cerco l'amministratore con quella email
-					AmministratoriBean amministratore= adao.doRetriveByKey(emailAm);
+					GestoreBean amministratore= gs.ricercaPerChiave(emailAm);
 					if(amministratore!=null) {
 						//l'amministratore esiste nel DB controllo se la password corrisponde
 						//cripto la password della request
@@ -139,18 +164,32 @@ public class servletAdmin extends HttpServlet {
 							//se la password corrisponde lo mando alla pagina di fornitura prodotti
 							sessione.setAttribute("emailAdmin", amministratore.getEmail());
 							sessione.setAttribute("passwordAdmin", amministratore.getPassword());
-							sessione.setAttribute("logAdmin", true);
+							sessione.setAttribute("logAdmin", amministratore.getRuolo());
 							
-							String url="servletgestioneadmin";//url pagina fornitura prodotti
-							url= response.encodeURL(url);
-							response.sendRedirect(url);
-							return;
+							
+							if(amministratore.getRuolo().equals("ordine"))
+							{
+								String url="ServletGestioneOrdiniAdmin";//url pagina fornitura prodotti
+								url= response.encodeURL(url);
+								response.sendRedirect(url);
+								return;
+							}
+							
+							else if(amministratore.getRuolo().equals("prodotto"))
+							{
+								String url="servletgestioneadmin";//url pagina fornitura prodotti
+								url= response.encodeURL(url);
+								response.sendRedirect(url);
+								return;
+							}
+							
 						}
 						else {
 							//se la password non corrisponde
 							request.setAttribute("message", "");
 							String url="/admin.jsp";
 							url= response.encodeURL(url);
+							sessione.setAttribute("logAdmin", null);
 							RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 							dispatcher.forward(request, response);
 							return;
@@ -162,6 +201,7 @@ public class servletAdmin extends HttpServlet {
 						request.setAttribute("message", "");
 						String url="/admin.jsp";
 						url= response.encodeURL(url);
+						sessione.setAttribute("logAdmin", null);
 						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 						dispatcher.forward(request, response);
 						return;

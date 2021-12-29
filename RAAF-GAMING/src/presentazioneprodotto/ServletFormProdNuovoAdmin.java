@@ -61,8 +61,8 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 			if(logAdminB!=null) {
 				//l'admin potrebbe essere loggato
 				
-				boolean logAdmin= (Boolean) logAdminB;
-				if(logAdmin==true) {
+				String logAdmin= (String) logAdminB;
+				if(logAdmin.equals("prodotto")) {
 					//l'admin e' loggato e può eseguire il form
 					String nomeProd =request.getParameter("nomeP");//prendo il nome del prodotto
 					double prezzoProd= Double.valueOf(request.getParameter("prezzoP"));
@@ -299,6 +299,16 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 					
 					
 				}
+				
+				
+				
+				else if(logAdminB.equals("ordine")){
+					String url="ServletGestioneOrdiniAdmin";
+					url= response.encodeURL(url);
+					response.sendRedirect(url);
+					return;
+				}
+				
 				else{
 					//l'admin non e' loggato
 					String url="servletaccessoadmin";

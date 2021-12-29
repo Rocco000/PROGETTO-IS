@@ -28,18 +28,27 @@ public class ServletAccessoAdmin extends HttpServlet {
 			Object logAmB= sessione.getAttribute("logAdmin");//prendo questo campo per vedere se l'admin è loggato
 			if(logAmB!=null) {
 				//l'amministratore può essere loggato
-				boolean logAmministratore= (Boolean) logAmB;
+				String logAmministratore= (String) logAmB;
 				
-				if(logAmministratore==true) {
+				if(logAmministratore.equals("ordine")) {
 					//l'amministratore e' gia loggato e quindi non può andare in admin.jsp
+					String url="ServletGestioneOrdiniAdmin";//pagina ordini
+					url= response.encodeURL(url);
+					response.sendRedirect(url);
+					return;
+				}
+				
+				else if(logAmministratore.equals("prodotto"))
+				{
 					String url="servletgestioneadmin";//pagina fornitura
 					url= response.encodeURL(url);
 					response.sendRedirect(url);
 					return;
 				}
+				
 				else {
 					//non è loggato e può andare in admin.jsp
-					sessione.setAttribute("logAdmin", false);
+					sessione.setAttribute("logAdmin", null);
 					request.setAttribute("visitato", "");
 					String url="/admin.jsp";
 					url= response.encodeURL(url);
@@ -50,7 +59,7 @@ public class ServletAccessoAdmin extends HttpServlet {
 			}
 			else {
 				//l'amministratore non è loggato e quindi può andare in admin.jsp
-				sessione.setAttribute("logAdmin", false);
+				sessione.setAttribute("logAdmin", null);
 				request.setAttribute("visitato", "");
 				String url="/admin.jsp";
 				url= response.encodeURL(url);

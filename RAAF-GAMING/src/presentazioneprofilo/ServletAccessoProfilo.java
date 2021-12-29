@@ -78,13 +78,12 @@ public class ServletAccessoProfilo extends HttpServlet {
 					ClienteDAO cdao= new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 					try {
 						//prendo i dati dell'utente loggato per far stampare i suoi dati sulla carta fedeltà
-						
-						ClienteBean utente= cdao.doRetriveByKey((String)sessione.getAttribute("emailSession"));
+						ClienteBean utente= cdao.ricercaPerChiave((String)sessione.getAttribute("emailSession"));
 						request.setAttribute("visitato", "");//per vedere nel profilo.jsp se sono passato prima in questa servlet
 						request.setAttribute("datiUtenteCarta", utente);
 						
 						CartaFedeltaDAO cartadao= new CartaFedeltaDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-						CartaFedeltaBean carta= cartadao.doRetriveByKey(utente.getCarta_fedelta());
+						CartaFedeltaBean carta= cartadao.ricercaPerChiave(utente.getCarta_fedelta());
 						request.setAttribute("puntiCarta", carta);
 						
 						String url="/profilo.jsp";

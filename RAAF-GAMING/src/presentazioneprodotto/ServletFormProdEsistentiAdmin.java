@@ -40,8 +40,9 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 			if(logAdminB!=null) {
 				//l'admin potrebbe essere loggato
 				
-				boolean logAdmin= (Boolean) logAdminB;
-				if(logAdmin==true) {
+				String logAdmin= (String) logAdminB;
+				
+				if(logAdmin.equals("prodotto")) {
 				//l'admin e' loggato e puo eseguire il form
 				String codiceP=request.getParameter("codicePesistente");
 				String quantita=request.getParameter("quantitaPesistente");
@@ -119,6 +120,15 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 				view.forward(request, response);
 				return;
 				}
+				
+				else if(logAdminB.equals("ordine")){
+					String url="ServletGestioneOrdiniAdmin";
+					url= response.encodeURL(url);
+					response.sendRedirect(url);
+					return;
+				}
+				
+				
 				else{
 					//l'admin non e' loggato
 					String url="servletaccessoadmin";

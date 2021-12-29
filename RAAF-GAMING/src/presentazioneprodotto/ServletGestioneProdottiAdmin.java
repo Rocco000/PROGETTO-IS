@@ -44,8 +44,9 @@ public class ServletGestioneProdottiAdmin extends HttpServlet {
 			if(logAdminB!=null) {
 				//l'admin potrebbe essere loggato
 				
-				boolean logAdmin= (Boolean)logAdminB;
-				if(logAdmin==true) {
+				String logAdmin= (String) logAdminB;
+				
+				if(logAdmin.equals("prodotto")) {
 					//l'admin e' loggato e può andare alla pagine di gestione(paginaAmministratore)
 					
 					OrdineDAO odao= new OrdineDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
@@ -87,9 +88,18 @@ public class ServletGestioneProdottiAdmin extends HttpServlet {
 					}
 					
 				}
+				
+				else if(logAdminB.equals("ordine")){
+					String url="ServletGestioneOrdiniAdmin";
+					url= response.encodeURL(url);
+					response.sendRedirect(url);
+					return;
+				}
+				
+				
 				else {
 					//l'admin non e' loggato
-					String url="admin.jsp";
+					String url="servletaccessoadmin";
 					url= response.encodeURL(url);
 					response.sendRedirect(url);
 					return;
@@ -97,7 +107,7 @@ public class ServletGestioneProdottiAdmin extends HttpServlet {
 			}
 			else {
 				//l'admin non e' loggato
-				String url="admin.jsp";
+				String url="servletaccessoadmin";
 				url= response.encodeURL(url);
 				response.sendRedirect(url);
 				return;
