@@ -123,7 +123,7 @@ public class ServletConfermaAcquisto extends HttpServlet {
 									session.setAttribute("carrello", null);
 								
 								request.setAttribute("eliminatoProdotto", "");
-								String url="/paginaCarrello.jsp"; //rimostro la pagina del carrello senza quel prodotto con un messaggio
+								String url="/servletcarrello"; //rimostro la pagina del carrello senza quel prodotto con un messaggio
 								url=response.encodeURL(url);
 								RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher(url);
 								dispatcher.forward(request, response);
@@ -195,6 +195,7 @@ public class ServletConfermaAcquisto extends HttpServlet {
 						
 						
 						ordine.setPrezzo_totale(prezzoTotale);//inserisco il prezzo totale nell'ordine
+						ordine.setStato("elaborazione");
 						
 						try {
 							odao.newInsert(ordine);//salvo l'ordine nel DB

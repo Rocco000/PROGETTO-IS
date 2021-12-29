@@ -40,7 +40,7 @@ public class ProdottoDAO{
 				bean.setPrezzo(st.getDouble("prezzo"));
 				bean.setQuantita_fornitura(st.getInt("quantita_fornitura"));
 				bean.setSconto(st.getInt("sconto"));
-				bean.setUltima_fornitura(st.getDate("ultima_fornitura"));
+				bean.setUltima_fornitura(st.getDate("data_fornitura"));
 				
 				st.close();
 				ps.close();

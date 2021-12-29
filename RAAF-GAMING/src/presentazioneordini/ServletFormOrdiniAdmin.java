@@ -60,10 +60,18 @@ public class ServletFormOrdiniAdmin extends HttpServlet {
 					spedizione.setCorriere_esprersso(corriere);
 					spedizione.setData_consegna(dataConsegna);
 					
-					System.out.println(ordine+" "+corriere+" "+dataConsegna);
-					System.out.println(spedizione.getData_consegna());
+					OrdineDAO odao= new OrdineDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+					
 					try {
-						sdao.newInsert(spedizione);
+						OrdineBean ordineGestito= odao.ricercaPerChiave(ordine); //ottengo l'ordine che viene spedito
+						
+						//setto il nuovo stato dell'ordine e chi l'ha gestito(l'email del gestore)
+						ordineGestito.setStato("spedito");
+						ordineGestito.setGestore((String)sessione.getAttribute("emailAdmin"));
+						
+						odao.doUpdate(ordineGestito); //aggiorno l'ordine
+						sdao.newInsert(spedizione);	 //inserisco la tupla
+						
 						String url="/servletgestioneadmin";
 						url= response.encodeURL(url);
 						request.setAttribute("messageok", "Ordine spedito con successo!");

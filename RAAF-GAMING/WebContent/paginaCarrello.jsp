@@ -60,10 +60,10 @@
 		        		<h2  style="color:orange;"><%=conferma %></h2>
 		       <%
 		       		}
-			        String eliminato= (String) request.getAttribute("eliminatoPrdotto");
-			        if(eliminato.equals("")){
+			        String eliminato= (String) request.getAttribute("eliminatoProdotto");
+			        if(eliminato!=null && eliminato.equals("")){
 		        %>
-		         		<h2 style="style:red;">Qualche o tutti i prodotti nel carrello non sono più disponibili</h2>
+		         		<h2 style="color:red;">Qualche o tutti i prodotti nel carrello non sono più disponibili</h2>
 		        <%
 			        }
 		        %>

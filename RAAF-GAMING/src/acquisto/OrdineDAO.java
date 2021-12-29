@@ -54,13 +54,13 @@ public class OrdineDAO {
 
 	public ArrayList<OrdineBean> allElements(String ordinamento) throws SQLException {
 		Connection con = ds.getConnection();
-		String str = "SELECT * FROM ordine ORDER BY codice ?;";
+		String str = "SELECT * FROM ordine ORDER BY ?;";
 		PreparedStatement ps = con.prepareStatement(str);
 		if(ordinamento!=null && ordinamento!="") {
 			ps.setString(1, ordinamento);
 		}
 		else {
-			ps.setString(1, "asc");
+			ps.setString(1, "codice asc");
 		}
 		ResultSet st = ps.executeQuery();
 		ArrayList<OrdineBean> array = new ArrayList<OrdineBean>();
@@ -111,10 +111,11 @@ public class OrdineDAO {
 			throw new NullPointerException("l'item e' null");
 		else {
 			Connection connessione= ds.getConnection();
-			String query="UPDATE ordine SET stato=? WHERE codice=?;";
+			String query="UPDATE ordine SET stato=?,gestore=? WHERE codice=?;";
 			PreparedStatement ps= connessione.prepareStatement(query);
 			ps.setString(1, item.getStato());
-			ps.setString(2, "spedito");
+			ps.setString(2, item.getGestore());
+			ps.setString(3, item.getCodice());
 			ps.executeUpdate();
 			ps.close();
 			connessione.close();
