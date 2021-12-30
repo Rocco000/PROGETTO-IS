@@ -1,4 +1,4 @@
-package presentazioneprofilo;
+package profilo;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -18,10 +18,6 @@ import javax.sql.DataSource;
 
 import it.unisa.model.AmministratoriBean;
 import it.unisa.model.AmministratoriModelDAO;
-import profilo.ClienteBean;
-import profilo.ClienteDAO;
-import profilo.GestoreBean;
-import profilo.GestoreDAO;
 
 
 @WebServlet("/servletAdmin")

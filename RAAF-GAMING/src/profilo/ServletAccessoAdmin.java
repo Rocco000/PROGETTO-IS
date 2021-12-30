@@ -1,4 +1,4 @@
-package presentazioneprofilo;
+package profilo;
 
 import java.io.IOException;
 

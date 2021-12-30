@@ -1,4 +1,4 @@
-package presentazioneprofilo;
+package profilo;
 
 import java.io.IOException;
 
@@ -15,13 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
-
-import profilo.CartaDiCreditoBean;
-import profilo.CartaDiCreditoDAO;
-import profilo.CartaFedeltaBean;
-import profilo.CartaFedeltaDAO;
-import profilo.ClienteBean;
-import profilo.ClienteDAO;
 
 @WebServlet("/ServletRegistrazione")
 public class ServletRegistrazione extends HttpServlet {

@@ -1,4 +1,4 @@
-package presentazioneprodotto;
+package prodotto;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-
-import prodotto.ProdottoBean;
-import prodotto.ProdottoDAO;
 
 /**
  * Servlet implementation class ServletCard

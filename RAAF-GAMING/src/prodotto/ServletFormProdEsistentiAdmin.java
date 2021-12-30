@@ -1,4 +1,4 @@
-package presentazioneprodotto;
+package prodotto;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -17,8 +17,6 @@ import magazzino.MagazzinoBean;
 import magazzino.MagazzinoDAO;
 import magazzino.PresenteInBean;
 import magazzino.PresenteInDAO;
-import prodotto.ProdottoBean;
-import prodotto.ProdottoDAO;
 
 @WebServlet("/servletformprodesistentiadmin")
 public class ServletFormProdEsistentiAdmin extends HttpServlet {

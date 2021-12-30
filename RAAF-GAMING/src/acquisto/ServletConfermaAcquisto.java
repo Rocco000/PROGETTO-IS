@@ -1,4 +1,4 @@
-package presentazioneacquisto;
+package acquisto;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,10 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import acquisto.OrdineBean;
-import acquisto.OrdineDAO;
-import acquisto.RiguardaBean;
-import acquisto.RiguardaDAO;
 import magazzino.PresenteInBean;
 import magazzino.PresenteInDAO;
 import prodotto.ProdottoBean;

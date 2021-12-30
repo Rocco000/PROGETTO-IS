@@ -1,4 +1,4 @@
-package presentazioneprodotto;
+package prodotto;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,9 +15,6 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.json.JSONObject;
-
-import prodotto.RecensisceBean;
-import prodotto.RecensisceDAO;
 
 @WebServlet("/servletrecensione")
 public class ServletRecensione extends HttpServlet {

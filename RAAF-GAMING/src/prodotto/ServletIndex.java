@@ -1,4 +1,4 @@
-package presentazioneacquisto;
+package prodotto;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,26 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import prodotto.ProdottoBean;
-import prodotto.ProdottoDAO;
-
-
-@WebServlet("/servletcarrello")
-public class ServletCarrello extends HttpServlet {
+/**
+ * Servlet implementation class ServletIndex
+ */
+@WebServlet("/servletindex")
+public class ServletIndex extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public ServletCarrello() {
+	
+    public ServletIndex() {
         super();
-
     }
 
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.doPost(request, response);
-	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		HttpSession session = request.getSession(true);
 		synchronized(session)
@@ -94,30 +86,37 @@ public class ServletCarrello extends HttpServlet {
 			else
 			{
 				request.setAttribute("carrello",carr);
-				DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-				ProdottoDAO dao = new ProdottoDAO(ds);
-				ArrayList<ProdottoBean> array = new ArrayList<ProdottoBean>();
-				
-				for(String str : carr)
-				{
-					ProdottoBean prod;
-					try {
-						prod = dao.ricercaPerChiave(str);
-						array.add(prod);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				}
-				
-				request.setAttribute("Prodotti",array);
 			}
 		}
-		request.setAttribute("visitato","");
-		request.setAttribute("eliminato", null);
-		RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaCarrello.jsp");
-		dispatcher.forward(request, response);
+		
+		DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
+		VideogiocoDAO vdao= new VideogiocoDAO(ds);
+		try {
+			VideogiocoBean migliorVideogioco= vdao.getTopRecensione();
+			VideogiocoBean ultimoUscito= vdao.getUltimoUscito(migliorVideogioco.getProdotto());
+			ArrayList<VideogiocoBean> scontati= vdao.getVideogiochiScontati(migliorVideogioco.getProdotto(),ultimoUscito.getProdotto());
+			ProdottoDAO dao = new ProdottoDAO(ds);
+			ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
+			prod.add(dao.ricercaPerChiave(""+migliorVideogioco.getProdotto()));
+			prod.add(dao.ricercaPerChiave(""+ultimoUscito.getProdotto()));
+			prod.add(dao.ricercaPerChiave(""+scontati.get(0).getProdotto()));
+			prod.add(dao.ricercaPerChiave(""+scontati.get(1).getProdotto()));
+			prod.add(dao.ricercaPerChiave(""+scontati.get(2).getProdotto()));
+			prod.add(dao.ricercaPerChiave(""+scontati.get(3).getProdotto()));
+			request.setAttribute("Prodotti",prod);
+			request.setAttribute("visitato","");
+			RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/homepage.jsp");
+			dispatcher.forward(request, response);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.doGet(request, response);
+	}
+	
 
 }

@@ -1,4 +1,4 @@
-package presentazioneprodotto;
+package prodotto;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,14 +15,6 @@ import javax.sql.DataSource;
 
 import acquisto.OrdineBean;
 import acquisto.OrdineDAO;
-import prodotto.CategoriaBean;
-import prodotto.CategoriaDAO;
-import prodotto.FornitoreBean;
-import prodotto.FornitoreDAO;
-import prodotto.ProdottoBean;
-import prodotto.ProdottoDAO;
-import prodotto.SoftwarehouseBean;
-import prodotto.SoftwarehouseDAO;
 
 /**
  * Servlet implementation class ServletGestioneAdmin

@@ -1,4 +1,4 @@
-package presentazioneprofilo;
+package profilo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,11 +18,6 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.json.JSONObject;
-
-import profilo.CartaDiCreditoBean;
-import profilo.CartaDiCreditoDAO;
-import profilo.ClienteBean;
-import profilo.ClienteDAO;
 
 
 

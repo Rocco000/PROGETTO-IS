@@ -1,4 +1,4 @@
-package presentazioneprodotto;
+package prodotto;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,16 +15,6 @@ import javax.sql.DataSource;
 
 import magazzino.PresenteInBean;
 import magazzino.PresenteInDAO;
-import prodotto.AbbonamentoBean;
-import prodotto.AbbonamentoDAO;
-import prodotto.ConsoleBean;
-import prodotto.ConsoleDAO;
-import prodotto.DlcBean;
-import prodotto.DlcDAO;
-import prodotto.ProdottoBean;
-import prodotto.ProdottoDAO;
-import prodotto.VideogiocoBean;
-import prodotto.VideogiocoDAO;
 
 
 @WebServlet("/servletprodotto")

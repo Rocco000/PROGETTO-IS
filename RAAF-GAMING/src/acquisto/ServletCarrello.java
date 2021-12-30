@@ -1,4 +1,4 @@
-package presentazioneprodotto;
+package acquisto;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,19 +17,22 @@ import prodotto.ProdottoBean;
 import prodotto.ProdottoDAO;
 
 
-@WebServlet("/servletricerca")
-public class ServletRicerca extends HttpServlet {
+@WebServlet("/servletcarrello")
+public class ServletCarrello extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-    public ServletRicerca() {
+    public ServletCarrello() {
         super();
-        // TODO Auto-generated constructor stub
+
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//setto navbar
+		this.doPost(request, response);
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		HttpSession session = request.getSession(true);
 		synchronized(session)
@@ -91,31 +94,30 @@ public class ServletRicerca extends HttpServlet {
 			else
 			{
 				request.setAttribute("carrello",carr);
+				DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
+				ProdottoDAO dao = new ProdottoDAO(ds);
+				ArrayList<ProdottoBean> array = new ArrayList<ProdottoBean>();
+				
+				for(String str : carr)
+				{
+					ProdottoBean prod;
+					try {
+						prod = dao.ricercaPerChiave(str);
+						array.add(prod);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				
+				request.setAttribute("Prodotti",array);
 			}
 		}
-		String str = request.getParameter("ricerca");
-		DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
-		 ProdottoDAO dao = new  ProdottoDAO(ds);
-		 ArrayList<ProdottoBean> bean = new ArrayList<ProdottoBean>();
-		 try {
-			bean = dao.ricercaPerNome(str);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 System.out.println(str);
-		 request.setAttribute("prodotti",bean);
-	//reindirizzo la pagina
 		request.setAttribute("visitato","");
-		RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
-		view.forward(request, response);
-	//
-	
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		this.doGet(request, response);
+		request.setAttribute("eliminato", null);
+		RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaCarrello.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

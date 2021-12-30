@@ -1,4 +1,4 @@
-package presentazioneprodotto;
+package prodotto;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,18 +22,6 @@ import magazzino.MagazzinoBean;
 import magazzino.MagazzinoDAO;
 import magazzino.PresenteInBean;
 import magazzino.PresenteInDAO;
-import prodotto.AbbonamentoBean;
-import prodotto.AbbonamentoDAO;
-import prodotto.ConsoleBean;
-import prodotto.ConsoleDAO;
-import prodotto.DlcBean;
-import prodotto.DlcDAO;
-import prodotto.ParteDiBean;
-import prodotto.ParteDiDAO;
-import prodotto.ProdottoBean;
-import prodotto.ProdottoDAO;
-import prodotto.VideogiocoBean;
-import prodotto.VideogiocoDAO;
 
 /**
  * Servlet implementation class ServletFormProdNuovoAdmin
