@@ -25,7 +25,7 @@ public class RecensisceDAO{
 	public RecensisceBean ricercaPerChiave(String cliente,String prodotto) throws SQLException {
 		if((prodotto==null || prodotto=="")&&(cliente==null || cliente==""))throw new NullPointerException("prodotto o cliente è vuoto o null");
 		Connection connessione = ds.getConnection();
-		String Query="SELECT * FROM console WHERE prodotto=? and cliente=?;";
+		String Query="SELECT * FROM recensisce WHERE prodotto=? and cliente=?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
 		ps.setString(1,prodotto);
@@ -50,18 +50,39 @@ public class RecensisceDAO{
 
 	}
 	
+	public ArrayList<RecensisceBean> ricercaPerProdotto(String id) throws SQLException{
+		if(id==null || id=="")throw new NullPointerException("id vuoto o null");
+		Connection connessione = ds.getConnection();
+		String Query="SELECT * FROM recensisce WHERE prodotto=?;";
+		
+		PreparedStatement ps= connessione.prepareStatement(Query);
+		ps.setString(1,id);	
+		ArrayList<RecensisceBean >a=new ArrayList<RecensisceBean>();
+		ResultSet risultato=ps.executeQuery();
+		while(risultato.next()) {
+			RecensisceBean app=new RecensisceBean();
+			
+			app.setCliente(risultato.getString("cliente"));
+			app.setProdotto(risultato.getInt("prodotto"));
+			app.setVoto(risultato.getInt("voto"));
+			app.setCommento(risultato.getString("commento"));
+			a.add(app);
+		}
+		risultato.close();
+		ps.close();
+		connessione.close();
+		
+		return a;
 
+	}
 
 
 	public ArrayList<RecensisceBean> allElements(String ordinamento) throws SQLException {
-	
+	if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione=ds.getConnection();
 		String query="SELECT * FROM recensisce ORDER BY ?;";
 		PreparedStatement ps=connessione.prepareStatement(query);
-		if(ordinamento!=null && !ordinamento.equals("")) 
 			ps.setString(1, ordinamento);
-		else {
-			ps.setString(1,"recensisce.voto asc");}
 		ArrayList<RecensisceBean >a=new ArrayList<RecensisceBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {

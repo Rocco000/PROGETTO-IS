@@ -15,6 +15,8 @@ import javax.sql.DataSource;
 
 import magazzino.PresenteInBean;
 import magazzino.PresenteInDAO;
+import profilo.ClienteBean;
+import profilo.ClienteDAO;
 
 
 @WebServlet("/servletprodotto")
@@ -40,10 +42,12 @@ public class ServletProdotto extends HttpServlet {
 			{
 				log = false;
 				session.setAttribute("log", log);
+				request.setAttribute("loggato",false);
 			}
 			
 			if(log == true)
 			{
+				request.setAttribute("loggato",true);
 				String impostazione1 = "LogOut";
 				String impostazione2="Profilo";
 				String impostazione3="I miei ordini";
@@ -60,9 +64,20 @@ public class ServletProdotto extends HttpServlet {
 				array2.add(impostazione5);
 				array2.add(impostazione6);
 				request.setAttribute("impostazione2",array2);
+				
+				ClienteDAO cli = new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+				ClienteBean nomeCli=null;
+				try {
+					nomeCli = cli.ricercaPerChiave((String)session.getAttribute("emailSession"));
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				request.setAttribute("nomeCliente",nomeCli.getNome()+" "+nomeCli.getCognome());
 			}
 			else
 			{
+				request.setAttribute("loggato",false);
 				String impostazione1 = "Login";
 				String impostazione2="Registrati";
 				ArrayList<String> array = new ArrayList<String>();
@@ -96,7 +111,7 @@ public class ServletProdotto extends HttpServlet {
 			String message="PRODOTTO NON ESISTENTE!";
 			request.setAttribute("message", message);
 			request.setAttribute("visitato", "");
-			String url="/paginaGioco.jsp";
+			String url="/WEB-INF/classes/prodotto/paginaGioco.jsp";
 			url= response.encodeURL(url);
 			RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 			dispatcher.forward(request, response);
@@ -104,6 +119,27 @@ public class ServletProdotto extends HttpServlet {
 		}
 		else {
 			DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
+			RecensisceDAO rec = new RecensisceDAO(ds);
+			try {
+			ArrayList<RecensisceBean> arrayrec = rec.ricercaPerProdotto(id);
+			ClienteDAO cli = new ClienteDAO(ds);
+			
+			
+			ArrayList<String> cliente = new ArrayList<String>();
+			for(RecensisceBean b : arrayrec)
+			{
+				ClienteBean bean = cli.ricercaPerChiave(b.getCliente());
+				cliente.add(bean.getNome()+" "+bean.getCognome()+" voto:"+b.getVoto()+" :"+b.getCommento());
+			}
+			request.setAttribute("clienti", cliente);
+			
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+			//-------------------------------------------//
 			ProdottoDAO dao = new ProdottoDAO(ds);
 			try {
 	
@@ -114,7 +150,7 @@ public class ServletProdotto extends HttpServlet {
 					String message="PRODOTTO NON ESISTENTE!";
 					request.setAttribute("message", message);
 					request.setAttribute("visitato", "");
-					String url="/paginaGioco.jsp";
+					String url="/WEB-INF/classes/prodotto/paginaGioco.jsp";
 					url= response.encodeURL(url);
 					RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 					dispatcher.forward(request, response);
@@ -143,7 +179,7 @@ public class ServletProdotto extends HttpServlet {
 						request.setAttribute("videogioco",video);
 						request.setAttribute("Prodotto",prod);
 						request.setAttribute("visitato","");
-						String url="/paginaGioco.jsp";
+						String url="/WEB-INF/classes/prodotto/paginaGioco.jsp";
 						url= response.encodeURL(url);
 						request.getRequestDispatcher(url).forward(request, response);
 						return;
@@ -158,7 +194,7 @@ public class ServletProdotto extends HttpServlet {
 							request.setAttribute("console",console);
 							request.setAttribute("Prodotto",prod);
 							request.setAttribute("visitato","");
-							String url="/paginaGioco.jsp";
+							String url="/WEB-INF/classes/prodotto/paginaGioco.jsp";
 							url= response.encodeURL(url);
 							request.getRequestDispatcher(url).forward(request, response);
 							return;
@@ -173,7 +209,7 @@ public class ServletProdotto extends HttpServlet {
 								request.setAttribute("abbonamento",abbo);
 								request.setAttribute("Prodotto",prod);
 								request.setAttribute("visitato","");
-								String url="/paginaGioco.jsp";
+								String url="/WEB-INF/classes/prodotto/paginaGioco.jsp";
 								url= response.encodeURL(url);
 								request.getRequestDispatcher(url).forward(request, response);
 								return;
@@ -188,7 +224,7 @@ public class ServletProdotto extends HttpServlet {
 									request.setAttribute("dlc",dlc);
 									request.setAttribute("Prodotto",prod);
 									request.setAttribute("visitato","");
-									String url="/paginaGioco.jsp";
+									String url="/WEB-INF/classes/prodotto/paginaGioco.jsp";
 									url= response.encodeURL(url);
 									request.getRequestDispatcher(url).forward(request, response);
 									return;
@@ -198,7 +234,7 @@ public class ServletProdotto extends HttpServlet {
 									String message="PRODOTTO NON ESISTENTE!";
 									request.setAttribute("message", message);
 									request.setAttribute("visitato", "");
-									String url="/paginaGioco.jsp";
+									String url="/WEB-INF/classes/prodotto/paginaGioco.jsp";
 									url= response.encodeURL(url);
 									RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 									dispatcher.forward(request, response);

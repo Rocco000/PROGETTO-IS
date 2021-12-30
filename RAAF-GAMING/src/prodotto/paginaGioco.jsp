@@ -33,7 +33,7 @@ if(str==null)
 }
 
 %>
-<%@include file="navbar.jsp" %>
+<%@include file="../it/unisa/utility/navbar.jsp" %>
 <!--inizio descrizione-->
 <div class="container d-flex justify-content-center" style="background-color:rgba(230,230,230,0.5); min-height:100vh; width:100%;">
 	<%
@@ -61,20 +61,7 @@ if(str==null)
 										<div class="col-md-6">
 												<h2 class="nome pl-3 pt-1" style="color:white; font-family:Impact; text-transform:uppercase; font-weight:bold; "><%=prod.getNome() %></h2>
 										</div>
-										<div class="col-md-6 pt-2" >
-												<span class="star-rating pr-1"><!-- modifica -->
-												  <input type="radio" name="rating" value="1" onclick="recensione(this);"><i></i>
-												  <input type="radio" name="rating" value="2" onclick="recensione(this);"><i></i>
-												  <input type="radio" name="rating" value="3" onclick="recensione(this);"><i></i>
-												  <input type="radio" name="rating" value="4" onclick="recensione(this);"><i></i>
-												  <input type="radio" name="rating" value="5" onclick="recensione(this);"><i></i>
-												  <input type="radio" name="rating" value="6" onclick="recensione(this);"><i></i>
-												  <input type="radio" name="rating" value="7" onclick="recensione(this);"><i></i>
-												  <input type="radio" name="rating" value="8" onclick="recensione(this);"><i></i>
-												  <input type="radio" name="rating" value="9" onclick="recensione(this);"><i></i>
-												  <input type="radio" name="rating" value="10" onclick="recensione(this);"><i></i>
-											</span>
-										</div>
+
 										</div>
 										
 										<div class="row">
@@ -154,7 +141,49 @@ if(str==null)
 						
 						</div>
 			</div>
-			<div class="container" style="height:315px;"></div>
+			<div class="container" style="height:300px;">
+				<h4 style="color:black; font-family:Impact; text-transform:uppercase;">Recensioni</h4>
+
+				<div style="width: 100%; height: 100px; overflow-y: scroll; background-color:rgba(240,240,230,0.8)" id="stampe">
+				<%ArrayList<String> lista = (ArrayList<String>) request.getAttribute("clienti"); 
+				for(String recensione : lista)
+				{
+				%><%=recensione%><br>
+				<%
+				}
+				%>
+				</div>
+				<div class="col-md-6" >
+												<span class="star-rating pr-1"><!-- modifica -->
+												  <input type="radio" name="rating" value="1"  id="stella1"><i></i>
+												  <input type="radio" name="rating" value="2"  id="stella2"><i></i>
+												  <input type="radio" name="rating" value="3"  id="stella3"><i></i>
+												  <input type="radio" name="rating" value="4"  id="stella4"><i></i>
+												  <input type="radio" name="rating" value="5"  id="stella5"><i></i>
+												  <input type="radio" name="rating" value="6"  id="stella6"><i></i>
+												  <input type="radio" name="rating" value="7"  id="stella7"><i></i>
+												  <input type="radio" name="rating" value="8"  id="stella8"><i></i>
+												  <input type="radio" name="rating" value="9"  id="stella9"><i></i>
+												  <input type="radio" name="rating" value="10" id="stella10"><i></i>
+												 </span>
+				</div>
+				
+				<div class="form-group">
+				
+					<textarea class="form-control" id="commento" rows="3" placeholder="inserisci una recensione..." style="resize:none"></textarea>
+				<%Boolean loggato = (Boolean)request.getAttribute("loggato");%>
+				<%if(loggato == true){ %>
+				<button type="button" class="btn btn-dark" onclick="recensione();">Conferma</button><%} else{%>
+				<button type="button" class="btn btn-dark" onclick="nonpuoirecensire();">Conferma</button><%} %>
+				</div>
+				
+				
+				
+				
+				
+				
+				
+			</div>
 		</div>
 	</div>
 	
@@ -162,6 +191,7 @@ if(str==null)
 		<script>
 		function aggiungiCarrello()
 		{
+		
 			var x = {id: <%=prod.getCodice_prodotto()%>};
 			
 			var jisono = JSON.stringify(x);
@@ -185,9 +215,38 @@ if(str==null)
 			
 		}
 		
-		function recensione(stella)
+		function recensione()
 		{
-			var x = {voto: stella.value, id:<%=prod.getCodice_prodotto()%>};
+			
+			var s;
+			if(document.getElementById("stella1").checked==true)
+			{
+				s="stella1";
+			}
+			else if(document.getElementById("stella2").checked==true) s="stella2";
+			else if(document.getElementById("stella3").checked==true) s="stella3";
+			else if(document.getElementById("stella4").checked==true) s="stella4";
+			else if(document.getElementById("stella5").checked==true) s="stella5";
+			else if(document.getElementById("stella6").checked==true) s="stella6";
+			else if(document.getElementById("stella7").checked==true) s="stella7";
+			else if(document.getElementById("stella8").checked==true) s="stella8";
+			else if(document.getElementById("stella9").checked==true) s="stella9";
+			else if(document.getElementById("stella10").checked==true) s="stella10";
+			else
+			{
+				alert("non hai inserito il voto");
+				return;
+			}
+			//--------------------------------------------------------------------------------------------------//
+			if(document.getElementById("commento").value==null || document.getElementById("commento").value=="")
+			{
+				alert("commento non inserito");
+				return;
+			}
+			//--------------------------------------------------------------------------------------------------//
+			if(document.getElementById("commento").value!=null && document.getElementById("commento").value!="")	
+			{
+			var x = {voto: document.getElementById(s).value, id:<%=prod.getCodice_prodotto()%>, commento: document.getElementById("commento").value };
 			var jisono = JSON.stringify(x);
 			
 		$.ajax({
@@ -201,10 +260,14 @@ if(str==null)
 				success: function (data){
 					var obj = JSON.parse(data);
 					alert(obj.recensione);
+					<%String nomeCliente = (String) request.getAttribute("nomeCliente");%>
+					var y = "<%=nomeCliente%>";
+					$("#stampe").append(y+' voto:'+x.voto+' :'+x.commento+' <br>');
+					
 					},
 				error: function(){alert("lol");}
 		});
-	
+			}
 		}
 		
 		function nonpuoiacquistare()
@@ -212,6 +275,10 @@ if(str==null)
 			alert("Prodotto non disponibile in magazzino");
 		}
 		
+		function nonpuoirecensire()
+		{
+			alert("Effettua l'accesso per recensire!");
+		}
 		</script>
 		<!-- fine -->
 	<%
@@ -221,6 +288,6 @@ if(str==null)
 </div>
 
 <!--fine descrizione-->
-<%@include file="footer.jsp" %>
+<%@include file="../it/unisa/utility/footer.jsp" %>
 </body>
 </html>

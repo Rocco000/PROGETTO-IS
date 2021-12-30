@@ -68,7 +68,7 @@ public class ServletRecensione extends HttpServlet {
 					RecensisceDAO dao = new RecensisceDAO(ds);
 					
 					try {
-						if(dao.ricercaPerChiave(id+"",email)==null)
+						if(dao.ricercaPerChiave(email,id+"")==null)
 						{
 							RecensisceBean bean = new RecensisceBean();
 							bean.setCliente(email);
