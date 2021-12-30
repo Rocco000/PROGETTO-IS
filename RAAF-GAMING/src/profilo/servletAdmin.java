@@ -65,6 +65,17 @@ public class servletAdmin extends HttpServlet {
 					String emailAm= request.getParameter("email");
 					String passwordAm= request.getParameter("password");
 					
+					if(emailAm==null || passwordAm==null)
+					{
+						request.setAttribute("message", "");
+						String url="servletaccessoadmin";
+						url= response.encodeURL(url);
+						sessione.setAttribute("logAdmin", null);
+						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
+						dispatcher.forward(request, response);
+						return;
+					}
+					
 					GestoreDAO gs = new GestoreDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
 					try {
 						//cerco l'amministratore con quella email
@@ -107,7 +118,7 @@ public class servletAdmin extends HttpServlet {
 							else {
 								//se la password non corrisponde
 								request.setAttribute("message", "");
-								String url="/admin.jsp";
+								String url="servletaccessoadmin";
 								url= response.encodeURL(url);
 								sessione.setAttribute("logAdmin", null);
 								RequestDispatcher dispatcher= request.getRequestDispatcher(url);
@@ -119,7 +130,7 @@ public class servletAdmin extends HttpServlet {
 							//l'amministratore non esiste nel db
 							
 							request.setAttribute("message", "");
-							String url="/admin.jsp";
+							String url="servletaccessoadmin";
 							url= response.encodeURL(url);
 							sessione.setAttribute("logAdmin", null);
 							RequestDispatcher dispatcher= request.getRequestDispatcher(url);
@@ -140,6 +151,17 @@ public class servletAdmin extends HttpServlet {
 				
 				String emailAm= request.getParameter("email");
 				String passwordAm= request.getParameter("password");
+				
+				if(emailAm==null || passwordAm==null)
+				{
+					request.setAttribute("message", "");
+					String url="servletaccessoadmin";
+					url= response.encodeURL(url);
+					sessione.setAttribute("logAdmin", null);
+					RequestDispatcher dispatcher= request.getRequestDispatcher(url);
+					dispatcher.forward(request, response);
+					return;
+				}
 				
 				GestoreDAO gs = new GestoreDAO((DataSource) super.getServletContext().getAttribute("DataSource"));
 				try {
@@ -183,7 +205,7 @@ public class servletAdmin extends HttpServlet {
 						else {
 							//se la password non corrisponde
 							request.setAttribute("message", "");
-							String url="/admin.jsp";
+							String url="servletaccessoadmin";
 							url= response.encodeURL(url);
 							sessione.setAttribute("logAdmin", null);
 							RequestDispatcher dispatcher= request.getRequestDispatcher(url);
@@ -195,7 +217,7 @@ public class servletAdmin extends HttpServlet {
 						//l'amministratore non esiste nel db
 						
 						request.setAttribute("message", "");
-						String url="/admin.jsp";
+						String url="servletaccessoadmin";
 						url= response.encodeURL(url);
 						sessione.setAttribute("logAdmin", null);
 						RequestDispatcher dispatcher= request.getRequestDispatcher(url);

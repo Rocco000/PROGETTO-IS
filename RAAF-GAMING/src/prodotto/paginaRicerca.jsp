@@ -44,7 +44,7 @@ if(str==null)
 
 %>
 
-<%@include file="navbar.jsp" %>
+<%@include file="../it/unisa/utility/navbar.jsp" %>
 <!--inizio descrizione-->
 
 <div class="container pl-5" style="min-height:100vh;">
@@ -102,7 +102,7 @@ if(str==null)
 
 <!--fine descrizione-->
 
-<%@include file="footer.jsp" %>
+<%@include file="../it/unisa/utility/footer.jsp" %>
 </body>
 </html>
 

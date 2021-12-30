@@ -95,7 +95,7 @@ public class ServletRicerca extends HttpServlet {
 		 ProdottoDAO dao = new  ProdottoDAO(ds);
 		 ArrayList<ProdottoBean> bean = new ArrayList<ProdottoBean>();
 		 try {
-			bean = dao.ricercaPerNome(str);
+			bean = dao.ricercaPerSottostringa(str);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -104,7 +104,7 @@ public class ServletRicerca extends HttpServlet {
 		 request.setAttribute("prodotti",bean);
 	//reindirizzo la pagina
 		request.setAttribute("visitato","");
-		RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+		RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/classes/prodotto/paginaRicerca.jsp"));
 		view.forward(request, response);
 	//
 	
