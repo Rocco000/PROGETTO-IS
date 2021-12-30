@@ -50,7 +50,7 @@ public class ServletAccessoAdmin extends HttpServlet {
 					//non è loggato e può andare in admin.jsp
 					sessione.setAttribute("logAdmin", null);
 					request.setAttribute("visitato", "");
-					String url="/admin.jsp";
+					String url="/WEB-INF/classes/profilo/admin.jsp";
 					url= response.encodeURL(url);
 					RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 					dispatcher.forward(request, response);
@@ -61,7 +61,7 @@ public class ServletAccessoAdmin extends HttpServlet {
 				//l'amministratore non è loggato e quindi può andare in admin.jsp
 				sessione.setAttribute("logAdmin", null);
 				request.setAttribute("visitato", "");
-				String url="/admin.jsp";
+				String url="/WEB-INF/classes/profilo/admin.jsp";
 				url= response.encodeURL(url);
 				RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 				dispatcher.forward(request, response);

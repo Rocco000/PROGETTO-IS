@@ -45,31 +45,27 @@ public class ServletGestioneProdottiAdmin extends HttpServlet {
 					try {
 						request.setAttribute("visitato", "");
 						
-						//ottengo tutti gli ordini non consegnati
-						ArrayList<OrdineBean> ordiniNonConsegnati= odao.getOrdiniNonConsegnati();
-						request.setAttribute("nonConsegnati", ordiniNonConsegnati);
-						
 						//ottengo tutti i prodotti esistenti
 						ProdottoDAO pdao= new ProdottoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-						ArrayList<ProdottoBean> prodottiEsistenti= pdao.allElements(null);
+						ArrayList<ProdottoBean> prodottiEsistenti= pdao.allElements("codice_prodotto asc");
 						request.setAttribute("prodottiEsistenti", prodottiEsistenti);
 						
 						//ottengo tutti i fornitori
 						FornitoreDAO fdao= new FornitoreDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-						ArrayList<FornitoreBean> fornitori= fdao.allElements(null);
+						ArrayList<FornitoreBean> fornitori= fdao.allElements("nome asc");
 						request.setAttribute("fornitori", fornitori);
 						
 						//ottengo tutte le softwarehouse
 						SoftwarehouseDAO sdao= new SoftwarehouseDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-						ArrayList<SoftwarehouseBean> sfh= sdao.allElements(null);
+						ArrayList<SoftwarehouseBean> sfh= sdao.allElements("nomesfh asc");
 						request.setAttribute("softwarehouse", sfh);
 						
 						//ottengo tutte le categorie
 						CategoriaDAO cdao= new CategoriaDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
-						ArrayList<CategoriaBean> categorie= cdao.allElements(null);
+						ArrayList<CategoriaBean> categorie= cdao.allElements("nome asc");
 						request.setAttribute("categorie", categorie);
 						
-						String url="/paginaAmministratore.jsp";
+						String url="/WEB-INF/classes/prodotto/paginaAmministratore.jsp";
 						url= response.encodeURL(url);
 						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 						dispatcher.forward(request, response);

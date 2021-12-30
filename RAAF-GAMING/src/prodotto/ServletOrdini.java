@@ -96,7 +96,7 @@ public class ServletOrdini extends HttpServlet {
 					request.setAttribute("spedizioni", spedizione);//metto l'array delle spedizioni nella request che passero a ordini.jsp
 							
 					request.setAttribute("visitato", "");//per controllare se son passato prima per questa servlet prima di andare a ordini.jsp
-					String url="/ordini.jsp";
+					String url="/WEB-INF/classes/prodotto/ordini.jsp";
 					url= response.encodeURL(url);
 					RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 					dispatcher.forward(request, response);
@@ -109,7 +109,7 @@ public class ServletOrdini extends HttpServlet {
 			}
 			else {
 				//se non è loggato lo riporto sulla home
-				String url="homepage.jsp";
+				String url="servletindex";
 				url= response.encodeURL(url);
 				response.sendRedirect(url);
 			}
