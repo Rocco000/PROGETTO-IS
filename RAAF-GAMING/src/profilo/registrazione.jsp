@@ -84,8 +84,18 @@
 			      	<input id="datadinascita" type="date" name="data" class="form-control" id="dataNascita" required style="width:80%;">
 		  		</div>
 		  		<div class="col-md-6 mb-3">
-		  			<label for="validationCustom06">Iban:</label>
-			      	<input type="text" name="iban" class="form-control" id="validationCustom06" placeholder="IT0000000000000000000000000" required style="width:80%;">
+		  			<label for="validationCustom06">Codice carta di credito:</label>
+			      	<input type="text" name="codicecarta" class="form-control" id="validationCustom07" placeholder="**** **** **** ****" required style="width:80%;">
+		  		</div>
+		  </div>
+		   <div class="form-row">
+		  		<div class="col-md-6 mb-3">
+		  			<label for="dataNascita">Data di scadenza carta:</label>
+			      	<input id="data_scadenza" type="date" name="data_scadenza" class="form-control" required style="width:80%;">
+		  		</div>
+		  		<div class="col-md-6 mb-3">
+		  			<label for="validationCustom06">CVV:</label>
+			      	<input type="text" name="codice_cvv" class="form-control" id="validationCustom08" placeholder="***" required style="width:80%;">
 		  		</div>
 		  </div>
 		  <div class="form-row">

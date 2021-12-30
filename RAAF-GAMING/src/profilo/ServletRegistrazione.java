@@ -66,7 +66,7 @@ public class ServletRegistrazione extends HttpServlet {
 				{
 					
 					request.setAttribute("visitato", "");
-					String url="/registrazione.jsp";
+					String url="/WEB-INF/classes/profilo/registrazione.jsp";
 					url=response.encodeURL(url);
 					RequestDispatcher di = request.getRequestDispatcher(url);
 					di.forward(request, response);
@@ -89,7 +89,7 @@ public class ServletRegistrazione extends HttpServlet {
 						
 						request.setAttribute("visitato", "");
 						
-						String url = "/registrazione.jsp";
+						String url = "/WEB-INF/classes/profilo/registrazione.jsp";
 						url = response.encodeURL(url);
 						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
 						dispatcher.forward(request, response);
@@ -111,7 +111,7 @@ public class ServletRegistrazione extends HttpServlet {
 							String message="Non puoi registrarti con questa carta";
 							request.setAttribute("message", message);
 							request.setAttribute("visitato", "");
-							String url = "/registrazione.jsp";
+							String url = "/WEB-INF/classes/profilo/registrazione.jsp";
 							url = response.encodeURL(url);
 							RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
 							dispatcher.forward(request, response);
@@ -176,7 +176,7 @@ public class ServletRegistrazione extends HttpServlet {
 			{
 				
 				request.setAttribute("visitato", "");
-				String url="/registrazione.jsp";
+				String url="/WEB-INF/classes/profilo/registrazione.jsp";
 				url=response.encodeURL(url);
 				RequestDispatcher di = request.getRequestDispatcher(url);
 				di.forward(request, response);
@@ -199,7 +199,7 @@ public class ServletRegistrazione extends HttpServlet {
 					
 					request.setAttribute("visitato", "");
 					
-					String url = "/registrazione.jsp";
+					String url = "/WEB-INF/classes/profilo/registrazione.jsp";
 					url = response.encodeURL(url);
 					RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
 					dispatcher.forward(request, response);
@@ -221,7 +221,7 @@ public class ServletRegistrazione extends HttpServlet {
 						String message="Non puoi registrarti con questa carta";
 						request.setAttribute("message", message);
 						request.setAttribute("visitato", "");
-						String url = "/registrazione.jsp";
+						String url = "/WEB-INF/classes/profilo/registrazione.jsp";
 						url = response.encodeURL(url);
 						RequestDispatcher dispatcher=super.getServletContext().getRequestDispatcher(url);//ritorno alla registrazione
 						dispatcher.forward(request, response);
