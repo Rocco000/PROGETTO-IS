@@ -101,13 +101,13 @@ public class ServletCategorie extends HttpServlet {
 				ProdottoDAO dao = new  ProdottoDAO(ds);
 				ArrayList<ProdottoBean> bean = new ArrayList<ProdottoBean>();
 				try {
-						bean = dao.allElements("");
+						bean = dao.allElements("codice_prodotto asc");
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 					request.setAttribute("prodotti",bean);
 					request.setAttribute("visitato","");
-					RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+					RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/classes/prodotto/paginaRicerca.jsp"));
 					view.forward(request, response);
 					return;
 			}
@@ -128,7 +128,7 @@ public class ServletCategorie extends HttpServlet {
 				}
 				request.setAttribute("prodotti",prod);
 				request.setAttribute("visitato","");
-				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/classes/prodotto/paginaRicerca.jsp"));
 				view.forward(request, response);
 				return;
 			}
@@ -149,7 +149,7 @@ public class ServletCategorie extends HttpServlet {
 				}
 				request.setAttribute("prodotti",prod);
 				request.setAttribute("visitato","");
-				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/classes/prodotto/paginaRicerca.jsp"));
 				view.forward(request, response);
 				return;
 			}
@@ -170,7 +170,7 @@ public class ServletCategorie extends HttpServlet {
 				}
 				request.setAttribute("prodotti",prod);
 				request.setAttribute("visitato","");
-				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/classes/prodotto/paginaRicerca.jsp"));
 				view.forward(request, response);
 				return;
 			}
@@ -191,7 +191,7 @@ public class ServletCategorie extends HttpServlet {
 				}
 				request.setAttribute("prodotti",prod);
 				request.setAttribute("visitato","");
-				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/classes/prodotto/paginaRicerca.jsp"));
 				view.forward(request, response);
 				return;
 			}
@@ -212,7 +212,7 @@ public class ServletCategorie extends HttpServlet {
 				}
 				request.setAttribute("prodotti",prod);
 				request.setAttribute("visitato","");
-				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/classes/prodotto/paginaRicerca.jsp"));
 				view.forward(request, response);
 				return;
 			}
@@ -233,7 +233,7 @@ public class ServletCategorie extends HttpServlet {
 				}
 				request.setAttribute("prodotti",prod);
 				request.setAttribute("visitato","");
-				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/classes/prodotto/paginaRicerca.jsp"));
 				view.forward(request, response);
 				return;
 			}
@@ -243,7 +243,7 @@ public class ServletCategorie extends HttpServlet {
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 				VideogiocoDAO dao = new VideogiocoDAO(ds);
 				try {
-					ArrayList<VideogiocoBean> bean = dao.allElements("");
+					ArrayList<VideogiocoBean> bean = dao.allElements("prodotto asc");
 					for(VideogiocoBean b : bean)
 					{
 						prod.add(dap.ricercaPerChiave(b.getProdotto()+""));
@@ -254,7 +254,7 @@ public class ServletCategorie extends HttpServlet {
 				}
 				request.setAttribute("prodotti",prod);
 				request.setAttribute("visitato","");
-				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/classes/prodotto/paginaRicerca.jsp"));
 				view.forward(request, response);
 				return;
 			}
@@ -275,7 +275,7 @@ public class ServletCategorie extends HttpServlet {
 				}
 				request.setAttribute("prodotti",prod);
 				request.setAttribute("visitato","");
-				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/classes/prodotto/paginaRicerca.jsp"));
 				view.forward(request, response);
 				return;
 			}
@@ -296,7 +296,7 @@ public class ServletCategorie extends HttpServlet {
 				}
 				request.setAttribute("prodotti",prod);
 				request.setAttribute("visitato","");
-				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/paginaRicerca.jsp"));
+				RequestDispatcher view = super.getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/classes/prodotto/paginaRicerca.jsp"));
 				view.forward(request, response);
 				return;
 			}

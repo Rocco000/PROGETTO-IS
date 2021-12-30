@@ -57,11 +57,7 @@ public class VideogiocoDAO{
 		String query="SELECT * FROM videogioco,prodotto WHERE videogioco.prodotto=prodotto.codice_prodotto ORDER BY ?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
-		
-		if(ordinamento!=null && !ordinamento.equals(""))
 			ps.setString(1, ordinamento);
-		else
-			ps.setString(1,"videogioco.prodotto");
 		ArrayList<VideogiocoBean>a=new ArrayList<VideogiocoBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {

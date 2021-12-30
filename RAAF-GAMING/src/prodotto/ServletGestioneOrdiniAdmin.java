@@ -54,13 +54,13 @@ public class ServletGestioneOrdiniAdmin extends HttpServlet {
 					
 					try {
 						ArrayList<OrdineBean> ordiniNonSpediti= odao.getOrdiniNonConsegnati();
-						ArrayList<CorriereEspressoBean> corrieri= sdao.allElements("");
+						ArrayList<CorriereEspressoBean> corrieri= sdao.allElements("nome asc");
 						
 						request.setAttribute("visitato", "");
 						request.setAttribute("ordiniNonSpediti", ordiniNonSpediti);
 						request.setAttribute("corrieri", corrieri);
 						
-						String url="/paginaGestioneOrdini.jsp";
+						String url="/WEB-INF/classes/prodotto/paginaGestioneOrdini.jsp";
 						url= response.encodeURL(url);
 						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 						dispatcher.forward(request, response);

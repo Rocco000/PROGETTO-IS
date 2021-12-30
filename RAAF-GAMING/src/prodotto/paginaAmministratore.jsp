@@ -42,7 +42,6 @@
 	}
 	
 	//ottengo dalla servletGestioneAdmin gli ordini non consegnati e i prodotti esistenti
-	ArrayList<OrdineBean> ordiniNonConsegnati= (ArrayList<OrdineBean>)request.getAttribute("nonConsegnati");
 	ArrayList<ProdottoBean> prodottiEsistenti= (ArrayList<ProdottoBean>)request.getAttribute("prodottiEsistenti");
 	ArrayList<FornitoreBean> fornitori= (ArrayList<FornitoreBean>)request.getAttribute("fornitori");  
 	ArrayList<SoftwarehouseBean> sfh= (ArrayList<SoftwarehouseBean>)request.getAttribute("softwarehouse");
@@ -85,13 +84,6 @@
 			<div class="form-group mr-3 mt-3">
 			    <label for="numeroOrdine">Codice ordine:</label><br>
 			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="numeroOrdine" >
-		    	<%
-		    		for(OrdineBean app: ordiniNonConsegnati){	
-		    	%>
-			  			<option value="<%=app.getCodice()%>"><%=app.getCodice()%></option>
-			  	<%
-		    		}
-			  	%>
 				</select>
 	    	</div>
 	    	<div class="form-group mr-3 mt-3">

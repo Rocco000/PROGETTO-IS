@@ -75,7 +75,7 @@ public class ProdottoDAO{
 				bean.setPrezzo(st.getDouble("prezzo"));
 				bean.setQuantita_fornitura(st.getInt("quantita_fornitura"));
 				bean.setSconto(st.getInt("sconto"));
-				bean.setUltima_fornitura(st.getDate("ultima_fornitura"));
+				bean.setUltima_fornitura(st.getDate("data_fornitura"));
 				
 				b.add(bean);
 			}
@@ -107,7 +107,7 @@ public class ProdottoDAO{
 				bean.setPrezzo(st.getDouble("prezzo"));
 				bean.setQuantita_fornitura(st.getInt("quantita_fornitura"));
 				bean.setSconto(st.getInt("sconto"));
-				bean.setUltima_fornitura(st.getDate("ultima_fornitura"));
+				bean.setUltima_fornitura(st.getDate("data_fornitura"));
 				
 				b.add(bean);
 			}
@@ -136,15 +136,14 @@ public class ProdottoDAO{
 	}
 
 	public ArrayList<ProdottoBean> allElements(String ordinamento) throws SQLException {
+		
+		if(ordinamento==null || ordinamento.equals(""))
+			throw new NullPointerException("ordinamento e' null o stringa vuota");
+		
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM prodotto ORDER BY ?;";
 		PreparedStatement ps = con.prepareStatement(str);
-		if(ordinamento!=null && ordinamento!="") {
-			ps.setString(1, ordinamento);
-		}
-		else {
-			ps.setString(1, "codice_prodotto asc");
-		}
+		ps.setString(1,ordinamento);
 		ResultSet st = ps.executeQuery();
 		ArrayList<ProdottoBean> array = new ArrayList<ProdottoBean>();
 		while(st.next())
@@ -158,7 +157,7 @@ public class ProdottoDAO{
 			bean.setPrezzo(st.getDouble("prezzo"));
 			bean.setQuantita_fornitura(st.getInt("quantita_fornitura"));
 			bean.setSconto(st.getInt("sconto"));
-			bean.setUltima_fornitura(st.getDate("ultima_fornitura"));
+			bean.setUltima_fornitura(st.getDate("data_fornitura"));
 			array.add(bean);
 		}
 		st.close();
@@ -197,7 +196,7 @@ public class ProdottoDAO{
 			throw new NullPointerException("l'item e' nulll");
 		else {
 			Connection con = ds.getConnection();
-			String str = "UPDATE prodotto SET quantita_fornitura=? , ultima_fornitura=? WHERE codice_prodotto=?;";
+			String str = "UPDATE prodotto SET quantita_fornitura=? , data_fornitura=? WHERE codice_prodotto=?;";
 			PreparedStatement ps = con.prepareStatement(str);
 			
 			ps.setInt(1,item.getQuantita_fornitura());

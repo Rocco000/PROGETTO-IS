@@ -21,16 +21,15 @@ public class CorriereEspressoDAO{
 	}
 	
 	public ArrayList<CorriereEspressoBean> allElements(String ordinamento) throws SQLException {
+		if(ordinamento==null || ordinamento=="")
+			throw new NullPointerException();
+		
 		Connection connessione = ds.getConnection();
-		String Query="SELECT * FROM corriereespresso ODER BY ?";
+		String Query="SELECT * FROM corriereespresso ORDER BY ?";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
-		if(ordinamento!=null && ordinamento!="") 
-		{
 			ps.setString(1, ordinamento);
-		}else { 
-			ps.setString(1, "nome asc");
-		}
+
 		
 		ResultSet rs= ps.executeQuery();
 		ArrayList<CorriereEspressoBean> a= new ArrayList<CorriereEspressoBean>();

@@ -57,7 +57,7 @@
 	ArrayList<OrdineBean> ordiniUtente= (ArrayList<OrdineBean>)request.getAttribute("listaOrdini");
 %>
 
-<%@include file="navbar.jsp" %>
+<%@include file="../it/unisa/utility/navbar.jsp" %>
 
 <div class="wrapper rounded" style="min-height:100vh;">
 
@@ -83,7 +83,7 @@
 			                <tr>
 			                    <th scope="col" style="color:#00FF7F"><i class='fas fa-shopping-basket' style='font-size:20px; display:inline;'></i> ORDER ID</th>
 			                    <th scope="col" style="color:#00FF7F;"><i class="fa fa-home" style="font-size:20px; display:inline;"></i>INDIRIZZO CONSEGNA</th>
-			                    <th scope="col" style="color:#00FF7F"><i class='far fa-credit-card' style='font-size:20px; display:inline;'></i> IBAN</th>
+			                    <th scope="col" style="color:#00FF7F"><i class='far fa-credit-card' style='font-size:20px; display:inline;'></i> CARTA CREDITO</th>
 			                    <th scope="col" style="color:#00FF7F"><i class='fas fa-calendar' style='font-size:20px; display:inline;'></i> DATA ACQUISTO</th>
 			                    <th scope="col" style="color:#00FF7F"><i class="fa fa-calendar" style="font-size:20px; display:inline;"></i> DATA CONSEGNA</th>
 			                    <th scope="col" style="color:#00FF7F"><i class='fas fa-money-bill-wave' style='font-size:20px; display:inline;'></i>TOTALE</th>
@@ -98,7 +98,7 @@
 			                <tr>
 			                    <td scope="row"> <%=app.getCodice()%> </td>
 			                    <td><div style="max-width:100%; overflow: auto; white-space: nowrap;"><%=app.getIndirizzo_di_consegna()%></div></td>
-			                    <td><%=app.getMetodo_di_pagamento()%></td>
+			                    <td><%="****"+app.getMetodo_di_pagamento().substring(12,16)%></td>
 			                    <td class="text-muted"><%=app.getData_acquisto().toString()%></td>
 			                    <%
 			                    	if(spedizioneApp==null){
@@ -126,7 +126,7 @@
     %>
 </div>
 
-<%@include file="footer.jsp" %>
+<%@include file="../it/unisa/utility/footer.jsp" %>
 
 </body>
 </html>
