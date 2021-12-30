@@ -105,7 +105,7 @@ public class ServletIndex extends HttpServlet {
 			prod.add(dao.ricercaPerChiave(""+scontati.get(3).getProdotto()));
 			request.setAttribute("Prodotti",prod);
 			request.setAttribute("visitato","");
-			RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/homepage.jsp");
+			RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/WEB-INF/classes/prodotto/homepage.jsp");
 			dispatcher.forward(request, response);
 			
 		} catch (SQLException e) {

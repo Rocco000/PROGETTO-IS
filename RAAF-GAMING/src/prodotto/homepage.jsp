@@ -41,7 +41,7 @@ if(str==null)
 ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Prodotti");
 %>
 
-<%@include file="navbar.jsp" %>
+<%@include file="../it/unisa/utility/navbar.jsp" %>
 
 <div class="container" style="background-color:rgba(230,230,230,0.5); min-height:100vh;">
 	<div class="row">
@@ -252,7 +252,7 @@ ArrayList<ProdottoBean> prod =(ArrayList<ProdottoBean>) request.getAttribute("Pr
 	</div>
 </div>
 
-<%@include file="footer.jsp" %>
+<%@include file="../it/unisa/utility/footer.jsp" %>
 
 </body>
 </html>
