@@ -116,7 +116,7 @@ public class ServletCarrello extends HttpServlet {
 		}
 		request.setAttribute("visitato","");
 		request.setAttribute("eliminato", null);
-		RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/paginaCarrello.jsp");
+		RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher("/WEB-INF/classes/acquisto/paginaCarrello.jsp");
 		dispatcher.forward(request, response);
 	}
 

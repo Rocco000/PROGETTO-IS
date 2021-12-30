@@ -39,7 +39,7 @@
 	}
 
 %>
-<%@include file="navbar.jsp" %>
+<%@include file="../it/unisa/utility/navbar.jsp" %>
 <!--inizio descrizione-->
 		<main class="page" >
 	 	<section class="shopping-cart dark" >
@@ -208,6 +208,6 @@
 	</script>
 </body>
 <!--fine descrizione-->
-<%@include file="footer.jsp" %>
+<%@include file="../it/unisa/utility/footer.jsp" %>
 </body>
 </html>
