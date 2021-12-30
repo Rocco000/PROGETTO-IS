@@ -77,7 +77,11 @@ public class ServletProfilo extends HttpServlet {
 						
 						String cartaNuova= oggettoJson.getString("cartaNuova");
 						String dataScadNuova = oggettoJson.getString("dataScadNuova");
-						int codice_cvv = oggettoJson.getInt("codiceNuovo");
+						int codice_cvv;
+						if(oggettoJson.getString("codiceNuovo")==null ||oggettoJson.getString("codiceNuovo").equals("")) //nel caso modifica solo la password non può fare il casting a intero
+							codice_cvv=0;
+						else
+							codice_cvv = oggettoJson.getInt("codiceNuovo");
 								
 						
 						//creo l'utente con i dati nuovi da passare al DAO per aggiornare il cliente
@@ -123,10 +127,10 @@ public class ServletProfilo extends HttpServlet {
 						CartaDiCreditoDAO cc = new CartaDiCreditoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 						CartaDiCreditoBean carta = new CartaDiCreditoBean();
 						
-						if(cartaNuova!="" && cartaNuova!=null && (cartaNuova.length()==16) && dataScadNuova!="" && dataScadNuova!=null &&  (codice_cvv>=100 && codice_cvv<=999)) {//se ha modificato l'iban
+						if(cartaNuova!="" && cartaNuova!=null && (cartaNuova.length()==16) && dataScadNuova!="" && dataScadNuova!=null &&  (codice_cvv>=100 && codice_cvv<=999)) {//se ha modificato i dati della carta
 							
-							if(!utente.getCarta_fedelta().equals(cartaNuova)) {//se il nuovo iban è diverso da quello del db
-								utenteAggiornato.setCartadicredito(cartaNuova);//setto il nuovo iban
+							if(!utente.getCartadicredito().equals(cartaNuova)) {//se la nuova carta è diversa da quello del db
+								utenteAggiornato.setCartadicredito(cartaNuova);//setto la nuova carta
 								carta.setCodicecarta(cartaNuova);
 								carta.setCodice_cvv(codice_cvv);
 								carta.setData_scadenza(java.sql.Date.valueOf(dataScadNuova));
@@ -134,7 +138,7 @@ public class ServletProfilo extends HttpServlet {
 								
 							}
 							else {
-								//se l'iban è uguale mando un errore
+								//se la carta è uguale mando un errore
 								JSONObject erroreJson= new JSONObject();
 								erroreJson.put("errorMessage", "LA CARTA COINCIDE CON QUELLA GIA' IN USO");
 								PrintWriter out= response.getWriter();//posso scrivere sulla response
@@ -143,7 +147,7 @@ public class ServletProfilo extends HttpServlet {
 							}
 						}
 						else {
-							//se non ha modificato l'iban setto quello attuale
+							//se non ha modificato la carta setto quello attuale
 							carta = cc.ricercaPerChiave(utente.getCartadicredito());
 							utenteAggiornato.setCartadicredito(utente.getCartadicredito());//setto la stessa Carta
 							
@@ -152,10 +156,10 @@ public class ServletProfilo extends HttpServlet {
 						
 						if(utenteAggiornato.getPassword()!=null)
 						{
-							cdao.doUpdate(utenteAggiornato);
-							
+						
 							try {
-							cc.doUpdate(carta, utente.getCartadicredito());
+								cdao.doUpdate(utenteAggiornato);
+								cc.doUpdate(carta, utente.getCartadicredito());
 							}
 							catch(SQLException e)
 							{
@@ -171,15 +175,15 @@ public class ServletProfilo extends HttpServlet {
 						{
 							try {
 								cc.doUpdate(carta, utente.getCartadicredito());
-								}
-								catch(SQLException e)
-								{
-									JSONObject erroreJson= new JSONObject();
-									erroreJson.put("errorMessage", "Non puoi utilizzare questa carta");
-									PrintWriter out= response.getWriter();//posso scrivere sulla response
-									out.print(erroreJson.toString());
-									return;
-								}
+							}
+							catch(SQLException e)
+							{
+								JSONObject erroreJson= new JSONObject();
+								erroreJson.put("errorMessage", "Non puoi utilizzare questa carta");
+								PrintWriter out= response.getWriter();//posso scrivere sulla response
+								out.print(erroreJson.toString());
+								return;
+							}
 						}
 						//aggiorno i dati dell'utente
 						

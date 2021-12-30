@@ -61,8 +61,11 @@ public class ServletLogin extends HttpServlet {
 					
 				ClienteDAO cmd=new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 				try {
-					ClienteBean cb=cmd.ricercaPerChiave(email);
+					ClienteBean cb=cmd.ricercaPerChiave(email);	//ottengo i dati dell'utente che si vuole loggare
+					
 					if(cb!=null) {//se l'utente è nel DB
+						
+						//codifico la password per vedere se è uguale a quella del DB
 						MessageDigest md = MessageDigest.getInstance("MD5"); 
 						byte[] digest = md.digest(password.getBytes()); 
 						BigInteger big=new BigInteger(1,digest);
@@ -72,7 +75,7 @@ public class ServletLogin extends HttpServlet {
 						}
 						if(str.equals(cb.getPassword())) {   //se la password e l'email coincidono nel DB
 							System.out.println("Sei loggato");
-							sessione.setAttribute("emailSession", email);//aggiungio il campo dell'email alla sessione
+							sessione.setAttribute("emailSession", email);//aggiungo il campo dell'email alla sessione
 							sessione.setAttribute("passwordSession", str);//aggiungo la password criptata alla sessione
 							log=true;
 							sessione.setAttribute("log",log);
@@ -83,20 +86,22 @@ public class ServletLogin extends HttpServlet {
 							return;
 						}
 						else {
+							//LA PASSWORD NON COINCIDE
 							String message="";
 							request.setAttribute("message",message);
 							request.setAttribute("visita","");
-							String url = "/login.jsp";
+							String url = "/WEB-INF/classes/profilo/login.jsp";
 							url = response.encodeURL(url);
 							RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
 							view.forward(request, response);
 						}
 					}
 					else {
+						//SE L'EMAIL NON ESISTE NEL DB
 						String message="";
 						request.setAttribute("message",message);
 						request.setAttribute("visita","");
-						String url = "/login.jsp";
+						String url = "/WEB-INF/classes/profilo/login.jsp";
 						url = response.encodeURL(url);
 						RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
 						view.forward(request, response);
@@ -110,8 +115,8 @@ public class ServletLogin extends HttpServlet {
 			}
 			
 		}
-		
 		else {
+			//SE LA SESSIONE NON ESISTE SI PUO' LOGGARE
 			boolean log;
 			String email=request.getParameter("email");
 			String password=request.getParameter("password");
@@ -125,8 +130,11 @@ public class ServletLogin extends HttpServlet {
 				
 			ClienteDAO cmd=new ClienteDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 			try {
-				ClienteBean cb=cmd.ricercaPerChiave(email);
+				ClienteBean cb=cmd.ricercaPerChiave(email); //ottengo i dati dell'utente che si vuole loggare
+				
 				if(cb!=null) {//se l'utente è nel DB
+					
+					//codifico la password per vedere se è uguale a quella del DB
 					MessageDigest md = MessageDigest.getInstance("MD5"); 
 					byte[] digest = md.digest(password.getBytes()); 
 					BigInteger big=new BigInteger(1,digest);
@@ -147,20 +155,22 @@ public class ServletLogin extends HttpServlet {
 						return;
 					}
 					else {
+						//LA PASSWORD NON COINCIDE
 						String message="";
 						request.setAttribute("message",message);
 						request.setAttribute("visita","");
-						String url="/login.jsp";
+						String url="/WEB-INF/classes/profilo/login.jsp";
 						url=response.encodeURL(url);
 						RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
 						view.forward(request, response);
 					}
 				}
 				else {
+					//SE L'EMAIL NON ESISTE NEL DB
 					String message="";
 					request.setAttribute("message",message);
 					request.setAttribute("visita","");
-					String url="/login.jsp";
+					String url="/WEB-INF/classes/profilo/login.jsp";
 					url=response.encodeURL(url);
 					RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
 					view.forward(request, response);

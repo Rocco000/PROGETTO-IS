@@ -17,7 +17,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	
 	<!-- javascript nostro -->
-	<script src="javascript/controlloProfilo.js"></script>
+	<script src="javascript/controlloCambio.js"></script>
 	
 	<!-- Css navbar -->
 	<link rel="stylesheet" href="css/StileIndex.css" type="text/css">
@@ -61,7 +61,7 @@
 	String url = response.encodeRedirectURL(str); //faccio l'url rewriting per non perdere la sessione
 %>
 
-<%@include file="navbar.jsp" %>
+<%@include file="../it/unisa/utility/navbar.jsp" %>
 <div class="container" style="min-height:100vh;">
 	<div class="row mt-3">
 		<div class="col-md-6">
@@ -72,7 +72,7 @@
 					<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">EMAIL:</li>  <li class="list-inline-item"><%=utente.getEmail() %></li></ul>
     				<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">NOME:</li>  <li class="list-inline-item"><%=utente.getNome() %></li></ul>
     				<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">COGNOME:</li>  <li class="list-inline-item"><%=utente.getCognome() %></li></ul>
-    				<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">IBAN:</li>  <li class="list-inline-item" id="ibanAggiornato"><%=utente.getIban() %></li></ul>
+    				<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">CODICE CARTA DI CREDITO:</li>  <li class="list-inline-item" id="cartaAggiornata"><%="****"+utente.getCartadicredito().substring(12,16) %></li></ul>
     				<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">CODICE CARTA:</li>  <li class="list-inline-item"><%=utente.getCarta_fedelta() %></li></ul>
     				<ul class="card-text list-inline font-weight-bold"><li class="list-inline-item text-warning">PUNTI CARTA:</li>  <li class="list-inline-item"><%=carta.getPunti() %></li></ul>
 				</div>
@@ -98,14 +98,22 @@
 		  			</div>
 		  		</div>
 		  		<div class="form-row">
-		  			<div class="form-group col-md-12">
-		  				<label for="inputIban1">Nuovo IBAN</label>
-		  				<input type="text" name="iban" class="form-control w-50" id="inputIban1" placeholder="ITxxxxxxxxxxxxxxxxxxxxxxxxx">
+		  			<div class="form-group col-md-4">
+		  				<label for="inputCarta1">Numero carta</label>
+		  				<input type="text" name="numeroCarta" class="form-control w-50" id="inputCarta1" placeholder="xxxxxxxxxxxxxxxx">
+		  			</div>
+		  			<div class="form-group col-md-4">
+		  				<label for="inputCarta2">CVV</label>
+		  				<input type="text" name="cvvCarta" class="form-control w-50" id="inputCarta2" placeholder="xxx">
+		  			</div>
+		  			<div class="form-group col-md-4">
+		  				<label for="inputCarta3">Data scadenza</label>
+		  				<input type="date" name="cvvCarta" class="form-control w-50" id="inputCarta3">
 		  			</div>
 		  		</div>
 		  		<div class="form-row">
 		  			<div class="col-md-12">
-		  				<input type="submit" class="btn btn-primary" value="INVIA" onclick="aggiornamentoCredenziali(this);">
+		  				<input type="submit" class="btn btn-primary" value="INVIA" onclick="aggiornamentoCredenziali();">
 		  			</div>
 		  		</div>
 			
@@ -115,20 +123,28 @@
 	
 </div>
 
-<%@include file="footer.jsp" %>
+<%@include file="../it/unisa/utility/footer.jsp" %>
 
 <%
 	String urlj= response.encodeURL("servletprofilo");
 %>
 <script>
 	
-	function aggiornamentoCredenziali(f){
-		
-		if(controlloCambioCredenziali()){
-
+	function aggiornamentoCredenziali(){
+		alert("Nella funzione javascript di profilo.jsp");
+		var pass1= document.getElementById("inputPassword1");
+		var pass2= document.getElementById("inputPassword2");
+		var codiceCarta= document.getElementById("inputCarta1");
+		var cvv= document.getElementById("inputCarta2");
+		var data= document.getElementById("inputCarta3");
+		alert(pass1.value+" "+pass2.value+" "+codiceCarta.value+" "+cvv.value+" "+data.value);
+		if(controlloCambioCredenziali(pass1,pass2,codiceCarta,cvv,data)){
+			alert("Controllo valori fatto");
 			var o= {
 					passwordNuova: $("#inputPassword1").val(),
-					ibanNuovo: $("#inputIban1").val() //qui bisogna mettere i campi giusti
+					cartaNuova: $("#inputCarta1").val(), //qui bisogna mettere i campi giusti
+					codiceNuovo: $("#inputCarta2").val(),
+					dataScadNuova: $("#inputCarta3").val()
 			};
 			var parametriJson= JSON.stringify(o);
 			
@@ -157,8 +173,8 @@
 										$("#notifica").css("text-align","center");
 										
 									}
-									if(risposta.iban!=null)
-										$("#ibanAggiornato").html(""+risposta.iban); //questo va cambiato va messo .carta e il tag # va cambiato
+									if(risposta.carta!=null)
+										$("#cartaAggiornata").html(""+risposta.carta); 
 								}
 							}
 			});

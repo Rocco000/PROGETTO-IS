@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class ServletLoginFirst
+ * Servlet che CI FA ANDARE NELLA PAGINA DI LOGIN
  */
 @WebServlet("/servletloginfirst")
 public class ServletLoginFirst extends HttpServlet {
@@ -46,7 +46,7 @@ public class ServletLoginFirst extends HttpServlet {
 			{
 				String message="";
 				request.setAttribute("visita",message);
-				String url="/login.jsp";
+				String url="/WEB-INF/classes/profilo/login.jsp";
 				url=response.encodeURL(url);
 				RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
 				view.forward(request, response);
@@ -57,7 +57,7 @@ public class ServletLoginFirst extends HttpServlet {
 		{
 				String message="";
 				request.setAttribute("visita",message);
-				String url="/login.jsp";
+				String url="/WEB-INF/classes/profilo/login.jsp";
 				url=response.encodeURL(url);
 				RequestDispatcher view=super.getServletContext().getRequestDispatcher(url);
 				view.forward(request, response);

@@ -81,7 +81,7 @@ public class ServletAccessoProfilo extends HttpServlet {
 						CartaFedeltaBean carta= cartadao.ricercaPerChiave(utente.getCarta_fedelta());
 						request.setAttribute("puntiCarta", carta);
 						
-						String url="/profilo.jsp";
+						String url="/WEB-INF/classes/profilo/profilo.jsp";
 						url= response.encodeURL(url);
 						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 						dispatcher.forward(request, response);
