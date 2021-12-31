@@ -48,15 +48,13 @@ public class ConsoleDAO{
 
 	
 	public ArrayList<ConsoleBean> allElements(String ordinamento) throws SQLException {
-		
+	if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");	
 	Connection connessione = ds.getConnection();
 	String Query="SELECT * FROM console ORDER BY ?";
 	
 	PreparedStatement ps= connessione.prepareStatement(Query);
-	if(ordinamento!=null && !ordinamento.equals("")) 
-	{
 	ps.setString(1, ordinamento);
-	}else { ps.setString(1, "prodotto asc");}
+
 	
 	ResultSet rs= ps.executeQuery();
 	ArrayList<ConsoleBean> a= new ArrayList<ConsoleBean>();

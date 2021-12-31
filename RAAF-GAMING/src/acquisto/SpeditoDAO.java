@@ -43,17 +43,11 @@ public class SpeditoDAO{
 
 
 	public ArrayList<SpeditoBean> allElements(String ordinamento) throws SQLException {
-		
+		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connesione=ds.getConnection();
 		String query="SELECT * FROM spedito ORDER BY ordine ?;";
-		
 		PreparedStatement ps=connesione.prepareStatement(query);
-		
-		if(ordinamento!=null && !ordinamento.equals(""))
 			ps.setString(1,ordinamento);
-		else
-			ps.setString(1,"asc");
-		
 		ArrayList<SpeditoBean> a=new ArrayList<SpeditoBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {

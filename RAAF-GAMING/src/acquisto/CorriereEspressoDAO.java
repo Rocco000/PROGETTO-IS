@@ -21,8 +21,7 @@ public class CorriereEspressoDAO{
 	}
 	
 	public ArrayList<CorriereEspressoBean> allElements(String ordinamento) throws SQLException {
-		if(ordinamento==null || ordinamento=="")
-			throw new NullPointerException();
+		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		
 		Connection connessione = ds.getConnection();
 		String Query="SELECT * FROM corriereespresso ORDER BY ?";

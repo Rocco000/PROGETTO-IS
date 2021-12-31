@@ -51,17 +51,12 @@ public class AbbonamentoDAO{
 
 
 	public ArrayList<AbbonamentoBean> allElements(String ordinamento) throws SQLException {
-		
+		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione= ds.getConnection();
 		String query="SELECT * FROM abbonamento ORDER BY ?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
-		
-		if(ordinamento!=null && !ordinamento.equals(""))
-			ps.setString(1, ordinamento);
-		else
-			ps.setString(1, "prodotto asc");
-		
+		ps.setString(1, ordinamento);
 		ArrayList<AbbonamentoBean> a= new ArrayList<AbbonamentoBean>();
 		ResultSet risultato= ps.executeQuery();
 		

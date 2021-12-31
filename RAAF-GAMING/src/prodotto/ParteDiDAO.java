@@ -41,15 +41,11 @@ public class ParteDiDAO{
 
 
 	public ArrayList<ParteDiBean> allElements(String ordinamento) throws SQLException {
+		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM parte_di ORDER BY ?;";
-		PreparedStatement ps = con.prepareStatement(str);
-		if(ordinamento!=null && !ordinamento.equals("")) {
+		PreparedStatement ps = con.prepareStatement(str);	
 			ps.setString(1, ordinamento);
-		}
-		else {
-			ps.setString(1, "categoria asc");
-		}
 		ResultSet st = ps.executeQuery();
 		ArrayList<ParteDiBean> array = new ArrayList<ParteDiBean>();
 		while(st.next())

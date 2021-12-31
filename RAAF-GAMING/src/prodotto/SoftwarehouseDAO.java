@@ -22,15 +22,14 @@ public class SoftwarehouseDAO{
 
 	
 	public ArrayList<SoftwarehouseBean> allElements(String ordinamento) throws SQLException {
+		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione=ds.getConnection();
 		String query="SELECT * FROM softwarehouse ORDER BY ?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
-		if(ordinamento!=null && !ordinamento.equals(""))
+		
 			ps.setString(1, ordinamento);
-		else
-			ps.setString(1,"softwarehouse.nomesfh asc");
 		ArrayList<SoftwarehouseBean> a=new ArrayList<SoftwarehouseBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {

@@ -42,15 +42,13 @@ public class MagazzinoDAO{
 	}
 
 	public ArrayList<MagazzinoBean> allElements(String ordinamento) throws SQLException {
+		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM magazzino ORDER BY ?;";
 		PreparedStatement ps = con.prepareStatement(str);
-		if(ordinamento!=null && ordinamento!="") {
+		
 			ps.setString(1, ordinamento);
-		}
-		else {
-			ps.setString(1, "indirizzo asc");
-		}
+
 		ResultSet st = ps.executeQuery();
 		ArrayList<MagazzinoBean> array = new ArrayList<MagazzinoBean>();
 		while(st.next())

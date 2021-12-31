@@ -17,14 +17,11 @@ public class RiguardaDAO{
 	}
 	
 	public ArrayList<RiguardaBean> allElements(String ordinamento) throws SQLException {
+		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione= ds.getConnection();
 		String query="SELECT * FROM Riguarda WHERE riguarda.prodotto=prodotto.codice_prodotto AND riguarda.ordine=ordine.codice ORDER BY ;?";
 		PreparedStatement ps=connessione.prepareStatement(query);
-		
-		if(ordinamento!=null && !ordinamento.equals(""))
 			ps.setString(1,ordinamento);
-		else	
-			ps.setString(1, "riguarda.prodotto asc");
 		ArrayList<RiguardaBean>a=new ArrayList<RiguardaBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {

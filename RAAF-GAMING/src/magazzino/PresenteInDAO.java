@@ -64,17 +64,12 @@ public class PresenteInDAO{
 
 
 	    public ArrayList<PresenteInBean> allElements(String ordinamento) throws SQLException {
+	    if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM presente_in ORDER BY ?;";
 		PreparedStatement ps = con.prepareStatement(str);
-		if(ordinamento!=null && ordinamento!="") {
-			ps.setString(1, ordinamento);
-		}
-		else {
-			ps.setString(1, "prodotto asc");
-		}
+		ps.setString(1, ordinamento);
 		ResultSet st = ps.executeQuery();
-		
 		ArrayList<PresenteInBean> array = new ArrayList<PresenteInBean>();
 		while(st.next())
 		{

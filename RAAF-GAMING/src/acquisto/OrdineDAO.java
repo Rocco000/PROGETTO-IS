@@ -53,15 +53,11 @@ public class OrdineDAO {
 	}
 
 	public ArrayList<OrdineBean> allElements(String ordinamento) throws SQLException {
+		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM ordine ORDER BY ?;";
 		PreparedStatement ps = con.prepareStatement(str);
-		if(ordinamento!=null && ordinamento!="") {
 			ps.setString(1, ordinamento);
-		}
-		else {
-			ps.setString(1, "codice asc");
-		}
 		ResultSet st = ps.executeQuery();
 		ArrayList<OrdineBean> array = new ArrayList<OrdineBean>();
 		while(st.next())

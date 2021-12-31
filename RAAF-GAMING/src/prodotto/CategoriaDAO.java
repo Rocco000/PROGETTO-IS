@@ -19,15 +19,11 @@ public class CategoriaDAO {
 
 
 	public ArrayList<CategoriaBean> allElements(String ordinamento) throws SQLException {
+		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione= ds.getConnection();
 		String query="SELECT * FROM categoria ORDER BY ?;";
 		PreparedStatement ps= connessione.prepareStatement(query);
-		
-		if(ordinamento!=null && !ordinamento.equals(""))
-			ps.setString(1, ordinamento);
-		else
-			ps.setString(1, "nome asc");
-		
+		ps.setString(1, ordinamento);
 		ArrayList<CategoriaBean> a= new ArrayList<CategoriaBean>();
 		ResultSet risultato= ps.executeQuery();
 		while(risultato.next()) {
