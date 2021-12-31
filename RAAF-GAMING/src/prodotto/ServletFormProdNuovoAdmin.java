@@ -27,7 +27,7 @@ import magazzino.PresenteInDAO;
  * Servlet implementation class ServletFormProdNuovoAdmin
  */
 @WebServlet("/servletformprodnuovoadmin")
-@MultipartConfig(fileSizeThreshold=1024*1024*2,maxFileSize=1024*1024*5,maxRequestSize=1024*1024*5)
+@MultipartConfig(fileSizeThreshold=1024*1024*10,maxFileSize=1024*1024*10,maxRequestSize=1024*1024*10)
 
 public class ServletFormProdNuovoAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -54,6 +54,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 					//l'admin e' loggato e può eseguire il form
 					String nomeProd =request.getParameter("nomeP");//prendo il nome del prodotto
 					double prezzoProd= Double.valueOf(request.getParameter("prezzoP"));
+					System.out.println("prezzo= "+prezzoProd);
 					int scontoProd=Integer.parseInt(request.getParameter("scontoP"));
 					String data = request.getParameter("dataP");
 					Date dataProd= Date.valueOf(data);
@@ -82,12 +83,12 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 							MagazzinoDAO mmd=new MagazzinoDAO(ds);
 							ArrayList<MagazzinoBean> mb=null;
 							try {
-								mb=mmd.allElements("");
-								} 
-								catch (SQLException e)
-								{
+								mb=mmd.allElements("indirizzo asc");
+							} 
+							catch (SQLException e)
+							{
 								e.printStackTrace();
-								}
+							}
 							PresenteInDAO pid=new PresenteInDAO(ds);
 							for(int i=0;i<mb.size();i++)
 								{
@@ -96,17 +97,16 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 									{
 										pb=pid.ricercaPerMagazzino(mb.get(i).getIndirizzo());
 									}
-										catch (SQLException e)
-										{
+									catch (SQLException e)
+									{
 										e.printStackTrace();
-										}
-										int cont=0;
-										for(PresenteInBean pib:pb)
-										{
-											cont+=pib.getQuantita_disponibile();
-										}
-									if((cont+quantitaProd)<=mb.get(i).getCapienza()) 
-										{//disponibilita in magazzino
+									}
+									int cont=0;
+									for(PresenteInBean pib:pb)
+									{
+										cont+=pib.getQuantita_disponibile();//calcolo la quantità occupata
+									}
+									if((cont+quantitaProd)<=mb.get(i).getCapienza()) {//disponibilita in magazzino
 										
 										ProdottoBean prodBean = new ProdottoBean();
 										ProdottoBean max =  ProdDAO.getMax();
@@ -131,7 +131,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 										prodBean.setPrezzo(prezzoProd);
 										prodBean.setQuantita_fornitura(quantitaProd);
 										prodBean.setSconto(scontoProd);
-										Date dateatt = new Date(Calendar.getInstance().getTime().getTime());
+										Date dateatt = new Date(Calendar.getInstance().getTime().getTime());//calcolo la data attuale
 										prodBean.setUltima_fornitura(dateatt);
 										
 										PresenteInBean pbean = new PresenteInBean();
@@ -141,7 +141,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 										
 										String scelta = request.getParameter("sceltaP");
 										
-										if(scelta.equals("videogioco")==true)
+										if(scelta.equals("videogioco fisico")==true)
 										{
 											String nomecategoria = request.getParameter("categoria");//prendo la categoria del videogioco 
 											//setto il bean per la tabella PARTE_DI del DB
@@ -152,10 +152,8 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											
 											double dimensione  =Double.parseDouble(request.getParameter("dimensioni"));
 											int pegi = Integer.parseInt(request.getParameter("pegi"));
-											String chiave = request.getParameter("chiave");
-											int ncd=0;
-											if(chiave==null)
-												ncd = Integer.parseInt(request.getParameter("ncd"));
+											//String chiave = request.getParameter("chiave");
+											int ncd = Integer.parseInt(request.getParameter("ncd"));
 											
 											String nomesfh = request.getParameter("nomesfh");
 											boolean edlim = Boolean.parseBoolean(request.getParameter("limitata"));
@@ -168,26 +166,14 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											videogicocoBean.setProdotto(prodBean.getCodice_prodotto());
 											
 											
-											
-											boolean flag=false;
-											
-											if(ncd>0)
-											{
-												flag=true;
-											}
-											if(flag==true)
-											{
-												//inserisci un gioco fisico
-												videogicocoBean.setNcd(ncd);
-												videogicocoBean.setVkey(null);
-											}
-											else
-											{
+											//inserisci un gioco fisico
+											videogicocoBean.setNcd(ncd);
+											videogicocoBean.setVkey(null);
 												//inserisci gioco digitale
-												videogicocoBean.setVkey(chiave);
-												videogicocoBean.setNcd(0);
-											}
+												/*videogicocoBean.setVkey(chiave);
+												videogicocoBean.setNcd(0);*/
 											
+											prodBean.setGestore((String)sessione.getAttribute("emailAdmin"));//settiamo il gestore che ha fornito questo nuovo gestore
 											ProdDAO.newInsert(prodBean);
 											pid.newInsert(pbean);
 											VideogiocoDAO vDAO = new VideogiocoDAO(ds);
@@ -201,6 +187,46 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											return;
 											
 										}
+										else if(scelta.equals("videogioco digitale")==true) {
+											
+											String nomecategoria = request.getParameter("categoria");//prendo la categoria del videogioco 
+											//setto il bean per la tabella PARTE_DI del DB
+											ParteDiBean parteBean= new ParteDiBean();
+											parteBean.setCategoria(nomecategoria);
+											parteBean.setVideogioco(prodBean.getCodice_prodotto());
+											ParteDiDAO pdao= new ParteDiDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+											
+											double dimensione  =Double.parseDouble(request.getParameter("dimensioni"));
+											int pegi = Integer.parseInt(request.getParameter("pegi"));
+											String chiave = request.getParameter("chiave");
+											
+											String nomesfh = request.getParameter("nomesfh");
+											boolean edlim = Boolean.parseBoolean(request.getParameter("limitata"));
+											
+											VideogiocoBean videogicocoBean = new VideogiocoBean();
+											videogicocoBean.setDimensione(dimensione);
+											videogicocoBean.setEdizione_limitata(edlim);
+											videogicocoBean.setPegi(pegi);
+											videogicocoBean.setSoftware_house(nomesfh);
+											videogicocoBean.setProdotto(prodBean.getCodice_prodotto());
+											
+											//inserisci gioco digitale
+											videogicocoBean.setVkey(chiave);
+											videogicocoBean.setNcd(0);
+											
+											prodBean.setGestore((String)sessione.getAttribute("emailAdmin"));//settiamo il gestore che ha fornito questo nuovo gestore
+											ProdDAO.newInsert(prodBean);
+											pid.newInsert(pbean);
+											VideogiocoDAO vDAO = new VideogiocoDAO(ds);
+											vDAO.newInsert(videogicocoBean);
+											pdao.newInsert(parteBean);
+											
+											String messageok = "Prodotto inserito con successo!";
+											request.setAttribute("messageok", messageok);
+											RequestDispatcher dispatcher = request.getRequestDispatcher(response.encodeURL("/servletgestioneadmin"));
+											dispatcher.forward(request, response);
+											return;
+										}
 										else if(scelta.equals("console")==true)
 										{
 											String specifica = request.getParameter("specifiche");
@@ -212,6 +238,8 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											console.setSpecifica(specifica);
 											
 											ConsoleDAO cDAO = new ConsoleDAO(ds);
+											
+											prodBean.setGestore((String)sessione.getAttribute("emailAdmin"));//settiamo il gestore che ha fornito questo nuovo gestore
 											ProdDAO.newInsert(prodBean);
 											pid.newInsert(pbean);
 											cDAO.newInsert(console);
@@ -233,6 +261,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											dlcbean.setDescrizione(descrizione);
 											dlcbean.setDimensione(dimensioneDlc);
 										
+											prodBean.setGestore((String)sessione.getAttribute("emailAdmin"));//settiamo il gestore che ha fornito questo nuovo gestore
 											ProdDAO.newInsert(prodBean);
 											pid.newInsert(pbean);
 											dDAO.newInsert(dlcbean);
@@ -255,6 +284,7 @@ public class ServletFormProdNuovoAdmin extends HttpServlet {
 											abb.setDurata_abbonamento(durata);
 											abb.setProdotto(prodBean.getCodice_prodotto());
 											
+											prodBean.setGestore((String)sessione.getAttribute("emailAdmin"));//settiamo il gestore che ha fornito questo nuovo gestore
 											ProdDAO.newInsert(prodBean);
 											pid.newInsert(pbean);
 											abbDAO.newInsert(abb);

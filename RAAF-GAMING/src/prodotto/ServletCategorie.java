@@ -222,7 +222,7 @@ public class ServletCategorie extends HttpServlet {
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 				ConsoleDAO dao = new ConsoleDAO(ds);
 				try {
-					ArrayList<ConsoleBean> bean = dao.allElements("");
+					ArrayList<ConsoleBean> bean = dao.allElements("prodotto asc");
 					for(ConsoleBean b : bean)
 					{
 						prod.add(dap.ricercaPerChiave(b.getProdotto()+""));
@@ -264,7 +264,7 @@ public class ServletCategorie extends HttpServlet {
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 				AbbonamentoDAO dao = new AbbonamentoDAO(ds);
 				try {
-					ArrayList<AbbonamentoBean> bean = dao.allElements("");
+					ArrayList<AbbonamentoBean> bean = dao.allElements("prodotto asc");
 					for(AbbonamentoBean b : bean)
 					{
 						prod.add(dap.ricercaPerChiave(b.getProdotto()+""));
@@ -285,7 +285,7 @@ public class ServletCategorie extends HttpServlet {
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 				DlcDAO dao = new DlcDAO(ds);
 				try {
-					ArrayList<DlcBean> bean = dao.allElements("");
+					ArrayList<DlcBean> bean = dao.allElements("prodotto asc");
 					for(DlcBean b : bean)
 					{
 						prod.add(dap.ricercaPerChiave(b.getProdotto()+""));

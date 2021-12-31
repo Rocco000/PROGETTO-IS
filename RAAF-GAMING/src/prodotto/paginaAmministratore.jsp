@@ -52,7 +52,7 @@
 			<img src="immagini/logo.png" alt="RAAF-GAMING" style="width:180px; position: static;">
 			<a class="btn btn-dark mr-3 mt-5 " style="float:right" href="<%=response.encodeURL("servletlogoutadmin")%>" role="button">LogOut</a>
 		</div>
-		<h4 class="testo" style="font-family: Acunim Variable Consent;text-align:center">Inserisci prodotto o crea spedizione:</h4>
+		<h4 class="testo" style="font-family: Acunim Variable Consent;text-align:center">Inserisci prodotto:</h4>
 		<%
 			String message= (String)request.getAttribute("message");
 			String messageOk= (String)request.getAttribute("messageok");
@@ -123,64 +123,70 @@
 		</div>
 		<div id=nuovo style="display:none">
 		<form action="<%=response.encodeURL("servletformprodnuovoadmin")%>" method="POST" name="nuovoProdotto" enctype="multipart/form-data" onsubmit="return controlloProdNuovo();">
-			<div class="form-row">		
-	  <div class="form-group mr-3">
-	    <label for="nomeP">Nome:</label>
-	    <input type="text" class="form-control" id="nomeProdotto" name="nomeP" style="border-radius:10px"  >
-	  </div>
-	  <div class="form-group">
-	    <label for="prezzoP">Prezzo:</label>
-	    <input type="number" class="form-control" id="prezzoProdotto"name="prezzoP" step="0.01" style="border-radius:10px"  >
-	  </div>
-	  <div class="form-group ml-3">
-	    <label for="scontoP">Sconto:</label>
-	    <input type="number" class="form-control" id="scontoProdotto"name="scontoP" min="0" max="99" style="border-radius:10px" >
-	  </div>
-	  </div>
-	   <div class="form-row">		
-	  <div class="form-group mr-3">
-	    <label for="dataP">Data uscita:</label>
-	    <input type="date" class="form-control" id="uscitaProdotto" name="dataP" style="border-radius:10px"  >
-	  </div>
-	  <div class="form-group">
-	    <label for="fornitoreP">Fornitore:</label><br>
-	    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="fornitoreP"  >
-	    <%
-	    	for(FornitoreBean app: fornitori){
-	    %>
-	    		<option value="<%=app.getNome()%>"><%=app.getNome()%></option>
-	    <%
-	    	}
-	    %>
-	    </select>
-	  </div>
- 		<div class="form-group ml-3">
-	    <label for="quantitaP">Quantita da rifornire:</label>
-	    <input type="number" class="form-control" id="quantitaProdottoNew" name="quantitaP" min="1" style="border-radius:10px"  >
-	  </div>
-	  </div>
-	  <div class="form-row">		
-		<div class="form-group">
-    	<label for="exampleFormControlFile1">Copertina:</label>
-    	<input type="file" class="form-control-file" id="copertinaP" name="copertina" accept="image/*">
-    	</div>
-  	</div>
 			<div class="form-group mt-3">
-			<label>VIDEOGIOCO
-			<input type="radio" value="videogioco" id="videogiocoRadio"name="sceltaP" onchange="prodottoForm();"></label>&nbsp;&nbsp;&nbsp;
-			<label>CONSOLE
-			<input type="radio" value="console" id="consoleRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
-			<label>DLC
-			<input type="radio" value="dlc" id="dlcRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
-			<label>ABBONAMENTO
-			<input type="radio" value="abbonamento" id="abbonamentoRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
+				<label>VIDEOGIOCO FISICO
+				<input type="radio" value="videogioco fisico" id="videogiocoRadio"name="sceltaP" onchange="prodottoForm();"></label>&nbsp;&nbsp;&nbsp;
+				<label>VIDEOGIOCO DIGITALE
+				<input type="radio" value="videogioco digitale" id="videogiocoRadio2"name="sceltaP" onchange="prodottoForm();"></label>&nbsp;&nbsp;&nbsp;
+				<label>CONSOLE
+				<input type="radio" value="console" id="consoleRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
+				<label>DLC
+				<input type="radio" value="dlc" id="dlcRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
+				<label>ABBONAMENTO
+				<input type="radio" value="abbonamento" id="abbonamentoRadio"name="sceltaP" onchange="prodottoForm()"></label>&nbsp;&nbsp;&nbsp;
 			</div>
+			
+			<div class="form-row">
+						
+			 	<div class="form-group mr-3">
+				    <label for="nomeP">Nome:</label>
+				    <input type="text" class="form-control" id="nomeProdotto" name="nomeP" style="border-radius:10px"  >
+			  	</div>
+			  	<div class="form-group">
+			    	<label for="prezzoP">Prezzo:</label>
+			    	<input type="number" class="form-control" id="prezzoProdotto"name="prezzoP" step="0.01" style="border-radius:10px"  >
+			  	</div>
+			  	<div class="form-group ml-3">
+			    	<label for="scontoP">Sconto:</label>
+			    	<input type="number" class="form-control" id="scontoProdotto"name="scontoP" min="0" max="99" style="border-radius:10px" >
+			  	</div>
+	  		</div>
+	   		<div class="form-row">
+	   					
+			  	<div class="form-group mr-3">
+			    	<label for="dataP">Data uscita:</label>
+			    	<input type="date" class="form-control" id="uscitaProdotto" name="dataP" style="border-radius:10px"  >
+			  	</div>
+	  			<div class="form-group">
+	    			<label for="fornitoreP">Fornitore:</label><br>
+	    			<select class="form-select" style="border-radius:8px;height:35px;width:110px" name="fornitoreP"  >
+	    			<%
+	    				for(FornitoreBean app: fornitori){
+	    			%>
+	    					<option value="<%=app.getNome()%>"><%=app.getNome()%></option>
+	    			<%
+	    				}
+	    			%>
+	    			</select>
+	  			</div>
+ 				<div class="form-group ml-3">
+	    			<label for="quantitaP">Quantita da rifornire:</label>
+	    			<input type="number" class="form-control" id="quantitaProdottoNew" name="quantitaP" min="1" style="border-radius:10px"  >
+	  			</div>
+	  		</div>
+	  		<div class="form-row">		
+				<div class="form-group">
+    				<label for="exampleFormControlFile1">Copertina:</label>
+    				<input type="file" class="form-control-file" id="copertinaP" name="copertina" accept="image/*">
+    			</div>
+  			</div>
+			
 			<div>
 			<div id="videogiocoForm" class="form-group" style="display:none">
 			<label>Dimensione:<input type="number" name="dimensioni" id="dim" min="1" style="border-radius:7px"  ></label>
 			<label>Pegi:<input type="number" name="pegi" id="pegi" min="3" max="18" style="border-radius:7px"  ></label>
-			<label>Numero di cd:<input type="number" name="ncd" id="ncd" min="1" style="border-radius:7px"></label>
-			<label>Chiave:<input type="text" name="chiave" id="chiave" style="border-radius:7px"></label>
+			<label for="ncd" id="labelncd">Numero di cd:</label><input type="number" name="ncd" id="ncd" min="1" style="border-radius:7px">
+			<label for="chiave" id="labelchiave">Chiave:</label><input type="text" name="chiave" id="chiave" style="border-radius:7px">
 			<label>Software House:<br>
 				<select class="form-select" style="border-radius:8px;height:35px;width:110px" name="nomesfh"  >
 				<%
@@ -230,20 +236,37 @@
 		function prodottoForm(){
 		if(document.getElementById("videogiocoRadio").checked){
 			document.getElementById("videogiocoForm").style.display="block";
+			document.getElementById("chiave").style.display="none";
+			document.getElementById("labelchiave").style.display="none";
+			document.getElementById("ncd").style.display="inline";
+			document.getElementById("labelncd").style.display="inline";
 			document.getElementById("consoleForm").style.display="none";
 			document.getElementById("dlcForm").style.display="none";
 			document.getElementById("abbonamentoForm").style.display="none";
-		}else if(document.getElementById("consoleRadio").checked){
+		}
+		else if(document.getElementById("videogiocoRadio2").checked){
+			document.getElementById("videogiocoForm").style.display="block";
+			document.getElementById("chiave").style.display="inline";
+			document.getElementById("labelchiave").style.display="inline";
+			document.getElementById("ncd").style.display="none";
+			document.getElementById("labelncd").style.display="none";
+			document.getElementById("consoleForm").style.display="none";
+			document.getElementById("dlcForm").style.display="none";
+			document.getElementById("abbonamentoForm").style.display="none";			
+		}
+		else if(document.getElementById("consoleRadio").checked){
 			document.getElementById("consoleForm").style.display="block";
 			document.getElementById("videogiocoForm").style.display="none";
 			document.getElementById("dlcForm").style.display="none";
 			document.getElementById("abbonamentoForm").style.display="none";
-		}else if(document.getElementById("dlcRadio").checked){
+		}
+		else if(document.getElementById("dlcRadio").checked){
 			document.getElementById("dlcForm").style.display="block";
 			document.getElementById("videogiocoForm").style.display="none";
 			document.getElementById("consoleForm").style.display="none";
 			document.getElementById("abbonamentoForm").style.display="none";
-		}else if(document.getElementById("abbonamentoRadio").checked){
+		}
+		else if(document.getElementById("abbonamentoRadio").checked){
 			document.getElementById("abbonamentoForm").style.display="block";
 			document.getElementById("videogiocoForm").style.display="none";
 			document.getElementById("dlcForm").style.display="none";

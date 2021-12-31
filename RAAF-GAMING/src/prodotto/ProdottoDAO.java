@@ -172,7 +172,7 @@ public class ProdottoDAO{
 			throw new NullPointerException("l'item e' null");
 		else {
 			Connection con = ds.getConnection();
-			String str = "INSERT INTO prodotto VALUES(?,?,?,?,?,?,?,?,?);";
+			String str = "INSERT INTO prodotto VALUES(?,?,?,?,?,?,?,?,?,?);";
 			PreparedStatement ps = con.prepareStatement(str);
 			
 			ps.setInt(1,item.getCodice_prodotto());
@@ -184,6 +184,7 @@ public class ProdottoDAO{
 			ps.setInt(7,item.getQuantita_fornitura());
 			ps.setDate(8, item.getUltima_fornitura());
 			ps.setString(9,item.getFornitore());
+			ps.setString(10, item.getGestore());
 			
 			ps.executeUpdate();
 			ps.close();
