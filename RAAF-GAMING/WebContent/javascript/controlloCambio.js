@@ -1,9 +1,8 @@
 function controlloCambioCredenziali(pass1,pass2,codiceCarta,cvv,data){
-	alert("nella funzione di controllo");
-	alert(pass1.value+" "+pass2.value);
+	
+	
 	if(pass1.value.length>0 && pass2.value.length>0){ //se ha scritto qualcosa nel campo nuova password
 	
-		alert("password inserite");
 		if(pass1.value.length>=8){//se la password è valida
 			pass1.style.border="2px solid green";
 			if(pass1.value==pass2.value){ //lunghezza conferma password corretta e coincide con quella di prima
@@ -35,13 +34,9 @@ function controlloCambioCredenziali(pass1,pass2,codiceCarta,cvv,data){
 	
 	const d2= new Date(data.value);
 	const dataAttuale= new Date();
-	alert("data attuale "+dataAttuale.getFullYear());
-	alert("data carta "+data.value);
-	alert("get year di data  "+d2.getFullYear());
-	alert("lunghezza data= "+data.value.length);
 	
 	if(codiceCarta.value.length>0 && cvv.value.length>0 && (d2.getFullYear()!=NaN && data.value.length==10)){ //se ha scritto qualcosa per modificare la carta
-		alert("inserito tutto");
+		
 		if(codiceCarta.value.length==16){//se il codice dell carta è corretto
 			codiceCarta.style.border="2px solid green";
 		}
@@ -90,11 +85,9 @@ function controlloCambioCredenziali(pass1,pass2,codiceCarta,cvv,data){
 			}
 		}
 		else if(d2.getFullYear()>dataAttuale.getFullYear()){//se l'anno di scadenza e' maggiore rispetto a quello attuale OK
-			alert("anno maggiore");
 			data.style.border="2px solid green";
 		}
 		else{//se l'anno di scadenza è minore rispetto all'anno attuale NO
-			alert("anno minore");
 			alert("La carta di credito e' scaduta");
 			data.style.border="2px solid red";
 			return false;

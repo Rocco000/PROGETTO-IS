@@ -15,9 +15,11 @@ import javax.sql.DataSource;
 
 import acquisto.OrdineBean;
 import acquisto.OrdineDAO;
+import magazzino.PresenteInBean;
+import magazzino.PresenteInDAO;
 
 /**
- * Servlet implementation class ServletGestioneAdmin
+ * Servlet per ANDARE SULLA PAGINA DI FORNITURA PRODOTTI DELL'ADMIN
  */
 @WebServlet("/servletgestioneadmin")
 public class ServletGestioneProdottiAdmin extends HttpServlet {
@@ -49,6 +51,23 @@ public class ServletGestioneProdottiAdmin extends HttpServlet {
 						ProdottoDAO pdao= new ProdottoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 						ArrayList<ProdottoBean> prodottiEsistenti= pdao.allElements("codice_prodotto asc");
 						request.setAttribute("prodottiEsistenti", prodottiEsistenti);
+						
+						//ottengo le quantità disponibili di ogni prodotto
+						PresenteInDAO presentedao= new PresenteInDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
+					
+						ArrayList<String> disponibilita = new ArrayList<String>();//per memorizzare la quantità disponibile del corrispettivo prodotto
+						
+						for(ProdottoBean prodotto : prodottiEsistenti) {
+							ArrayList<PresenteInBean> magazzini= presentedao.ricercaPerProdotto(""+prodotto.getCodice_prodotto());//ottengo tutti i magazzini che hanno quel prodotto
+							int quantitaAttuale=0;
+							
+							//calcolo la quantità totale disponibili di questo prodotto
+							for(PresenteInBean p : magazzini) {
+								quantitaAttuale+=p.getQuantita_disponibile();
+							}
+							disponibilita.add(""+quantitaAttuale);
+						}
+						request.setAttribute("disponibilita", disponibilita);
 						
 						//ottengo tutti i fornitori
 						FornitoreDAO fdao= new FornitoreDAO((DataSource)super.getServletContext().getAttribute("DataSource"));

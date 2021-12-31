@@ -43,6 +43,7 @@
 	
 	//ottengo dalla servletGestioneAdmin gli ordini non consegnati e i prodotti esistenti
 	ArrayList<ProdottoBean> prodottiEsistenti= (ArrayList<ProdottoBean>)request.getAttribute("prodottiEsistenti");
+	ArrayList<String> disponibilita= (ArrayList<String>) request.getAttribute("disponibilita");
 	ArrayList<FornitoreBean> fornitori= (ArrayList<FornitoreBean>)request.getAttribute("fornitori");  
 	ArrayList<SoftwarehouseBean> sfh= (ArrayList<SoftwarehouseBean>)request.getAttribute("softwarehouse");
 	ArrayList<CategoriaBean> categorie= (ArrayList<CategoriaBean>) request.getAttribute("categorie");
@@ -70,68 +71,55 @@
 			}
 		%>
 		<div class="form-row d-flex justify-content-center">
-		<label>Nuovo prodotto
-			<input type="radio" id="nuovoProdotto"name="sceltaP" onchange="formEsistente()"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<label>Prodotto esistente
-			<input type="radio" id="esistenteProdotto"name="sceltaP" onchange="formEsistente()"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<label>Crea spedizione
-			<input type="radio" id="spedizioneProdotto"name="sceltaP" onchange="spedizioneProdotto()"></label>
-			</div>
-		<div class="container d-flex justify-content-center" style="background-color: rgba(254,254,233,0.5);border-radius:20px;">
-		<div id="ordine" style="display:none">
-		<form action="<%=response.encodeURL("servletformordiniadmin")%>" method="POST" name="ordini" onSubmit="return controlloOrdini(this);">
-		<div class="form-row">
-			<div class="form-group mr-3 mt-3">
-			    <label for="numeroOrdine">Codice ordine:</label><br>
-			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="numeroOrdine" >
-				</select>
-	    	</div>
-	    	<div class="form-group mr-3 mt-3">
-			    <label for="corriere" >Corriere espresso:</label><br>
-			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="corriere"  >
-			  		<option value="Bartolini">Bartolini</option>
-			  		<option value="DHL">DHL</option>
-			  		<option value="SDA">SDA</option>
-			  		<option value="TNT">TNT</option>
-			  		<option value="UPS">UPS</option>
-				</select>
-	    	</div>
-	    	<div class="form-group mr-3 mt-3">
-			    <label for="consegnaO">Data consegna:</label>
-			    <input type="date" class="form-control" id="consegnaOrdine" name="consegnaO" style="border-radius:10px" >
-	    	</div>
-	     <div class="form-row">
-	     	<button class="btn btn-dark ml-3 mt-5" style="border-radius:5px;height:32px">Conferma</button>
-	     </div>
-	    </div>
-		</form>
-		</div>
+			<label>Nuovo prodotto
+				<input type="radio" id="nuovoProdotto"name="sceltaP" onchange="formEsistente()">
+			</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<label>Prodotto esistente
+				<input type="radio" id="esistenteProdotto"name="sceltaP" onchange="formEsistente()">
+			</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</div>
 		<div class="container d-flex justify-content-center" style="background-color: rgba(254,254,233,0.5);border-radius:20px;">
 		<div id="esistente" style="display:none">
-		<form action="<%=response.encodeURL("servletformprodesistentiadmin")%>" method="POST" name="prodEsistenti" onSubmit="return controlloProdEsistente(this);">
-		<div class="form-row">
-			<div class="form-group mr-3 mt-3">
-			    <label for="codicePesistente">Codice:</label><br>
-			    <select class="form-select" style="border-radius:8px;height:35px;width:110px" name="codicePesistente" >
-			    <%
-			    	for(ProdottoBean app: prodottiEsistenti){
-			    %>
-			    		<option value="<%=app.getCodice_prodotto()%>"><%=app.getCodice_prodotto()%></option>
-			    <%
-			    	}
-			    %>
-			    </select>
-	    	</div>
-	    <div class="form-group mr-3 mt-3">
-		    <label for="quantitaPesistente">Quantità:</label>
-		    <input type="number" class="form-control" id="quantitaProdottoEx" name="quantitaPesistente" min="1" style="border-radius:10px"  >
-	    </div>
-	     <div class="form-row">
-	     	<button class="btn btn-dark ml-3 mt-5" style="border-radius:5px;height:32px">Inserisci</button>
-	     </div>
-	    </div>
-		</form>
+			
+				
+					
+				</form>
+			
+			<table class="table">
+            	<thead class="thead-dark">
+                	<tr>
+                    	<th scope="col">Nome</th>
+                      	<th scope="col">Prezzo</th>
+                      	<th scope="col">Quantita' attuale</th>
+                      	<th scope="col">Quantita' da rifornire</th>
+                      	<th scope="col"></th>
+                    </tr>
+           		</thead>
+              	<tbody>
+                	<%
+                          //STAMPO TUTTE LE INFO DEI PRODOTTI ESISTENTI
+                          int i=0;
+                 
+                          for(ProdottoBean prodotto : prodottiEsistenti){
+                  	%>
+                            <tr id="idrow<%=i%>">
+                            	<form action="<%=response.encodeURL("servletformprodesistentiadmin")%>" method="POST">
+                              		<input type="hidden" name="prod" id="prod" value="<%=prodotto.getCodice_prodotto() %>">
+                              		<td><%=prodotto.getNome() %></td>
+                              		<td><%=prodotto.getPrezzo() %></td>
+                              		<td><%=disponibilita.get(i) %></td>
+                              		<td><input type="number" name="quantita" min="1"></td>
+                              		<td><button class="btn btn-dark ml-3" style="border-radius:5px;">Rifornisci</button></td>
+                                 </form>
+                            </tr>
+                           
+                    <%
+                          }
+                    %>
+                   
+                  </tbody>
+                </table>
+                
 		</div>
 		<div id=nuovo style="display:none">
 		<form action="<%=response.encodeURL("servletformprodnuovoadmin")%>" method="POST" name="nuovoProdotto" enctype="multipart/form-data" onsubmit="return controlloProdNuovo();">
@@ -278,15 +266,6 @@
 				
 		}
 		</script>
-		<script>
-		function spedizioneProdotto(){
-			if(document.getElementById("spedizioneProdotto").checked){
-			document.getElementById("ordine").style.display="block";
-			document.getElementById("nuovo").style.display="none";
-			document.getElementById("esistente").style.display="none";
-			}
-		}
-		
-		</script>
+
 </body>
 </html>

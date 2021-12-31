@@ -87,6 +87,8 @@ public class ServletConfermaAcquisto extends HttpServlet {
 						DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
 						
 						ArrayList<PresenteInBean> magazziniDisponibili= new ArrayList<PresenteInBean>(); //per salvarmi i magazzini che hanno disponibilità di quel prodotto da acquistare
+						boolean nonDisponibili=false;//serve per mandare il messaggio d'errore se i prodotti non sono più disponibili
+						ArrayList<String> carrelloCopia= (ArrayList<String>) carrello.clone(); //copio il carrello per fare le modifiche
 						
 						for(String idProdotto : carrello) {//controllo se i prodotti nel carrello sono ancora disponibili in magazzino
 							
@@ -99,10 +101,10 @@ public class ServletConfermaAcquisto extends HttpServlet {
 								e.printStackTrace();
 							}
 							
-							int flag=0;
+							int flag=0;//serve per eliminare il prodotto nel carrello se non è più disponibile
 							
 							for(PresenteInBean b : presenteInMagazzino)
-							{
+							{					
 								if(b.getQuantita_disponibile()>0) //appena trovo un magazzino che ha il prodotto da acquistare disponibile allora ok 
 								{
 									magazziniDisponibili.add(b);//mi salvo il magazzino che ha disponibilità
@@ -112,20 +114,23 @@ public class ServletConfermaAcquisto extends HttpServlet {
 							}
 							
 							if(flag==0) { //il prodotto non è più disponibile e deve essere tolto dal carrello
-								System.out.println("Prodotto non piu' disponibile");
 								
-								carrello.remove(idProdotto);	//elimino il prodotto dal carrello
-								if(carrello.size()==0)			
+								carrelloCopia.remove(idProdotto);	//elimino il prodotto dal carrello;
+								if(carrelloCopia.size()==0)			
 									session.setAttribute("carrello", null);
-								
-								request.setAttribute("eliminatoProdotto", "");
-								String url="/servletcarrello"; //rimostro la pagina del carrello senza quel prodotto con un messaggio
-								url=response.encodeURL(url);
-								RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher(url);
-								dispatcher.forward(request, response);
-								return;
-								
+								else
+									session.setAttribute("carrello", carrelloCopia);
+								nonDisponibili=true;
 							}
+						}
+
+						if(nonDisponibili) {	//MANDO MESSAGGIO CHE NON SONO DISPONIBILI DEI PRODOTTI
+							request.setAttribute("eliminatoProdotto", "");
+							String url="/servletcarrello"; //rimostro la pagina del carrello senza quel prodotto con un messaggio
+							url=response.encodeURL(url);
+							RequestDispatcher dispatcher= super.getServletContext().getRequestDispatcher(url);
+							dispatcher.forward(request, response);
+							return;
 						}
 						
 						OrdineDAO odao=new OrdineDAO(ds);
