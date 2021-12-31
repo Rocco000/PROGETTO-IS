@@ -17,8 +17,6 @@ import acquisto.CorriereEspressoBean;
 import acquisto.CorriereEspressoDAO;
 import acquisto.OrdineBean;
 import acquisto.OrdineDAO;
-import acquisto.SpeditoBean;
-import acquisto.SpeditoDAO;
 
 /**
  * Servlet per VEDERE GLI ORDINI NON SPEDITI

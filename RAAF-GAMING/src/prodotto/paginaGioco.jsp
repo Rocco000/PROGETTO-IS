@@ -189,6 +189,9 @@ if(str==null)
 	
 		<!-- row -->
 		<script>
+		
+		var flag = 0;
+		
 		function aggiungiCarrello()
 		{
 		
@@ -262,7 +265,24 @@ if(str==null)
 					alert(obj.recensione);
 					<%String nomeCliente = (String) request.getAttribute("nomeCliente");%>
 					var y = "<%=nomeCliente%>";
-					$("#stampe").append(y+' voto:'+x.voto+' :'+x.commento+' <br>');
+					
+					
+					var str = obj.recensione;
+
+					if(flag==0)
+					{
+						if(str.localeCompare("Hai gia effettuato una recensione per questo prodotto")==0)
+						{
+							flag=1;
+						}
+						if(flag==0){
+							$("#stampe").append(y+' voto:'+x.voto+' :'+x.commento+' <br>');
+							flag=1;
+						}
+						
+					}
+					
+					
 					
 					},
 				error: function(){alert("lol");}

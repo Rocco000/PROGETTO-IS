@@ -159,7 +159,7 @@ public class OrdineDAO {
 	
 	public ArrayList<OrdineBean> getOrdiniNonConsegnati() throws SQLException{
 		Connection connessione= ds.getConnection();
-		String query="SELECT * FROM ordine o WHERE gestore=NULL;";
+		String query="SELECT * FROM ordine o WHERE gestore IS NULL;";
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
 		ResultSet risultato= ps.executeQuery();
