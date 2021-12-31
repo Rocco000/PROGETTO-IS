@@ -53,10 +53,20 @@ public class ServletFormOrdiniAdmin extends HttpServlet {
 					SpeditoBean spedizione= new SpeditoBean();
 					String ordine= request.getParameter("numeroOrdine");
 					String corriere= request.getParameter("corriere");
-					String data= request.getParameter("consegnaO");
+					String data= request.getParameter("consegnaO");					
+					
 					java.sql.Date dataConsegna= java.sql.Date.valueOf(data);
 					
-					spedizione.setOrdine(ordine);
+					if(ordine==null || ordine=="" || corriere==null || corriere=="" || data==null || data=="")
+					{
+						String url="/servletgestioneadmin";
+						url= response.encodeURL(url);
+						request.setAttribute("messageok", "Errore!");
+						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
+						dispatcher.forward(request, response);	
+					}
+					
+					spedizione.setOrdine(ordine);	
 					spedizione.setCorriere_esprersso(corriere);
 					spedizione.setData_consegna(dataConsegna);
 					
@@ -76,7 +86,7 @@ public class ServletFormOrdiniAdmin extends HttpServlet {
 						url= response.encodeURL(url);
 						request.setAttribute("messageok", "Ordine spedito con successo!");
 						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
-						dispatcher.forward(request, response);
+						dispatcher.forward(request, response);	
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
