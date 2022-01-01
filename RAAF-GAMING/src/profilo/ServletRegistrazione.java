@@ -62,7 +62,7 @@ public class ServletRegistrazione extends HttpServlet {
 				String codice_cvv=request.getParameter("codice_cvv");
 				String data=request.getParameter("data");
 				String password=request.getParameter("password");
-				if(password==null || password.length()==0 || nome==null || nome.length()==0 || cognome==null || cognome.length()==0 || email==null || email.length()==0 || data==null || data.length()==0 || codicecarta==null || codicecarta.length()==0 || codice_cvv==null || codice_cvv.length()==0 || data_scadenza==null || data_scadenza.length()==0)
+				if(password==null || password.length()==0 || nome==null || nome.length()==0 || cognome==null || cognome.length()==0 || email==null || email.length()==0 || data==null || data.length()==0 || codicecarta==null || codicecarta.length()!=16 || codice_cvv==null || codice_cvv.length()==0 || data_scadenza==null || data_scadenza.length()==0)
 				{
 					
 					request.setAttribute("visitato", "");
@@ -172,7 +172,7 @@ public class ServletRegistrazione extends HttpServlet {
 			String codice_cvv=request.getParameter("codice_cvv");
 			String data=request.getParameter("data");
 			String password=request.getParameter("password");
-			if(password==null || password.length()==0 || nome==null || nome.length()==0 || cognome==null || cognome.length()==0 || email==null || email.length()==0 || data==null || data.length()==0 || codicecarta==null || codicecarta.length()==0 || codice_cvv==null || codice_cvv.length()==0 || data_scadenza==null || data_scadenza.length()==0)
+			if(password==null || password.length()==0 || nome==null || nome.length()==0 || cognome==null || cognome.length()==0 || email==null || email.length()==0 || data==null || data.length()==0 || codicecarta==null || codicecarta.length()!=16 || codice_cvv==null || codice_cvv.length()==0 || data_scadenza==null || data_scadenza.length()==0)
 			{
 				
 				request.setAttribute("visitato", "");
