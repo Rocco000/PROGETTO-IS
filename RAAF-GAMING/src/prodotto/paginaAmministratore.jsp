@@ -23,8 +23,6 @@
 	<link rel="stylesheet" href="css/stileAdmin.css" type="text/css">
 	
 	<!-- javascript nostro -->
-	<script src="javascript/controlloProdEsistente.js"></script>
-	<script src="javascript/controlloSpedizione.js"></script>
 	<script src="javascript/controlloNuovoProd.js"></script>
 	
 	<meta charset="UTF-8">
@@ -81,9 +79,6 @@
 		<div class="container d-flex justify-content-center" style="background-color: rgba(254,254,233,0.5);border-radius:20px;">
 		<div id="esistente" style="display:none">
 			
-				
-					
-				</form>
 			
 			<table class="table">
             	<thead class="thead-dark">
@@ -114,6 +109,7 @@
                             </tr>
                            
                     <%
+                    		i++;
                           }
                     %>
                    

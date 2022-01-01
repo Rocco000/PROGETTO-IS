@@ -45,10 +45,17 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 					DataSource ds=(DataSource)super.getServletContext().getAttribute("DataSource");
 					ProdottoDAO proddao= new ProdottoDAO(ds);
 					
-					String codiceProd= (String) request.getAttribute("prod");//ottengo il valore dell'input type hidden che contiene l'id del prodotto
-					System.out.println("codice prodotto ricevuto= "+codiceProd);
-					int quantitaDaRifornire= (Integer) request.getAttribute("quantita");
-					System.out.println("codice prodotto ricevuto= "+codiceProd+" e quantita= "+quantitaDaRifornire);
+					String codiceProd= (String) request.getParameter("prod");//ottengo il valore dell'input type hidden che contiene l'id del prodotto
+					
+					int quantitaDaRifornire= Integer.parseInt(request.getParameter("quantita"));
+					if(quantitaDaRifornire<0) {
+						request.setAttribute("message", "Quantita' non valida");
+						String url="/servletgestioneadmin";
+						RequestDispatcher view=super.getServletContext().getRequestDispatcher(response.encodeURL(url));
+						view.forward(request, response);
+						return;
+					}
+					
 					ProdottoBean daRifornire=null;
 					try {
 						daRifornire= proddao.ricercaPerChiave(codiceProd);
@@ -99,7 +106,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 					
 						//int quantitaDaRifornire= (int) request.getAttribute("quantita"+daRifornire.getCodice_prodotto());
 						
-						ArrayList<MagazzinoBean> magazziniCheNonHanno= null;//per tenere traccia di tutti i magazzini che non hanno il prodotto da rifornire
+						ArrayList<MagazzinoBean> magazziniCheNonHanno= new ArrayList<MagazzinoBean>();//per tenere traccia di tutti i magazzini che non hanno il prodotto da rifornire
 						
 						for(PresenteInBean presente : magazziniCheHannoProdotto) {
 							
@@ -117,7 +124,7 @@ public class ServletFormProdEsistentiAdmin extends HttpServlet {
 										
 										presente.setQuantita_disponibile(presente.getQuantita_disponibile()+quantitaDaRifornire);//aggiorno la quantità
 										try {
-											presentedao.newInsert(presente);//salvo nel DB
+											presentedao.rifornitura(presente);;//salvo nel DB
 										} catch (SQLException e) {
 											e.printStackTrace();
 										}
