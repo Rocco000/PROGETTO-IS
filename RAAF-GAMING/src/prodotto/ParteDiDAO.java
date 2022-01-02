@@ -19,12 +19,13 @@ public class ParteDiDAO{
 	}
 
 
-	public ParteDiBean ricercaPerChiave(String id) throws SQLException {
-		if(id==null || id=="")throw new NullPointerException("id null o vuoto");
+	public ParteDiBean ricercaPerChiave(String id1,String id2) throws SQLException {
+		if(id1==null || id2==null)throw new NullPointerException("id1 null o id2 null");
 		Connection con = ds.getConnection();
-		String str = "SELECT * FROM parte_di WHERE videogioco=? && categoria=? ;";
+		String str = "SELECT * FROM parte_di WHERE videogioco=? AND categoria=? ;";
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1,id);
+		ps.setString(1,id1);
+		ps.setString(2, id2);
 		ResultSet st = ps.executeQuery();
 		ParteDiBean bean = new ParteDiBean();
 		while(st.next())
@@ -76,7 +77,7 @@ public class ParteDiDAO{
 
 
 	
-	public ArrayList<ParteDiBean> doRetriveByCategoria(String id) throws SQLException {
+	public ArrayList<ParteDiBean> ricercaPerCategoria(String id) throws SQLException {
 		if(id==null || id=="")throw new NullPointerException("id null o vuoto");
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM parte_di WHERE categoria=?;";

@@ -123,28 +123,6 @@ public class RecensisceDAO{
 
 
 	
-	public ArrayList<RecensisceBean> getRecensioniCriterio(String condizione,String ordinamento) throws SQLException{
-		if((condizione==null || condizione=="")&&(ordinamento==null || ordinamento=="")) throw new NullPointerException("ordimanento e condizione sono null o vuoti");
-		Connection connessione= ds.getConnection();
-		String query="SELECT recensisce.cliente,recensisce.prodotto,recensisce.voto,recensisce.commento FROM recensisce WHERE ? ORDER BY ?;";
-		PreparedStatement ps=connessione.prepareStatement(query);
-		
-		ps.setString(1, condizione);
-		ps.setString(2, ordinamento);
-		ResultSet risultato= ps.executeQuery();
-		ArrayList<RecensisceBean> recensioni= new ArrayList<RecensisceBean>();
-		while(risultato.next()) {
-			RecensisceBean app= new RecensisceBean();
-			app.setCliente(risultato.getString("recensisce.cliente"));
-			app.setProdotto(risultato.getInt("recensisce.prodotto"));
-			app.setVoto(risultato.getInt("recensisce.voto"));
-			app.setCommento(risultato.getString("recensice.commento"));
-			recensioni.add(app);
-		}
-		risultato.close();
-		ps.close();
-		connessione.close();
-		return recensioni;
-	}
+
 
 }

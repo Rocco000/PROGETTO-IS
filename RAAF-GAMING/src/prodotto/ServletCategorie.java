@@ -117,7 +117,7 @@ public class ServletCategorie extends HttpServlet {
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 				ParteDiDAO dao = new ParteDiDAO(ds);
 				try {
-					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Azione");
+					ArrayList<ParteDiBean> bean = dao.ricercaPerCategoria("Azione");
 					for(ParteDiBean b : bean)
 					{
 						prod.add(dap.ricercaPerChiave(b.getVideogioco()+""));
@@ -138,7 +138,7 @@ public class ServletCategorie extends HttpServlet {
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 				ParteDiDAO dao = new ParteDiDAO(ds);
 				try {
-					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Avventura");
+					ArrayList<ParteDiBean> bean = dao.ricercaPerCategoria("Avventura");
 					for(ParteDiBean b : bean)
 					{
 						prod.add(dap.ricercaPerChiave(b.getVideogioco()+""));
@@ -159,7 +159,7 @@ public class ServletCategorie extends HttpServlet {
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 				ParteDiDAO dao = new ParteDiDAO(ds);
 				try {
-					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Battle Royale");
+					ArrayList<ParteDiBean> bean = dao.ricercaPerCategoria("Battle Royale");
 					for(ParteDiBean b : bean)
 					{
 						prod.add(dap.ricercaPerChiave(b.getVideogioco()+""));
@@ -180,7 +180,7 @@ public class ServletCategorie extends HttpServlet {
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 				ParteDiDAO dao = new ParteDiDAO(ds);
 				try {
-					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Sport");
+					ArrayList<ParteDiBean> bean = dao.ricercaPerCategoria("Sport");
 					for(ParteDiBean b : bean)
 					{
 						prod.add(dap.ricercaPerChiave(b.getVideogioco()+""));
@@ -201,7 +201,7 @@ public class ServletCategorie extends HttpServlet {
 				ArrayList<ProdottoBean> prod = new ArrayList<ProdottoBean>();
 				ParteDiDAO dao = new ParteDiDAO(ds);
 				try {
-					ArrayList<ParteDiBean> bean = dao.doRetriveByCategoria("Survival horror");
+					ArrayList<ParteDiBean> bean = dao.ricercaPerCategoria("Survival horror");
 					for(ParteDiBean b : bean)
 					{
 						prod.add(dap.ricercaPerChiave(b.getVideogioco()+""));
