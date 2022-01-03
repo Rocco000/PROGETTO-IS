@@ -55,7 +55,7 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 	@Override
 	protected DataSource getDataSource() {
 		JdbcDataSource dataSource = new JdbcDataSource();
-        dataSource.setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;init=runscript from 'classpath:/RAAF-GAMING/test/resources/db/init/schema.sql'");
+        dataSource.setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;init=runscript from 'classpath:resources/db/init/schema.sql'");
         dataSource.setUser("root");
         dataSource.setPassword("veloce123");
         return dataSource;
@@ -63,7 +63,7 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(this.getClass().getClassLoader().getResourceAsStream("/RAAF-GAMING/test/resources/db/init/init.xml"));
+		return new FlatXmlDataSetBuilder().build(this.getClass().getClassLoader().getResourceAsStream("resources/db/init/init.xml"));
 	}
 	
 	 @Override
@@ -92,20 +92,26 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 			
 			b.add(bean);
 			
-			bean.setNome("ups");
-			bean.setSito("ups.com");
+			CorriereEspressoBean bean2 = new CorriereEspressoBean();
 			
-			b.add(bean);
+			bean2.setNome("ups");
+			bean2.setSito("ups.com");
 			
-			bean.setNome("dhl");
-			bean.setSito("dhl.com");
+			b.add(bean2);
 			
-			b.add(bean);
 			
-			bean.setNome("lol");
-			bean.setSito("lol.com");
+			CorriereEspressoBean bean3 = new CorriereEspressoBean();
+			bean3.setNome("dhl");
+			bean3.setSito("dhl.com");
 			
-			b.add(bean);
+			b.add(bean3);
+			
+			
+			CorriereEspressoBean bean4 = new CorriereEspressoBean();
+			bean4.setNome("lol");
+			bean4.setSito("lol.com");
+			
+			b.add(bean4);
 			
 			assertEquals(a.toString(),b.toString());
 			
