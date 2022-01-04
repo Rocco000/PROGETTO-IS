@@ -83,7 +83,7 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 		@Test
 		public void testAllElements() throws SQLException {
 			
-			ArrayList<CorriereEspressoBean> a = cre.allElements("nome asc");
+			ArrayList<CorriereEspressoBean> a = cre.allElements(""+1);
 			ArrayList<CorriereEspressoBean> b = new ArrayList<CorriereEspressoBean>();
 			CorriereEspressoBean bean = new CorriereEspressoBean();
 			

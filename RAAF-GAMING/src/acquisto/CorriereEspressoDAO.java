@@ -24,10 +24,10 @@ public class CorriereEspressoDAO{
 		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		
 		Connection connessione = ds.getConnection();
-		String Query="SELECT * FROM corriereespresso ORDER BY ?";
+		String Query="SELECT * FROM corriereespresso ORDER BY nome ";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
-			ps.setString(1, ordinamento);
+			//ps.setString(1, ordinamento);
 
 		
 		ResultSet rs= ps.executeQuery();
