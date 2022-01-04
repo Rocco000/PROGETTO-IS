@@ -81,9 +81,9 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 	 	 * @throws SQLException 
 		 */
 		@Test
-		public void testAllElements() throws SQLException {
+		public void testAllElementsASC() throws SQLException {
 			
-			ArrayList<CorriereEspressoBean> a = cre.allElements(""+1);
+			ArrayList<CorriereEspressoBean> a = cre.allElements("nome asc");
 			ArrayList<CorriereEspressoBean> b = new ArrayList<CorriereEspressoBean>();
 			CorriereEspressoBean bean = new CorriereEspressoBean();
 			
@@ -91,6 +91,18 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 			bean.setSito("bartolini.com");
 			
 			b.add(bean);
+			
+			CorriereEspressoBean bean3 = new CorriereEspressoBean();
+			bean3.setNome("dhl");
+			bean3.setSito("dhl.com");
+			
+			b.add(bean3);
+			
+			CorriereEspressoBean bean4 = new CorriereEspressoBean();
+			bean4.setNome("lol");
+			bean4.setSito("lol.com");
+			
+			b.add(bean4);
 			
 			CorriereEspressoBean bean2 = new CorriereEspressoBean();
 			
@@ -100,12 +112,31 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 			b.add(bean2);
 			
 			
-			CorriereEspressoBean bean3 = new CorriereEspressoBean();
-			bean3.setNome("dhl");
-			bean3.setSito("dhl.com");
 			
-			b.add(bean3);
 			
+			
+			
+			for(int i=0; i<a.size();i++)
+			{
+				assertEquals(a.get(i).getNome(),b.get(i).getNome());
+				assertEquals(a.get(i).getSito(),b.get(i).getSito());
+			}
+			
+			
+		}
+		
+		@Test
+		public void testAllElementsDESC() throws SQLException {
+			
+			ArrayList<CorriereEspressoBean> a = cre.allElements("nome desc");
+			ArrayList<CorriereEspressoBean> b = new ArrayList<CorriereEspressoBean>();
+			
+			CorriereEspressoBean bean2 = new CorriereEspressoBean();
+			
+			bean2.setNome("ups");
+			bean2.setSito("ups.com");
+			
+			b.add(bean2);
 			
 			CorriereEspressoBean bean4 = new CorriereEspressoBean();
 			bean4.setNome("lol");
@@ -113,10 +144,74 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 			
 			b.add(bean4);
 			
-			assertEquals(a.toString(),b.toString());
+			CorriereEspressoBean bean3 = new CorriereEspressoBean();
+			bean3.setNome("dhl");
+			bean3.setSito("dhl.com");
+			
+			b.add(bean3);
+			
+			
+			CorriereEspressoBean bean = new CorriereEspressoBean();
+			
+			bean.setNome("bartolini");
+			bean.setSito("bartolini.com");
+			
+			b.add(bean);
+			
+			for(int i=0; i<a.size();i++)
+			{
+				assertEquals(a.get(i).getNome(),b.get(i).getNome());
+				assertEquals(a.get(i).getSito(),b.get(i).getSito());
+			}
 			
 			
 		}
+		
+		
+		@Test
+		public void testAllElementsNULL() throws SQLException{
+			
+			ArrayList<CorriereEspressoBean> a = null;
+			try {
+			a = cre.allElements(null);
+			}catch(NullPointerException e)
+			{
+				assertNull(a);
+			}
+			
+		}
+		
+		
+		@Test
+		public void testAllElementsNotValid() throws NullPointerException{
+			
+			ArrayList<CorriereEspressoBean> a = null;
+			try {
+			a = cre.allElements("nome as");
+			}catch(SQLException e)
+			{
+				assertNull(a);
+			}
+			
+		}
+		
+		
+		@Test
+		public void testAllElementsVoid() throws SQLException{
+			
+			ArrayList<CorriereEspressoBean> a = null;
+			try {
+			a = cre.allElements("");
+			}catch(NullPointerException e)
+			{
+				assertNull(a);
+			}
+			
+		}
+		
+		
+		
+		
 
 
 

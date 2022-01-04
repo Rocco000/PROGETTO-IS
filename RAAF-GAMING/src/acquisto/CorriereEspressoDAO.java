@@ -20,14 +20,27 @@ public class CorriereEspressoDAO{
 		ds=d;
 	}
 	
-	public ArrayList<CorriereEspressoBean> allElements(String ordinamento) throws SQLException {
+	public ArrayList<CorriereEspressoBean> allElements(String ordinamento) throws SQLException, NullPointerException {
 		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		
 		Connection connessione = ds.getConnection();
-		String Query="SELECT * FROM corriereespresso ORDER BY nome ";
+		String Query=null;
+		
+		if(ordinamento.equals("nome asc"))
+			Query="SELECT * FROM corriereespresso ORDER BY nome asc ";
+		else if(ordinamento.equals("nome desc"))
+			Query="SELECT * FROM corriereespresso ORDER BY nome desc ";
+		else if(ordinamento.equals("sito asc"))
+			Query="SELECT * FROM corriereespresso ORDER BY sito asc ";
+		else if(ordinamento.equals("sito desc"))
+			Query="SELECT * FROM corriereespresso ORDER BY sito desc ";
+		
+		else
+			throw new SQLException("ordinamento scritto in modo errato");
+		
+		
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
-			//ps.setString(1, ordinamento);
 
 		
 		ResultSet rs= ps.executeQuery();
