@@ -53,11 +53,30 @@ public class DlcDAO {
 	public ArrayList<DlcBean> allElements(String ordinamento) throws SQLException {
 		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione = ds.getConnection();
-		String Query="SELECT * FROM dlc ORDER BY ?";
 		
-		PreparedStatement ps= connessione.prepareStatement(Query);
+
+		String query=null;
 		
-			ps.setString(1, ordinamento);
+		if(ordinamento.equals("prodotto asc"))
+			query="SELECT * FROM dlc ORDER BY prodotto asc ";
+		else if(ordinamento.equals("prodotto desc"))
+			query="SELECT * FROM dlc ORDER BY prodotto desc ";
+		else if(ordinamento.equals("dimensione asc"))
+			query="SELECT * FROM dlc ORDER BY dimensione asc ";
+		else if(ordinamento.equals("dimensione desc"))
+			query="SELECT * FROM dlc ORDER BY dimensione desc ";
+		else if(ordinamento.equals("descrizione asc"))
+			query="SELECT * FROM dlc ORDER BY descrizione asc ";
+		else if(ordinamento.equals("descrizione desc"))
+			query="SELECT * FROM dlc ORDER BY descrizione desc ";
+		
+		else
+			throw new SQLException("ordinamento scritto in modo errato");
+		
+		
+		PreparedStatement ps= connessione.prepareStatement(query);
+		
+			
 		
 		ResultSet rs= ps.executeQuery();
 		ArrayList<DlcBean> a= new ArrayList<DlcBean>();

@@ -209,13 +209,6 @@ public class ProdottoDAO{
 			con.close();
 		}
 	}
-
-
-	public void doDelete(ProdottoBean item) throws SQLException {
-
-		
-	}
-
 	
 
 }

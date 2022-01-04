@@ -121,7 +121,7 @@ public class ServletProdotto extends HttpServlet {
 			DataSource ds = (DataSource)super.getServletContext().getAttribute("DataSource");
 			RecensisceDAO rec = new RecensisceDAO(ds);
 			try {
-			ArrayList<RecensisceBean> arrayrec = rec.ricercaPerProdotto(id);
+			ArrayList<RecensisceBean> arrayrec = rec.ricercaPerProdotto(Integer.parseInt(id));
 			ClienteDAO cli = new ClienteDAO(ds);
 			
 			

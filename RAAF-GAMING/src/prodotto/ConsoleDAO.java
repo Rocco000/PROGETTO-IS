@@ -50,10 +50,28 @@ public class ConsoleDAO{
 	public ArrayList<ConsoleBean> allElements(String ordinamento) throws SQLException {
 	if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");	
 	Connection connessione = ds.getConnection();
-	String Query="SELECT * FROM console ORDER BY ?";
 	
-	PreparedStatement ps= connessione.prepareStatement(Query);
-	ps.setString(1, ordinamento);
+	String query=null;
+	
+	if(ordinamento.equals("prodotto asc"))
+		query="SELECT * FROM console ORDER BY prodotto asc ";
+	else if(ordinamento.equals("prodotto desc"))
+		query="SELECT * FROM console ORDER BY prodotto desc ";
+	else if(ordinamento.equals("specifica asc"))
+		query="SELECT * FROM console ORDER BY specifica asc ";
+	else if(ordinamento.equals("specifica desc"))
+		query="SELECT * FROM console ORDER BY specifica desc ";
+	else if(ordinamento.equals("colore asc"))
+		query="SELECT * FROM console ORDER BY colore asc ";
+	else if(ordinamento.equals("colore desc"))
+		query="SELECT * FROM console ORDER BY colore desc ";
+	
+	else
+		throw new SQLException("ordinamento scritto in modo errato");
+
+	
+	PreparedStatement ps= connessione.prepareStatement(query);
+	
 
 	
 	ResultSet rs= ps.executeQuery();

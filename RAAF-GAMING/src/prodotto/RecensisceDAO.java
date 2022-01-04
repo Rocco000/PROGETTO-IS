@@ -22,13 +22,13 @@ public class RecensisceDAO{
 		ds=d;
 	}
 	
-	public RecensisceBean ricercaPerChiave(String cliente,String prodotto) throws SQLException {
-		if((prodotto==null || prodotto=="")&&(cliente==null || cliente==""))throw new NullPointerException("prodotto o cliente è vuoto o null");
+	public RecensisceBean ricercaPerChiave(String cliente,int prodotto) throws SQLException {
+		if((cliente==null || cliente==""))throw new NullPointerException("prodotto o cliente è vuoto o null");
 		Connection connessione = ds.getConnection();
 		String Query="SELECT * FROM recensisce WHERE prodotto=? and cliente=?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
-		ps.setString(1,prodotto);
+		ps.setInt(1,prodotto);
 		ps.setString(2,cliente);
 		ResultSet rs= ps.executeQuery();		
 		while(rs.next())
@@ -50,13 +50,12 @@ public class RecensisceDAO{
 
 	}
 	
-	public ArrayList<RecensisceBean> ricercaPerProdotto(String id) throws SQLException{
-		if(id==null || id=="")throw new NullPointerException("id vuoto o null");
+	public ArrayList<RecensisceBean> ricercaPerProdotto(int id) throws SQLException{
 		Connection connessione = ds.getConnection();
 		String Query="SELECT * FROM recensisce WHERE prodotto=?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(Query);
-		ps.setString(1,id);	
+		ps.setInt(1,id);	
 		ArrayList<RecensisceBean >a=new ArrayList<RecensisceBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {
@@ -80,9 +79,33 @@ public class RecensisceDAO{
 	public ArrayList<RecensisceBean> allElements(String ordinamento) throws SQLException {
 	if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione=ds.getConnection();
-		String query="SELECT * FROM recensisce ORDER BY ?;";
+		
+		String query=null;
+		if(ordinamento.equals("cliente asc"))
+			query="SELECT * FROM recensisce ORDER BY cliente asc ";
+		else if(ordinamento.equals("cliente desc"))
+			query="SELECT * FROM cliente ORDER BY cliente desc ";
+		
+		else if(ordinamento.equals("prodotto asc"))
+			query="SELECT * FROM recensisce ORDER BY prodotto asc ";
+		else if(ordinamento.equals("prodotto desc"))
+			query="SELECT * FROM recensisce ORDER BY prodotto desc ";
+		
+		else if(ordinamento.equals("voto asc"))
+			query="SELECT * FROM recensisce ORDER BY voto asc ";
+		else if(ordinamento.equals("voto desc"))
+			query="SELECT * FROM recensisce ORDER BY voto desc ";
+		
+		else if(ordinamento.equals("commento asc"))
+			query="SELECT * FROM recensisce ORDER BY commento asc ";
+		else if(ordinamento.equals("commento desc"))
+			query="SELECT * FROM recensisce ORDER BY commento desc ";
+		
+		else
+			throw new SQLException("ordinamento scritto in modo errato");		
+		
 		PreparedStatement ps=connessione.prepareStatement(query);
-			ps.setString(1, ordinamento);
+			
 		ArrayList<RecensisceBean >a=new ArrayList<RecensisceBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {
@@ -120,6 +143,7 @@ public class RecensisceDAO{
 		connessione.close();
 		
 	}
+	
 
 
 	

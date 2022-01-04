@@ -24,7 +24,7 @@ public class AbbonamentoDAO{
 		String query="SELECT * FROM abbonamento WHERE prodotto=?;";
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
-		ps.setString(1,code);
+		ps.setInt(1,Integer.parseInt(code));
 		ResultSet risultato= ps.executeQuery();
 		
 		while(risultato.next()) {
@@ -53,10 +53,28 @@ public class AbbonamentoDAO{
 	public ArrayList<AbbonamentoBean> allElements(String ordinamento) throws SQLException {
 		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione= ds.getConnection();
-		String query="SELECT * FROM abbonamento ORDER BY ?;";
+		
+		String query=null;
+		
+		if(ordinamento.equals("prodotto asc"))
+			query="SELECT * FROM abbonamento ORDER BY prodotto asc ";
+		else if(ordinamento.equals("prodotto desc"))
+			query="SELECT * FROM abbonamento ORDER BY prodotto desc ";
+		else if(ordinamento.equals("specifica asc"))
+			query="SELECT * FROM abbonamento ORDER BY specifica asc ";
+		else if(ordinamento.equals("specifica desc"))
+			query="SELECT * FROM abbonamento ORDER BY specifica desc ";
+		else if(ordinamento.equals("colore asc"))
+			query="SELECT * FROM abbonamento ORDER BY colore asc ";
+		else if(ordinamento.equals("colore desc"))
+			query="SELECT * FROM abbonamento ORDER BY colore desc ";
+		
+		else
+			throw new SQLException("ordinamento scritto in modo errato");
+		
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
-		ps.setString(1, ordinamento);
+		
 		ArrayList<AbbonamentoBean> a= new ArrayList<AbbonamentoBean>();
 		ResultSet risultato= ps.executeQuery();
 		

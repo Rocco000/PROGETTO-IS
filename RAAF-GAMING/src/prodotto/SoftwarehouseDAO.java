@@ -24,12 +24,24 @@ public class SoftwarehouseDAO{
 	public ArrayList<SoftwarehouseBean> allElements(String ordinamento) throws SQLException {
 		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione=ds.getConnection();
-		String query="SELECT * FROM softwarehouse ORDER BY ?;";
+		
+		String query=null;
+		
+		if(ordinamento.equals("nomesfh asc"))
+			query="SELECT * FROM softwarehouse ORDER BY nomesfh asc ";
+		else if(ordinamento.equals("nomesfh desc"))
+			query="SELECT * FROM softwarehouse ORDER BY nomesfh desc ";
+	
+		
+		else
+			throw new SQLException("ordinamento scritto in modo errato");
+		
+		
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
 		
-			ps.setString(1, ordinamento);
+			
 		ArrayList<SoftwarehouseBean> a=new ArrayList<SoftwarehouseBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {

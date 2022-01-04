@@ -21,9 +21,29 @@ public class FornitoreDAO{
 	public ArrayList<FornitoreBean> allElements(String ordinamento) throws SQLException {
 		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione = ds.getConnection();
-		String Query="SELECT * FROM fornitore ORDER BY ?;";	
-		PreparedStatement ps= connessione.prepareStatement(Query);	
-		ps.setString(1, ordinamento);
+		
+		String query=null;
+		
+		if(ordinamento.equals("nome asc"))
+			query="SELECT * FROM fornitore ORDER BY nome asc ";
+		else if(ordinamento.equals("nome desc"))
+			query="SELECT * FROM fornitore ORDER BY nome desc ";
+		
+		else if(ordinamento.equals("indirizzo asc"))
+			query="SELECT * FROM fornitore ORDER BY indirizzo asc ";
+		else if(ordinamento.equals("indirizzo desc"))
+			query="SELECT * FROM fornitore ORDER BY indirizzo desc ";
+		
+		else if(ordinamento.equals("telefono asc"))
+			query="SELECT * FROM fornitore ORDER BY telefono asc ";
+		else if(ordinamento.equals("telefono desc"))
+			query="SELECT * FROM fornitore ORDER BY telefono desc ";
+		
+		else
+			throw new SQLException("ordinamento scritto in modo errato");
+			
+		PreparedStatement ps= connessione.prepareStatement(query);	
+		
 		ResultSet rs= ps.executeQuery();
 		ArrayList<FornitoreBean> a= new ArrayList<FornitoreBean>();
 		
