@@ -551,9 +551,24 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 	}
 	
 	@Test
-	public void testGetOrdiniNonConsegnati() throws SQLException {
+	public void testGetOrdiniNonConsegnati() throws SQLException, DataSetException {
 		
-		ArrayList<OrdineBean> a = od.getOrdiniNonConsegnati();
+		DataSource dataSource = new JdbcDataSource();
+        ((JdbcDataSource) dataSource).setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;init=runscript from 'classpath:resources/db/init/ordine.sql'");
+        ((JdbcDataSource) dataSource).setUser("root");
+        ((JdbcDataSource) dataSource).setPassword("veloce123");
+        
+        
+        //Riuso ordini update perche e il file che contiene un ordine non spedito, altrimenti non potevo testare il metodo
+       IDataSet i = new FlatXmlDataSetBuilder().build(this.getClass().getClassLoader().getResourceAsStream("resources/db/init/ordininonconsegnati.xml"));
+        
+       
+       OrdineDAO o = new OrdineDAO(dataSource);
+		
+		ArrayList<OrdineBean> a = o.getOrdiniNonConsegnati();
+
+		if(a.size()==0)
+			fail("Size 0");
 		
 		for(OrdineBean b : a)
 			assertNull(b.getGestore());
@@ -566,7 +581,39 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 	@Test
 	public void testDoUpdatePresente() throws Exception {
 		
-		assertEquals(1,1);
+		DataSource dataSource = new JdbcDataSource();
+        ((JdbcDataSource) dataSource).setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;init=runscript from 'classpath:resources/db/init/ordine.sql'");
+        ((JdbcDataSource) dataSource).setUser("root");
+        ((JdbcDataSource) dataSource).setPassword("veloce123");
+        
+       IDataSet i = new FlatXmlDataSetBuilder().build(this.getClass().getClassLoader().getResourceAsStream("resources/db/init/ordineupdate.xml"));
+        
+       ITable expectedTable = new FlatXmlDataSetBuilder()
+               .build(OrdineDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/ordineupdate.xml"))
+               .getTable("ordine");
+       
+       
+       OrdineBean bean2 = new OrdineBean();
+		
+		bean2.setCodice("26134054612");
+		bean2.setCliente("f.peluso25@gmail.com");
+		bean2.setData_acquisto(java.sql.Date.valueOf("2021-12-30"));
+		bean2.setGestore("ordine@admin.com");
+		bean2.setIndirizzo_di_consegna("viale croce");
+		bean2.setMetodo_di_pagamento("2134567891234567");
+		bean2.setPrezzo_totale(80.5);
+		bean2.setStato("spedito");
+		
+		OrdineDAO d = new OrdineDAO(dataSource);
+		
+		d.doUpdate(bean2);
+       
+		 IDatabaseTester tester = this.getDatabaseTester();
+       
+		 ITable actualTable =  tester.getConnection().createDataSet().getTable("ordine");       
+	       
+	     Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+		
 	}
 	
 	/**
