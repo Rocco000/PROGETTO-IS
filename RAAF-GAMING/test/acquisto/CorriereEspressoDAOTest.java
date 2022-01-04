@@ -5,6 +5,7 @@ package acquisto;
 
 import static org.junit.Assert.*;
 
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import org.junit.Test;
 
 
 /**
- * @author Utente
+ * @author Francesco Peluso
  *
  */
 public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
@@ -55,7 +56,7 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 	@Override
 	protected DataSource getDataSource() {
 		JdbcDataSource dataSource = new JdbcDataSource();
-        dataSource.setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;init=runscript from 'classpath:resources/db/init/schema.sql'");
+        dataSource.setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;init=runscript from 'classpath:resources/db/init/corriereespresso.sql'");
         dataSource.setUser("root");
         dataSource.setPassword("veloce123");
         return dataSource;
@@ -63,7 +64,7 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(this.getClass().getClassLoader().getResourceAsStream("resources/db/init/init.xml"));
+		return new FlatXmlDataSetBuilder().build(this.getClass().getClassLoader().getResourceAsStream("resources/db/init/corriereespresso.xml"));
 	}
 	
 	 @Override
@@ -113,7 +114,7 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 			
 			
 			
-			
+			assertEquals(b.size(),a.size());
 			
 			
 			for(int i=0; i<a.size();i++)
@@ -158,6 +159,8 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 			
 			b.add(bean);
 			
+			assertEquals(b.size(),a.size());
+			
 			for(int i=0; i<a.size();i++)
 			{
 				assertEquals(a.get(i).getNome(),b.get(i).getNome());
@@ -169,7 +172,7 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 		
 		
 		@Test
-		public void testAllElementsNULL() throws SQLException{
+		public void testAllElementsNULL()  {
 			
 			ArrayList<CorriereEspressoBean> a = null;
 			try {
@@ -178,12 +181,16 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 			{
 				assertNull(a);
 			}
+			catch(SQLException e)
+			{
+				fail("Not throws NullPointer");
+			}
 			
 		}
 		
 		
 		@Test
-		public void testAllElementsNotValid() throws NullPointerException{
+		public void testAllElementsNotValid() {
 			
 			ArrayList<CorriereEspressoBean> a = null;
 			try {
@@ -192,12 +199,16 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 			{
 				assertNull(a);
 			}
+			catch(NullPointerException e)
+			{
+				fail("Not throws SqlExceptionr");
+			}
 			
 		}
 		
 		
 		@Test
-		public void testAllElementsVoid() throws SQLException{
+		public void testAllElementsVoid() {
 			
 			ArrayList<CorriereEspressoBean> a = null;
 			try {
@@ -206,6 +217,11 @@ public class CorriereEspressoDAOTest extends DataSourceBasedDBTestCase{
 			{
 				assertNull(a);
 			}
+			catch(SQLException e)
+			{
+				fail("Not throws NullPointer");
+			}
+			
 			
 		}
 		

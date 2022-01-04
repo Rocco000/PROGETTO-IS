@@ -22,7 +22,7 @@ public class OrdineDAO {
 		this.ds = ds;
 	}
 
-	public OrdineBean ricercaPerChiave(String id) throws SQLException {
+	public OrdineBean ricercaPerChiave(String id) throws SQLException,NullPointerException {
 		if(id==null || id.equals(""))
 			throw new NullPointerException("l'id e' nulla o e' stringa vuota");
 		else {
@@ -31,9 +31,10 @@ public class OrdineDAO {
 			PreparedStatement ps = con.prepareStatement(str);
 			ps.setString(1,id);
 			ResultSet st = ps.executeQuery();
-			OrdineBean bean = new OrdineBean();
+			OrdineBean bean = null;
 			while(st.next())
 			{
+				bean = new OrdineBean();
 				bean.setCodice(st.getString("codice"));
 				bean.setMetodo_di_pagamento(st.getString("metodo_di_pagamento"));
 				bean.setData_acquisto(st.getDate("data_acquisto"));
@@ -55,9 +56,45 @@ public class OrdineDAO {
 	public ArrayList<OrdineBean> allElements(String ordinamento) throws SQLException {
 		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection con = ds.getConnection();
-		String str = "SELECT * FROM ordine ORDER BY ?;";
+		String str = null;
+		
+		if(ordinamento.equals("codice asc"))
+				str="SELECT * FROM ordine ORDER BY codice asc;";
+		else if(ordinamento.equals("codice desc"))
+			str="SELECT * FROM ordine ORDER BY codice desc;";
+		else if(ordinamento.equals("data_acquisto asc"))
+			str="SELECT * FROM ordine ORDER BY data_acquisto asc;";
+		else if(ordinamento.equals("data_acquisto desc"))
+			str="SELECT * FROM ordine ORDER BY data_acquisto desc;";
+		else if(ordinamento.equals("indirizzo_di_consegna asc"))
+			str="SELECT * FROM ordine ORDER BY indirizzo_di_consegna asc;";
+		else if(ordinamento.equals("indirizzo_di_consegna desc"))
+			str="SELECT * FROM ordine ORDER BY indirizzo_di_consegna desc;";
+		else if(ordinamento.equals("cliente asc"))
+			str="SELECT * FROM ordine ORDER BY cliente asc;";
+		else if(ordinamento.equals("cliente desc"))
+			str="SELECT * FROM ordine ORDER BY cliente desc;";
+		else if(ordinamento.equals("prezzo_totale asc"))
+			str="SELECT * FROM ordine ORDER BY prezzo_totale asc;";
+		else if(ordinamento.equals("prezzo_totale desc"))
+			str="SELECT * FROM ordine ORDER BY prezzo_totale desc;";
+		else if(ordinamento.equals("gestore asc"))
+			str="SELECT * FROM ordine ORDER BY gestore asc;";
+		else if(ordinamento.equals("gestore desc"))
+			str="SELECT * FROM ordine ORDER BY gestore desc;";
+		else if(ordinamento.equals("stato asc"))
+			str="SELECT * FROM ordine ORDER BY stato asc;";
+		else if(ordinamento.equals("stato desc"))
+			str="SELECT * FROM ordine ORDER BY stato desc;";
+		else if(ordinamento.equals("metodo_di_pagamento asc"))
+			str="SELECT * FROM ordine ORDER BY metodo_di_pagamento asc;";
+		else if(ordinamento.equals("metodo_di_pagamento desc"))
+			str="SELECT * FROM ordine ORDER BY metodo_di_pagamento desc;";
+		else
+			throw new SQLException("Invalid ordinamento");
+		
+
 		PreparedStatement ps = con.prepareStatement(str);
-			ps.setString(1, ordinamento);
 		ResultSet st = ps.executeQuery();
 		ArrayList<OrdineBean> array = new ArrayList<OrdineBean>();
 		while(st.next())
