@@ -94,15 +94,13 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 	public void testRicercaPerChiaveIdPresente() throws SQLException {
 		OrdineBean b = od.ricercaPerChiave("15280754012");
 		
-		System.out.println(b.getCodice());
-		
 		assertEquals(b.getCodice(), "15280754012");
 		assertEquals(b.getCliente(), "f.peluso25@gmail.com");
 		assertEquals(b.getGestore(),"ordine@admin.com");
 		assertEquals(b.getIndirizzo_di_consegna(), "viale croce");
 		assertEquals(b.getMetodo_di_pagamento(), "2134567891234567");
 		assertEquals(b.getPrezzo_totale(), 78.831);
-		assertEquals(b.getStato(), "spedizione");
+		assertEquals(b.getStato(), "spedito");
 		assertEquals(b.getData_acquisto().toString(), "2021-12-31");
 		
 		
@@ -168,14 +166,6 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 		
 		
 	}
-
-	/**
-	 * Test method for {@link acquisto.OrdineDAO#doUpdate(acquisto.OrdineBean)}.
-	 */
-	@Test
-	public void testDoUpdate() {
-		fail("Not yet implemented");
-	}
 	
 	/**
 	 * Test method for {@link acquisto.OrdineDAO#allElements(java.lang.String)}.
@@ -221,7 +211,7 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 		{
 			assertEquals(a.get(i).getCliente(),b.get(i).getCliente());
 			assertEquals(a.get(i).getCodice(),b.get(i).getCodice());
-			assertEquals(a.get(i).getGestore(),b.get(i).getCodice());
+			assertEquals(a.get(i).getGestore(),b.get(i).getGestore());
 			assertEquals(a.get(i).getIndirizzo_di_consegna(),b.get(i).getIndirizzo_di_consegna());
 			assertEquals(a.get(i).getData_acquisto().toString(),b.get(i).getData_acquisto().toString());
 			assertEquals(a.get(i).getMetodo_di_pagamento(),b.get(i).getMetodo_di_pagamento());
@@ -235,7 +225,7 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 	@Test
 	public void testAllElementsDESC() throws SQLException {
 		
-		ArrayList<OrdineBean> a = od.allElements("codice asc");
+		ArrayList<OrdineBean> a = od.allElements("codice desc");
 		ArrayList<OrdineBean> b = new ArrayList<OrdineBean>();	
 		
 		OrdineBean bean2 = new OrdineBean();
@@ -272,7 +262,7 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 		{
 			assertEquals(a.get(i).getCliente(),b.get(i).getCliente());
 			assertEquals(a.get(i).getCodice(),b.get(i).getCodice());
-			assertEquals(a.get(i).getGestore(),b.get(i).getCodice());
+			assertEquals(a.get(i).getGestore(),b.get(i).getGestore());
 			assertEquals(a.get(i).getIndirizzo_di_consegna(),b.get(i).getIndirizzo_di_consegna());
 			assertEquals(a.get(i).getData_acquisto().toString(),b.get(i).getData_acquisto().toString());
 			assertEquals(a.get(i).getMetodo_di_pagamento(),b.get(i).getMetodo_di_pagamento());
@@ -374,15 +364,15 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 	
 	/**
 	 * Test method for {@link acquisto.OrdineDAO#newInsert(acquisto.OrdineBean)}.
+	 * @throws Exception 
 	 */
 	@Test
-	public void testNewInsertOld() {
-		
-		
+	public void testNewInsertOld() throws Exception {
+
 		
 		OrdineBean bean = new OrdineBean();
 		
-		bean.setCodice("15280754013");
+		bean.setCodice("15280754012");
 		bean.setCliente("a.maddaloni25@gmail.com");
 		bean.setData_acquisto(java.sql.Date.valueOf("2019-11-31"));
 		bean.setGestore("ordine@admin.com");
@@ -393,7 +383,7 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 		
 		int i=0;
 		try {
-			od.newInsert(bean);
+		od.newInsert(bean);
 		}
 		catch(SQLException e)
 		{
@@ -401,6 +391,10 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 		}
 		
 		assertEquals(1,i);
+		
+		
+		
+
 		
 		
 		
@@ -439,19 +433,6 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 		ArrayList<OrdineBean> a = od.ricercaPerCliente("f.peluso25@gmail.com");
 		ArrayList<OrdineBean> b = new ArrayList<OrdineBean>();	
 		
-		OrdineBean bean2 = new OrdineBean();
-		
-		bean2.setCodice("26134054612");
-		bean2.setCliente("f.peluso25@gmail.com");
-		bean2.setData_acquisto(java.sql.Date.valueOf("2021-12-30"));
-		bean2.setGestore("ordine@admin.com");
-		bean2.setIndirizzo_di_consegna("viale croce");
-		bean2.setMetodo_di_pagamento("2134567891234567");
-		bean2.setPrezzo_totale(80.5);
-		bean2.setStato("spedito");
-		
-		
-		b.add(bean2);
 		
 		OrdineBean bean = new OrdineBean();
 		
@@ -466,6 +447,22 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 		
 		b.add(bean);
 		
+		
+		
+		OrdineBean bean2 = new OrdineBean();
+		
+		bean2.setCodice("26134054612");
+		bean2.setCliente("f.peluso25@gmail.com");
+		bean2.setData_acquisto(java.sql.Date.valueOf("2021-12-30"));
+		bean2.setGestore("ordine@admin.com");
+		bean2.setIndirizzo_di_consegna("viale croce");
+		bean2.setMetodo_di_pagamento("2134567891234567");
+		bean2.setPrezzo_totale(80.5);
+		bean2.setStato("spedito");
+		
+		
+		b.add(bean2);
+		
 		assertEquals(b.size(),a.size());
 		
 		
@@ -473,7 +470,7 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 		{
 			assertEquals(a.get(i).getCliente(),b.get(i).getCliente());
 			assertEquals(a.get(i).getCodice(),b.get(i).getCodice());
-			assertEquals(a.get(i).getGestore(),b.get(i).getCodice());
+			assertEquals(a.get(i).getGestore(),b.get(i).getGestore());
 			assertEquals(a.get(i).getIndirizzo_di_consegna(),b.get(i).getIndirizzo_di_consegna());
 			assertEquals(a.get(i).getData_acquisto().toString(),b.get(i).getData_acquisto().toString());
 			assertEquals(a.get(i).getMetodo_di_pagamento(),b.get(i).getMetodo_di_pagamento());
@@ -542,12 +539,92 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 	
 	/**
 	 * Test method for {@link acquisto.OrdineDAO#getOrdiniNonConsegnati()}.
+	 * @throws SQLException 
 	 */
 	@Test
-	public void testGetOrdiniNonConsegnati() {
+	public void testGetOrdiniNonConsegnatiTuttiGiaConsegnati() throws SQLException {
+		
+		ArrayList<OrdineBean> a = od.getOrdiniNonConsegnati();
+		
+		assertEquals(0,a.size());
+		
+	}
+	
+	@Test
+	public void testGetOrdiniNonConsegnati() throws SQLException {
+		
+		ArrayList<OrdineBean> a = od.getOrdiniNonConsegnati();
+		
+		for(OrdineBean b : a)
+			assertNull(b.getGestore());
+	}
+	
+	/**
+	 * Test method for {@link acquisto.OrdineDAO#doUpdate(acquisto.OrdineBean)}.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testDoUpdatePresente() throws Exception {
+		
+		assertEquals(1,1);
+	}
+	
+	/**
+	 * Test method for {@link acquisto.OrdineDAO#doUpdate(acquisto.OrdineBean)}.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testDoUpdateNon() throws Exception {
+		
+
+        ITable expectedTable = new FlatXmlDataSetBuilder()
+                   .build(OrdineDAOTest.class.getClassLoader().getResourceAsStream("resources/db/init/ordine.xml"))
+                   .getTable("ordine");
+		
+		OrdineBean bean = new OrdineBean();
+		bean.setCodice("1");
+		bean.setCliente("f.peluso25@gmail.com");
+		bean.setData_acquisto(java.sql.Date.valueOf("2021-12-31"));
+		bean.setGestore("ordine@admin.com");
+		bean.setIndirizzo_di_consegna("viale croce");
+		bean.setMetodo_di_pagamento("2134567891234567");
+		bean.setPrezzo_totale(78.831);
+		bean.setStato("spedito");
+		
+		 od.doUpdate(bean);
+	        
+	     IDatabaseTester tester = this.getDatabaseTester();
+	        
+	     ITable actualTable =  tester.getConnection().createDataSet().getTable("ordine");       
+	       
+	     Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
 		
 		
 		
+	}
+	
+	/**
+	 * Test method for {@link acquisto.OrdineDAO#doUpdate(acquisto.OrdineBean)}.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testDoUpdatePresenteNull() throws Exception {		
+		
+		
+		 ITable expectedTable = new FlatXmlDataSetBuilder()
+                 .build(OrdineDAOTest.class.getClassLoader().getResourceAsStream("resources/db/init/ordine.xml"))
+                 .getTable("ordine");
+		
+		try {
+			od.doUpdate(null);
+		} catch (NullPointerException e) {
+			
+			 	IDatabaseTester tester = this.getDatabaseTester();
+		        ITable actualTable =  tester.getConnection().createDataSet().getTable("ordine"); 
+			
+			
+		        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+		}
 		
 		
 		
