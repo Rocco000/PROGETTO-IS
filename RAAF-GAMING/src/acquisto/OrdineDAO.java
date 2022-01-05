@@ -154,10 +154,6 @@ public class OrdineDAO {
 			connessione.close();
 		}
 	}
-
-	public void doDelete(OrdineBean item) throws SQLException {
-
-	}
 	
 	public ArrayList<OrdineBean> ricercaPerCliente(String cliente) throws SQLException{
 		if(cliente==null)

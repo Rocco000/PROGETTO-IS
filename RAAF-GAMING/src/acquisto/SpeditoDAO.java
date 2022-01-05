@@ -45,9 +45,25 @@ public class SpeditoDAO{
 	public ArrayList<SpeditoBean> allElements(String ordinamento) throws SQLException {
 		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connesione=ds.getConnection();
-		String query="SELECT * FROM spedito ORDER BY ordine ?;";
+		String query=null;
+		
+		if(ordinamento.equals("ordine asc"))
+			query="SELECT * FROM spedito ORDER BY ordine asc;";
+	else if(ordinamento.equals("ordine desc"))
+		query="SELECT * FROM spedito ORDER BY ordine desc;";
+	else if(ordinamento.equals("corriere_espresso asc"))
+		query="SELECT * FROM spedito ORDER BY corriere_espresso asc;";
+	else if(ordinamento.equals("corriere_espresso desc"))
+		query="SELECT * FROM spedito ORDER BY corriere_espresso desc;";
+	else if(ordinamento.equals("data_consegna asc"))
+		query="SELECT * FROM spedito ORDER BY data_consegna asc;";
+	else if(ordinamento.equals("data_consegna desc"))
+		query="SELECT * FROM spedito ORDER BY data_consegna desc;";
+	else
+		throw new SQLException("Invalid ordinamento");
+		
 		PreparedStatement ps=connesione.prepareStatement(query);
-			ps.setString(1,ordinamento);
+		
 		ArrayList<SpeditoBean> a=new ArrayList<SpeditoBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {

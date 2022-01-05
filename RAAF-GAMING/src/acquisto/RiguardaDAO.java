@@ -18,17 +18,33 @@ public class RiguardaDAO{
 	
 	public ArrayList<RiguardaBean> allElements(String ordinamento) throws SQLException {
 		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
+		
 		Connection connessione= ds.getConnection();
-		String query="SELECT * FROM Riguarda WHERE riguarda.prodotto=prodotto.codice_prodotto AND riguarda.ordine=ordine.codice ORDER BY ;?";
+		String query=null;
+		
+		if(ordinamento.equals("prodotto asc"))
+			query="SELECT * FROM riguarda ORDER BY prodotto asc;";
+	else if(ordinamento.equals("prodotto desc"))
+		query="SELECT * FROM riguarda ORDER BY prodotto desc;";
+	else if(ordinamento.equals("ordine asc"))
+		query="SELECT * FROM riguarda ORDER BY ordine asc;";
+	else if(ordinamento.equals("ordine desc"))
+		query="SELECT * FROM riguarda ORDER BY ordine desc;";
+	else if(ordinamento.equals("quantita_acquistata asc"))
+		query="SELECT * FROM riguarda ORDER BY quantita_acquistata asc;";
+	else if(ordinamento.equals("quantita_acquistata desc"))
+		query="SELECT * FROM riguarda ORDER BY quantita_acquistata desc;";
+	else
+		throw new SQLException("Invalid ordinamento");
+		
 		PreparedStatement ps=connessione.prepareStatement(query);
-			ps.setString(1,ordinamento);
 		ArrayList<RiguardaBean>a=new ArrayList<RiguardaBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {
 			RiguardaBean app=new RiguardaBean();
 			app.setOrdine(risultato.getString("riguarda.ordine"));
 			app.setProdotto(risultato.getInt("riguarda.prodotto"));
-			app.setQuantita_acquistata(risultato.getInt("riguarda.qauntita_acquistata"));
+			app.setQuantita_acquistata(risultato.getInt("riguarda.quantita_acquistata"));
 			a.add(app);
 		}
 		
