@@ -19,7 +19,7 @@ public class ClienteDAO {
 	}
 	
 
-	public ClienteBean ricercaPerChiave(String id) throws SQLException {
+	public ClienteBean ricercaPerChiave(String id) throws SQLException,NullPointerException {
 		
 		if(id==null || id=="")
 			throw new NullPointerException("Inserito un id null o vuoto");
@@ -61,15 +61,39 @@ public class ClienteDAO {
 		
 		Connection connessione= ds.getConnection();//ottengo la connessione al DB
 		
-		String query="SELECT * FROM cliente ORDER BY ?;";
+		String query=null;
 		
+		if(ordinamento.equals("email asc"))
+			query="SELECT * FROM cliente ORDER BY email asc ";
+		else if(ordinamento.equals("email desc"))
+			query="SELECT * FROM cliente ORDER BY email desc ";
+		else if(ordinamento.equals("nome asc"))
+			query="SELECT * FROM cliente ORDER BY nome asc ";
+		else if(ordinamento.equals("nome desc"))
+			query="SELECT * FROM cliente ORDER BY nome desc ";
+		else if(ordinamento.equals("cognome asc"))
+			query="SELECT * FROM cliente ORDER BY cognome asc ";
+		else if(ordinamento.equals("cognome desc"))
+			query="SELECT * FROM cliente ORDER BY cognome desc ";
+		else if(ordinamento.equals("password asc"))
+			query="SELECT * FROM cliente ORDER BY password asc ";
+		else if(ordinamento.equals("password desc"))
+			query="SELECT * FROM cliente ORDER BY password desc ";
+		else if(ordinamento.equals("carta_fedelta asc"))
+			query="SELECT * FROM cliente ORDER BY carta_fedelta asc ";
+		else if(ordinamento.equals("carta_fedelta desc"))
+			query="SELECT * FROM cliente ORDER BY carta_fedelta desc";
+		else if(ordinamento.equals("cartadicredito asc"))
+			query="SELECT * FROM cliente ORDER BY cartadicredito asc ";
+		else if(ordinamento.equals("cartadicredito desc"))
+			query="SELECT * FROM cliente ORDER BY cartadicredito desc ";
+		
+		else
+			throw new SQLException("ordinamento scritto in modo errato");
 		PreparedStatement ps= connessione.prepareStatement(query);
 		
-		ps.setString(1, ordinamento);
-		
-		ResultSet risultato= ps.executeQuery();//eseguo la query
 		ArrayList<ClienteBean> a= new ArrayList<ClienteBean>();//mi salvo tutte le righe dei clienti che ho ottenuto dalla query
-		
+		ResultSet risultato= ps.executeQuery();
 		while(risultato.next()) {
 		
 			ClienteBean app= new ClienteBean();//creo un ClienteBean d'appoggio per salvarmi i campi della riga man mano

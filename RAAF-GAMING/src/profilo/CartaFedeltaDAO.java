@@ -17,7 +17,7 @@ public class CartaFedeltaDAO {
 
 
 
-	public CartaFedeltaBean ricercaPerChiave(String id) throws SQLException {
+	public CartaFedeltaBean ricercaPerChiave(String id) throws SQLException,NullPointerException {
 		
 		if(id==null || id=="")
 			throw new NullPointerException("Inserito un id null o vuoto");
@@ -49,11 +49,16 @@ public class CartaFedeltaDAO {
 			throw new NullPointerException("Inserito un ordinamento null o vuoto");
 		
 		Connection connessione= ds.getConnection();
-		String query="SELECT * FROM cartafedelta ORDER BY ?;";
+		String query=null;
+		if(ordinamento.equals("codice asc"))
+			query="SELECT * FROM cartafedelta ORDER BY codice asc ";
+		else if(ordinamento.equals("codice desc"))
+			query="SELECT * FROM cartafedelta ORDER BY codice desc ";
+		else if(ordinamento.equals("punti asc"))
+			query="SELECT * FROM cartafedelta ORDER BY punti asc ";
+		else if(ordinamento.equals("punti desc"))
+			query="SELECT * FROM cartafedelta ORDER BY punti desc ";
 		PreparedStatement ps= connessione.prepareStatement(query);
-
-		ps.setString(1,ordinamento);
-
 		ArrayList<CartaFedeltaBean> a= new ArrayList<CartaFedeltaBean>();
 		ResultSet risultato= ps.executeQuery();
 		while(risultato.next()) {
@@ -87,7 +92,7 @@ public class CartaFedeltaDAO {
 
 	public void doUpdate(CartaFedeltaBean item) throws SQLException {
 		
-		if(item.getCodice()==null || item.getCodice()=="")
+		if(item.getCodice()==null)
 			throw new NullPointerException("Inserito un id null o vuoto");
 		
 		Connection con = ds.getConnection();

@@ -16,7 +16,7 @@ public class CartaDiCreditoDAO {
 		ds=d;
 	}
 	
-	public CartaDiCreditoBean ricercaPerChiave(String id) throws SQLException
+	public CartaDiCreditoBean ricercaPerChiave(String id) throws SQLException,NullPointerException
 	{
 		if(id==null || id=="")
 			throw new NullPointerException("Inserito un id null o vuoto");
