@@ -122,18 +122,27 @@ public class ProdottoDAO{
 	public ProdottoBean getMax() throws SQLException
 	{
 		Connection con = ds.getConnection();
-		String str = "SELECT MAX(codice_prodotto) AS massimo FROM prodotto;";
+		String str = "select * from prodotto where codice_prodotto = (SELECT MAX(codice_prodotto) AS massimo FROM prodotto);";
 		PreparedStatement ps = con.prepareStatement(str);
 		ResultSet st = ps.executeQuery();
-		ProdottoBean prod = new ProdottoBean();
+		ProdottoBean bean = new ProdottoBean();
 		if(st.next())
 		{
-			prod.setCodice_prodotto(st.getInt("massimo"));
+			bean.setCodice_prodotto(st.getInt("codice_prodotto"));
+			bean.setCopertina(st.getBytes("copertina"));
+			bean.setData_uscita(st.getDate("data_uscita"));
+			bean.setFornitore(st.getString("fornitore"));
+			bean.setNome(st.getString("nome"));
+			bean.setPrezzo(st.getDouble("prezzo"));
+			bean.setQuantita_fornitura(st.getInt("quantita_fornitura"));
+			bean.setSconto(st.getInt("sconto"));
+			bean.setUltima_fornitura(st.getDate("data_fornitura"));
+			bean.setGestore(st.getString("gestore"));
 		}
 		st.close();
 		ps.close();
 		con.close();
-		return prod;
+		return bean;
 	}
 
 	public ArrayList<ProdottoBean> allElements(String ordinamento) throws SQLException {

@@ -250,33 +250,63 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 			}
 	}
 	
-	/*public void testNewInsertNew() throws Exception {      
+	public void testNewInsertNew() throws Exception {      
 	      
-        ITable expectedTable = new FlatXmlDataSetBuilder()
-                   .build(OrdineDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/prodotto.xml"))
-                   .getTable("prodotto");
-     
-        ProdottoBean b = new ProdottoBean();
-		b.setCodice_prodotto(3);
-		b.setFornitore("2K");
-		b.setGestore("prodotto@admin.com");
-		b.setPrezzo(11.0);
-		b.setSconto(0);
-		b.setQuantita_fornitura(100);
-		b.setUltima_fornitura(java.sql.Date.valueOf("2021-02-20"));
-		b.setData_uscita(java.sql.Date.valueOf("2021-12-22"));
-		b.setNome("WWE2K22");
+		DataSource dataSource = new JdbcDataSource();
+        ((JdbcDataSource) dataSource).setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;init=runscript from 'classpath:resources/db/init/prodotto.sql'");
+        ((JdbcDataSource) dataSource).setUser("root");
+        ((JdbcDataSource) dataSource).setPassword("veloce123");
         
-		prod.newInsert(b);
+       IDataSet i = new FlatXmlDataSetBuilder().build(this.getClass().getClassLoader().getResourceAsStream("resources/db/init/prodotto.xml"));
+        
+       ITable expectedTable = new FlatXmlDataSetBuilder()
+               .build(OrdineDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/prodotto.xml"))
+               .getTable("prodotto");
        
-       IDatabaseTester tester = this.getDatabaseTester();
-       
-       ITable actualTable =  tester.getConnection().createDataSet().getTable("prodotto");       
-      
-     
-      Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+
+       ProdottoBean b1 = new ProdottoBean();
+		b1.setCodice_prodotto(3);
+		b1.setFornitore("2K");
+		b1.setGestore("prodotto@admin.com");
+		b1.setPrezzo(11);
+		b1.setSconto(0);
+		b1.setQuantita_fornitura(100);
+		b1.setUltima_fornitura(java.sql.Date.valueOf("2021-02-20"));
+		b1.setData_uscita(java.sql.Date.valueOf("2020-12-22"));
+		b1.setNome("WWE2K22");
 		
-	}*/
+      
+		
+		ProdottoDAO d = new ProdottoDAO(dataSource);
+		
+		d.newInsert(b1);
+       
+		 IDatabaseTester tester = this.getDatabaseTester();
+       
+		 ITable actualTable =  tester.getConnection().createDataSet().getTable("prodotto");
+		 
+		 SortedTable s1 = new SortedTable(expectedTable);
+		 SortedTable s2 = new SortedTable(actualTable);
+		 
+		 
+		 assertEquals(expectedTable.getRowCount(),actualTable.getRowCount());
+
+		 for(int c=0;c<expectedTable.getRowCount();c++)
+		 {
+			 
+			 assertEquals(s1.getValue(c,"codice_prodotto").toString(),s2.getValue(c,"codice_prodotto").toString());
+			 assertEquals(s1.getValue(c,"prezzo").toString(),s2.getValue(c,"prezzo").toString());
+			 assertEquals(s1.getValue(c,"sconto").toString(),s2.getValue(c,"sconto").toString());
+			 assertEquals(s1.getValue(c,"data_uscita").toString(),s2.getValue(c,"data_uscita").toString());
+			 assertEquals(s1.getValue(c,"nome").toString(),s2.getValue(c,"nome").toString());
+			 assertEquals(s1.getValue(c,"quantita_fornitura").toString(),s2.getValue(c,"quantita_fornitura").toString());
+			 assertEquals(s1.getValue(c,"data_fornitura").toString(),s2.getValue(c,"data_fornitura").toString());
+			 assertEquals(s1.getValue(c,"gestore").toString(),s2.getValue(c,"gestore").toString());
+		 }
+	       
+		
+		
+	}
 	
 	public void testricercaPerNome() throws SQLException {
 		ArrayList<ProdottoBean> a = prod.ricercaPerNome("FIFA");
@@ -402,7 +432,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 			}
 	}
 	
-		/*public void testDoUpdatePresente() throws Exception {
+		public void testDoUpdatePresente() throws Exception {
 		
 		DataSource dataSource = new JdbcDataSource();
         ((JdbcDataSource) dataSource).setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;init=runscript from 'classpath:resources/db/init/prodotto.sql'");
@@ -435,38 +465,43 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
        
 		 IDatabaseTester tester = this.getDatabaseTester();
        
-		 ITable actualTable =  tester.getConnection().createDataSet().getTable("prodotto");       
+		 ITable actualTable =  tester.getConnection().createDataSet().getTable("prodotto");   
+		 
+		 SortedTable s1 = new SortedTable(expectedTable);
+		 SortedTable s2 = new SortedTable(actualTable);
+		 
+		 
+		 assertEquals(expectedTable.getRowCount(),actualTable.getRowCount());
+
+		 for(int c=0;c<expectedTable.getRowCount();c++)
+		 {
+			 
+			 assertEquals(s1.getValue(c,"codice_prodotto").toString(),s2.getValue(c,"codice_prodotto").toString());
+			 assertEquals(s1.getValue(c,"prezzo").toString(),s2.getValue(c,"prezzo").toString());
+			 assertEquals(s1.getValue(c,"sconto").toString(),s2.getValue(c,"sconto").toString());
+			 assertEquals(s1.getValue(c,"data_uscita").toString(),s2.getValue(c,"data_uscita").toString());
+			 assertEquals(s1.getValue(c,"nome").toString(),s2.getValue(c,"nome").toString());
+			 assertEquals(s1.getValue(c,"quantita_fornitura").toString(),s2.getValue(c,"quantita_fornitura").toString());
+			 assertEquals(s1.getValue(c,"data_fornitura").toString(),s2.getValue(c,"data_fornitura").toString());
+			 assertEquals(s1.getValue(c,"gestore").toString(),s2.getValue(c,"gestore").toString());
+		 }
 	       
-	     Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
 		
-	}*/
+	} 
 		
 		public void testGetMax() throws Exception {
 			ProdottoBean a = prod.getMax();
-			ProdottoBean b = new ProdottoBean();	
 			
-			 ProdottoBean b1 = new ProdottoBean();
-				b1.setCodice_prodotto(2);
-				b1.setFornitore("Activision");
-				b1.setGestore("prodotto@admin.com");
-				b1.setPrezzo(15.5);
-				b1.setSconto(0);
-				b1.setQuantita_fornitura(102);
-				b1.setUltima_fornitura(java.sql.Date.valueOf("2020-12-20"));
-				b1.setData_uscita(java.sql.Date.valueOf("2020-12-22"));
-				b1.setNome("PES");
 				
-				System.out.println(a.getCodice_prodotto());
-				
-				assertEquals(a.getCodice_prodotto(),b.getCodice_prodotto());
-				assertEquals(a.getFornitore(),b.getFornitore());
-				assertEquals(a.getGestore(),b.getGestore());
-				assertEquals(a.getPrezzo(),b.getPrezzo());
-				assertEquals(a.getSconto(),b.getSconto());
-				assertEquals(a.getQuantita_fornitura(),b.getQuantita_fornitura());
-				assertEquals(a.getUltima_fornitura(),b.getUltima_fornitura());
-				assertEquals(a.getData_uscita(),b.getData_uscita());
-				assertEquals(a.getNome(),b.getNome());
+				assertEquals(a.getCodice_prodotto(),2);
+				assertEquals(a.getFornitore(),"Activision");
+				assertEquals(a.getGestore(),"prodotto@admin.com");
+				assertEquals(a.getPrezzo(),15.5);
+				assertEquals(a.getSconto(),0);
+				assertEquals(a.getQuantita_fornitura(),12);
+				assertEquals(a.getUltima_fornitura().toString(),"2019-12-20");
+				assertEquals(a.getData_uscita().toString(),"2020-12-22");
+				assertEquals(a.getNome(),"PES");
 		}
 
 }
