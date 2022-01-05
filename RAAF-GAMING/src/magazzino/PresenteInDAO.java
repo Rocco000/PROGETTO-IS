@@ -18,8 +18,8 @@ public class PresenteInDAO{
 		this.ds = ds;
 	}
 	
-	public ArrayList<PresenteInBean> ricercaPerProdotto(String id) throws SQLException {
-		if(id==null || id=="")throw new NullPointerException();
+	public ArrayList<PresenteInBean> ricercaPerProdotto(String id) throws SQLException,NullPointerException {
+		if(id==null || id=="")throw new NullPointerException("id null o stringa vuota");
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM presente_in WHERE prodotto=?;";
 		PreparedStatement ps = con.prepareStatement(str);
@@ -41,16 +41,20 @@ public class PresenteInDAO{
 		return app;
 	}
 	
-	public PresenteInBean ricercaPerChiave(int id1,String id2) throws SQLException {
+	public PresenteInBean ricercaPerChiave(int id1,String id2) throws SQLException,NullPointerException {
+		if(id1<0 || id2==null || id2.equals(""))
+			throw new NullPointerException("id1 negativo e/o id2 e' null o id2 e' stringa vuota");
+		
 		Connection con = ds.getConnection();
-		String str = "SELECT * FROM presente_in WHERE prodotto=? && magazzino=? ;";
+		String str = "SELECT * FROM presente_in WHERE prodotto=? AND magazzino=? ;";
 		PreparedStatement ps = con.prepareStatement(str);
 		ps.setInt(1,id1);
 		ps.setString(2,id2);
 		ResultSet st = ps.executeQuery();
-		PresenteInBean bean = new PresenteInBean();
-		while(st.next())
+		PresenteInBean bean = null;
+		if(st.next())
 		{
+			bean= new PresenteInBean();
 			bean.setMagazzino(st.getString("magazzino"));
 			bean.setProdotto(st.getInt("prodotto"));
 			bean.setQuantita_disponibile(st.getInt("quantita_disponibile"));
@@ -63,12 +67,28 @@ public class PresenteInDAO{
 	}
 
 
-	    public ArrayList<PresenteInBean> allElements(String ordinamento) throws SQLException {
+	public ArrayList<PresenteInBean> allElements(String ordinamento) throws SQLException,NullPointerException {
 	    if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection con = ds.getConnection();
-		String str = "SELECT * FROM presente_in ORDER BY ?;";
+		
+		String str ;
+		if(ordinamento.equals("magazzino asc"))
+			str = "SELECT * FROM presente_in ORDER BY magazzino asc;";
+		else if(ordinamento.equals("magazzino desc"))
+			str = "SELECT * FROM presente_in ORDER BY magazzino desc;";
+		else if(ordinamento.equals("prodotto asc"))
+			str = "SELECT * FROM presente_in ORDER BY prodotto asc;";
+		else if(ordinamento.equals("prodotto desc"))
+			str = "SELECT * FROM presente_in ORDER BY prodotto desc;";
+		else if(ordinamento.equals("quantita_disponibile asc"))
+			str = "SELECT * FROM presente_in ORDER BY quantita_disponibile asc;";
+		else if(ordinamento.equals("quantita_disponibile asc"))
+			str = "SELECT * FROM presente_in ORDER BY quantita_disponibile asc;";
+		else
+			throw new SQLException("ordinamento non valido");
+		
+		
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1, ordinamento);
 		ResultSet st = ps.executeQuery();
 		ArrayList<PresenteInBean> array = new ArrayList<PresenteInBean>();
 		while(st.next())
@@ -87,8 +107,8 @@ public class PresenteInDAO{
 	}
 
 
-	public void newInsert(PresenteInBean item) throws SQLException {
-		if(item==null)throw new NullPointerException();
+	public void newInsert(PresenteInBean item) throws SQLException,NullPointerException {
+		if(item==null)throw new NullPointerException("item e' null");
 		Connection con = ds.getConnection();
 		String str = "INSERT INTO presente_in VALUES(?,?,?);";
 		PreparedStatement ps = con.prepareStatement(str);
@@ -101,8 +121,8 @@ public class PresenteInDAO{
 	}
 
 
-	public void doUpdate(PresenteInBean item) throws SQLException {
-		if(item==null)throw new NullPointerException();
+	public void doUpdate(PresenteInBean item) throws SQLException,NullPointerException {
+		if(item==null)throw new NullPointerException("item e' null");
 		Connection con = ds.getConnection();
 		String str = "UPDATE presente_in SET quantita_disponibile=quantita_disponibile-1 where prodotto=? AND magazzino=?;";
 		PreparedStatement ps = con.prepareStatement(str);
@@ -113,8 +133,8 @@ public class PresenteInDAO{
 		con.close();
 	}
 	
-	public void rifornitura(PresenteInBean item) throws SQLException {
-		if(item==null)throw new NullPointerException();
+	public void rifornitura(PresenteInBean item) throws SQLException,NullPointerException {
+		if(item==null)throw new NullPointerException("item e' null");
 		Connection con = ds.getConnection();
 		String str = "UPDATE presente_in SET quantita_disponibile=? where prodotto=? AND magazzino=?;";
 		PreparedStatement ps = con.prepareStatement(str);
@@ -127,8 +147,8 @@ public class PresenteInDAO{
 	}
 
 
-	public ArrayList<PresenteInBean> ricercaPerMagazzino(String id) throws SQLException{
-		if(id==null || id=="")throw new NullPointerException();
+	public ArrayList<PresenteInBean> ricercaPerMagazzino(String id) throws SQLException,NullPointerException{
+		if(id==null || id=="")throw new NullPointerException("id e' null");
 		Connection cn=ds.getConnection();
 		String str="SELECT * FROM presente_in WHERE magazzino=?;";
 		PreparedStatement ps=cn.prepareStatement(str);

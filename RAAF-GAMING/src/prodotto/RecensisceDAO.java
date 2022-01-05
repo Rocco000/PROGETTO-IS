@@ -22,8 +22,8 @@ public class RecensisceDAO{
 		ds=d;
 	}
 	
-	public RecensisceBean ricercaPerChiave(String cliente,int prodotto) throws SQLException {
-		if((cliente==null || cliente==""))throw new NullPointerException("prodotto o cliente è vuoto o null");
+	public RecensisceBean ricercaPerChiave(String cliente,int prodotto) throws SQLException,NullPointerException{
+		if((cliente==null || cliente=="" || prodotto<0))throw new NullPointerException("prodotto o cliente è vuoto o null");
 		Connection connessione = ds.getConnection();
 		String Query="SELECT * FROM recensisce WHERE prodotto=? and cliente=?;";
 		
@@ -50,7 +50,8 @@ public class RecensisceDAO{
 
 	}
 	
-	public ArrayList<RecensisceBean> ricercaPerProdotto(int id) throws SQLException{
+	public ArrayList<RecensisceBean> ricercaPerProdotto(int id) throws SQLException,NullPointerException{
+		if(id<0) throw new NullPointerException("id non valido");
 		Connection connessione = ds.getConnection();
 		String Query="SELECT * FROM recensisce WHERE prodotto=?;";
 		

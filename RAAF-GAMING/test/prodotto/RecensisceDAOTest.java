@@ -210,6 +210,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
+	
 	public void testAllElementsNULL() throws SQLException
 	{
 		ArrayList<RecensisceBean> a = null;
@@ -332,12 +333,12 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 		}
 	}
 	
-	public void testRicercaPerProdottoMinDiZero() throws NullPointerException
+	public void testRicercaPerProdottoMinDiZero() throws SQLException
 	{
 		ArrayList<RecensisceBean> a = null;
 		try {
 		a = rec.ricercaPerProdotto(-1);
-		}catch(SQLException e)
+		}catch(NullPointerException e)
 		{
 			assertNull(a);
 		}
