@@ -5,6 +5,8 @@ package acquisto;
 
 import static org.junit.Assert.*;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -550,28 +552,25 @@ public class OrdineDAOTest  extends DataSourceBasedDBTestCase {
 		
 	}
 	
+	
+	/**
+	 * Test method for {@link acquisto.OrdineDAO#getOrdiniNonConsegnati()}.
+	 * @throws SQLException 
+	 */
 	@Test
-	public void testGetOrdiniNonConsegnati() throws SQLException, DataSetException {
+	public void testGetOrdiniNonConsegnati() throws Exception {
+
+		ds.getConnection().prepareStatement("INSERT INTO ordine values('15280754013',"+"'"+java.sql.Date.valueOf("2019-11-31")+"'"+",'viale croce','a.maddaloni25@gmail.com','80',null,'elaborazione','2134567891234567');").executeUpdate();
 		
-		DataSource dataSource = new JdbcDataSource();
-        ((JdbcDataSource) dataSource).setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;init=runscript from 'classpath:resources/db/init/ordine.sql'");
-        ((JdbcDataSource) dataSource).setUser("root");
-        ((JdbcDataSource) dataSource).setPassword("veloce123");
-        
-        
-        //Riuso ordini update perche e il file che contiene un ordine non spedito, altrimenti non potevo testare il metodo
-       IDataSet i = new FlatXmlDataSetBuilder().build(this.getClass().getClassLoader().getResourceAsStream("resources/db/init/ordininonconsegnati.xml"));
-        
-       
-       OrdineDAO o = new OrdineDAO(dataSource);
 		
-		ArrayList<OrdineBean> a = o.getOrdiniNonConsegnati();
+		ArrayList<OrdineBean> a = od.getOrdiniNonConsegnati();
 
 		if(a.size()==0)
 			fail("Size 0");
 		
 		for(OrdineBean b : a)
 			assertNull(b.getGestore());
+			
 	}
 	
 	/**

@@ -19,12 +19,12 @@ public class ParteDiDAO{
 	}
 
 
-	public ParteDiBean ricercaPerChiave(String id1,String id2) throws SQLException {
-		if(id1==null || id2==null)throw new NullPointerException("id1 null o id2 null");
+	public ParteDiBean ricercaPerChiave(int id1,String id2) throws SQLException,NullPointerException{
+		if(id1<0 || id2==null)throw new NullPointerException("id1 non valido o id2 null");
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM parte_di WHERE videogioco=? AND categoria=? ;";
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1,id1);
+		ps.setInt(1,id1);
 		ps.setString(2, id2);
 		ResultSet st = ps.executeQuery();
 		ParteDiBean bean = new ParteDiBean();
@@ -44,9 +44,23 @@ public class ParteDiDAO{
 	public ArrayList<ParteDiBean> allElements(String ordinamento) throws SQLException {
 		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection con = ds.getConnection();
-		String str = "SELECT * FROM parte_di ORDER BY ?;";
-		PreparedStatement ps = con.prepareStatement(str);	
-			ps.setString(1, ordinamento);
+		
+		String query=null;
+		
+		if(ordinamento.equals("videogioco asc"))
+			query="SELECT * FROM parte_di ORDER BY  videogioco asc";
+		else if(ordinamento.equals("videogioco desc"))
+			query="SELECT * FROM parte_di ORDER BY videogioco desc";
+		else if(ordinamento.equals("categoria asc"))
+			query="SELECT * FROM parte_di ORDER BY  categoria asc";
+		else if(ordinamento.equals("categoria desc"))
+			query="SELECT * FROM parte_di ORDER BY categoria desc";
+
+		else
+			throw new SQLException("ordinamento scritto in modo errato");
+	
+		PreparedStatement ps = con.prepareStatement(query);	
+			
 		ResultSet st = ps.executeQuery();
 		ArrayList<ParteDiBean> array = new ArrayList<ParteDiBean>();
 		while(st.next())
@@ -77,7 +91,7 @@ public class ParteDiDAO{
 
 
 	
-	public ArrayList<ParteDiBean> ricercaPerCategoria(String id) throws SQLException {
+	public ArrayList<ParteDiBean> ricercaPerCategoria(String id) throws SQLException,NullPointerException {
 		if(id==null || id=="")throw new NullPointerException("id null o vuoto");
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM parte_di WHERE categoria=?;";
