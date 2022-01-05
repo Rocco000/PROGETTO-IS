@@ -16,7 +16,7 @@ public class VideogiocoDAO{
 		ds=d;
 	}
 	
-	public VideogiocoBean ricercaPerChiave(String code) throws SQLException {
+	public VideogiocoBean ricercaPerChiave(String code) throws SQLException,NullPointerException {
 		if(code==null||code=="")throw new NullPointerException("code vuoto o null");
 		Connection connessione = ds.getConnection();
 		String query="SELECT * FROM videogioco WHERE prodotto=?;";
@@ -51,13 +51,43 @@ public class VideogiocoDAO{
 	}
 
 	
-	public ArrayList<VideogiocoBean> allElements(String ordinamento) throws SQLException {
+	public ArrayList<VideogiocoBean> allElements(String ordinamento) throws SQLException, NullPointerException {
 		if(ordinamento==null||ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection connessione=ds.getConnection();
-		String query="SELECT * FROM videogioco,prodotto WHERE videogioco.prodotto=prodotto.codice_prodotto ORDER BY ?;";
+		String query=null;
+		if(ordinamento.equals("prodotto asc"))
+			query="SELECT * FROM videogioco ORDER BY prodotto asc;";
+		else if(ordinamento.equals("prodotto desc"))
+			query="SELECT * FROM videogioco ORDER BY prodotto desc;";
+		else if(ordinamento.equals("dimensione asc"))
+			query="SELECT * FROM videogioco ORDER BY dimensione asc;";
+		else if(ordinamento.equals("dimensione desc"))
+			query="SELECT * FROM videogioco ORDER BY dimensione desc;";
+		else if(ordinamento.equals("pegi asc"))
+			query="SELECT * FROM videogioco ORDER BY pegi asc;";
+		else if(ordinamento.equals("pegi desc"))
+			query="SELECT * FROM videogioco ORDER BY pegi desc;";
+		else if(ordinamento.equals("edizione_limitata asc"))
+			query="SELECT * FROM videogioco ORDER BY edizione_limitata asc;";
+		else if(ordinamento.equals("edizione_limitata desc"))
+			query="SELECT * FROM videogioco ORDER BY edizione_limitata desc;";
+		else if(ordinamento.equals("ncd asc"))
+			query="SELECT * FROM videogioco ORDER BY ncd asc;";
+		else if(ordinamento.equals("ncd desc"))
+			query="SELECT * FROM videogioco ORDER BY ncd desc;";
+		else if(ordinamento.equals("vkey asc"))
+			query="SELECT * FROM videogioco ORDER BY vkey asc;";
+		else if(ordinamento.equals("vkey desc"))
+			query="SELECT * FROM videogioco ORDER BY vkey desc;";
+		else if(ordinamento.equals("software_house asc"))
+			query="SELECT * FROM videogioco ORDER BY software_house asc;";
+		else if(ordinamento.equals("software_house desc"))
+			query="SELECT * FROM videogioco ORDER BY software_house desc;";
+		else
+			throw new SQLException("ordinamento non valido");
 		
 		PreparedStatement ps= connessione.prepareStatement(query);
-			ps.setString(1, ordinamento);
+		
 		ArrayList<VideogiocoBean>a=new ArrayList<VideogiocoBean>();
 		ResultSet risultato=ps.executeQuery();
 		while(risultato.next()) {
@@ -82,7 +112,7 @@ public class VideogiocoDAO{
 	}
 
 	
-	public void newInsert(VideogiocoBean item) throws SQLException {
+	public void newInsert(VideogiocoBean item) throws SQLException, NullPointerException {
 		if(item==null)throw new NullPointerException("item null");
 		Connection con = ds.getConnection();
 		String str = "INSERT INTO videogioco VALUES(?,?,?,?,?,?,?);";
@@ -106,19 +136,22 @@ public class VideogiocoDAO{
 	
 	public VideogiocoBean getTopRecensione() throws SQLException{
 		Connection connessione=ds.getConnection();
-		String query="SELECT v.*,recensione.voto_medio_assegnato FROM videogioco v,(SELECT r.prodotto as codice_prodotto, avg(voto) as voto_medio_assegnato FROM recensisce r GROUP BY r.prodotto) as recensione WHERE v.prodotto = recensione.codice_prodotto ORDER BY recensione.voto_medio_assegnato desc;";
+		//VECCHIA QUERY:
+		//SELECT v.*,recensione.voto_medio_assegnato FROM videogioco v,(SELECT r.prodotto as codice_prodotto, avg(voto) as voto_medio_assegnato FROM recensisce r GROUP BY r.prodotto) as recensione WHERE v.prodotto = recensione.codice_prodotto ORDER BY recensione.voto_medio_assegnato desc;
+
+		String query="SELECT videogioco.*,recensione.voto_medio_assegnato FROM videogioco,(SELECT r.prodotto as codice_prodotto, avg(voto) as voto_medio_assegnato FROM recensisce r GROUP BY r.prodotto) as recensione WHERE videogioco.prodotto = recensione.codice_prodotto ORDER BY recensione.voto_medio_assegnato desc;";
 		PreparedStatement ps= connessione.prepareStatement(query);
 		ResultSet risultato= ps.executeQuery();
 		
 		if(risultato.next()) {
 			VideogiocoBean migliorVideogioco= new VideogiocoBean();
-			migliorVideogioco.setDimensione(risultato.getDouble("v.dimensione"));
-			migliorVideogioco.setEdizione_limitata(risultato.getBoolean("v.edizione_limitata"));
-			migliorVideogioco.setNcd(risultato.getInt("v.ncd"));
-			migliorVideogioco.setPegi(risultato.getInt("v.pegi"));
-			migliorVideogioco.setProdotto(risultato.getInt("v.prodotto"));
-			migliorVideogioco.setSoftware_house(risultato.getString("v.software_house"));
-			migliorVideogioco.setVkey(risultato.getString("v.vkey"));
+			migliorVideogioco.setDimensione(risultato.getDouble("videogioco.dimensione"));
+			migliorVideogioco.setEdizione_limitata(risultato.getBoolean("videogioco.edizione_limitata"));
+			migliorVideogioco.setNcd(risultato.getInt("videogioco.ncd"));
+			migliorVideogioco.setPegi(risultato.getInt("videogioco.pegi"));
+			migliorVideogioco.setProdotto(risultato.getInt("videogioco.prodotto"));
+			migliorVideogioco.setSoftware_house(risultato.getString("videogioco.software_house"));
+			migliorVideogioco.setVkey(risultato.getString("videogioco.vkey"));
 			
 			risultato.close();
 			ps.close();
@@ -134,7 +167,7 @@ public class VideogiocoDAO{
 		
 	}
 	
-	public VideogiocoBean getUltimoUscito(int code) throws SQLException{
+	public VideogiocoBean getUltimoUscito(int code) throws SQLException,NullPointerException{
 		if(code<=0)throw new NullPointerException("code minore di 0");
 		Connection connessione=ds.getConnection();
 		String query="SELECT videogioco.* FROM videogioco,prodotto,(SELECT MAX(prodotto.data_uscita) AS ultimo FROM prodotto,videogioco WHERE prodotto.codice_prodotto=videogioco.prodotto AND prodotto.codice_prodotto!=?) AS temp WHERE videogioco.prodotto=prodotto.codice_prodotto AND prodotto.data_uscita=temp.ultimo;";
@@ -159,7 +192,7 @@ public class VideogiocoDAO{
 		}
 	}
 	
-	public ArrayList<VideogiocoBean> getVideogiochiScontati(int code1,int code2) throws SQLException{
+	public ArrayList<VideogiocoBean> getVideogiochiScontati(int code1,int code2) throws SQLException, NullPointerException{
 		if((code1<=0 && code2<=0) && code1==code2)throw new NullPointerException("code1 e code2 minoro o uguale a 0 oppure sono uguali");
 		Connection connessione=ds.getConnection();
 		String query="SELECT videogioco.* FROM prodotto,videogioco WHERE prodotto.codice_prodotto=videogioco.prodotto AND sconto>0 AND prodotto.codice_prodotto!=? AND prodotto.codice_prodotto!=?;";
