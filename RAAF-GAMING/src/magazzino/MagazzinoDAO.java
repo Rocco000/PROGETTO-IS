@@ -19,16 +19,17 @@ public class MagazzinoDAO{
 		this.ds = ds;
 	}
 
-	public MagazzinoBean  ricercaPerChiave(String id) throws SQLException {
-		if(id==null || id=="")throw new NullPointerException();
+	public MagazzinoBean  ricercaPerChiave(String id) throws SQLException,NullPointerException {
+		if(id==null || id=="")throw new NullPointerException("id null o stringa vuota");
 		Connection con = ds.getConnection();
 		String str = "SELECT * FROM magazzino WHERE indirizzo=? ;";
 		PreparedStatement ps = con.prepareStatement(str);
 		ps.setString(1,id);
 		ResultSet st = ps.executeQuery();
-		MagazzinoBean bean = new MagazzinoBean();
-		while(st.next())
+		MagazzinoBean bean = null;
+		if(st.next())
 		{
+			bean= new MagazzinoBean();
 			bean.setIndirizzo(st.getString("indirizzo"));
 			bean.setCapienza(st.getInt("capienza"));
 		}
@@ -44,10 +45,21 @@ public class MagazzinoDAO{
 	public ArrayList<MagazzinoBean> allElements(String ordinamento) throws SQLException {
 		if(ordinamento==null || ordinamento=="")throw new NullPointerException("ordinamento vuoto o null");
 		Connection con = ds.getConnection();
-		String str = "SELECT * FROM magazzino ORDER BY ?;";
-		PreparedStatement ps = con.prepareStatement(str);
+		String str;
 		
-			ps.setString(1, ordinamento);
+		if(ordinamento.equals("indirizzo asc"))
+			str = "SELECT * FROM magazzino ORDER BY indirizzo asc;";
+		else if(ordinamento.equals("indirizzo desc"))
+			str = "SELECT * FROM magazzino ORDER BY indirizzo desc;";
+		else if(ordinamento.equals("capienza asc"))
+			str = "SELECT * FROM magazzino ORDER BY capienza asc;";
+		else if(ordinamento.equals("capienza desc"))
+			str = "SELECT * FROM magazzino ORDER BY capienza desc;";
+		else
+			throw new SQLException("ordinamento scritto in modo errato");
+		
+		PreparedStatement ps = con.prepareStatement(str);
+	
 
 		ResultSet st = ps.executeQuery();
 		ArrayList<MagazzinoBean> array = new ArrayList<MagazzinoBean>();
