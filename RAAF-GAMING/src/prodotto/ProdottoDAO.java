@@ -41,6 +41,7 @@ public class ProdottoDAO{
 				bean.setQuantita_fornitura(st.getInt("quantita_fornitura"));
 				bean.setSconto(st.getInt("sconto"));
 				bean.setUltima_fornitura(st.getDate("data_fornitura"));
+				bean.setGestore(st.getString("gestore"));
 				
 				st.close();
 				ps.close();
@@ -76,7 +77,7 @@ public class ProdottoDAO{
 				bean.setQuantita_fornitura(st.getInt("quantita_fornitura"));
 				bean.setSconto(st.getInt("sconto"));
 				bean.setUltima_fornitura(st.getDate("data_fornitura"));
-				
+				bean.setGestore(st.getString("gestore"));
 				b.add(bean);
 			}
 			st.close();
@@ -86,7 +87,7 @@ public class ProdottoDAO{
 		}
 	}
 	
-	public ArrayList<ProdottoBean> ricercaPerNome(String nome) throws SQLException {
+	public ArrayList<ProdottoBean> ricercaPerNome(String nome) throws SQLException,NullPointerException {
 		if(nome==null)
 			throw new NullPointerException("nome e' null");
 		else {
@@ -108,7 +109,7 @@ public class ProdottoDAO{
 				bean.setQuantita_fornitura(st.getInt("quantita_fornitura"));
 				bean.setSconto(st.getInt("sconto"));
 				bean.setUltima_fornitura(st.getDate("data_fornitura"));
-				
+				bean.setGestore(st.getString("gestore"));
 				b.add(bean);
 			}
 			st.close();
@@ -141,9 +142,59 @@ public class ProdottoDAO{
 			throw new NullPointerException("ordinamento e' null o stringa vuota");
 		
 		Connection con = ds.getConnection();
-		String str = "SELECT * FROM prodotto ORDER BY ?;";
-		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1,ordinamento);
+		
+		String query=null;
+		
+		if(ordinamento.equals("codice_prodotto asc"))
+			query="SELECT * FROM prodotto ORDER BY codice_prodotto asc ";
+		else if(ordinamento.equals("codice_prodotto desc"))
+			query="SELECT * FROM prodotto ORDER BY codice_prodotto desc ";
+		
+		else if(ordinamento.equals("prezzo asc"))
+			query="SELECT * FROM prodotto ORDER BY prezzo asc ";
+		else if(ordinamento.equals("prezzo desc"))
+			query="SELECT * FROM prodotto ORDER BY prezzo desc ";
+		
+		else if(ordinamento.equals("sconto asc"))
+			query="SELECT * FROM prodotto ORDER BY sconto asc ";
+		else if(ordinamento.equals("sconto desc"))
+			query="SELECT * FROM prodotto ORDER BY sconto desc ";
+		
+		else if(ordinamento.equals("data_uscita asc"))
+			query="SELECT * FROM prodotto ORDER BY data_uscita asc ";
+		else if(ordinamento.equals("data_uscita desc"))
+			query="SELECT * FROM prodotto ORDER BY data_uscita desc ";
+		
+		else if(ordinamento.equals("nome asc"))
+			query="SELECT * FROM prodotto ORDER BY nome asc ";
+		else if(ordinamento.equals("nome desc"))
+			query="SELECT * FROM nome ORDER BY nome desc ";
+		
+		else if(ordinamento.equals("quantita_fornitura asc"))
+			query="SELECT * FROM prodotto ORDER BY quantita_fornitura asc ";
+		else if(ordinamento.equals("quantita_fornitura desc"))
+			query="SELECT * FROM prodotto ORDER BY quantita_fornitura desc ";
+		
+		else if(ordinamento.equals("data_fornitura asc"))
+			query="SELECT * FROM prodotto ORDER BY data_fornitura asc ";
+		else if(ordinamento.equals("data_fornitura desc"))
+			query="SELECT * FROM prodotto ORDER BY data_fornitura desc ";
+			
+			else if(ordinamento.equals("fornitore asc"))
+				query="SELECT * FROM prodotto ORDER BY fornitore asc ";
+			else if(ordinamento.equals("fornitore desc"))
+				query="SELECT * FROM prodotto ORDER BY fornitore desc ";
+		
+			else if(ordinamento.equals("gestore asc"))
+				query="SELECT * FROM prodotto ORDER BY gestore asc ";
+			else if(ordinamento.equals("gestore desc"))
+				query="SELECT * FROM prodotto ORDER BY gestore desc ";
+		else
+			throw new SQLException("ordinamento scritto in modo errato");
+		
+
+		PreparedStatement ps = con.prepareStatement(query);
+
 		ResultSet st = ps.executeQuery();
 		ArrayList<ProdottoBean> array = new ArrayList<ProdottoBean>();
 		while(st.next())
@@ -158,6 +209,7 @@ public class ProdottoDAO{
 			bean.setQuantita_fornitura(st.getInt("quantita_fornitura"));
 			bean.setSconto(st.getInt("sconto"));
 			bean.setUltima_fornitura(st.getDate("data_fornitura"));
+			bean.setGestore(st.getString("gestore"));
 			array.add(bean);
 		}
 		st.close();
