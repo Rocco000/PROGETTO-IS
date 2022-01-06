@@ -56,7 +56,7 @@
 							String str=(String)request.getAttribute("message");
 							if(str!=null){
 								%>
-								<h5 style="color:red; text-align:center;">Email/Password errata!</h5>
+								<h5 style="color:red; text-align:center;" name="messaggioerrore">Email/Password errata!</h5>
 								<%
 							}
 							%>
