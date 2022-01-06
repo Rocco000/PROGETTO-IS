@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import org.dbunit.Assertion;
 import org.dbunit.DataSourceBasedDBTestCase;
 import org.dbunit.IDatabaseTester;
+import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.SortedTable;
@@ -19,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import acquisto.OrdineDAOTest;
+import magazzino.PresenteInDAOTest;
 
 
 
@@ -148,5 +150,103 @@ public class CartaDiCreditoDAOTest extends DataSourceBasedDBTestCase {
 		
 		assertEquals(1,i);
 		
+	}
+	
+	@Test
+	public void testDoUpdatePresente() throws Exception {
+		ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(PresenteInDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/cartadicreditoDoUpdatePresente.xml"))
+                .getTable("cartadicredito");
+		
+		CartaDiCreditoBean aggiornato= new CartaDiCreditoBean();
+		aggiornato.setCodice_cvv(111);
+		aggiornato.setData_scadenza(java.sql.Date.valueOf("2028-12-25"));
+		aggiornato.setCodicecarta("1234123412341230");
+		cdc.doUpdate(aggiornato,"1234123412341236" );
+		
+		IDatabaseTester tester= this.getDatabaseTester();
+		
+        ITable actualTable = tester.getConnection().createDataSet().getTable("cartadicredito");
+		
+        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+	}
+	@Test
+	public void testDoUpdateGiaPresente() throws Exception {
+		ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(PresenteInDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/cartadicreditoDoUpdateGiaPresente.xml"))
+                .getTable("cartadicredito");
+		CartaDiCreditoBean aggiornato= new CartaDiCreditoBean();
+		aggiornato.setCodicecarta("1234123412341234");
+		aggiornato.setCodice_cvv(125);
+		aggiornato.setData_scadenza(java.sql.Date.valueOf("2025-11-10"));
+		try {
+			cdc.doUpdate(aggiornato, "1234123412341236");
+		}catch(SQLException e) {
+			
+			IDatabaseTester tester= this.getDatabaseTester();
+			
+			ITable actualTable = tester.getConnection().createDataSet().getTable("cartadicredito");
+		
+			Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+		}
+		
+	}
+	@Test
+	public void testDoUpdateCodNonValido() throws Exception {
+		ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(PresenteInDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/cartadicreditoDoUpdateGiaPresente.xml"))
+                .getTable("cartadicredito");
+		CartaDiCreditoBean aggiornato= new CartaDiCreditoBean();
+		aggiornato.setCodicecarta("1234123412341234");
+		aggiornato.setCodice_cvv(125);
+		aggiornato.setData_scadenza(java.sql.Date.valueOf("2025-11-10"));
+		try {
+			cdc.doUpdate(aggiornato, "123");
+		}catch(SQLException e) {
+			
+			IDatabaseTester tester= this.getDatabaseTester();
+			
+			ITable actualTable = tester.getConnection().createDataSet().getTable("cartadicredito");
+		
+			Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+		}
+	}
+	
+	@Test
+	public void testDoUpdateItemNull() throws Exception {
+		ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(PresenteInDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/cartadicreditoDoUpdateGiaPresente.xml"))
+                .getTable("cartadicredito");
+		try {
+			cdc.doUpdate(null, "1234123412341234");
+		}catch(NullPointerException e) {
+			
+			IDatabaseTester tester= this.getDatabaseTester();
+			
+			ITable actualTable = tester.getConnection().createDataSet().getTable("cartadicredito");
+		
+			Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+		}
+	}
+	
+	@Test
+	public void testDoUpdateCodNull() throws Exception {
+		ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(PresenteInDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/cartadicreditoDoUpdateGiaPresente.xml"))
+                .getTable("cartadicredito");
+		CartaDiCreditoBean aggiornato= new  CartaDiCreditoBean();
+		aggiornato.setCodice_cvv(200);
+		aggiornato.setData_scadenza(java.sql.Date.valueOf("2030-12-25"));
+		aggiornato.setCodicecarta("123412341231");
+		try {
+			cdc.doUpdate(aggiornato, null);
+		}catch(NullPointerException e) {
+			
+			IDatabaseTester tester= this.getDatabaseTester();
+			
+			ITable actualTable = tester.getConnection().createDataSet().getTable("cartadicredito");
+		
+			Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+		}
 	}
 }

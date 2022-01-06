@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import acquisto.OrdineDAOTest;
+import magazzino.PresenteInDAOTest;
 import prodotto.AbbonamentoBean;
 
 public class ClienteDAOTest extends DataSourceBasedDBTestCase{
@@ -199,6 +200,57 @@ public class ClienteDAOTest extends DataSourceBasedDBTestCase{
 		}
 	}
 	
+	@Test
+	public void testDoUpdatePresente() throws Exception {
+		ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(PresenteInDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/cartafedeltaDoUpdate.xml"))
+                .getTable("cartafedelta");
+		
+		ClienteBean aggiornato= new ClienteBean();
+		aggiornato.setEmail("antoniodelucia123@hotmail.com");
+		aggiornato.setPassword("Zlatanpato1998");
+		
+		cd.doUpdate(aggiornato);
+		
+		IDatabaseTester tester= this.getDatabaseTester();
+		
+        ITable actualTable = tester.getConnection().createDataSet().getTable("cartafedelta");
+		
+        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+	}
+	
+	@Test
+	public void testDoUpdateNonPresente() throws Exception {
+		ITable expectedTable = new FlatXmlDataSetBuilder()
+                .build(PresenteInDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/clienteDoUpdateNo.xml"))
+                .getTable("cliente");
+		
+		ClienteBean aggiornato= new ClienteBean();
+		aggiornato.setEmail("antonioilmigliore@hotmail.it");
+		aggiornato.setPassword("nononono");
+		
+		cd.doUpdate(aggiornato);
+		
+		IDatabaseTester tester= this.getDatabaseTester();
+		
+        ITable actualTable = tester.getConnection().createDataSet().getTable("cliente");
+		
+        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+	}
+	
+	@Test
+	public void testDoUpdateNull() throws SQLException {
+		
+		boolean flag=false;
+		try {
+			cd.doUpdate(null);
+		}
+		catch(NullPointerException e){
+			flag=true;
+		}
+		
+		assertEquals(flag,true);
+	}
 	public void testNewInsertNew() throws Exception {      
 	      
         ITable expectedTable = new FlatXmlDataSetBuilder()

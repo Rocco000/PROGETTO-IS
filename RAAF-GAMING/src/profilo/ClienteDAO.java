@@ -54,7 +54,7 @@ public class ClienteDAO {
 	}
 
 
-	public ArrayList<ClienteBean> allElements(String ordinamento) throws SQLException {
+	public ArrayList<ClienteBean> allElements(String ordinamento) throws SQLException,NullPointerException{
 		
 		if(ordinamento==null || ordinamento=="")
 			throw new NullPointerException("Inserito un ordinamento null o vuoto");
@@ -114,7 +114,7 @@ public class ClienteDAO {
 	}
 
 
-	public void newInsert(ClienteBean item) throws SQLException {
+	public void newInsert(ClienteBean item) throws SQLException,NullPointerException{
 		
 		if(item==null)
 			throw new NullPointerException("Inserito un item null");
@@ -138,7 +138,7 @@ public class ClienteDAO {
 	}
 
 
-	public void doUpdate(ClienteBean item) throws SQLException {
+	public void doUpdate(ClienteBean item) throws SQLException,NullPointerException {
 		
 		if(item==null)
 			throw new NullPointerException("Inserito un item null");

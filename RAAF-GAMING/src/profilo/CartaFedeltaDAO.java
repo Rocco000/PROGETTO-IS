@@ -43,7 +43,7 @@ public class CartaFedeltaDAO {
 	}
 
 
-	public ArrayList<CartaFedeltaBean> allElements(String ordinamento) throws SQLException {
+	public ArrayList<CartaFedeltaBean> allElements(String ordinamento) throws SQLException,NullPointerException {
 		
 		if(ordinamento==null || ordinamento=="")
 			throw new NullPointerException("Inserito un ordinamento null o vuoto");
@@ -74,7 +74,7 @@ public class CartaFedeltaDAO {
 	}
 	
 
-	public void newInsert(CartaFedeltaBean item) throws SQLException {
+	public void newInsert(CartaFedeltaBean item) throws SQLException,NullPointerException {
 		
 		if(item==null)
 			throw new NullPointerException("Inserito un item null");
@@ -90,7 +90,7 @@ public class CartaFedeltaDAO {
 	}
 	
 
-	public void doUpdate(CartaFedeltaBean item) throws SQLException {
+	public void doUpdate(CartaFedeltaBean item) throws SQLException,NullPointerException{
 		
 		if(item.getCodice()==null)
 			throw new NullPointerException("Inserito un id null o vuoto");

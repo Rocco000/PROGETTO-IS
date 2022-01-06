@@ -46,7 +46,7 @@ public class CartaDiCreditoDAO {
 	}
 		
 		
-		public void newInsert(CartaDiCreditoBean item) throws SQLException
+		public void newInsert(CartaDiCreditoBean item) throws SQLException,NullPointerException
 		{
 			
 			if(item==null)
@@ -67,7 +67,7 @@ public class CartaDiCreditoDAO {
 		}
 		
 		
-		public void doUpdate(CartaDiCreditoBean item, String codice) throws SQLException {
+		public void doUpdate(CartaDiCreditoBean item, String codice) throws SQLException,NullPointerException {
 			
 			
 			if(item==null || codice==null)

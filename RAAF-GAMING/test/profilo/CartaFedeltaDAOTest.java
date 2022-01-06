@@ -21,6 +21,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import acquisto.OrdineDAOTest;
+import magazzino.PresenteInBean;
+import magazzino.PresenteInDAOTest;
 
 public class CartaFedeltaDAOTest extends DataSourceBasedDBTestCase{
 
@@ -216,19 +218,54 @@ public class CartaFedeltaDAOTest extends DataSourceBasedDBTestCase{
 		
 		@Test
 		public void testDoUpdatePresente() throws Exception {
-			   
-	        ITable expectedTable = new FlatXmlDataSetBuilder()
-	                   .build(OrdineDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/cartafedeltaDoUpdate.xml"))
-	                   .getTable("cartafedelta");
-			CartaFedeltaBean bean=new CartaFedeltaBean();
-			bean.setPunti(26);
-			cf.doUpdate(bean);
+			ITable expectedTable = new FlatXmlDataSetBuilder()
+	                .build(PresenteInDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/cartafedeltaDoUpdate.xml"))
+	                .getTable("cartafedelta");
 			
-			IDatabaseTester tester = this.getDatabaseTester();
-	        
-	        ITable actualTable =  tester.getConnection().createDataSet().getTable("cartafedelta");       
-	       
-	       Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+			CartaFedeltaBean aggiornato= new CartaFedeltaBean();
+			aggiornato.setCodice("1234567899");
+			aggiornato.setPunti(16);
+			
+			cf.doUpdate(aggiornato);
+			
+			IDatabaseTester tester= this.getDatabaseTester();
+			
+	        ITable actualTable = tester.getConnection().createDataSet().getTable("cartafedelta");
+			
+	        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+		}
+		
+		@Test
+		public void testDoUpdateNonPresente() throws Exception {
+			ITable expectedTable = new FlatXmlDataSetBuilder()
+	                .build(PresenteInDAOTest.class.getClassLoader().getResourceAsStream("resources/db/expected/cartafedeltaDoUpdateNo.xml"))
+	                .getTable("cartafedelta");
+			
+			CartaFedeltaBean aggiornato= new CartaFedeltaBean();
+			aggiornato.setCodice("1234567891");
+			aggiornato.setPunti(16);
+			
+			cf.doUpdate(aggiornato);
+			
+			IDatabaseTester tester= this.getDatabaseTester();
+			
+	        ITable actualTable = tester.getConnection().createDataSet().getTable("cartafedelta");
+			
+	        Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
+		}
+		
+		@Test
+		public void testDoUpdateNull() throws SQLException {
+			
+			boolean flag=false;
+			try {
+				cf.doUpdate(null);
+			}
+			catch(NullPointerException e){
+				flag=true;
+			}
+			
+			assertEquals(flag,true);
 		}
 	@Override
 	protected DataSource getDataSource() {
