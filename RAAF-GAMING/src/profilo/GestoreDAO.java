@@ -15,7 +15,7 @@ public class GestoreDAO {
 		ds=d;
 	}
 	
-	public GestoreBean ricercaPerChiave(String id) throws SQLException
+	public GestoreBean ricercaPerChiave(String id) throws SQLException,NullPointerException
 	{
 		if(id==null || id=="")
 			throw new NullPointerException("Inserito un id null o vuoto");
