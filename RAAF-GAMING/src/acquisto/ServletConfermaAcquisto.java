@@ -136,7 +136,7 @@ public class ServletConfermaAcquisto extends HttpServlet {
 						OrdineDAO odao=new OrdineDAO(ds);
 						ArrayList<OrdineBean> ordini = null;
 						try {
-							ordini = odao.allElements("");
+							ordini = odao.allElements("codice asc");
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}

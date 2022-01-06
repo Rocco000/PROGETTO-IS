@@ -57,7 +57,7 @@
 		        	else
 		        	{
 		        %>
-		        		<h2  style="color:orange;"><%=conferma %></h2>
+		        		<h2  name="acquisto" style="color:orange;"><%=conferma %></h2>
 		       <%
 		       		}
 			        String eliminato= (String) request.getAttribute("eliminatoProdotto");
