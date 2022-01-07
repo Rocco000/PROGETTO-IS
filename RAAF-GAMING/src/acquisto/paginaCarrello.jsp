@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
-<title>RAAF-GAMING</title>
+<title>CARRELLO</title>
 	<meta charset="utf-8">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<link rel="stylesheet" href="css/stileCarrello.css">
@@ -63,7 +63,7 @@
 			        String eliminato= (String) request.getAttribute("eliminatoProdotto");
 			        if(eliminato!=null && eliminato.equals("")){
 		        %>
-		         		<h2 style="color:red;">Qualche o tutti i prodotti nel carrello non sono più disponibili</h2>
+		         		<h2 name="prodottoNonDisponibile"style="color:red;">Qualche o tutti i prodotti nel carrello non sono più disponibili</h2>
 		        <%
 			        }
 		        %>
@@ -78,7 +78,7 @@
 				 				if(carrelloo==null)
 				 				{
 				 					%>
-				 					<p class="my-5" style="text-align:center; color:orange; font-weight:bold;">NON HAI NESSUN PRODOTTO NEL CARRELLO!
+				 					<p name="NonHaiProdotti" class="my-5" style="text-align:center; color:orange; font-weight:bold;">NON HAI NESSUN PRODOTTO NEL CARRELLO!
 				 					</p>
 				 					<%
 				 				}
