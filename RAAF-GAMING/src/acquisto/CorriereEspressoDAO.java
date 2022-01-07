@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.OperazioniModel;
+
 
 public class CorriereEspressoDAO{
 	

@@ -25,7 +25,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.net.MalformedURLException;
 import java.net.URL;
-public class TestAggiuntaAlCarrelloTest {
+public class TestAggiuntaAlCarrello {
   private WebDriver driver;
   private Map<String, Object> vars;
   JavascriptExecutor js;

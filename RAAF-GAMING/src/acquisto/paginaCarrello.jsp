@@ -102,7 +102,7 @@
 							 						String urlprodotto = "servletprodotto?id="+prod.get(j).getCodice_prodotto();
 							 						urlprodotto = response.encodeURL(urlprodotto);
 							 						%>	
-								 							<a href="<%=urlprodotto%>" style="color:orange;"><h4 style="color:orange;"><%=prod.get(j).getNome() %></h4></a>
+								 							<a href="<%=urlprodotto%>" name="nomeProd" style="color:orange;"><h4 style="color:orange;"><%=prod.get(j).getNome() %></h4></a>
 								 							<div class="product-info">
 									 							<div>Data Uscita: <span class="value"><%=prod.get(j).getData_uscita() %></span></div>
 									 							<div>Scontato del: <span class="value"><%=prod.get(j).getSconto() %>%</span></div>
