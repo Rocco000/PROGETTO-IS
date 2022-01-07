@@ -40,6 +40,40 @@ public class TestEliminazioneProdottoTest {
     driver.quit();
   }
   @Test
+  public void testEliminazioneProdottiFallito() {
+    // Test name: TestEliminazioneProdotti_Fallito
+    // Step # | name | target | value
+    // 1 | open | http://localhost:8080/RAAF-GAMING/servletcarrello | 
+    driver.get("http://localhost:8080/RAAF-GAMING/servletcarrello");
+    // 2 | assertText | name=NonHaiProdotti | NON HAI NESSUN PRODOTTO NEL CARRELLO!
+    assertThat(driver.findElement(By.name("NonHaiProdotti")).getText(), is("NON HAI NESSUN PRODOTTO NEL CARRELLO!"));
+  }
+  @Test
+  public void testliminazioneProdottoRiuscito() throws InterruptedException {
+    // Test name: TestliminazioneProdotto_Riuscito
+    // Step # | name | target | value
+    // 1 | open | http://localhost:8080/RAAF-GAMING/servletprodotto?id=1 | 
+    driver.get("http://localhost:8080/RAAF-GAMING/servletprodotto?id=1");
+    // 2 | click | css=.pl-2 | 
+    driver.findElement(By.cssSelector(".pl-2")).click();
+    // 3 | assertAlert | Aggiunta nel carrello fatta con successo! |
+    Thread.sleep(5000);
+    Alert alert=driver.switchTo().alert();
+    String text= alert.getText();
+    if(text.equals("Aggiunta nel carrello fatta con successo!"))
+    {
+    	alert.accept();
+    }
+    // 4 | click | id=sostituisciCarrello | 
+    Thread.sleep(5000);
+    driver.findElement(By.id("sostituisciCarrello")).click();
+    // 5 | click | id=quantity |
+    Thread.sleep(5000);
+    driver.findElement(By.id("quantity")).click();
+    // 6 | assertText | name=NonHaiProdotti | NON HAI NESSUN PRODOTTO NEL CARRELLO!
+    assertThat(driver.findElement(By.name("NonHaiProdotti")).getText(), is("NON HAI NESSUN PRODOTTO NEL CARRELLO!"));
+  }
+  /*@Test
   public void testEliminazioneProdottoRiuscita() {
     // Test name: TestEliminazioneProdotto_Riuscita
     // Step # | name | target | value
@@ -49,14 +83,5 @@ public class TestEliminazioneProdottoTest {
     driver.findElement(By.id("quantity")).click();
     // 3 | assertText | name=NonHaiProdotti | NON HAI NESSUN PRODOTTO NEL CARRELLO!
     assertThat(driver.findElement(By.name("NonHaiProdotti")).getText(), is("NON HAI NESSUN PRODOTTO NEL CARRELLO!"));
-  }
-  @Test
-  public void testEliminazioneProdottiFallito() {
-    // Test name: TestEliminazioneProdotti_Fallito
-    // Step # | name | target | value
-    // 1 | open | http://localhost:8080/RAAF-GAMING/servletcarrello | 
-    driver.get("http://localhost:8080/RAAF-GAMING/servletcarrello");
-    // 2 | assertText | name=NonHaiProdotti | NON HAI NESSUN PRODOTTO NEL CARRELLO!
-    assertThat(driver.findElement(By.name("NonHaiProdotti")).getText(), is("NON HAI NESSUN PRODOTTO NEL CARRELLO!"));
-  }
+  }*/
 }

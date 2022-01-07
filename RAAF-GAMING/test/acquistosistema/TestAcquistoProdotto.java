@@ -38,21 +38,7 @@ public class TestAcquistoProdotto {
   public void tearDown() {
     driver.quit();
   }
-  @Test
-  public void testAcquistoDeiProdottiNonAutenticato() {
-    // Test name: TestAcquistoDeiProdotti_NonAutenticato
-    // Step # | name | target | value
-    // 1 | open | http://localhost:8080/RAAF-GAMING/servletcarrello | 
-    driver.get("http://localhost:8080/RAAF-GAMING/servletcarrello");
-    // 2 | click | name=indirizzodiconsegna | 
-    driver.findElement(By.name("indirizzodiconsegna")).click();
-    // 3 | type | name=indirizzodiconsegna | viale croce
-    driver.findElement(By.name("indirizzodiconsegna")).sendKeys("viale croce");
-    // 4 | click | css=.btn-outline-warning | 
-    driver.findElement(By.cssSelector(".btn-outline-warning")).click();
-    // 5 | assertTitle | LOGIN | 
-    assertThat(driver.getTitle(), is("LOGIN"));
-  }
+  
   @Test
   public void testAcquistoDeiProdottiNessunProdotto() {
     // Test name: TestAcquistoDeiProdotti_NessunProdotto
@@ -64,58 +50,200 @@ public class TestAcquistoProdotto {
     // 3 | assertAlert | Non hai prodotti nel carrello | 
     assertThat(driver.switchTo().alert().getText(), is("Non hai prodotti nel carrello"));
   }
+  
+  
+ 
+ 
   @Test
-  public void testAcquistoDeiProdottiIndirizzoDiConsegnaNonValido() {
+  public void testAcquistoDeiProdottiNonAutenticato() throws InterruptedException {
+    // Test name: TestAcquistoDeiProdotti_NonAutenticato
+    // Step # | name | target | value
+    // 1 | open | http://localhost:8080/RAAF-GAMING/ | 
+    driver.get("http://localhost:8080/RAAF-GAMING/");
+    // 2 | click | id=dropdownMenuButton | 
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    Thread.sleep(3000);
+    // 3 | click | linkText=Login | 
+    driver.findElement(By.linkText("Login")).click();
+    // 4 | click | name=email | 
+    driver.findElement(By.name("email")).click();
+    // 5 | type | name=email | f.peluso25@gmail.com
+    driver.findElement(By.name("email")).sendKeys("f.peluso25@gmail.com");
+    // 6 | click | name=password | 
+    driver.findElement(By.name("password")).click();
+    // 7 | type | name=password | veloce123
+    driver.findElement(By.name("password")).sendKeys("veloce123");
+    // 8 | click | css=.invio | 
+    Thread.sleep(3000);
+    driver.findElement(By.cssSelector(".invio")).click();
+    // 9 | click | css=.fa-user-astronaut | 
+    driver.findElement(By.cssSelector(".fa-user-astronaut")).click();
+    // 10 | click | linkText=LogOut | 
+    Thread.sleep(3000);
+    driver.findElement(By.linkText("LogOut")).click();
+    Thread.sleep(3000);
+    // 11 | click | css=.row:nth-child(1) li:nth-child(1) .card__title | 
+    driver.findElement(By.cssSelector(".row:nth-child(1) li:nth-child(1) .card__title")).click();
+    // 12 | click | css=.pl-2 | 
+    Thread.sleep(3000);
+    driver.findElement(By.cssSelector(".pl-2")).click();
+    // 13 | assertAlert | Aggiunta nel carrello fatta con successo! |
+    Thread.sleep(3000);
+    Alert alert=driver.switchTo().alert();
+    String text= alert.getText();
+    if(text.equals("Aggiunta nel carrello fatta con successo!"))
+    {
+    	alert.accept();
+    }
+    Thread.sleep(3000);
+    // 14 | click | id=sostituisciCarrello | 
+    driver.findElement(By.id("sostituisciCarrello")).click();
+    // 15 | click | name=indirizzodiconsegna | 
+    Thread.sleep(3000);
+    driver.findElement(By.name("indirizzodiconsegna")).click();
+    // 16 | type | name=indirizzodiconsegna | viale croce
+    driver.findElement(By.name("indirizzodiconsegna")).sendKeys("viale croce");
+    // 17 | click | css=.btn-outline-warning | 
+    Thread.sleep(3000);
+    driver.findElement(By.cssSelector(".btn-outline-warning")).click();
+    // 18 | assertTitle | LOGIN | 
+    assertThat(driver.getTitle(), is("LOGIN"));
+    
+  }
+ 
+
+  @Test
+  public void testAcquistoDeiProdottiIndirizzoDiConsegnaNonValido() throws InterruptedException {
     // Test name: TestAcquistoDeiProdotti_IndirizzoDiConsegnaNonValido
     // Step # | name | target | value
-    // 1 | open | http://localhost:8080/RAAF-GAMING/servletcarrello | 
-    driver.get("http://localhost:8080/RAAF-GAMING/servletcarrello");
-    // 2 | setWindowSize | 1366x728 | 
-    driver.manage().window().setSize(new Dimension(1366, 728));
-    // 3 | click | name=indirizzodiconsegna | 
-    driver.findElement(By.name("indirizzodiconsegna")).click();
-    // 4 | type | name=indirizzodiconsegna | fgfffggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-    driver.findElement(By.name("indirizzodiconsegna")).sendKeys("fgfffggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
-    // 5 | click | css=.btn-outline-warning | 
-    driver.findElement(By.cssSelector(".btn-outline-warning")).click();
-    // 6 | assertAlert | INDIRIZZO DI CONSEGNA NON VALIDO! | 
-    assertThat(driver.switchTo().alert().getText(), is("INDIRIZZO DI CONSEGNA NON VALIDO!"));
-    // 7 | close |  | 
-    driver.close();
+    // 1 | open | http://localhost:8080/RAAF-GAMING/servletprodotto?id=1 | 
+    driver.get("http://localhost:8080/RAAF-GAMING/servletprodotto?id=1");
+    Thread.sleep(5000);
+    // 2 | click | css=.pl-2 | 
+    driver.findElement(By.cssSelector(".pl-2")).click();
+    Thread.sleep(5000);
+    // 3 | assertAlert | Aggiunta nel carrello fatta con successo! | 
+    Alert alert = driver.switchTo().alert();
+    String t= alert.getText();
+    if(t.equals("Aggiunta nel carrello fatta con successo!"))
+    {
+    	alert.accept();
+    	 Thread.sleep(5000);
+    	 // 4 | click | id=sostituisciCarrello | 
+        driver.findElement(By.id("sostituisciCarrello")).click();
+        Thread.sleep(5000);
+        // 5 | click | name=indirizzodiconsegna | 
+        driver.findElement(By.name("indirizzodiconsegna")).click();
+        // 6 | type | name=indirizzodiconsegna | fgfffggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+        driver.findElement(By.name("indirizzodiconsegna")).sendKeys("fgfffggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
+        // 7 | click | css=.btn-outline-warning | 
+        Thread.sleep(5000);
+        driver.findElement(By.cssSelector(".btn-outline-warning")).click();
+        // 8 | assertAlert | INDIRIZZO DI CONSEGNA NON VALIDO! | 
+        assertThat(driver.switchTo().alert().getText(), is("INDIRIZZO DI CONSEGNA NON VALIDO!"));
+        Thread.sleep(5000);
+    }
   }
+ 
   @Test
-  public void testAcquistoDeiProdottiRiuscito() {
+  public void testAcquistoDeiProdottiRiuscito() throws InterruptedException {
     // Test name: TestAcquistoDeiProdotti_Riuscito
     // Step # | name | target | value
-    // 1 | open | http://localhost:8080/RAAF-GAMING/servletcarrello | 
-    driver.get("http://localhost:8080/RAAF-GAMING/servletcarrello");
-    // 2 | click | name=indirizzodiconsegna | 
+    // 1 | open | http://localhost:8080/RAAF-GAMING/servletloginfirst | 
+    driver.get("http://localhost:8080/RAAF-GAMING/servletloginfirst");
+    // 2 | click | name=email | 
+    Thread.sleep(5000);
+    driver.findElement(By.name("email")).click();
+    // 3 | type | name=email | f.peluso25@gmail.com
+    driver.findElement(By.name("email")).sendKeys("f.peluso25@gmail.com");
+    // 4 | click | name=password | 
+    driver.findElement(By.name("password")).click();
+    // 5 | type | name=password | veloce123
+    driver.findElement(By.name("password")).sendKeys("veloce123");
+    // 6 | click | css=.invio | 
+    Thread.sleep(5000);
+    driver.findElement(By.cssSelector(".invio")).click();
+    Thread.sleep(5000);
+    // 7 | click | css=.row:nth-child(1) li:nth-child(1) .card__title | 
+    driver.findElement(By.cssSelector(".row:nth-child(1) li:nth-child(1) .card__title")).click();
+    // 8 | click | css=.pl-2 | 
+    Thread.sleep(5000);
+    driver.findElement(By.cssSelector(".pl-2")).click();
+    Thread.sleep(5000);
+    // 9 | assertAlert | Aggiunta nel carrello fatta con successo! | 
+    Alert alert=driver.switchTo().alert();
+    String text= alert.getText();
+    if(text.equals("Aggiunta nel carrello fatta con successo!"))
+    {
+    	alert.accept();
+    }
+    Thread.sleep(5000);
+    // 10 | click | id=sostituisciCarrello | 
+    driver.findElement(By.id("sostituisciCarrello")).click();
+    // 11 | click | name=indirizzodiconsegna | 
+    Thread.sleep(5000);
     driver.findElement(By.name("indirizzodiconsegna")).click();
-    // 3 | type | name=indirizzodiconsegna | viale croce
-    driver.findElement(By.name("indirizzodiconsegna")).sendKeys("viale croce");
-    // 4 | click | css=.btn-outline-warning | 
-    driver.findElement(By.cssSelector(".btn-outline-warning")).click();
-    // 5 | assertText | name=acquisto | Acquisto Confermato
-    assertThat(driver.findElement(By.name("acquisto")).getText(), is("Acquisto Confermato"));
-  }
-  @Test
-  public void testAcquistoDeiProdottiProdottoNonDisponibile() {
-    // Test name: TestAcquistoDeiProdotti_ProdottoNonDisponibile
-    // Step # | name | target | value
-    // 1 | open | http://localhost:8080/RAAF-GAMING/servletcarrello | 
-    driver.get("http://localhost:8080/RAAF-GAMING/servletcarrello");
-    // 2 | setWindowSize | 1366x728 | 
-    driver.manage().window().setSize(new Dimension(1366, 728));
-    // 3 | click | name=indirizzodiconsegna | 
-    driver.findElement(By.name("indirizzodiconsegna")).click();
-    // 4 | type | name=indirizzodiconsegna | viale traiano
+    // 12 | type | name=indirizzodiconsegna | viale traiano
     driver.findElement(By.name("indirizzodiconsegna")).sendKeys("viale traiano");
-    // 5 | click | css=.btn-outline-warning | 
+    // 13 | click | css=.btn-outline-warning | 
     driver.findElement(By.cssSelector(".btn-outline-warning")).click();
-    // 6 | verifyTitle | CARRELLO | 
-    assertThat(driver.getTitle(), is("CARRELLO"));
-    // 7 | assertText | name=prodottoNonDisponibile | Qualche o tutti i prodotti nel carrello non sono più disponibili
-    assertThat(driver.findElement(By.name("prodottoNonDisponibile")).getText(), is("Qualche o tutti i prodotti nel carrello non sono più disponibili"));
+  }
+
+ 
+  @Test
+  public void testAcquistoDeiProdottiNonDisponibile() throws InterruptedException {
+    // Test name: TestAcquistoDeiProdotti_NonDisponibile
+    // Step # | name | target | value
+    // 1 | open | http://localhost:8080/RAAF-GAMING/servletindex | 
+    driver.get("http://localhost:8080/RAAF-GAMING/servletindex");
+    // 2 | click | id=dropdownMenuButton | 
+    Thread.sleep(5000);
+    driver.findElement(By.id("dropdownMenuButton")).click();
+    // 3 | click | linkText=Login | 
+    driver.findElement(By.linkText("Login")).click();
+    // 4 | click | name=email | 
+    Thread.sleep(5000);
+    driver.findElement(By.name("email")).click();
+    // 5 | type | name=email | f.peluso25@gmail.com
+    driver.findElement(By.name("email")).sendKeys("f.peluso25@gmail.com");
+    // 6 | click | name=password | 
+    driver.findElement(By.name("password")).click();
+    // 7 | type | name=password | veloce123
+    driver.findElement(By.name("password")).sendKeys("veloce123");
+    // 8 | click | css=.invio | 
+    Thread.sleep(5000);
+    driver.findElement(By.cssSelector(".invio")).click();
+    // 9 | click | css=.row:nth-child(1) li:nth-child(3) .card__header | 
+    driver.findElement(By.cssSelector(".row:nth-child(1) li:nth-child(3) .card__header")).click();
+    // 10 | click | css=.pl-2 | 
+    Thread.sleep(5000);
+    driver.findElement(By.cssSelector(".pl-2")).click();
+    // 11 | assertAlert | Aggiunta nel carrello fatta con successo! |
+    Thread.sleep(5000);
+    Alert alert=driver.switchTo().alert();
+    String halo=alert.getText();
+    if(halo.equals("Aggiunta nel carrello fatta con successo!"))
+    {
+    	alert.accept();
+    	// 12 | click | id=sostituisciCarrello | 
+    	Thread.sleep(5000);
+        driver.findElement(By.id("sostituisciCarrello")).click();
+        // 13 | click | name=indirizzodiconsegna | 
+        Thread.sleep(9000);
+        driver.findElement(By.name("indirizzodiconsegna")).click();
+        // 14 | type | name=indirizzodiconsegna | viale croce
+        Thread.sleep(5000);
+        driver.findElement(By.name("indirizzodiconsegna")).sendKeys("viale croce");
+        // 15 | click | css=.btn-outline-warning | 
+        Thread.sleep(5000);
+        driver.findElement(By.cssSelector(".btn-outline-warning")).click();
+        // 16 | assertText | name=prodottoNonDisponibile | Qualche o tutti i prodotti nel carrello non sono piu' disponibili
+        /*Alert alert2=driver.switchTo().alert();
+        String Aggiunta=alert2.getText();
+        if(Aggiunta.equals("Qualche o tutti i prodotti nel carrello non sono piu' disponibili"))*/
+        assertThat(driver.findElement(By.name("prodottoNonDisponibile")).getText(), is("Qualche o tutti i prodotti nel carrello non sono piu' disponibili"));
+    }
+   
   }
   
 }

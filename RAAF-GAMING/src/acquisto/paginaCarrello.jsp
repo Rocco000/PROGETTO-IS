@@ -63,7 +63,7 @@
 			        String eliminato= (String) request.getAttribute("eliminatoProdotto");
 			        if(eliminato!=null && eliminato.equals("")){
 		        %>
-		         		<h2 name="prodottoNonDisponibile"style="color:red;">Qualche o tutti i prodotti nel carrello non sono più disponibili</h2>
+		         		<h2 name="prodottoNonDisponibile"style="color:red;">Qualche o tutti i prodotti nel carrello non sono piu' disponibili</h2>
 		        <%
 			        }
 		        %>
