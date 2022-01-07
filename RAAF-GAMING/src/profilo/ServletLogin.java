@@ -122,7 +122,7 @@ public class ServletLogin extends HttpServlet {
 			String password=request.getParameter("password");
 			if(email.equals("") && password.equals(""))
 			{
-				String url="/servletloginfirst";
+				String url="servletloginfirst";
 				url=response.encodeURL(url);
 				response.sendRedirect(url);
 				return;
@@ -149,7 +149,7 @@ public class ServletLogin extends HttpServlet {
 						log=true;
 						sessione.setAttribute("log",log);
 						//URL rewriting
-						String url="/servletindex";
+						String url="servletindex";
 						url=response.encodeURL(url);
 						response.sendRedirect(url);
 						return;
