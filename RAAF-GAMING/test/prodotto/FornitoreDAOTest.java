@@ -92,7 +92,7 @@ public class FornitoreDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
-	
+	@Test
 	public void testAllElementsDESC() throws SQLException
 	{
 		ArrayList<FornitoreBean> s = fo.allElements("nome desc");
@@ -130,7 +130,7 @@ public class FornitoreDAOTest extends DataSourceBasedDBTestCase{
 			assertEquals(s.get(i).getTelefono(),bean.get(i).getTelefono());
 		}	
 	}
-	
+	@Test
 	public void testAllElementsNULL() throws SQLException
 	{
 		ArrayList<FornitoreBean> a = null;
@@ -141,7 +141,7 @@ public class FornitoreDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsNotValid() throws NullPointerException
 	{
 		ArrayList<FornitoreBean> a = null;
@@ -152,7 +152,7 @@ public class FornitoreDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsVoid() throws SQLException
 	{
 		ArrayList<FornitoreBean> a = null;

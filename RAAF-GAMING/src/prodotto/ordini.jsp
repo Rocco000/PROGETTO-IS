@@ -62,7 +62,7 @@
 <div class="wrapper rounded" style="min-height:100vh;">
 
   
-	<p class="text-center font-weight-bold" style="color:#FF9900; font-size:20px;">I TUOI ORDINI</p>
+	<p class="text-center font-weight-bold" id="peppino" style="color:#FF9900; font-size:20px;">I TUOI ORDINI</p>
   		         
     <div class="d-flex justify-content-between align-items-center mt-3">
     	<p style="widht:75%; color:white; border-bottom: 3px solid; border-color: #FF9900;">History</p>

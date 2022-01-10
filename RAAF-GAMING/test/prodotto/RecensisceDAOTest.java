@@ -79,7 +79,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 		assertEquals(r.getVoto(),b.getVoto());
 		assertEquals(r.getCommento(),b.getCommento());
 	}
-	
+	@Test
 	public void testRicercaPerChiaveClienteVoid() throws SQLException{
 		RecensisceBean a = null;
 		try {
@@ -89,7 +89,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveClienteNULL() throws SQLException{
 		RecensisceBean a = null;
 		try {
@@ -99,7 +99,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveClienteNotValid() throws SQLException{
 		RecensisceBean a = null;
 		try {
@@ -109,7 +109,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveProdottoNotValid() throws SQLException{
 		RecensisceBean a = null;
 		try {
@@ -119,7 +119,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveCampiNotValid() throws SQLException{
 		RecensisceBean a = null;
 		try {
@@ -129,7 +129,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsASC() throws SQLException
 	{
 		ArrayList<RecensisceBean> s = rec.allElements("prodotto asc");
@@ -170,7 +170,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
-	
+	@Test
 	public void testAllElementsDESC() throws SQLException
 	{
 		ArrayList<RecensisceBean> s = rec.allElements("prodotto desc");
@@ -210,7 +210,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
-	
+	@Test
 	public void testAllElementsNULL() throws SQLException
 	{
 		ArrayList<RecensisceBean> a = null;
@@ -221,7 +221,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsNotValid() throws NullPointerException
 	{
 		ArrayList<RecensisceBean> a = null;
@@ -232,7 +232,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsVoid() throws SQLException
 	{
 		ArrayList<RecensisceBean> a = null;
@@ -243,6 +243,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
+	@Test
 	public void testNewInsertNew() throws Exception {      
 	      
         ITable expectedTable = new FlatXmlDataSetBuilder()
@@ -265,7 +266,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
       Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
 		
 	}
-	
+	@Test
 	public void testNewInsertOld() {
 
 		RecensisceBean b1 = new RecensisceBean();
@@ -286,7 +287,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 		
 		assertEquals(1,i);
 	}
-	
+	@Test
 	public void testNewInsertNull() {
 		
 		int i=0;
@@ -302,7 +303,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 		
 		assertEquals(1,i);	
 	}
-	
+	@Test
 	public void testRicercaPerProdotto() throws SQLException{
 		ArrayList<RecensisceBean> r = rec.ricercaPerProdotto(1);
 		ArrayList<RecensisceBean> bean = new ArrayList<RecensisceBean>();
@@ -332,7 +333,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 			assertEquals(r.get(i).getCommento(),bean.get(i).getCommento());
 		}
 	}
-	
+	@Test
 	public void testRicercaPerProdottoMinDiZero() throws SQLException
 	{
 		ArrayList<RecensisceBean> a = null;
@@ -343,7 +344,7 @@ public class RecensisceDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerProdottoNotValid() throws NullPointerException
 	{
 		ArrayList<RecensisceBean> a = null;

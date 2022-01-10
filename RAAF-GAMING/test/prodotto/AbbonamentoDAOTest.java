@@ -77,7 +77,7 @@ public class AbbonamentoDAOTest extends DataSourceBasedDBTestCase{
 		assertEquals(a.getCodice(),b.getCodice());
 		assertEquals(a.getDurata_abbonamento(),b.getDurata_abbonamento());
 	}
-	
+	@Test
 	public void testRicercaPerChiaveNULL() throws SQLException{
 		AbbonamentoBean a = null;
 		try {
@@ -87,7 +87,7 @@ public class AbbonamentoDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveVoid() throws SQLException{
 		AbbonamentoBean a = null;
 		try {
@@ -97,7 +97,7 @@ public class AbbonamentoDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveNotValid() throws NullPointerException
 	{
 		AbbonamentoBean a = null;
@@ -108,7 +108,7 @@ public class AbbonamentoDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsASC() throws SQLException
 	{
 		ArrayList<AbbonamentoBean> s = ab.allElements("prodotto asc");
@@ -137,7 +137,7 @@ public class AbbonamentoDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
-	
+	@Test
 	public void testAllElementsDESC() throws SQLException
 	{
 		ArrayList<AbbonamentoBean> s = ab.allElements("prodotto desc");
@@ -167,7 +167,7 @@ public class AbbonamentoDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
-	
+	@Test
 	public void testAllElementsNULL() throws SQLException{
 		ArrayList<AbbonamentoBean> a = null;
 		try {
@@ -177,7 +177,7 @@ public class AbbonamentoDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testAllElementsVoid() throws SQLException{
 		ArrayList<AbbonamentoBean> a = null;
 		try {
@@ -187,7 +187,7 @@ public class AbbonamentoDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testAllElementsNotValid() throws NullPointerException{
 		ArrayList<AbbonamentoBean> a = null;
 		try {
@@ -197,7 +197,7 @@ public class AbbonamentoDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testNewInsertNew() throws Exception {      
 	      
         ITable expectedTable = new FlatXmlDataSetBuilder()
@@ -220,7 +220,7 @@ public class AbbonamentoDAOTest extends DataSourceBasedDBTestCase{
       Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
 		
 	}
-	
+	@Test
 	public void testNewInsertOld() {
 
 		AbbonamentoBean bean = new  AbbonamentoBean();
@@ -241,7 +241,7 @@ public class AbbonamentoDAOTest extends DataSourceBasedDBTestCase{
 		
 		assertEquals(1,i);
 	}
-	
+	@Test
 	public void testNewInsertNull() {
 		
 		int i=0;

@@ -79,7 +79,7 @@ public class CategoriaDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
-	
+	@Test
 	public void testAllElementsDESC() throws SQLException
 	{
 		ArrayList<CategoriaBean> s = ca.allElements("nome desc");
@@ -103,6 +103,7 @@ public class CategoriaDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
+	@Test
 	public void testAllElementsNULL() throws SQLException
 	{
 		ArrayList<CategoriaBean> a = null;
@@ -113,7 +114,7 @@ public class CategoriaDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsNotValid() throws NullPointerException
 	{
 		ArrayList<CategoriaBean> a = null;
@@ -124,7 +125,7 @@ public class CategoriaDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsVoid() throws SQLException
 	{
 		ArrayList<CategoriaBean> a = null;

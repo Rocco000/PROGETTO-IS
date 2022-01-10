@@ -76,7 +76,7 @@ public class ConsoleDAOTest extends DataSourceBasedDBTestCase{
 		assertEquals(a.getSpecifica(),b.getSpecifica());
 		assertEquals(a.getColore(),b.getColore());
 	}
-	
+	@Test
 	public void testRicercaPerChiaveNULL() throws SQLException{
 		ConsoleBean a = null;
 		try {
@@ -86,7 +86,7 @@ public class ConsoleDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveVoid() throws SQLException{
 		ConsoleBean a = null;
 		try {
@@ -96,7 +96,7 @@ public class ConsoleDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveNotValid() throws NullPointerException
 	{
 		ConsoleBean a = null;
@@ -107,7 +107,7 @@ public class ConsoleDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsASC() throws SQLException
 	{
 		ArrayList<ConsoleBean> s = cns.allElements("prodotto asc");
@@ -137,7 +137,7 @@ public class ConsoleDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
-	
+	@Test
 	public void testAllElementsDESC() throws SQLException
 	{
 		ArrayList<ConsoleBean> s = cns.allElements("prodotto desc");
@@ -166,7 +166,7 @@ public class ConsoleDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
-	
+	@Test
 	public void testAllElementsNULL() throws SQLException{
 		ArrayList<ConsoleBean> a = null;
 		try {
@@ -176,7 +176,7 @@ public class ConsoleDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testAllElementsVoid() throws SQLException{
 		ArrayList<ConsoleBean> a = null;
 		try {
@@ -186,7 +186,7 @@ public class ConsoleDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testAllElementsNotValid() throws NullPointerException{
 		ArrayList<ConsoleBean> a = null;
 		try {
@@ -196,7 +196,7 @@ public class ConsoleDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testNewInsertNew() throws Exception {      
 	      
         ITable expectedTable = new FlatXmlDataSetBuilder()
@@ -218,7 +218,7 @@ public class ConsoleDAOTest extends DataSourceBasedDBTestCase{
       Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
 		
 	}
-	
+	@Test
 	public void testNewInsertOld() {
 
 		 ConsoleBean bean2 = new ConsoleBean();
@@ -239,7 +239,7 @@ public class ConsoleDAOTest extends DataSourceBasedDBTestCase{
 		
 		assertEquals(1,i);
 	}
-	
+	@Test
 	public void testNewInsertNull() {
 		
 		int i=0;

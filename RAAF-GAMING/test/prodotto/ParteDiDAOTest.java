@@ -72,7 +72,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 		assertEquals(r.getVideogioco(),b.getVideogioco());
 		assertEquals(r.getCategoria(),b.getCategoria());
 	}
-	
+	@Test
 	public void testRicercaPerChiaveVideogiocoNotValid() throws SQLException{
 		ParteDiBean a = null;
 		try {
@@ -82,7 +82,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveCategoriaNotValid() throws NullPointerException{
 		ParteDiBean a = null;
 		try {
@@ -92,7 +92,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveCategoriaNull() throws SQLException{
 		ParteDiBean a = null;
 		try {
@@ -102,7 +102,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveVideogiocoECategoriaNotValid() throws SQLException{
 		ParteDiBean a = null;
 		try {
@@ -112,7 +112,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsASC() throws SQLException
 	{
 		ArrayList<ParteDiBean> s = pad.allElements("videogioco asc");
@@ -142,7 +142,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 		assertEquals(s.get(i).getCategoria(),bean.get(i).getCategoria());
 		}
 	}
-	
+	@Test
 	public void testAllElementsDESC() throws SQLException
 	{
 		ArrayList<ParteDiBean> s = pad.allElements("videogioco desc");
@@ -171,7 +171,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 		assertEquals(s.get(i).getCategoria(),bean.get(i).getCategoria());
 		}
 	}
-	
+	@Test
 	public void testAllElementsNULL() throws SQLException
 	{
 		ArrayList<ParteDiBean> a = null;
@@ -182,7 +182,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsNotValid() throws NullPointerException
 	{
 		ArrayList<ParteDiBean> a = null;
@@ -193,7 +193,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsVoid() throws SQLException 
 	{
 		ArrayList<ParteDiBean> a = null;
@@ -204,7 +204,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testNewInsertNew() throws Exception {      
 	      
         ITable expectedTable = new FlatXmlDataSetBuilder()
@@ -223,7 +223,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
       Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
 		
 	}
-	
+	@Test
 	public void testNewInsertOld() {
 
 		ParteDiBean b1 = new ParteDiBean();
@@ -241,6 +241,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 		
 		assertEquals(1,i);
 	}
+	@Test
 	public void testNewInsertNull() {
 		
 		int i=0;
@@ -256,7 +257,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 		
 		assertEquals(1,i);	
 	}
-	
+		@Test
 		public void testRicercaPerCategoria() throws SQLException {
 		ArrayList<ParteDiBean> s = pad.ricercaPerCategoria("Avventura");
 		ArrayList<ParteDiBean> bean = new ArrayList<ParteDiBean>();
@@ -279,6 +280,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 		assertEquals(s.get(i).getCategoria(),bean.get(i).getCategoria());
 		}
 	}
+		@Test
 		public void testRicercaPerCategoriaNotValid() throws NullPointerException
 		{
 			ArrayList<ParteDiBean> a = null;
@@ -289,7 +291,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 		}
-		
+		@Test
 		public void testRicercaPerCategoriaVoid() throws SQLException
 		{
 			ArrayList<ParteDiBean> a = null;
@@ -300,7 +302,7 @@ public class ParteDiDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 		}
-		
+		@Test
 		public void testRicercaPerCategoriaNull() throws SQLException
 		{
 			ArrayList<ParteDiBean> a = null;

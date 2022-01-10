@@ -42,7 +42,7 @@ public class TestVisualizzaCarrello {
   public void tearDown() {
     driver.quit();
   }
-  /*
+  
   @Test
   public void testVisualizzaCarelloCarrelloVuoto() throws InterruptedException {
     // Test name: TestVisualizzaCarello_CarrelloVuoto
@@ -57,7 +57,7 @@ public class TestVisualizzaCarrello {
     Thread.sleep(5000);
     // 4 | assertText | name=NonHaiProdotti | NON HAI NESSUN PRODOTTO NEL CARRELLO!
     assertThat(driver.findElement(By.name("NonHaiProdotti")).getText(), is("NON HAI NESSUN PRODOTTO NEL CARRELLO!"));
-  }*/
+  }
   
   @Test
   public void testVisualizzaCarelloCarrelloConElementi() throws InterruptedException {

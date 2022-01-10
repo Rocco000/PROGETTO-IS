@@ -91,7 +91,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 		assertEquals(a.getData_uscita(),b.getData_uscita());
 		assertEquals(a.getNome(),b.getNome());
 	}
-	
+	@Test
 	public void testRicercaPerChiaveNULL() throws SQLException{
 		ProdottoBean  a = null;
 		try {
@@ -101,7 +101,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveVoid() throws SQLException{
 		ProdottoBean  a = null;
 		try {
@@ -111,7 +111,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveNotValid() throws NullPointerException
 	{
 		ProdottoBean  a = null;
@@ -122,7 +122,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsASC() throws SQLException
 	{
 		ArrayList<ProdottoBean> a = prod.allElements("codice_prodotto asc");
@@ -171,7 +171,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
-	
+	@Test
 	public void testAllElementsDESC() throws SQLException
 	{
 		ArrayList<ProdottoBean> a = prod.allElements("codice_prodotto desc");
@@ -220,7 +220,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
-	
+	@Test
 	public void testAllElementsNULL() throws SQLException{
 		ArrayList<ProdottoBean> a = null;
 		try {
@@ -230,7 +230,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testAllElementsVoid() throws SQLException{
 		ArrayList<ProdottoBean> a = null;
 		try {
@@ -240,6 +240,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
+	@Test
 	public void testAllElementsNotValid() throws NullPointerException{
 		ArrayList<ProdottoBean> a = null;
 		try {
@@ -249,7 +250,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testNewInsertNew() throws Exception {      
 	      
 		DataSource dataSource = new JdbcDataSource();
@@ -307,7 +308,46 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 		
 		
 	}
+	@Test
+	public void testNewInsertExists() throws Exception {      
+
+       ProdottoBean b1 = new ProdottoBean();
+		b1.setCodice_prodotto(1);
+		b1.setFornitore("2K");
+		b1.setGestore("prodotto@admin.com");
+		b1.setPrezzo(11);
+		b1.setSconto(0);
+		b1.setQuantita_fornitura(100);
+		b1.setUltima_fornitura(java.sql.Date.valueOf("2021-02-20"));
+		b1.setData_uscita(java.sql.Date.valueOf("2020-12-22"));
+		b1.setNome("WWE2K22");
+		int i=0;
+	try {
+		prod.newInsert(b1);
+		i++;
+	}catch(SQLException e) {
+		assertEquals(0,i);
+	}catch(NullPointerException e) {
+		i++;
+	}
+	assertEquals(0,i);
 	
+	}
+	@Test
+	public void testNewInsertNull() throws SQLException  {
+		boolean flag=false;
+		try {
+			prod.newInsert(null);
+		}
+		catch(NullPointerException e) {
+			flag=true;
+		}
+		
+		assertEquals(flag,true);
+		
+	}
+	
+	@Test
 	public void testricercaPerNome() throws SQLException {
 		ArrayList<ProdottoBean> a = prod.ricercaPerNome("FIFA");
 		ArrayList<ProdottoBean> b = new ArrayList<ProdottoBean>();
@@ -340,7 +380,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 			assertEquals(a.get(i).getNome(),b.get(i).getNome());
 		}
 	}
-	
+	@Test
 	public void testricercaPerNomeVoid() throws SQLException{
 		ArrayList<ProdottoBean> a = null;
 		try {
@@ -350,6 +390,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
+	@Test
 	public void testricercaPerNomeNotValid() throws NullPointerException
 	{
 		ArrayList<ProdottoBean> a = null;
@@ -360,6 +401,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
+	@Test
 	public void testricercaPerNomeNULL() throws SQLException{
 		ArrayList<ProdottoBean> a = null;
 		try {
@@ -369,7 +411,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testricercaPerSottostringa() throws SQLException {
 		ArrayList<ProdottoBean> a = prod.ricercaPerSottostringa("FIF");
 		ArrayList<ProdottoBean> b = new ArrayList<ProdottoBean>();
@@ -402,7 +444,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 			assertEquals(a.get(i).getNome(),b.get(i).getNome());
 		}
 	}
-	
+	@Test
 	public void testricercaPerSottostringaVoid() throws SQLException{
 		ArrayList<ProdottoBean> a = null;
 		try {
@@ -412,6 +454,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
+	@Test
 	public void testricercaPerSottostringaNotValid() throws NullPointerException
 	{
 		ArrayList<ProdottoBean> a = null;
@@ -422,6 +465,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
+	@Test
 	public void testricercaPerSottostringaNULL() throws SQLException{
 		ArrayList<ProdottoBean> a = null;
 		try {
@@ -431,7 +475,7 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 		public void testDoUpdatePresente() throws Exception {
 		
 		DataSource dataSource = new JdbcDataSource();
@@ -488,7 +532,77 @@ public class ProdottoDAOTest extends DataSourceBasedDBTestCase{
 	       
 		
 	} 
-		
+	@Test
+		public void testDoUpdateNull() throws SQLException  {
+			boolean flag=false;
+			try {
+				prod.doUpdate(null);
+			}
+			catch(NullPointerException e) {
+				flag=true;
+			}
+			
+			assertEquals(flag,true);
+			
+		}
+	@Test
+		public void testDoUpdateNonPresente() throws Exception {
+			
+			DataSource dataSource = new JdbcDataSource();
+	        ((JdbcDataSource) dataSource).setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;init=runscript from 'classpath:resources/db/init/prodotto.sql'");
+	        ((JdbcDataSource) dataSource).setUser("root");
+	        ((JdbcDataSource) dataSource).setPassword("veloce123");
+	        
+	       IDataSet i = new FlatXmlDataSetBuilder().build(this.getClass().getClassLoader().getResourceAsStream("resources/db/init/prodotto.xml"));
+	        
+	       ITable expectedTable = new FlatXmlDataSetBuilder()
+	               .build(OrdineDAOTest.class.getClassLoader().getResourceAsStream("resources/db/init/prodotto.xml"))
+	               .getTable("prodotto");
+	       
+
+	       ProdottoBean b1 = new ProdottoBean();
+			b1.setCodice_prodotto(50);
+			b1.setFornitore("Activision");
+			b1.setGestore("prodotto@admin.com");
+			b1.setPrezzo(15.5);
+			b1.setSconto(0);
+			b1.setQuantita_fornitura(102);
+			b1.setUltima_fornitura(java.sql.Date.valueOf("2020-12-20"));
+			b1.setData_uscita(java.sql.Date.valueOf("2020-12-22"));
+			b1.setNome("PES");
+			
+	      
+			
+			ProdottoDAO d = new ProdottoDAO(dataSource);
+			
+			d.doUpdate(b1);
+	       
+			 IDatabaseTester tester = this.getDatabaseTester();
+	       
+			 ITable actualTable =  tester.getConnection().createDataSet().getTable("prodotto");   
+			 
+			 SortedTable s1 = new SortedTable(expectedTable);
+			 SortedTable s2 = new SortedTable(actualTable);
+			 
+			 
+			 assertEquals(expectedTable.getRowCount(),actualTable.getRowCount());
+
+			 for(int c=0;c<expectedTable.getRowCount();c++)
+			 {
+				 
+				 assertEquals(s1.getValue(c,"codice_prodotto").toString(),s2.getValue(c,"codice_prodotto").toString());
+				 assertEquals(s1.getValue(c,"prezzo").toString(),s2.getValue(c,"prezzo").toString());
+				 assertEquals(s1.getValue(c,"sconto").toString(),s2.getValue(c,"sconto").toString());
+				 assertEquals(s1.getValue(c,"data_uscita").toString(),s2.getValue(c,"data_uscita").toString());
+				 assertEquals(s1.getValue(c,"nome").toString(),s2.getValue(c,"nome").toString());
+				 assertEquals(s1.getValue(c,"quantita_fornitura").toString(),s2.getValue(c,"quantita_fornitura").toString());
+				 assertEquals(s1.getValue(c,"data_fornitura").toString(),s2.getValue(c,"data_fornitura").toString());
+				 assertEquals(s1.getValue(c,"gestore").toString(),s2.getValue(c,"gestore").toString());
+			 }
+		       
+			
+		} 
+		@Test
 		public void testGetMax() throws Exception {
 			ProdottoBean a = prod.getMax();
 			

@@ -59,7 +59,7 @@ public class ServletFormOrdiniAdmin extends HttpServlet {
 					
 					if(ordine==null || ordine=="" || corriere==null || corriere=="" || data==null || data=="")
 					{
-						String url="/servletgestioneadmin";
+						String url="/ServletGestioneOrdiniAdmin";
 						url= response.encodeURL(url);
 						request.setAttribute("messageok", "Errore!");
 						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
@@ -82,9 +82,9 @@ public class ServletFormOrdiniAdmin extends HttpServlet {
 						odao.doUpdate(ordineGestito); //aggiorno l'ordine
 						sdao.newInsert(spedizione);	 //inserisco la tupla
 						
-						String url="/servletgestioneadmin";
+						String url="/ServletGestioneOrdiniAdmin";
 						url= response.encodeURL(url);
-						request.setAttribute("messageok", "Ordine spedito con successo!");
+						request.setAttribute("messageok","Ordine spedito con successo!");
 						RequestDispatcher dispatcher= request.getRequestDispatcher(url);
 						dispatcher.forward(request, response);	
 					} catch (SQLException e) {

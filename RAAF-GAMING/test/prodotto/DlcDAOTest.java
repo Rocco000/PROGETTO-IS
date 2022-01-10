@@ -81,7 +81,7 @@ public class DlcDAOTest extends DataSourceBasedDBTestCase{
 		assertEquals(a.getDimensione(),b.getDimensione());
 		assertEquals(a.getDescrizione(),b.getDescrizione());
 	}
-	
+	@Test
 	public void testRicercaPerChiaveNULL() throws SQLException{
 		DlcBean a = null;
 		try {
@@ -91,7 +91,7 @@ public class DlcDAOTest extends DataSourceBasedDBTestCase{
 				assertNull(a);
 			}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveVoid() throws SQLException{
 		DlcBean a = null;
 		try {
@@ -101,7 +101,7 @@ public class DlcDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testRicercaPerChiaveNotValid() throws NullPointerException
 	{
 		DlcBean a = null;
@@ -112,7 +112,7 @@ public class DlcDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsASC() throws SQLException
 	{
 		ArrayList<DlcBean> s = dlc.allElements("prodotto asc");
@@ -146,7 +146,7 @@ public class DlcDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
-	
+	@Test
 	public void testAllElementsDESC() throws SQLException
 	{
 		ArrayList<DlcBean> s = dlc.allElements("prodotto desc");
@@ -181,6 +181,7 @@ public class DlcDAOTest extends DataSourceBasedDBTestCase{
 		}
 		
 	}
+	@Test
 	public void testAllElementsNULL() throws SQLException
 	{
 		ArrayList<DlcBean> a = null;
@@ -191,7 +192,7 @@ public class DlcDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsNotValid() throws NullPointerException
 	{
 		ArrayList<DlcBean> a = null;
@@ -202,7 +203,7 @@ public class DlcDAOTest extends DataSourceBasedDBTestCase{
 			assertNull(a);
 		}
 	}
-	
+	@Test
 	public void testAllElementsVoid() throws SQLException
 	{
 		ArrayList<DlcBean> a = null;
@@ -214,7 +215,7 @@ public class DlcDAOTest extends DataSourceBasedDBTestCase{
 		}
 	}
 	
-	
+	@Test
 	public void testNewInsertNew() throws Exception {      
 	      
         ITable expectedTable = new FlatXmlDataSetBuilder()
@@ -237,7 +238,7 @@ public class DlcDAOTest extends DataSourceBasedDBTestCase{
       Assertion.assertEquals(new SortedTable(expectedTable), new SortedTable(actualTable));
 		
 	}
-	
+	@Test
 	public void testNewInsertOld() {
 
 		DlcBean bean = new DlcBean();
@@ -258,7 +259,7 @@ public class DlcDAOTest extends DataSourceBasedDBTestCase{
 		
 		assertEquals(1,i);
 	}
-	
+	@Test
 	public void testNewInsertNull() {
 		
 		int i=0;

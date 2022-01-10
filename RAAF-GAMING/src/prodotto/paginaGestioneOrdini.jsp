@@ -52,17 +52,16 @@
 				if(messageOk!=null){
 					
 		%>
-					<h4 style="color:green; text-align:center;"><%=messageOk%></h4>
+					<h4 id="peppe"style="color:green; text-align:center;"><%=messageOk%></h4>
 		<%
 				}
-				else if(message!=null){
+				 if(message!=null){
 		%>
 					<h4 style="color:red; text-align:center;"><%=message%></h4>	
 		<%
 				}
 			}
 		%>
-		
 		
 		
 		<div class="form-row d-flex justify-content-center">
@@ -133,11 +132,18 @@
 			
 			if(dataForm.getFullYear()==dataAttuale.getFullYear()){
 				
-				if((dataForm.getMonth()+1)>=(dataAttuale.getMonth()+1)){
+				if((dataForm.getMonth()+1)>(dataAttuale.getMonth()+1)){
+					$("."+x).css("border","2px solid green");
+					return true;
+				}
+				if((dataForm.getMonth()+1)==(dataAttuale.getMonth()+1)){
 					if(dataForm.getDate()>=dataAttuale.getDate()){
-					
 						$("."+x).css("border","2px solid green");
 						return true;				
+					}
+					else{
+						$("."+x).css("border","2px solid red");
+						return false;	
 					}
 				}
 				$("."+x).css("border","2px solid red");
