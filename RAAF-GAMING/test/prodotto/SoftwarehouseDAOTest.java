@@ -89,7 +89,7 @@ public class SoftwarehouseDAOTest extends DataSourceBasedDBTestCase{
 			assertEquals(s.get(i).getNomesfh(),soft.get(i).getNomesfh());
 		}
 	}
-	
+	@Test 
 	public void testAllElementsDESC() throws SQLException{
 		ArrayList<SoftwarehouseBean> s = sh.allElements("nomesfh desc");
 		ArrayList<SoftwarehouseBean> soft = new ArrayList<SoftwarehouseBean>();
@@ -114,6 +114,39 @@ public class SoftwarehouseDAOTest extends DataSourceBasedDBTestCase{
 		for(int i=0; i<s.size();i++)
 		{			
 			assertEquals(s.get(i).getNomesfh(),soft.get(i).getNomesfh());
+		}
+	}
+	@Test 
+	public void testAllElementsNULL() throws SQLException
+	{
+		ArrayList<SoftwarehouseBean> a = null;
+		try {
+		a = sh.allElements(null);
+		}catch(NullPointerException e)
+		{
+			assertNull(a);
+		}
+	}
+	@Test 
+	public void testAllElementsNotValid() throws NullPointerException
+	{
+		ArrayList<SoftwarehouseBean> a = null;
+		try {
+		a = sh.allElements("nome sc");
+		}catch(SQLException e)
+		{
+			assertNull(a);
+		}
+	}
+	@Test 
+	public void testAllElementsVoid() throws SQLException
+	{
+		ArrayList<SoftwarehouseBean> a = null;
+		try {
+		a = sh.allElements("");
+		}catch(NullPointerException e)
+		{
+			assertNull(a);
 		}
 	}
 
