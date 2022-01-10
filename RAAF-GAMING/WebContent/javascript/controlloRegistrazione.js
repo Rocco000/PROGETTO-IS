@@ -47,13 +47,14 @@ function controlloRegistrazione(x){
 			
 				x.elements["data"].style.border="2px solid green";
 				var i=x.elements["codicecarta"];
-				if(i.value.length==16 && i.value.length>0)
+				var formatocarta = /^[0-9]+$/;
+				if(i.value.length==16 && i.value.length>0 && i.value.match(formatocarta)!=null)
 				{ //codice carta corretto
 					i.style.border="2px solid green";
 					return controlloData(x);
 				}
 				else{
-					alert("Hai inserito un codice carta non valido");
+					alert("Hai inserito un codice carta non valida");
 					i.value="";
 					i.style.border="2px solid red";
 					return false;//codice carta non corretto 
@@ -114,7 +115,8 @@ function controlloData(x){
 		
 function controlloCVV(x){
 	var n=x.elements["codice_cvv"];
-		if(n.value.length==3 && n.value.length>0){
+	var formatocvv = /^[0-9]+$/;
+		if(n.value.length==3 && n.value.length>0 && n.value.match(formatocvv)!=null){
 			n.style.border="2px solid green";
 			return controlloEmailPassword(x);
 		}

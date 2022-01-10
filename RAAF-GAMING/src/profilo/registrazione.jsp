@@ -62,7 +62,7 @@
 			%>
 					<div class="form-row">
 						<div class="col-md-12 mb-1 mt-1 d-flex justify-content-center">
-							<p class="h5" style="color:red;"><%=messaggio %></p>
+							<p name="messaggioerrore" class="h5" style="color:red;"><%=messaggio %></p>
 						</div>
 					</div>
 			<%

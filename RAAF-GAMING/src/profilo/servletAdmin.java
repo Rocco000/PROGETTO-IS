@@ -16,9 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import it.unisa.model.AmministratoriBean;
-import it.unisa.model.AmministratoriModelDAO;
-
 
 @WebServlet("/servletAdmin")
 public class servletAdmin extends HttpServlet {

@@ -8,6 +8,7 @@ import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -126,8 +127,7 @@ public class ServletProfilo extends HttpServlet {
 						
 						CartaDiCreditoDAO cc = new CartaDiCreditoDAO((DataSource)super.getServletContext().getAttribute("DataSource"));
 						CartaDiCreditoBean carta = new CartaDiCreditoBean();
-						
-						if(cartaNuova!="" && cartaNuova!=null && (cartaNuova.length()==16) && dataScadNuova!="" && dataScadNuova!=null &&  (codice_cvv>=100 && codice_cvv<=999)) {//se ha modificato i dati della carta
+						if(cartaNuova!="" && cartaNuova!=null && (cartaNuova.length()==16) && dataScadNuova!="" && dataScadNuova!=null  && (codice_cvv>=100 && codice_cvv<=999)) {//se ha modificato i dati della carta
 							
 							if(!utente.getCartadicredito().equals(cartaNuova)) {//se la nuova carta è diversa da quello del db
 								utenteAggiornato.setCartadicredito(cartaNuova);//setto la nuova carta

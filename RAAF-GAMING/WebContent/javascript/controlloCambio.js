@@ -64,7 +64,6 @@ function controlloCambioCredenziali(pass1,pass2,codiceCarta,cvv,data){
 		
 		
 		if(d2.getFullYear()==dataAttuale.getFullYear()){ //se l'anno di scadenza è uguale all'anno attuale
-			alert("anno uguale");
 			if((d2.getMonth()+1)==(dataAttuale.getMonth()+1)){ //se il mese della data di scadenza è uguale a quella attuale
 				
 				if(d2.getDate()>dataAttuale.getDate()){//se il giorno della data di scadenza è maggiore rispetto a quello di oggi OK
@@ -73,6 +72,7 @@ function controlloCambioCredenziali(pass1,pass2,codiceCarta,cvv,data){
 				else{//il giorno della scadenza coincide al giorno attuale o prima NO
 					alert("La carta di credito e' scaduta");
 					data.style.border="2px solid red";
+					return false;
 				}
 			}
 			else if((d2.getMonth()+1)>(dataAttuale.getMonth()+1)){//il mese della data di scadenza è maggiore al mese attuale OK
