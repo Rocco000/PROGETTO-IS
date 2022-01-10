@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="css/stileAdmin.css" type="text/css">
 	
 	<!-- javascript nostro -->
-	<script src="javascript/controlloNuovoProd.js"></script>
+	<!-- <script src="javascript/controlloNuovoProd.js"></script> -->
 	
 	<meta charset="UTF-8">
 
@@ -58,12 +58,12 @@
 				if(messageOk!=null){
 					
 		%>
-					<h4 style="color:green; text-align:center;"><%=messageOk%></h4>
+					<h4 style="color:green; text-align:center;" name="successo"><%=messageOk%></h4>
 		<%
 				}
 				else if(message!=null){
 		%>
-					<h4 style="color:red; text-align:center;"><%=message%></h4>	
+					<h4 style="color:red; text-align:center;" name="errore"><%=message%></h4>	
 		<%
 				}
 			}
@@ -284,6 +284,232 @@
 			}
 				
 		}
+		</script>
+		<script>
+		function controlloProdNuovo(){
+			
+			var nome=$("#nomeProdotto").val().length;
+			
+			if(nome>0 && nome<=50){ //se la lunghezza del nome del prodotto è compatibile con il DB
+				$("#nomeProdotto").css("border","2px solid green");
+			}
+			else{
+				$("#nomeProdotto").css("border","2px solid red");
+				return false;	
+			}
+
+			var prezzo=$("#prezzoProdotto").val().length; 
+			
+			if(($("#prezzoProdotto").val()<9999) && ($("#prezzoProdotto").val()>0)){
+				
+				$("#prezzoProdotto").css("border","2px solid green");
+			}
+			else{
+				$("#prezzoProdotto").css("border","2px solid red");	
+				return false;
+			}
+				
+			var sconto=$("#scontoProdotto").val().length;
+			
+			if(($("#scontoProdotto").val()>=0) && ($("#scontoProdotto").val()<=99) && (sconto>0)){
+				$("#scontoProdotto").css("border","2px solid green");
+			}
+			else{
+				$("#scontoProdotto").css("border","2px solid red");
+				return false;		
+			}
+					
+			var dataUscita= $("#uscitaProdotto").val().length;
+			
+			if(dataUscita==10){
+				$("#uscitaProdotto").css("border","2px solid green");
+			}
+			else{
+				$("#uscitaProdotto").css("border","2px solid red");
+				return false;
+			}
+					
+			if($("#quantitaProdottoNew").val()>=1){
+				$("#quantitaProdottoNew").css("border","2px solid green");
+			}
+			else{
+				$("#quantitaProdottoNew").css("border","2px solid red");
+				return false;
+			}
+
+			if($("#copertinaP").get(0).files.length === 0){	//se non ha inserito l'immagine del prodotto
+					$("#copertinaP").css("border","2px solid red");
+					return false;
+			}
+			else{
+				$("#copertinaP").css("border","2px solid green");
+			}
+			
+			//controllo che tipo di prodotto vuole mettere
+			if(document.getElementById("videogiocoRadio").checked){ //se e' un videogioco fisico
+
+				var dim= $("#dim").val().length; 
+
+				if((dim>0) && dim<=3 && $("#dim").val()>=1 &&  ($("#dim").val()<=900)){//se la dimensione del videogioco e' ok
+					$("#dim").css("border","2px solid green");
+				}
+				else{
+					$("#dim").css("border","2px solid red");
+					return false;
+				}
+				
+				var pegi=$("#pegi").val().length;
+
+				if(($("#pegi").val()>=3) && ($("#pegi").val()<=18) && (pegi>0)){//se la pegi e' ok
+					$("#pegi").css("border","2px solid green");
+				}
+				else{
+					$("#pegi").css("border","2px solid red");
+					return false;
+				}
+				
+				var ncd= $("#ncd").val().length;
+
+				if(ncd==0){// se non ha inserito ne cd e key
+					$("#ncd").css("border","2px solid red");
+					return false;
+				}
+				else if($("#ncd").val()>0){
+					$("#ncd").css("border","2px solid green");
+				}
+				
+					
+				var limitata= $("#limitata").val().length;
+				if(($("#limitata").val()==0 || $("#limitata").val()==1) && limitata>0){
+					$("#limitata").css("border","2px solid green");		
+				}
+				else{
+					$("#limitata").css("border","2px solid red");
+					return false;
+				}
+
+				return true;
+				
+			}
+			else if(document.getElementById("videogiocoRadio2").checked){ //se e' un videogioco fisico
+				$("#quantitaProdottoNew").val(1);
+			
+				var dim= $("#dim").val().length; 
+
+				if((dim>0) && dim<=3 && $("#dim").val()>=1 &&  ($("#dim").val()<=900)){//se la dimensione del videogioco e' ok
+					$("#dim").css("border","2px solid green");
+				}
+				else{
+					$("#dim").css("border","2px solid red");
+					return false;
+				}
+					
+				var pegi=$("#pegi").val().length;
+
+				if(($("#pegi").val()>=3) && ($("#pegi").val()<=18) && (pegi>0)){//se la pegi e' ok
+					$("#pegi").css("border","2px solid green");
+					
+				}
+				else{
+					$("#pegi").css("border","2px solid red");
+					return false;
+				}
+				
+				var vkey= $("#chiave").val().length;
+				
+				if(vkey==0){// se non ha inserito key
+					$("#chiave").css("border","2px solid red");
+					return false;
+				}
+				else if(vkey>0 && vkey<=14){
+					$("#chiave").css("border","2px solid green");
+				}
+				else{
+					$("#chiave").css("border","2px solid red");
+					return false;
+				}
+				
+					
+				var limitata= $("#limitata").val().length;
+				if(($("#limitata").val()==0 || $("#limitata").val()==1) && limitata>0){
+					$("#limitata").css("border","2px solid green");		
+				}
+				else{
+					$("#limitata").css("border","2px solid red");
+					return false;
+				}
+
+				return true;
+				
+			}
+			else if(document.getElementById("consoleRadio").checked){//se e' una console
+				var specifica= $("#specifiche").val().length;
+				var colore= $("#colore").val().length;
+				if(specifica>0 && specifica<=20){
+					
+					$("#specifiche").css("border","2px solid green");
+					
+					if(colore>0 && colore<=8){
+						$("#colore").css("border","2px solid green");
+					}
+					else{
+						$("#colore").css("border","2px solid red");
+						return false;
+					}
+				}
+				else{
+					$("#specifiche").css("border","2px solid red");
+					return false;					
+				}
+				return true;
+			}
+			else if(document.getElementById("dlcRadio").checked){//se e' un dlc
+				var descrizione= $("#descDLC").val().length;
+				var dimensione= $("#dimDLC").val().length;
+
+				if(descrizione>0 && descrizione<=50){
+					
+					$("#descDLC").css("border","2px solid green");						
+					
+					if(dimensione>0 && dimensione<=2){
+						$("#dimDLC").css("border","2px solid green");
+					}
+					else{
+						$("#dimDLC").css("border","2px solid red");
+						return false;
+					}
+				}
+				else{
+					$("#descDLC").css("border","2px solid red");
+					return false;
+				}
+				return true;
+			}
+			else if(document.getElementById("abbonamentoRadio").checked){//se e' un abbonamento
+				var codAbb= $("#codiceAbb").val().length;
+				var durAbb= $("#durAbb").val().length;
+
+				if(codAbb>0 && codAbb<=11){
+					$("#codiceAbb").css("border","2px solid green");
+
+					if(durAbb>0 && $("#durAbb").val()>=1 && $("#durAbb").val()<=12){
+						$("#durAbb").css("border","2px solid green");						
+					}
+					else{
+						$("#durAbb").css("border","2px solid red");
+						return false;						
+					}
+				}
+				else{
+					$("#codiceAbb").css("border","2px solid red");
+					return false;					
+				}
+				return true;
+			}
+			
+					
+		}
+				
 		</script>
 
 </body>

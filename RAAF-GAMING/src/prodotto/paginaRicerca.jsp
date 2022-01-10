@@ -68,7 +68,7 @@ if(str==null)
 		        			<div class="card__header">                  
 		          				<i class='fas fa-shopping-cart' style='font-size:27px; color:black;'></i>
 		          				<div class="card__header-text">
-		            				<h3 class="card__title" name="nomeProdotto"><%=prodric.get(l).getNome()%></h3>            
+		            				<h3 class="card__title" name="nomeProdotto<%=l%>"><%=prodric.get(l).getNome()%></h3>            
 		            				<%
 		            					if(prodric.get(l).getSconto()==0){
 		            				%>           

@@ -1,3 +1,5 @@
+
+
 function controlloProdNuovo(){
 
 	var nome=$("#nomeProdotto").val().length;
@@ -56,6 +58,7 @@ function controlloProdNuovo(){
 							
 							var ncd= $("#ncd").val().length;
 							var key= $("#chiave").val().length;
+							alert(key);
 							if((ncd==0) && (key==0)){// se non ha inserito ne cd e key
 								$("#ncd").css("border","2px solid red");
 								$("#chiave").css("border","2px solid red");
